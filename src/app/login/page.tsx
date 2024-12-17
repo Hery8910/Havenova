@@ -10,7 +10,6 @@ const Login = () => {
     try {
       const response = await api.post('/users/login', { email, password });
       console.log('Login exitoso:', response.data);
-      // Aquí guardarías el token en cookies o manejarías el estado del usuario
     } catch (error) {
       console.error('Error de autenticación:', error);
     }
