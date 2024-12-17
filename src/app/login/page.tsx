@@ -1,17 +1,20 @@
-"use client"
-import { useState } from 'react';
-import api from '../../services/api';
+"use client";
+import { useState } from "react";
+import api from "../../services/api";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await api.post('api/users/login', { email, password });
-      console.log('Login exitoso:', response.data);
+      const response = await api.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/login`,
+        { email, password }
+      );
+      console.log("Login exitoso:", response.data);
     } catch (error) {
-      console.error('Error de autenticación:', error);
+      console.error("Error de autenticación:", error);
     }
   };
 
