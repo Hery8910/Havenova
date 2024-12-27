@@ -1,8 +1,12 @@
 // src/types/User.ts
 export interface User {
-    id: string;
-    name: string;
-    email: string;
-    isMember: boolean;
-  }
-  
+  id: string;
+  name: string;
+  email: string;
+  address: string;
+  phone: string;
+  isMember: boolean;
+}
+export interface UserError {
+  message: string;
+}
