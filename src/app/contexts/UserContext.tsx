@@ -11,6 +11,7 @@ interface User {
 interface UserContextProps {
   user: User | null;
   setUser: (user: User | null) => void;
+  refreshUser: () => Promise<void>;
   logout: () => void;
 }
 
@@ -18,28 +19,23 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await api.get("/api/users/profile");
-        setUser(response.data); // Actualiza el usuario con la información del backend
-      } catch (error: any) {
-        console.error("Error al cargar el usuario:", error.response?.data?.message || error.message);
-        setUser(null); // Limpia el estado si falla la solicitud
-      }
-    };
-
-    fetchUser();
-  }, []);
+  
+  const refreshUser = async () => {
+    try {
+      const response = await api.get("/api/users/profile");
+      setUser(response.data); // Actualiza el estado del usuario
+    } catch (error: any) {
+      setUser(null); // Limpia el estado si falla la solicitud
+    }
+  };
 
   const logout = () => {
     setUser(null);
-    api.post("/api/users/logout"); // Endpoint para cerrar sesión
+    api.post("/api/users/login"); // Endpoint para cerrar sesión
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, logout, refreshUser }}>
       {children}
     </UserContext.Provider>
   );
