@@ -1,3 +1,4 @@
+import { UserProvider } from "./contexts/UserContext";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
@@ -16,7 +17,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable}`}>{children}</body>
+      <body className={`${roboto.variable}`}>
+        <UserProvider>{children}</UserProvider>
+      </body>
     </html>
   );
 }
