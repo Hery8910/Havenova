@@ -25,6 +25,7 @@ const Login = () => {
       <aside className={styles.aside}>
         <Image
           className={styles.image}
+          priority={true}
           src="/images/login.webp"
           alt="Minimalist flat design illustration of a worker in a blue uniform painting a wall with a roller."
           width={500}
