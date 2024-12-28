@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import api from "../../services/api";
-
 interface User {
   _id: string;
   name: string;
@@ -24,9 +23,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       try {
         const response = await api.get("/api/users/profile");
-        setUser(response.data); 
-      } catch (error) {
-        console.error("Error al cargar el usuario:", error);
+        setUser(response.data); // Actualiza el usuario con la información del backend
+      } catch (error: any) {
+        console.error("Error al cargar el usuario:", error.response?.data?.message || error.message);
+        setUser(null); // Limpia el estado si falla la solicitud
       }
     };
 
@@ -34,8 +34,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const logout = () => {
-    setUser(null); 
-    api.post("/api/users/logout"); 
+    setUser(null);
+    api.post("/api/users/logout"); // Endpoint para cerrar sesión
   };
 
   return (
