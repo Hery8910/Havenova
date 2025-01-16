@@ -9,7 +9,7 @@ const Profile = () => {
   const { user, refreshUser } = useUser();
   useEffect(() => {
     refreshUser();
-  }, []);
+  }, [refreshUser]);
   console.log(user);
   
 

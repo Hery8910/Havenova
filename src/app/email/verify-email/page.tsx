@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
+import { useCallback } from "react";
 
 import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
@@ -13,9 +14,7 @@ const VerifyEmail = () => {
   const [message, setMessage] = useState("Verifying your email...");
   const [redirecting, setRedirecting] = useState<boolean>(false);
 
-  const handleRefresh = async () => {
-    if (redirecting) return;
-    setRedirecting(true);
+  const handleRefresh = useCallback(async () => {
     try {
       await refreshUser();
       setMessage("Email successfully verified. Redirecting...");
@@ -28,11 +27,11 @@ const VerifyEmail = () => {
       );
       setRedirecting(false);
     }
-  };
+  }, [refreshUser, router, user]);
 
   useEffect(() => {
     handleRefresh();
-  }, []);
+  }, [handleRefresh]);
 
   return (
     <main className={styles.main}>
@@ -49,9 +48,7 @@ const VerifyEmail = () => {
             height={70}
           />
         </div>
-        {!user && (
-          <Button onClick={handleRefresh} children={"Verify Account"} />
-        )}
+        {!user && <Button onClick={handleRefresh}>Verify Account</Button>}
       </section>
     </main>
   );

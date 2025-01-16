@@ -77,7 +77,7 @@ const Login = () => {
         </button>
       <article className={styles.article}>
         <p className={styles.p}>Forgot your password?</p>
-        <p className={styles.p}>Don't have an account? <Link href="/register">Sign up here.</Link></p>
+        <p className={styles.p}>Don&apos;t have an account? <Link href="/register">Sign up here.</Link></p>
       </article>
       </form>
     </main>
