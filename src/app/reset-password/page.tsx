@@ -37,6 +37,7 @@ const PasswordRequest = () => {
   };
 
   return (
+    
       <main className={styles.main}>
         <header className={styles.header}>
           <Image
@@ -82,7 +83,6 @@ const PasswordRequest = () => {
   return (
     
     <Suspense fallback={<p>Loading...</p>}>
-
       <PasswordRequest />
     </Suspense>
   )
