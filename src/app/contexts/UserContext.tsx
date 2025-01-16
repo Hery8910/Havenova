@@ -28,6 +28,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setUser(null); 
     }
   };
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
 
   const logout = () => {
     setUser(null);
