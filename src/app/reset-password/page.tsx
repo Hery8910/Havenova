@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import api from "../../services/api";
 import styles from "./page.module.css";
@@ -34,6 +34,7 @@ const ResetPassword = () => {
 
   return (
     <main className={styles.main}>
+      
       <header className={styles.header}>
       <Image
           src="/svg/logo-desktop.svg"
@@ -53,6 +54,8 @@ const ResetPassword = () => {
         />
         <h1>Reset your Password</h1>
       </header>
+      <Suspense fallback={<p>Loading...</p>}>
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           className={styles.input}
@@ -70,6 +73,7 @@ const ResetPassword = () => {
         </button>
         {message && <p>{message}</p>}
       </form>
+      </ Suspense >
     </main>
   );
 };
