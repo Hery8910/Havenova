@@ -5,6 +5,16 @@ import { useRouter } from "next/navigation";
 import { User } from "../../types/User";
 import styles from "./page.module.css";
 import Image from "next/image";
+import { ImEye } from "react-icons/im";
+import { ImEyeBlocked } from "react-icons/im";
+import {
+  isNameValid,
+  isEmailValid,
+  isPhoneValid,
+  isPasswordValid,
+  isAddressValid,
+} from "../../utils/validators";
+import Link from "next/link";
 
 interface FormData {
   name: string;
@@ -36,75 +46,49 @@ const Register = () => {
     phone: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const validateField = (name: string, value: string): string => {
+    if (name === "name" && !isNameValid(value)) {
+      return "The name must begin with a capital letter and contain only letters, spaces, hyphens, or apostrophes.";
+    } else if (name === "email" && !isEmailValid(value)) {
+      return "The email is not valid";
+    } else if (name === "phone" && !isPhoneValid(value)) {
+      return "The phone number is not valid";
+    } else if (name === "password" && !isPasswordValid(value)) {
+      return "The password must be at least 8 characters, one uppercase letter, one number, and one special character.";
+    } else if (name === "address" && !isAddressValid(value)) {
+      return "The address can only contain letters, numbers, spaces, commas, and hyphens.";
+    }
+    return "";
   };
 
-  const isEmailValid = (email: string): boolean => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  const validateForm = (): boolean => {
+    const newErrors: Partial<FormData> = {};
+    let isValid = true;
 
-  const isPhoneValid = (phone: string): boolean => {
-    const regex = /^\+49\d{10,12}$/;
-    return regex.test(phone);
-  };
+    Object.keys(formData).forEach((key) => {
+      const fieldName = key as keyof FormData;
+      const error = validateField(fieldName, formData[fieldName]);
+      if (error) {
+        isValid = false;
+        newErrors[fieldName] = error;
+      }
+    });
 
-  const isPasswordValid = (password: string): boolean => {
-    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return regex.test(password);
-  };
-
-  const passwordsMatch = (
-    password: string,
-    repeatPassword: string
-  ): boolean => {
-    return password === repeatPassword;
+    setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
+    return isValid;
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    let error = "";
-
-    if (name === "email" && !isEmailValid(value)) {
-      error = "El correo electrónico no es válido";
-    } else if (name === "phone" && !isPhoneValid(value)) {
-      error = "El número de teléfono no es válido";
-    } else if (name === "password" && !isPasswordValid(value)) {
-      error =
-        "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.";
-    }
-
-    setErrors({ ...errors, [name]: error });
+    const error = validateField(name, value);
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.name) {
-      setMessage("El nombre es obligatorio");
-      return;
-    }
 
-    if (!isEmailValid(formData.email)) {
-      setMessage("El correo electrónico no es válido");
-      return;
-    }
-
-    if (!isPhoneValid(formData.phone)) {
-      setMessage("El número de teléfono no es válido");
-      return;
-    }
-
-    if (!isPasswordValid(formData.password)) {
-      setMessage(
-        "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial."
-      );
-      return;
-    }
-
-    if (!passwordsMatch(formData.password, formData.repeatPassword)) {
-      setMessage("Las contraseñas no coinciden");
+    if (!validateForm()) {
+      setMessage("Please fix the errors in the form.");
       return;
     }
 
@@ -116,130 +100,123 @@ const Register = () => {
         formData.address,
         formData.phone
       );
-      setMessage(`Usuario registrado: ${formData.name}. Verifica tu correo.`);
+      setMessage(`Registered user: ${formData.name}. Check your email.`);
       setTimeout(() => {
         router.push("/email/verify-email");
-      }, 1500);
+      }, 3000);
     } catch (error: any) {
       setMessage(error.message);
     }
   };
-
   return (
-    <>
-      <main className={styles.main}>
-        <aside className={styles.aside}>
+    <main className={styles.main}>
+      <header className={styles.header}>
+      <Image
+          src="/svg/logo-desktop.svg"
+          priority={true}
+          alt="Havenova logo"
+          width={2400}
+          height={400}
+          className={`${styles.desktop} ${styles.image}`}
+        />
+        <Image
+          src="/svg/logo-mobile.svg"
+          priority={true}
+          alt="Havenova logo"
+          width={450}
+          height={450}
+          className={`${styles.mobile} ${styles.image}`}
+        />
+        <h1 className={styles.h1}>Welcome</h1>
+        <p className={styles.header_p}>
+          Create an account to manage your requests and explore your benefits.
+        </p>
+      </header>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <button className={styles.button} style={{ padding: "0 .5rem" }}>
+          Continue with Google{" "}
           <Image
-            className={styles.image}
-            priority={true}
-            src="/images/login.webp"
-            alt="Minimalist flat design illustration of a worker in a blue uniform painting a wall with a roller."
-            width={500}
-            height={500}
+            src="/svg/google-logo.svg"
+            alt="Google logo"
+            width={35}
+            height={35}
           />
-        </aside>
-        <section className={styles.section}>
-          <header className={styles.header}>
-            <Image
-              src="/logo-blue.svg"
-              alt="Minimalist flat design illustration of a worker in a blue uniform painting a wall with a roller."
-              width={200}
-              height={200}
-            />
-            <h1 className={styles.h1}>Welcome Back!</h1>
-            <p className={styles.p}>
-              Log in to your account to manage your requests and explore your
-              benefits.
-            </p>
-          </header>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <button className={styles.button} style={{ padding: "0 .5rem" }}>
-              Continue with Google{" "}
-              <Image
-                src="/google-logo.svg"
-                alt="Minimalist flat design illustration of a worker in a blue uniform painting a wall with a roller."
-                width={35}
-                height={35}
-              />
-            </button>
-            <input
-              className={styles.input}
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+        </button>
+        <input
+          className={styles.input}
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          onBlur={handleBlur}
+          required
+        />
+        {errors.name && <p className={styles.error}>{errors.name}</p>}
+        <input
+          className={styles.input}
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onBlur={handleBlur}
+          required
+        />
+        {errors.email && <p className={styles.error}>{errors.email}</p>}
+        <div className={styles.div}>
+          <input
+            className={styles.input}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            onBlur={handleBlur}
+            required
+          />
+          <button className={styles.show} onClick={() => setShowPassword((prev) => !prev)}>
+            {showPassword ? <ImEye /> : <ImEyeBlocked />}
+          </button>
+        </div>
+        {errors.password && <p className={styles.error}>{errors.password}</p>}
 
-            <input
-              className={styles.input}
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-            />
-            {errors.email && <p className={styles.error}>{errors.email}</p>}
-            <input
-              className={styles.input}
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-            />
-            {errors.password && (
-              <p className={styles.error}>{errors.password}</p>
-            )}
-            <input
-              className={styles.input}
-              type={showPassword ? "text" : "password"}
-              name="repeatPassword"
-              placeholder="Repeat Password"
-              value={formData.repeatPassword}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-            />
-            {errors.password && (
-              <p className={styles.error}>{errors.password}</p>
-            )}
-            <input
-              className={styles.input}
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-            <input
-              className={styles.input}
-              type="tel"
-              name="phone"
-              placeholder="Phone +49123456789"
-              value={formData.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              required
-            />
-            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
-            <button type="submit" className={styles.button}>
-              Register
-            </button>
-          </form>
-          <article className={styles.article}>
-            <p className={styles.p}>Forgot your password?</p>
-            <p className={styles.p}>Don't have an account? Sign up here.</p>
-          </article>
+        <input
+          className={styles.input}
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={formData.address}
+          onChange={(e) =>
+            setFormData({ ...formData, address: e.target.value })
+          }
+          onBlur={handleBlur}
+          required
+        />
+        {errors.address && <p className={styles.error}>{errors.address}</p>}
+        <input
+          className={styles.input}
+          type="tel"
+          name="phone"
+          placeholder="Phone +49123456789"
+          value={formData.phone}
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          onBlur={handleBlur}
+          required
+        />
+        {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+        <button type="submit" className={styles.button}>
+          Register
+        </button>
+        <article className={styles.article}>
+          
+          <p className={styles.p}>You have an account already? <Link href="/login">Go to Login</Link></p>
+        </article>
         {message && <p>{message}</p>}
-        </section>
-      </main>
-    </>
+      </form>
+    </main>
   );
 };
 

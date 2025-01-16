@@ -23,15 +23,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const refreshUser = async () => {
     try {
       const response = await api.get("/api/users/profile");
-      setUser(response.data); // Actualiza el estado del usuario
+      setUser(response.data); 
     } catch (error: any) {
-      setUser(null); // Limpia el estado si falla la solicitud
+      setUser(null); 
     }
   };
 
   const logout = () => {
     setUser(null);
-    api.post("/api/users/login"); // Endpoint para cerrar sesión
+    api.post("/api/users/login"); 
   };
 
   return (
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error("useUser debe ser usado dentro de un UserProvider");
+    throw new Error("useUser must be used on the UserProvider");
   }
   return context;
 };

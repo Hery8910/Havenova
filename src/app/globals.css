@@ -1,11 +1,32 @@
 :root {
-  background-color: #d7f2f6;
-  background-image: url(../../public/backgroud-desktop.svg);
+  --font-roboto: Roboto, sans-serif;
+  --background-color: #d7f2f6;
+  --font-color: #002442;
+  --secondary-color: #0e3c68;
+  --light-color: #82b6d2;
+  --bgCards-color: #8cd1f67c;
+
+  --font-size-small: 14px;
+  --font-size-base: 16px;
+  --font-size-large: 20px;
+
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+
+  --border-radius: 8px;
+  --border: 1px solid #3f85b7;
+  --box-shadow: 0 2px 6px #00244260;
+  --transition-speed: 0.3s;
+}
+:root {
+  background-color: var(--background-color);
+  background-image: url(/svg/backgroud-desktop.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
-  --font-roboto: Roboto, sans-serif;
+
 }
 
 html,

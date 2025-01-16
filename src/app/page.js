@@ -5,14 +5,14 @@ export default function Home() {
   
   return (
     <>
-      <nav>
+      <nav className={styles.nav}>
         <Navbar />
       </nav>
-      <header>
+      <header className={styles.header}>
         <h1>Bienvenido a Nuestro Servicio</h1>
         <p className={styles.p}>Explora nuestros servicios:</p>
       </header>
-      <main></main>
+      <main className={styles.main}></main>
     </>
   );
 }

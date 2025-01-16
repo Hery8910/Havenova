@@ -21,6 +21,10 @@ export const registerUser = async (
     if (error.response?.data?.message) {
       throw new Error(error.response.data.message);
     }
-    throw new Error("Error inesperado al registrar el usuario");
+    throw new Error("Something went wrong on the register, please try again.");
   }
+};
+export const loginUser = async (email: string, password: string) => {
+  const response = await api.post("/api/users/login", { email, password });
+  return response.data;
 };
