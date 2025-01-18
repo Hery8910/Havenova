@@ -54,6 +54,8 @@ const Verification = () => {
   };
 
   return (
+    <Suspense fallback={<p>Loading...</p>}>
+
     <main className={styles.main}>
       <section className={styles.section}>
         <h1 className={styles.h1}>Email Verification</h1>
@@ -74,6 +76,8 @@ const Verification = () => {
           )}
       </section>
     </main>
+    </Suspense>
+
   );
 };
 const VerifyEmail = ()=> {
