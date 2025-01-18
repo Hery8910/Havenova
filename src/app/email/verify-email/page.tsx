@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useUser } from "../../contexts/UserContext";
 import api from "../../../services/api";
 
@@ -35,6 +35,7 @@ const VerifyEmail = () => {
   };
 
   return (
+    <Suspense>
     <main className={styles.main}>
       <section className={styles.section}>
         <h1 className={styles.h1}>Email Verification</h1>
@@ -56,6 +57,7 @@ const VerifyEmail = () => {
         )}
       </section>
     </main>
+    </Suspense>
   );
 };
 
