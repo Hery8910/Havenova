@@ -79,8 +79,8 @@ const Verification = () => {
 const VerifyEmail = ()=> {
 
   return (
-    <Suspense>
-      <Verification/>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Verification />
     </Suspense>
 
   )
