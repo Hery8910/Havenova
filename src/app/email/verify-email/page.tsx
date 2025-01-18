@@ -13,17 +13,36 @@ const VerifyEmail = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
-  const [status, setStatus] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const statusParam = searchParams.get("status");
-    const messageParam = searchParams.get("message");
+    const verifyUser = async () => {
+      try {
+        const token = searchParams.get("token");
+        if (!token) {
+          setError("No token provided.");
+          return;
+        }
 
-    if (statusParam) {
-      setStatus(statusParam);
-      setMessage(messageParam || "Verification complete.");
-    }
-  }, [searchParams]);
+        const response = await api.get(`/api/users/verify-email?token=${token}`, {
+          withCredentials: true, 
+        });
+
+        const user = response.data;
+        if (user.isVerified) {
+          setUser(user); 
+          setMessage("Email successfully verified. Redirecting...");
+          setTimeout(() => router.push("/"), 3000); 
+        } else {
+          setError("Email not verified. Please try again.");
+        }
+      } catch (error: any) {
+        setError(error.response?.data?.message || "Verification failed.");
+      }
+    };
+
+    verifyUser();
+  }, [router, searchParams, setUser]);
 
   const handleResendEmail = async () => {
     try {
@@ -49,12 +68,11 @@ const VerifyEmail = () => {
             height={70}
           />
         </div>
-        {status === "error" && (
-          <Button onClick={handleResendEmail}>Resend Verification Email</Button>
-        )}
-        {status === "success" && (
-          <Button onClick={() => router.push("/")}>Go to Dashboard</Button>
-        )}
+        {error && (
+            <Button onClick={handleResendEmail}>
+              Resend Verification Email
+            </Button>
+          )}
       </section>
     </main>
     </Suspense>
