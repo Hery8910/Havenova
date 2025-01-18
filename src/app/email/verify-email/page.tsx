@@ -8,9 +8,9 @@ import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
 import Image from "next/image";
 
-const VerifyEmail = () => {
-  const {  setUser } = useUser();
+const Verification = () => {
   const searchParams = useSearchParams();
+  const {  setUser } = useUser();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +54,6 @@ const VerifyEmail = () => {
   };
 
   return (
-    <Suspense>
     <main className={styles.main}>
       <section className={styles.section}>
         <h1 className={styles.h1}>Email Verification</h1>
@@ -75,8 +74,16 @@ const VerifyEmail = () => {
           )}
       </section>
     </main>
-    </Suspense>
   );
 };
+const VerifyEmail = ()=> {
+
+  return (
+    <Suspense>
+      <Verification/>
+    </Suspense>
+
+  )
+}
 
 export default VerifyEmail;
