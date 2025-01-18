@@ -2,22 +2,41 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+
 import styles from "./page.module.css";
 import Image from "next/image";
 import { loginUser } from "../../services/userService";
 import Link from "next/link";
-
+import {  useUser } from "../contexts/UserContext";
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  address: string;
+  phone: string;
+}
 const Login = () => {
   const router = useRouter();
-
+  const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const user = await loginUser(email, password);
+      const response = await loginUser(email, password);
+      setUser({
+        _id: response.user._id,
+        name: response.user.name,
+        email: response.user.email,
+        role: response.user.role,
+        address: response.user.address,
+        phone: response.user.phone,
+      });       
       router.push("/");
+      console.log(user);
+      
     } catch (error) {
       console.error("Login failed:", error);
     }

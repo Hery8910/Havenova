@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { registerUser } from "../../services/userService";
 import { useRouter } from "next/navigation";
-import { User } from "../../types/User";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { ImEye } from "react-icons/im";
 import { ImEyeBlocked } from "react-icons/im";
+import { useUser } from "../contexts/UserContext";
 import {
   isNameValid,
   isEmailValid,
@@ -20,18 +20,17 @@ interface FormData {
   name: string;
   email: string;
   password: string;
-  repeatPassword: string;
   address: string;
   phone: string;
 }
 
 const Register = () => {
   const router = useRouter();
+  const { setUser } = useUser();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     password: "",
-    repeatPassword: "",
     address: "",
     phone: "",
   });
@@ -41,7 +40,6 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
-    repeatPassword: "",
     address: "",
     phone: "",
   });
@@ -93,14 +91,23 @@ const Register = () => {
     }
 
     try {
-      const user: User = await registerUser(
+      const response = await registerUser(
         formData.name,
         formData.email,
         formData.password,
         formData.address,
         formData.phone
       );
-      setMessage(`Registered user: ${formData.name}. Check your email.`);
+
+      setUser({
+        _id: response.user._id,
+        name: response.user.name,
+        email: response.user.email,
+        role: response.user.role,
+        address: response.user.address,
+        phone: response.user.phone,
+      });
+      setMessage(response.message);
       setTimeout(() => {
         router.push("/email/verify-email");
       }, 3000);
@@ -111,7 +118,7 @@ const Register = () => {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-      <Image
+        <Image
           src="/svg/logo-desktop.svg"
           priority={true}
           alt="Havenova logo"
@@ -177,7 +184,10 @@ const Register = () => {
             onBlur={handleBlur}
             required
           />
-          <button className={styles.show} onClick={() => setShowPassword((prev) => !prev)}>
+          <button
+            className={styles.show}
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
             {showPassword ? <ImEye /> : <ImEyeBlocked />}
           </button>
         </div>
@@ -211,8 +221,9 @@ const Register = () => {
           Register
         </button>
         <article className={styles.article}>
-          
-          <p className={styles.p}>You have an account already? <Link href="/login">Go to Login</Link></p>
+          <p className={styles.p}>
+            You have an account already? <Link href="/login">Go to Login</Link>
+          </p>
         </article>
         {message && <p>{message}</p>}
       </form>

@@ -1,11 +1,14 @@
 "use client";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import api from "../../services/api";
+import Cookies from "js-cookie";
 interface User {
   _id: string;
   name: string;
   email: string;
-  role: string;
+  role: boolean;
+  address: string;
+  phone: string;
 }
 
 interface UserContextProps {
@@ -29,7 +32,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
   useEffect(() => {
-    refreshUser();
+    const token = Cookies.get("authToken"); 
+    if (token) {
+      refreshUser();
+    }
   }, [refreshUser]);
 
   const logout = () => {

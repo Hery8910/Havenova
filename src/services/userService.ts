@@ -1,5 +1,5 @@
-import api from "./api"; 
-import { User } from "../types/User"; 
+import api from "./api";
+import { RegisterResponse } from "../types/User";
 
 export const registerUser = async (
   name: string,
@@ -7,16 +7,17 @@ export const registerUser = async (
   password: string,
   address: string,
   phone: string
-): Promise<User> => {
+): Promise<RegisterResponse> => {
   try {
-    const response = await api.post<User>("/api/users/register", {
+    const response = await api.post<RegisterResponse>("/api/users/register", {
       name,
       email,
       password,
       address,
       phone,
     });
-    return response.data; 
+
+    return response.data;
   } catch (error: any) {
     if (error.response?.data?.message) {
       throw new Error(error.response.data.message);
@@ -24,7 +25,10 @@ export const registerUser = async (
     throw new Error("Something went wrong on the register, please try again.");
   }
 };
-export const loginUser = async (email: string, password: string) => {
-  const response = await api.post("/api/users/login", { email, password });
+export const loginUser = async (
+  email: string,
+  password: string
+): Promise<RegisterResponse> => {
+  const response = await api.post<RegisterResponse>("/api/users/login", { email, password });
   return response.data;
 };

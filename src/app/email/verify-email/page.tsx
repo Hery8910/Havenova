@@ -1,37 +1,38 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
-import { useCallback } from "react";
+import api from "../../../services/api";
 
 import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
 import Image from "next/image";
 
 const VerifyEmail = () => {
-  const { user, refreshUser } = useUser();
+  const {  setUser } = useUser();
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [message, setMessage] = useState("Verifying your email...");
-  const [redirecting, setRedirecting] = useState<boolean>(false);
-
-  const handleRefresh = useCallback(async () => {
-    try {
-      await refreshUser();
-      setMessage("Email successfully verified. Redirecting...");
-      console.log(user);
-      setTimeout(() => router.push("/"), 3000);
-    } catch (error: any) {
-      setMessage(
-        error.response?.data?.message ||
-          "Please check your email. We sent you a verification email to secure your data."
-      );
-      setRedirecting(false);
-    }
-  }, [refreshUser, router, user]);
+  const [message, setMessage] = useState<string>("Verifying your email...");
+  const [status, setStatus] = useState<string | null>(null);
 
   useEffect(() => {
-    handleRefresh();
-  }, [handleRefresh]);
+    const statusParam = searchParams.get("status");
+    const messageParam = searchParams.get("message");
+
+    if (statusParam) {
+      setStatus(statusParam);
+      setMessage(messageParam || "Verification complete.");
+    }
+  }, [searchParams]);
+
+  const handleResendEmail = async () => {
+    try {
+      const response = await api.get("/api/users/resend-verification");
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage("Error resending verification email.");
+    }
+  };
 
   return (
     <main className={styles.main}>
@@ -43,12 +44,16 @@ const VerifyEmail = () => {
           <Image
             src="/svg/loading.svg"
             alt="Loading animation"
-            style={redirecting ? { opacity: 1 } : { opacity: 0 }}
             width={70}
             height={70}
           />
         </div>
-        {!user && <Button onClick={handleRefresh}>Verify Account</Button>}
+        {status === "error" && (
+          <Button onClick={handleResendEmail}>Resend Verification Email</Button>
+        )}
+        {status === "success" && (
+          <Button onClick={() => router.push("/")}>Go to Dashboard</Button>
+        )}
       </section>
     </main>
   );
