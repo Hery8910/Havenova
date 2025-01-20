@@ -1,20 +1,28 @@
-"use client"
-import styles from './page.module.css';
+'use client'
+import Cookies from "js-cookie";
 import { useUser } from "../contexts/UserContext";
-import { useState, useEffect } from "react";
-
-
+import { useEffect } from "react";
 
 const Profile = () => {
   const { user, refreshUser } = useUser();
+
   useEffect(() => {
-    refreshUser();
+    const token = Cookies.get("authToken");
+    if (token) {
+      refreshUser(); // Llama al backend para obtener los datos del usuario
+    }
   }, [refreshUser]);
-  console.log(user);
-  
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <h1>Profile Page</h1>
+    <div>
+      <h1>Profile Page</h1>
+      <p>Name: {user.name}</p>
+      <p>Email: {user.email}</p>
+    </div>
   );
 };
 
