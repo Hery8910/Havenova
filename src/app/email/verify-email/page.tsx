@@ -9,7 +9,7 @@ import Button from "../../../components/Button/page";
 import Image from "next/image";
 
 const VerifyEmail = () => {
-  const { user, setUser } = useUser();
+  const { user, setUser, refreshUser } = useUser();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
   const [error, setError] = useState<string | null>(null);
@@ -17,14 +17,10 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const response = await api.get("/api/users/verify-email", {
-          withCredentials: true,
-        });
-
-        const { user } = response.data;
-        setUser(user); 
+        refreshUser();
+        if (!user?.isVerified) return
         setMessage("Email successfully verified. Redirecting...");
-        setTimeout(() => router.push("/"), 3000); 
+        setTimeout(() => router.push("/"), 3000);
       } catch (error: any) {
         setError(error.response?.data?.message || "Verification failed.");
       }
@@ -34,9 +30,11 @@ const VerifyEmail = () => {
   }, [router, setUser]);
 
   const handleResendEmail = async () => {
-    const email = user?.email
+    const email = user?.email;
     try {
-      const response = await api.post("/api/users/resend-verification", { email });
+      const response = await api.post("/api/users/resend-verification", {
+        email,
+      });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Error resending verification email.");

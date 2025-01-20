@@ -30,6 +30,7 @@ const Login = () => {
         _id: response.user._id,
         name: response.user.name,
         email: response.user.email,
+        isVerified: response.user.isVerified,
         role: response.user.role,
         address: response.user.address,
         phone: response.user.phone,

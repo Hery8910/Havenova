@@ -6,6 +6,7 @@ interface User {
   _id: string;
   name: string;
   email: string;
+  isVerified: boolean;
   role: boolean;
   address: string;
   phone: string;
