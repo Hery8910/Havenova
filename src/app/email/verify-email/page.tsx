@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { useState, useEffect, Suspense } from "react";
 import { useUser } from "../../contexts/UserContext";
 import api from "../../../services/api";
@@ -7,9 +7,9 @@ import api from "../../../services/api";
 import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 const Verification = () => {
-  const searchParams = useSearchParams();
   const {  setUser } = useUser();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
@@ -18,7 +18,8 @@ const Verification = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const token = searchParams.get("token");
+        const token = Cookies.get("authToken"); 
+
         if (!token) {
           setError("No token provided.");
           return;
@@ -42,7 +43,7 @@ const Verification = () => {
     };
 
     verifyUser();
-  }, [router, searchParams, setUser]);
+  }, [router, setUser]);
 
   const handleResendEmail = async () => {
     try {
