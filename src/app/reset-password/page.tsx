@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useState } from "react";
+import {  useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "../../services/api";
 import styles from "./page.module.css";

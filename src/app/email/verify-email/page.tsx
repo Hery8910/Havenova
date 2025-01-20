@@ -1,6 +1,6 @@
 "use client";
-import { useRouter} from "next/navigation";
-import { useState, useEffect, Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useUser } from "../../contexts/UserContext";
 import api from "../../../services/api";
 
@@ -9,8 +9,8 @@ import Button from "../../../components/Button/page";
 import Image from "next/image";
 import Cookies from "js-cookie";
 
-const Verification = () => {
-  const {  setUser } = useUser();
+const VerifyEmail = () => {
+  const { setUser } = useUser();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
   const [error, setError] = useState<string | null>(null);
@@ -18,22 +18,25 @@ const Verification = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const token = Cookies.get("authToken"); 
+        const token = Cookies.get("authToken");
 
         if (!token) {
           setError("No token provided.");
           return;
         }
 
-        const response = await api.get(`/api/users/verify-email?token=${token}`, {
-          withCredentials: true, 
-        });
+        const response = await api.get(
+          `/api/users/verify-email?token=${token}`,
+          {
+            withCredentials: true,
+          }
+        );
 
         const user = response.data;
         if (user.isVerified) {
-          setUser(user); 
+          setUser(user);
           setMessage("Email successfully verified. Redirecting...");
-          setTimeout(() => router.push("/"), 3000); 
+          setTimeout(() => router.push("/"), 3000);
         } else {
           setError("Email not verified. Please try again.");
         }
@@ -55,8 +58,6 @@ const Verification = () => {
   };
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-
     <main className={styles.main}>
       <section className={styles.section}>
         <h1 className={styles.h1}>Email Verification</h1>
@@ -71,24 +72,11 @@ const Verification = () => {
           />
         </div>
         {error && (
-            <Button onClick={handleResendEmail}>
-              Resend Verification Email
-            </Button>
-          )}
+          <Button onClick={handleResendEmail}>Resend Verification Email</Button>
+        )}
       </section>
     </main>
-    </Suspense>
-
   );
 };
-const VerifyEmail = ()=> {
-
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Verification />
-    </Suspense>
-
-  )
-}
 
 export default VerifyEmail;
