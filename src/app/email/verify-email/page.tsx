@@ -7,10 +7,9 @@ import api from "../../../services/api";
 import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
 import Image from "next/image";
-import Cookies from "js-cookie";
 
 const VerifyEmail = () => {
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const router = useRouter();
   const [message, setMessage] = useState<string>("Verifying your email...");
   const [error, setError] = useState<string | null>(null);
@@ -18,28 +17,14 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const token = Cookies.get("authToken");
+        const response = await api.get("/api/users/verify-email", {
+          withCredentials: true,
+        });
 
-        if (!token) {
-          setError("No token provided.");
-          return;
-        }
-
-        const response = await api.get(
-          `/api/users/verify-email?token=${token}`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        const user = response.data;
-        if (user.isVerified) {
-          setUser(user);
-          setMessage("Email successfully verified. Redirecting...");
-          setTimeout(() => router.push("/"), 3000);
-        } else {
-          setError("Email not verified. Please try again.");
-        }
+        const { user } = response.data;
+        setUser(user); 
+        setMessage("Email successfully verified. Redirecting...");
+        setTimeout(() => router.push("/"), 3000); 
       } catch (error: any) {
         setError(error.response?.data?.message || "Verification failed.");
       }
@@ -49,8 +34,9 @@ const VerifyEmail = () => {
   }, [router, setUser]);
 
   const handleResendEmail = async () => {
+    const email = user?.email
     try {
-      const response = await api.get("/api/users/resend-verification");
+      const response = await api.post("/api/users/resend-verification", { email });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Error resending verification email.");

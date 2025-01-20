@@ -25,7 +25,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   
   const refreshUser = useCallback(async () => {
     try {
-      const response = await api.get("/api/users/profile");
+      const response = await api.get("/api/users/profile", {
+        withCredentials: true, 
+      });
       setUser(response.data); 
     } catch (error: any) {
       setUser(null); 
