@@ -1,10 +1,19 @@
 'use client'
 import styles from "./page.module.css";
 import Navbar from "../components/navbar/page";
-import { useUser } from "../app/contexts/UserContext";
+import { useUser } from "./contexts/UserContext";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 export default function Home() {
-  const { user } = useUser();
+  const { user, refreshUser } = useUser();
+
+  useEffect(() => {
+    const token = Cookies.get("authToken");
+    if (token) {
+      refreshUser(); // Llama al backend para obtener los datos del usuario
+    }
+  }, [refreshUser]);
 
   return (
     <>
