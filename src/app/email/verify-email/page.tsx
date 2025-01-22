@@ -17,13 +17,13 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     const verifyUser = async () => {
-    const token = Cookies.get("authToken");
+      const token = Cookies.get("authToken");
 
       try {
         if (token) {
-          refreshUser(); 
+          refreshUser();
         }
-        if (!user?.isVerified) return
+        if (!user?.isVerified) return;
         setMessage("Email successfully verified. Redirecting...");
         setTimeout(() => router.push("/"), 3000);
       } catch (error: any) {

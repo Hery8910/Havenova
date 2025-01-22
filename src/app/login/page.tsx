@@ -36,7 +36,6 @@ const Login = () => {
         phone: response.user.phone,
       });       
       router.push("/");
-      console.log(user);
       
     } catch (error) {
       console.error("Login failed:", error);
