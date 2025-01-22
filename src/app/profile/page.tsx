@@ -24,12 +24,12 @@ const Profile = () => {
       <main className={styles.main}>
         <h1>Profile Page</h1>
         <section className={styles.section}>
+          <div className={styles.div}>
           <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <p>Address: {user.address}</p>
           <p>Phone: {user.phone}</p>
 
-          <div className={styles.div}>
             <Image
               src="/svg/profile.svg"
               alt="Loading animation"
