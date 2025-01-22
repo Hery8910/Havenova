@@ -1,5 +1,12 @@
 "use client";
-import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from "react";
 import api from "../../services/api";
 import Cookies from "js-cookie";
 interface User {
@@ -23,27 +30,22 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  
+
   const refreshUser = useCallback(async () => {
     try {
-      const response = await api.get("/api/users/profile", {
-        withCredentials: true, 
-      });
-      setUser(response.data); 
+      const response = await api.get("/api/users/profile");
+      setUser(response.data);
     } catch (error: any) {
-      setUser(null); 
+      setUser(null);
     }
   }, []);
   useEffect(() => {
-    const token = Cookies.get("authToken"); 
-    if (token) {
-      refreshUser();
-    }
+    refreshUser();
   }, [refreshUser]);
 
   const logout = () => {
     setUser(null);
-    api.post("/api/users/login"); 
+    api.post("/api/users/logout");
   };
 
   return (
