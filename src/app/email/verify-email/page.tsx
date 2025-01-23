@@ -7,22 +7,17 @@ import api from "../../../services/api";
 import styles from "./page.module.css";
 import Button from "../../../components/Button/page";
 import Image from "next/image";
-import Cookies from "js-cookie";
 
 const VerifyEmail = () => {
   const { user, setUser, refreshUser } = useUser();
   const router = useRouter();
-  const [message, setMessage] = useState<string>("Verifying your email...");
+  const [message, setMessage] = useState<string>("We send you an verification email, please check your Mail.");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const verifyUser = async () => {
-      const token = Cookies.get("authToken");
-
       try {
-        if (token) {
-          refreshUser();
-        }
+        refreshUser();
         if (!user?.isVerified) return;
         setMessage("Email successfully verified. Redirecting...");
         setTimeout(() => router.push("/"), 3000);

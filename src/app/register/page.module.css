@@ -7,14 +7,30 @@
 }
 
 .header {
+  max-width: 100dvw;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
 }
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+}
+.aside {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 .h1 {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
 }
 
 .header_p {
