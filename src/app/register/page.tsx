@@ -36,7 +36,7 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState(
-    "We send you a verification email. Please check your email."
+    ""
   );
   const [errors, setErrors] = useState<FormData>({
     name: "",
@@ -226,7 +226,7 @@ const Register = () => {
             className={styles.input}
             type="tel"
             name="phone"
-            placeholder="Phone +49123456789"
+            placeholder="Phone +49 123456789"
             value={formData.phone}
             onChange={(e) =>
               setFormData({ ...formData, phone: e.target.value })

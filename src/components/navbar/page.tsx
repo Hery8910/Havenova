@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <>
+    <main>
       <ul>
         <li>
           <Link href="/service/furniture-assembly">Furniture Assembly</Link>
@@ -35,6 +35,6 @@ export default function Navbar() {
           <Link href="/profile">Profile</Link>
         </li>
       </ul>
-    </>
+    </main>
   );
 }

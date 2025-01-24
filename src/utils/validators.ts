@@ -6,7 +6,7 @@ export const isEmailValid = (email: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 export const isPhoneValid = (phone: string): boolean =>
-  /^\+49\d{10,12}$/.test(phone);
+  /^(\+49|0)\d{8,12}$/.test(phone);
 
 export const isPasswordValid = (password: string): boolean =>
   /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);

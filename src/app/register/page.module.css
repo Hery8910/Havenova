@@ -85,6 +85,8 @@
 .error {
   max-width: 300px;
   text-align: left;
+  color: #d93434;
+  text-shadow: 0px 0px 0px black;
 }
 .image {
   display: none;

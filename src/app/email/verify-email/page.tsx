@@ -5,14 +5,14 @@ import { useUser } from "../../contexts/UserContext";
 import api from "../../../services/api";
 
 import styles from "./page.module.css";
-import Button from "../../../components/Button/page";
-import Image from "next/image";
 
 const VerifyEmail = () => {
   const { user, setUser, refreshUser } = useUser();
+  const [email, setEmail] = useState("");
   const router = useRouter();
-  const [message, setMessage] = useState<string>("We send you an verification email, please check your Mail.");
-  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string>(
+    "We send you an verification email, please check your Mail."
+  );
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -22,7 +22,7 @@ const VerifyEmail = () => {
         setMessage("Email successfully verified. Redirecting...");
         setTimeout(() => router.push("/"), 3000);
       } catch (error: any) {
-        setError(error.response?.data?.message || "Verification failed.");
+        console.error("Unexpected error:", error);
       }
     };
 
@@ -30,10 +30,10 @@ const VerifyEmail = () => {
   }, [router, setUser]);
 
   const handleResendEmail = async () => {
-    const email = user?.email;
+    const userEmail = user?.email || email;
     try {
       const response = await api.post("/api/users/resend-verification", {
-        email,
+        userEmail,
       });
       setMessage(response.data.message);
     } catch (error) {
@@ -44,20 +44,24 @@ const VerifyEmail = () => {
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <h1 className={styles.h1}>Email Verification</h1>
         <div className={styles.div}>
+        <h1 className={styles.h1}>Email Verification</h1>
           <p className={styles.p}>{message}</p>
-
-          <Image
-            src="/svg/loading.svg"
-            alt="Loading animation"
-            width={70}
-            height={70}
-          />
         </div>
-        {error && (
-          <Button onClick={handleResendEmail}>Resend Verification Email</Button>
-        )}
+
+        <form className={styles.form} onSubmit={handleResendEmail}>
+          <label>If you have not received any email, please try again.</label>
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <button className={styles.button} type="submit">
+            Resend verification email.
+          </button>
+        </form>
       </section>
     </main>
   );
