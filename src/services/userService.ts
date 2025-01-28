@@ -29,6 +29,23 @@ export const loginUser = async (
   email: string,
   password: string
 ): Promise<RegisterResponse> => {
-  const response = await api.post<RegisterResponse>("/api/users/login", { email, password });
+  const response = await api.post<RegisterResponse>("/api/users/login", {
+    email,
+    password,
+  });
+  return response.data;
+};
+export const updateUser = async (
+  name: string,
+  email: string,
+  address: string,
+  phone: string
+): Promise<RegisterResponse> => {
+  const response = await api.post<RegisterResponse>("/api/users/update-user", {
+    name,
+    email,
+    address,
+    phone,
+  });
   return response.data;
 };

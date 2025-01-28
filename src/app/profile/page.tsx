@@ -7,6 +7,7 @@ import { useState } from "react";
 import { RiEdit2Fill } from "react-icons/ri";
 import { RxAvatar } from "react-icons/rx";
 import { validateField } from "../../utils/validators";
+import { updateUser } from "../../services/userService";
 
 interface FormData {
   name: string;
@@ -29,13 +30,13 @@ const Profile = () => {
   });
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    refreshUser();
-  }, [refreshUser]);
+  // useEffect(() => {
+  //   refreshUser();
+  // }, [refreshUser]);
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+  // if (!user) {
+  //   return <p>Loading...</p>;
+  // }
   const toggleEdit = () => setEdit((prev) => !prev);
 
   const validateForm = (): boolean => {
@@ -70,13 +71,16 @@ const Profile = () => {
     }
 
     try {
-      // const response = await registerUser(
-      //   formData.name,
-      //   formData.address,
-      //   formData.phone
-      // );
+      const response = await updateUser(
+        user?.email,
+        formData.name,
+        formData.address,
+        formData.phone
+      );
 
-      // setMessage(response.message);
+      setMessage(response.message);
+      setTimeout(() => setMessage(""), 3000);
+
       setEdit(false);
     } catch (error: any) {
       setMessage(error.message);
@@ -135,6 +139,7 @@ const Profile = () => {
               required
             />
             {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+            {message && <p className={styles.error}>{message}</p>}
 
             <button type="submit" className={styles.submit_button}>
               Save Changes
@@ -142,13 +147,13 @@ const Profile = () => {
           </form>
         </aside>
       )}
-      {message && <p className={styles.error}>{message}</p>}
 
       <header className={styles.header}>
         <h1 className={styles.h1}>
           <RxAvatar /> Profile
         </h1>
         <p className={styles.header_p}>Here you can manage you account</p>
+        {message && <p className={styles.error}>{message}</p>}
       </header>
       <section className={styles.section}>
         <article className={styles.user_article}>
