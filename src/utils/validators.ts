@@ -13,3 +13,19 @@ export const isPasswordValid = (password: string): boolean =>
 
 export const isAddressValid = (address: string): boolean =>
   /^[a-zA-Z0-9\s,'-.#]{5,49}$/.test(address.trim());
+
+export const validateField = (name: string, value: string): string => {
+  if (name === "name" && !isNameValid(value)) {
+    return "The name must begin with a capital letter and contain only letters, spaces, hyphens, or apostrophes.";
+  } else if (name === "email" && !isEmailValid(value)) {
+    return "The email is not valid";
+  } else if (name === "phone" && !isPhoneValid(value)) {
+    return "The phone number is not valid";
+  } else if (name === "password" && !isPasswordValid(value)) {
+    return "The password must be at least 8 characters, one uppercase letter, one number, and one special character.";
+  } else if (name === "address" && !isAddressValid(value)) {
+    return "The address can only contain letters, numbers, spaces, commas, and hyphens.";
+  }
+  return "";
+};
+

@@ -137,6 +137,7 @@ const Login = () => {
             placeholder="Email Address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
           />
           {error === "Invalid email provided" && (
             <p className={styles.error_p}>{error}</p>

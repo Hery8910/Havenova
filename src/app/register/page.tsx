@@ -7,13 +7,7 @@ import Image from "next/image";
 import { ImEye } from "react-icons/im";
 import { ImEyeBlocked } from "react-icons/im";
 import { useUser } from "../contexts/UserContext";
-import {
-  isNameValid,
-  isEmailValid,
-  isPhoneValid,
-  isPasswordValid,
-  isAddressValid,
-} from "../../utils/validators";
+import { validateField } from "../../utils/validators";
 import Link from "next/link";
 
 interface FormData {
@@ -45,21 +39,6 @@ const Register = () => {
     address: "",
     phone: "",
   });
-
-  const validateField = (name: string, value: string): string => {
-    if (name === "name" && !isNameValid(value)) {
-      return "The name must begin with a capital letter and contain only letters, spaces, hyphens, or apostrophes.";
-    } else if (name === "email" && !isEmailValid(value)) {
-      return "The email is not valid";
-    } else if (name === "phone" && !isPhoneValid(value)) {
-      return "The phone number is not valid";
-    } else if (name === "password" && !isPasswordValid(value)) {
-      return "The password must be at least 8 characters, one uppercase letter, one number, and one special character.";
-    } else if (name === "address" && !isAddressValid(value)) {
-      return "The address can only contain letters, numbers, spaces, commas, and hyphens.";
-    }
-    return "";
-  };
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -171,6 +150,8 @@ const Register = () => {
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             onBlur={handleBlur}
+            autoComplete="name"
+
             required
           />
           {errors.name && <p className={styles.error}>{errors.name}</p>}
@@ -184,6 +165,8 @@ const Register = () => {
               setFormData({ ...formData, email: e.target.value })
             }
             onBlur={handleBlur}
+            autoComplete="email"
+
             required
           />
           {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -219,6 +202,7 @@ const Register = () => {
               setFormData({ ...formData, address: e.target.value })
             }
             onBlur={handleBlur}
+            autoComplete="address"
             required
           />
           {errors.address && <p className={styles.error}>{errors.address}</p>}
@@ -232,12 +216,14 @@ const Register = () => {
               setFormData({ ...formData, phone: e.target.value })
             }
             onBlur={handleBlur}
+            autoComplete="phone"
             required
           />
           {errors.phone && <p className={styles.error}>{errors.phone}</p>}
           <button type="submit" className={styles.button}>
             Register
           </button>
+          {message && <p className={styles.error}>{message}</p>}
         </form>
       </section>
     </main>
