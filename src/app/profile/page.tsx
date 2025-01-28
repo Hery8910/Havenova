@@ -30,13 +30,13 @@ const Profile = () => {
   });
   const [message, setMessage] = useState("");
 
-  // useEffect(() => {
-  //   refreshUser();
-  // }, [refreshUser]);
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
 
-  // if (!user) {
-  //   return <p>Loading...</p>;
-  // }
+  if (!user) {
+    return <p>Loading...</p>;
+  }
   const toggleEdit = () => setEdit((prev) => !prev);
 
   const validateForm = (): boolean => {
