@@ -21,10 +21,9 @@ const Login = () => {
   const { user, setUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(
-    ""
-  );
+  const [error, setError] = useState("");
 
+ 
   const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -43,6 +42,8 @@ const Login = () => {
       if (error.response && error.response.status === 401) {
         const { message, field } = error.response.data;
         console.error(`Login failed: ${message}`);
+        console.log(error.response.data);
+        
         if (field === "email") {
           setError("Invalid email provided");
         } else if (field === "password") {
@@ -78,27 +79,25 @@ const Login = () => {
           className={`${styles.mobile} ${styles.image}`}
         />
       </header>
-      <section
-        className={styles.section}>
+      <section className={styles.section}>
         {error === "Please verify your account before logging in." && (
           <article className={styles.error_article}>
-           
             <div className={styles.error_div}>
-            <Image
-              src="/svg/attention.svg"
-              priority={true}
-              alt="Havenova logo"
-              width={200}
-              height={200}
-              className={styles.article_image}
-            />
-            <p className={styles.article_p}>{error}</p>
-            <p className={styles.article_p}>
-              We send you a verification email, please check your email.
-            </p>
-            <Link className={styles.link} href="/email/verify-email">
-              Resend verification email
-            </Link>
+              <Image
+                src="/svg/attention.svg"
+                priority={true}
+                alt="Havenova logo"
+                width={200}
+                height={200}
+                className={styles.article_image}
+              />
+              <p className={styles.article_p}>{error}</p>
+              <p className={styles.article_p}>
+                We send you a verification email, please check your email.
+              </p>
+              <Link className={styles.link} href="/email/verify-email">
+                Resend verification email
+              </Link>
             </div>
           </article>
         )}
@@ -133,6 +132,7 @@ const Login = () => {
           </button>
           <input
             className={styles.input}
+            name="email"
             type="email"
             placeholder="Email Address"
             value={email}
@@ -145,6 +145,7 @@ const Login = () => {
 
           <input
             className={styles.input}
+            name="email"
             type="password"
             placeholder="Password"
             value={password}

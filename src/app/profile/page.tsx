@@ -100,7 +100,7 @@ const Profile = () => {
               type="text"
               name="name"
               placeholder={user?.name}
-              value={formData.name}
+              value={formData.name || user?.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
@@ -115,7 +115,7 @@ const Profile = () => {
               type="text"
               name="address"
               placeholder={user?.address}
-              value={formData.address}
+              value={formData.address || user?.address}
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
               }
@@ -129,8 +129,8 @@ const Profile = () => {
               className={styles.input}
               type="tel"
               name="phone"
-              placeholder={user?.address}
-              value={formData.phone}
+              placeholder={user?.phone}
+              value={formData.phone || user?.phone}
               onChange={(e) =>
                 setFormData({ ...formData, phone: e.target.value })
               }

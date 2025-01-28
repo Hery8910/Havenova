@@ -13,5 +13,7 @@ export interface UserError {
 }
 export interface RegisterResponse {
   message: string;
+  field: string;
+  error: string;
   user: User;
 }
