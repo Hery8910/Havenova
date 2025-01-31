@@ -30,9 +30,9 @@ const Profile = () => {
   });
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    refreshUser();
-  }, [refreshUser]);
+  // useEffect(() => {
+  //   refreshUser();
+  // }, [refreshUser]);
 
   if (!user) {
     return <p>Loading...</p>;
@@ -42,24 +42,26 @@ const Profile = () => {
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
     let isValid = true;
-
+  
     Object.keys(formData).forEach((key) => {
       const fieldName = key as keyof FormData;
-      const error = validateField(fieldName, formData[fieldName]);
-      if (error) {
+      const value = formData[fieldName];
+      if (value.trim() && validateField(fieldName, value)) {
+        newErrors[fieldName] = validateField(fieldName, value);
         isValid = false;
-        newErrors[fieldName] = error;
       }
     });
-
+  
     setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
     return isValid;
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const error = validateField(name, value);
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    if (value.trim()) {
+      const error = validateField(name, value);
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,18 +71,22 @@ const Profile = () => {
       setMessage("Please fix the errors in the form.");
       return;
     }
-
+    const updatedData = {
+      name: formData.name || user?.name,
+      address: formData.address || user?.address,
+      phone: formData.phone || user?.phone,
+    };  
     try {
       const response = await updateUser(
         user?.email,
-        formData.name,
-        formData.address,
-        formData.phone
+        updatedData.name || user?.name,
+        updatedData.address || user?.address,
+        updatedData.phone || user?.phone
       );
 
       setMessage(response.message);
       setTimeout(() => setMessage(""), 3000);
-
+      refreshUser();
       setEdit(false);
     } catch (error: any) {
       setMessage(error.message);
@@ -100,13 +106,12 @@ const Profile = () => {
               type="text"
               name="name"
               placeholder={user?.name}
-              value={formData.name || user?.name}
+              value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
               onBlur={handleBlur}
               autoComplete="name"
-              required
             />
             {errors.name && <p className={styles.error}>{errors.name}</p>}
 
@@ -115,13 +120,12 @@ const Profile = () => {
               type="text"
               name="address"
               placeholder={user?.address}
-              value={formData.address || user?.address}
+              value={formData.address}
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
               }
               onBlur={handleBlur}
               autoComplete="address"
-              required
             />
             {errors.address && <p className={styles.error}>{errors.address}</p>}
 
@@ -130,13 +134,12 @@ const Profile = () => {
               type="tel"
               name="phone"
               placeholder={user?.phone}
-              value={formData.phone || user?.phone}
+              value={formData.phone}
               onChange={(e) =>
                 setFormData({ ...formData, phone: e.target.value })
               }
               onBlur={handleBlur}
               autoComplete="phone"
-              required
             />
             {errors.phone && <p className={styles.error}>{errors.phone}</p>}
             {message && <p className={styles.error}>{message}</p>}
@@ -159,19 +162,18 @@ const Profile = () => {
         <article className={styles.user_article}>
           <div className={styles.user_div}>
             <p className={styles.article_p}>
-              <span className={styles.span}>Name:</span> Heriberto Santana
+              <span className={styles.span}>Name:</span> {user.name}
             </p>
 
             <p className={styles.article_p}>
-              <span className={styles.span}>Address:</span> Sarah- Kirsch-str. 5
-              , 12629
+              <span className={styles.span}>Address:</span> {user.address}
             </p>
             <p className={styles.article_p}>
-              <span className={styles.span}>Phone:</span> +49 1777312606
+              <span className={styles.span}>Phone:</span> {user.phone}
             </p>
             <p className={styles.article_p}>
               <span className={styles.span}>Email:</span>{" "}
-              contact@heribertosantana.com
+              {user.email}
             </p>
           </div>
           <button className={styles.button} onClick={toggleEdit}>

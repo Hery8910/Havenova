@@ -36,8 +36,8 @@ export const loginUser = async (
   return response.data;
 };
 export const updateUser = async (
-  name: string,
   email: string,
+  name: string,
   address: string,
   phone: string
 ): Promise<RegisterResponse> => {

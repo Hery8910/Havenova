@@ -51,28 +51,32 @@ const ForgotPassword = () => {
             height={450}
             className={`${styles.mobile} ${styles.image}`}
           />
-          <h1>Forgot Password?</h1>
-          <p className={styles.header_p}>
-            Enter your email address and we will send you a link to reset your
-            password.
-          </p>
         </header>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={handleBlur}
-            required
-          />
-          {error && <p>{error}</p>}
-          <button className={styles.button} type="submit">
-            Send Reset Link
-          </button>
-          {message && <p>{message}</p>}
-        </form>
+        <section className={styles.section}>
+          <aside className={styles.aside}>
+            <h1 className={styles.h1}>Forgot Password?</h1>
+            <p className={styles.header_p}>
+              Enter your email address and we will send you a link to reset your
+              password.
+            </p>
+          </aside>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+              className={styles.input}
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={handleBlur}
+              required
+            />
+            {error && <p>{error}</p>}
+            <button className={styles.button} type="submit">
+              Send Reset Link
+            </button>
+          </form>
+            {message && <p>{message}</p>}
+        </section>
       </main>
     </Suspense>
   );

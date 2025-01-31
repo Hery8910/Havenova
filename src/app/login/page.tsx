@@ -104,18 +104,15 @@ const Login = () => {
         <aside className={styles.aside}>
           <div className={styles.div}>
             <h1 className={styles.h1}>Welcome Back</h1>
-            <p className={styles.header_p}>
-              Log in to your account to manage your requests and explore your
-              benefits.
-            </p>
+            
           </div>
           <article className={styles.article}>
-            <p className={styles.p}>
-              <Link href="/forgot-password">Forgot your password?</Link>
+            <p className={styles.header_p}>
+              <Link className={styles.article_link} href="/forgot-password">Forgot your password?</Link>
             </p>
-            <p className={styles.p}>
-              Don&apos;t have an account?{" "}
-              <Link href="/register">Sign up here.</Link>
+            <p className={styles.header_p}>
+              Don&apos;t have an account?<br/>
+              <Link className={styles.article_link} href="/register">Sign up here.</Link>
             </p>
           </article>
         </aside>

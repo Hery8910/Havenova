@@ -1,5 +1,5 @@
 "use client";
-import {  useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "../../services/api";
 import styles from "./page.module.css";
@@ -56,26 +56,30 @@ const ResetPassword = () => {
           height={450}
           className={`${styles.mobile} ${styles.image}`}
         />
-        <h1>Reset your Password</h1>
       </header>
+      <section className={styles.section}>
+        <aside className={styles.aside}>
+          <h1>Reset your Password</h1>
+        </aside>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          type="password"
-          placeholder="Enter new password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={handleBlur}
-          required
-        />
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Enter new password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onBlur={handleBlur}
+            required
+          />
 
-        {error && <p>{error}</p>}
-        <button className={styles.button} type="submit">
-          Reset Password
-        </button>
-        {message && <p>{message}</p>}
-      </form>
+          {error && <p>{error}</p>}
+          <button className={styles.button} type="submit">
+            Reset Password
+          </button>
+          {message && <p>{message}</p>}
+        </form>
+      </section>
     </main>
   );
 };

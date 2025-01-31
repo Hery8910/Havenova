@@ -5,13 +5,25 @@
     align-items: center;
     color: #002442;
   }
-  
+  .section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+  }
   .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
+  }
+  .aside {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
   }
   .h1 {
     font-size: 2.5rem;
@@ -28,7 +40,6 @@
     justify-content: center;
     align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 2rem;
   }
   
   .input,
@@ -84,22 +95,42 @@
       width: 1900px;
       height: 300px;
     }
-  
   }
   @media (max-width: 1024px) {
     .desktop {
       width: 1900px;
       height: 240px;
     }
-  
   }
   
   @media (max-width: 768px) {
     .desktop {
       display: none;
     }
-  
     .mobile {
       display: block;
     }
+    .section {
+      gap: 2rem;
+      padding: 2rem 1rem;
+    }
+  }
+  @media (max-width: 425px) {
+    .section {
+      flex-direction: column;
+    }
+    .aside {
+      justify-content: center;
+      align-items: center;
+    }
+    .div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+  .header_p  {
+    text-align: center;
+  }
   }

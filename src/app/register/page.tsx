@@ -29,9 +29,7 @@ const Register = () => {
     phone: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [message, setMessage] = useState(
-    ""
-  );
+  const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<FormData>({
     name: "",
     email: "",
@@ -80,7 +78,6 @@ const Register = () => {
         formData.phone
       );
 
-     
       setMessage(response.message);
       setTimeout(() => {
         router.push("/email/verify-email");
@@ -113,18 +110,15 @@ const Register = () => {
         <aside className={styles.aside}>
           <div className={styles.div}>
             <h1 className={styles.h1}>Welcome</h1>
-            {message ? (
-              <p className={styles.header_p}>{message}</p>
-            ) : (
-              <p className={styles.header_p}>
-                Create an account to manage your requests and explore your
-                benefits.
-              </p>
-            )}
+            <p className={styles.header_p}>
+              Create an account to manage your requests and explore your
+              benefits.
+            </p>
           </div>
           <article className={styles.article}>
-            <p className={styles.p}>
-              You have an account already?{" "}
+            <p className={styles.header_p}>
+              You have an account already?
+              <br />
               <Link className={styles.link} href="/login">
                 Go to Login
               </Link>
@@ -151,7 +145,6 @@ const Register = () => {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             onBlur={handleBlur}
             autoComplete="name"
-
             required
           />
           {errors.name && <p className={styles.error}>{errors.name}</p>}
@@ -166,7 +159,6 @@ const Register = () => {
             }
             onBlur={handleBlur}
             autoComplete="email"
-
             required
           />
           {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -223,7 +215,7 @@ const Register = () => {
           <button type="submit" className={styles.button}>
             Register
           </button>
-          {message && <p className={styles.error}>{message}</p>}
+        {message && <p className={styles.error}>{message}</p>}
         </form>
       </section>
     </main>
