@@ -1,10 +1,12 @@
-import { UserProvider } from "./contexts/UserContext";
+import { UserProvider } from "../components/contexts/UserContext";
 import { Roboto } from "next/font/google";
 import "./globals.css";
+import Navbar from "../components/navbar/page";
+import Footer from "../components/footer/page";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["100", "400", "700", "900"],
   variable: "--font-roboto",
 });
 
@@ -18,7 +20,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}>
-        <UserProvider>{children}</UserProvider>
+        <UserProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );

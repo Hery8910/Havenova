@@ -1,9 +1,16 @@
 'use client'
-import styles from "./page.module.css";
-import Navbar from "../components/navbar/page";
-import { useUser } from "./contexts/UserContext";
+import { useUser } from "../components/contexts/UserContext";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+
+import Hero from '../components/hero/page'
+import Benefits from "../components/benefits/page";
+import WorkFlow from "../components/workFlow/page"
+import Service from './service/page'
+import QuestionAnswer from "../components/q&a/page"
+import Review from "../components/review/page"
+import Blog from "../components/blog/page"
+
 
 export default function Home() {
   const { user, refreshUser } = useUser();
@@ -11,30 +18,19 @@ export default function Home() {
   useEffect(() => {
     const token = Cookies.get("authToken");
     if (token) {
-      refreshUser(); // Llama al backend para obtener los datos del usuario
+      refreshUser(); 
     }
   }, [refreshUser]);
 
   return (
-    <>
-      <nav className={styles.nav}>
-        <Navbar />
-      </nav>
-      <header className={styles.header}>
-        <h1>Bienvenido a Nuestro Servicio</h1>
-        <p className={styles.p}>Explora nuestros servicios:</p>
-      </header>
-      <div>
-        {user && (
-          <>
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-            <p>{user.role}</p>
-            <p>{user.address}</p>
-          </>
-        )}
-      </div>
-      <main className={styles.main}></main>
-    </>
+    <main>
+      <Hero/>
+      <Benefits/>
+      <WorkFlow />
+      <Service/>
+      <Review />
+      <QuestionAnswer/>
+      <Blog />
+    </main>
   );
 }

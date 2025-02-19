@@ -1,0 +1,87 @@
+.section {
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color);
+}
+.header {
+  margin: 4rem;
+  text-align: center;
+}
+.h2, .article_h3 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.header_h3 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.h3 {
+  margin-bottom: 0.7rem;
+}
+
+.main {
+  width: 130%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/svg/benefits-background.svg");
+  background-size: cover;
+  filter: drop-shadow(0px 0px 9px hsl(209, 76%, 23%));
+  mask-image: linear-gradient(to top, transparent, #000 20%);
+
+}
+.ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+.li {
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(247, 247, 247, 0.7) 50%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  box-shadow: 0px 0px 20px hsla(0, 0%, 75%, 0.7),
+    -5px -5px 40px hsla(0, 0%, 100%, 0.5);
+  border-bottom: 1px solid hsla(0, 0%, 75%, 0.869);
+}
+
+.image {
+  mask-image: linear-gradient(to top, transparent, #000 40%);
+}
+.article {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px;
+  border: 1px solid #002442;
+  box-shadow: 0 2px 6px #002442da;
+  background-color: #002442da;
+  color: var(--background-color);
+}

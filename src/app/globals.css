@@ -2,7 +2,7 @@
   --font-roboto: Roboto, sans-serif;
   --background-color: #d7f2f6;
   --font-color: #002442;
-  --secondary-color: #0e3c68;
+  --secondary-color: #0e3c67;
   --light-color: #82b6d2;
   --bgCards-color: #8cd1f6ae;
 
@@ -26,13 +26,18 @@
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
 }
 
 html,
 body {
   margin: 0 auto;
-  max-width: 1200px;
+  margin-top: 3rem;
+  max-width: 1500px;
   min-height: 100dvh;
 }
 
