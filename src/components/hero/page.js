@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import { IoIosArrowForward } from "react-icons/io";
 
 const Hero = () => {
   return (
@@ -13,7 +14,7 @@ const Hero = () => {
         started today and enjoy a 10% discount on your first order.
       </p>
       <Link href="/user/register" className={styles.button}>
-        Register & Save 10%
+        Register & Save 10% <IoIosArrowForward />
       </Link>
     </section>
   );

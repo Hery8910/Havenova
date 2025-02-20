@@ -50,7 +50,11 @@ export default function Navbar() {
 
   return (
     <nav className={styles.nav}>
-      <div className={`${styles.wrapper} ${scrolled ? styles.scrolled : ""}`}>
+      <div
+        className={`${styles.wrapper} ${scrolled ? styles.scrolled : ""}${
+          menuOpen ? styles.wrapper_open : ""
+        }`}
+      >
         <header className={styles.header}>
           <Link className={styles.logo} href="/">
             <Image
@@ -78,62 +82,98 @@ export default function Navbar() {
         ${menuOpen ? styles.open : styles.close}
         `}
       >
+        <Image
+          src="/svg/menu.svg"
+          priority={true}
+          alt="Berlin illustration"
+          width={800}
+          height={350}
+          className={styles.image}
+        />
         <section className={styles.section}>
           <ul className={styles.ul}>
-            <li className={styles.li}>
-              <Link href="/service/furniture-assembly">Furniture Assembly</Link>
+            <li>
+              <Link className={styles.link} href="/services/furniture-assembly">
+                Furniture Assembly
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service/kitchen-assembly">Kitchen Assembly</Link>
+            <li>
+              <Link className={styles.link} href="/services/kitchen-assembly">
+                Kitchen Assembly
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service/home-service">Home Service</Link>
+            <li>
+              <Link className={styles.link} href="/services/home-service">
+                Home Service
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service/general-cleaning">General Cleaning</Link>
+            <li>
+              <Link className={styles.link} href="/services/house-cleaning">
+                House Cleaning
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service/kitchen-cleaning">Kitchen Cleaning</Link>
+            <li>
+              <Link className={styles.link} href="/services/kitchen-cleaning">
+                Kitchen Cleaning
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service/windows-cleaning">Windows Cleaning</Link>
+            <li>
+              <Link className={styles.link} href="/services/windows-cleaning">
+                Windows Cleaning
+              </Link>
             </li>
           </ul>
           <ul className={styles.ul}>
-            <li className={styles.li}>
-              <Link href="/about">About</Link>
+            <li>
+              <Link className={styles.link} href="/about">
+                About
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/contact">Contact</Link>
+            <li>
+              <Link className={styles.link} href="/contact">
+                Contact
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/q&a">Q&A</Link>
+            <li>
+              <Link className={styles.link} href="/q&a">
+                Q&A
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/reviews">Reviews</Link>
+            <li>
+              <Link className={styles.link} href="/reviews">
+                Reviews
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/Blog">Blog</Link>
+            <li>
+              <Link className={styles.link} href="/Blog">
+                Blog
+              </Link>
             </li>
-            <li className={styles.li}>
-              <Link href="/service">Our Services</Link>
+            <li>
+              <Link className={styles.link} href="/service">
+                Our Services
+              </Link>
             </li>
           </ul>
           {!user ? (
             <ul className={styles.ul}>
-              <li className={styles.li}>
-                <Link href="/user/register">Register</Link>
+              <li>
+                <Link className={styles.link} href="/user/register">
+                  Register
+                </Link>
               </li>
               <li>
-                <Link className={styles.li} href="/user/login">
+                <Link className={styles.link} href="/user/login">
                   Login
                 </Link>
               </li>
             </ul>
           ) : (
             <ul className={styles.ul}>
-              <li className={styles.li}>
-                <Link href="/user/profile">Profile</Link>
+              <li>
+                <Link className={styles.link} href="/user/profile">
+                  Profile
+                </Link>
               </li>
             </ul>
           )}

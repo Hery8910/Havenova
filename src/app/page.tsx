@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import Hero from '../components/hero/page'
 import Benefits from "../components/benefits/page";
 import WorkFlow from "../components/workFlow/page"
-import Service from './service/page'
+import Service from '../components/service/page'
 import QuestionAnswer from "../components/q&a/page"
 import Review from "../components/review/page"
 import Blog from "../components/blog/page"

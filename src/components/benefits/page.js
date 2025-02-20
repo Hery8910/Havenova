@@ -1,8 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
-
+import { IoIosArrowForward } from "react-icons/io";
 
 const Benefits = () => {
   return (
@@ -92,7 +91,7 @@ const Benefits = () => {
       <article className={styles.article}>
         <h3 className={styles.article_h3}>Learn More About Our Services</h3>
         <Link href="/about" className={styles.button}>
-          About Us <FaArrowRight />
+          About Us <IoIosArrowForward />
 
         </Link>
       </article>

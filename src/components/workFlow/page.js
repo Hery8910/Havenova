@@ -1,7 +1,8 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { FaArrowRight } from "react-icons/fa";
+import { IoIosArrowForward } from "react-icons/io";
+
 
 
 const WorkFlow = () => {
@@ -20,7 +21,8 @@ const WorkFlow = () => {
         giving you full flexibility and control.
       </p>
       <Link href="/user/register" className={styles.button}>
-      Explore Our Services <FaArrowRight />
+      Explore Our Services <IoIosArrowForward />
+
       </Link>
       </article>
       <Image
@@ -29,6 +31,7 @@ const WorkFlow = () => {
               alt="Young male builder in blue overalls"
               width={1000}
               height={667}
+              className={styles.image}
             />
     </section>
   );

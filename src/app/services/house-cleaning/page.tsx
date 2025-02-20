@@ -1,6 +1,6 @@
 import styles from './page.module.css';
 
-const GeneralCleaningPage = () => {
+const HouseCleaningPage = () => {
   return (
     <div className={styles.container}>
       <h1>Limpieza General</h1>
@@ -9,4 +9,4 @@ const GeneralCleaningPage = () => {
   );
 };
 
-export default GeneralCleaningPage
+export default HouseCleaningPage
