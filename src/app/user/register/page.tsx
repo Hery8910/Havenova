@@ -80,7 +80,7 @@ const Register = () => {
 
       setMessage(response.message);
       setTimeout(() => {
-        router.push("/email/verify-email");
+        router.push("/user/email/verify-email");
       }, 3000);
     } catch (error: any) {
       setMessage(error.message);
@@ -130,7 +130,7 @@ const Register = () => {
           <button className={styles.button} style={{ padding: "0 .5rem" }}>
             Continue with Google{" "}
             <Image
-              src="/svg/google-logo.svg"
+              src="/svg/google.svg"
               alt="Google logo"
               width={35}
               height={35}

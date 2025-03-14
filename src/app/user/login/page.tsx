@@ -121,7 +121,7 @@ const Login = () => {
           <button className={styles.button} style={{ padding: "0 .5rem" }}>
             Continue with Google{" "}
             <Image
-              src="/svg/google-logo.svg"
+              src="/svg/google.svg"
               alt="Google logo"
               width={35}
               height={35}

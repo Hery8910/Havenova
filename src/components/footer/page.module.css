@@ -3,7 +3,8 @@
   position: absolute;
   margin-top: 5rem;
   left: 0;
-  background-color: var(--font-color);
+  background-color: var(--font-color-black);
+  color: var(--font-color-white);
 }
 .main {
   margin: 0 auto;

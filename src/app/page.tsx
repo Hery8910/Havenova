@@ -14,6 +14,12 @@ import Blog from "../components/blog/page"
 
 export default function Home() {
   const { user, refreshUser } = useUser();
+  const title = "Reliable Home Services, Just One Click Away";
+  const description =
+    "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.";
+  const image = {src:"/svg/hero_home.svg", alt: "llustration of two household cleaning workers"};
+  const cta = "Register & Save 10% ";
+  const href = "/user/register";
 
   useEffect(() => {
     const token = Cookies.get("authToken");
@@ -24,7 +30,7 @@ export default function Home() {
 
   return (
     <main>
-      <Hero/>
+      <Hero  title={title} description={description} image={image} cta={cta} href={href}  />
       <Benefits/>
       <WorkFlow />
       <Service/>

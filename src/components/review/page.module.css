@@ -1,0 +1,20 @@
+.ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.li {
+  max-width: 500px;
+  padding: 1rem;
+}
+.div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.image {
+  filter: drop-shadow(0px 16px 16px rgba(3, 41, 41, 0.8));
+}

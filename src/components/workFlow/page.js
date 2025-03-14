@@ -8,10 +8,10 @@ import { IoIosArrowForward } from "react-icons/io";
 const WorkFlow = () => {
   return (
     <section className={styles.section}>
-      <article className={styles.article}>
-      <h2 className={styles.h2}>How Havenova Works</h2>
-      <h3 className={styles.h3}>Seamless, Transparent, and Reliable</h3>
-      <p className={styles.p}>
+      <main className={styles.main}>
+      <h2>How Havenova Works</h2>
+      <h3>Seamless, Transparent, and Reliable</h3>
+      <p>
         At Havenova, we make booking a handyman service simple and stress-free.
         First, choose the service you need and select a preferred date for an
         on-site visit. One of our skilled professionals will assess your
@@ -20,17 +20,17 @@ const WorkFlow = () => {
         payment can be made securely online through our application or in cash,
         giving you full flexibility and control.
       </p>
-      <Link href="/user/register" className={styles.button}>
+      <Link href="/user/register" className="button">
       Explore Our Services <IoIosArrowForward />
 
       </Link>
-      </article>
+      </main>
       <Image
-              src="/images/workflow.webp"
+              src="/svg/workFlow-header.svg"
               priority={true}
               alt="Young male builder in blue overalls"
-              width={1000}
-              height={667}
+              width={300}
+              height={300}
               className={styles.image}
             />
     </section>

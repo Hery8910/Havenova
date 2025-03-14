@@ -1,21 +1,28 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
 
-const Hero = () => {
+const Hero = ({ title, description, image, cta, href }) => {
   return (
     <section className={styles.section}>
-      <h1 className={styles.h1}>
-        Reliable Home Services,
-        <br /> Just One Click Away
-      </h1>
-      <p className={styles.p}>
-        Professional and tailored handyman services to meet your needs. Get
-        started today and enjoy a 10% discount on your first order.
-      </p>
-      <Link href="/user/register" className={styles.button}>
-        Register & Save 10% <IoIosArrowForward />
-      </Link>
+      <header className={styles.header}>
+        <h1>{title}</h1>
+        <p className={styles.p}>{description}</p>
+        <Link href={href} className="button">
+            {cta} <IoIosArrowForward />
+        </Link>
+      </header>
+      <aside className={styles.aside}>
+        <Image
+          className={styles.image}
+          src={image.src}
+          priority={true}
+          alt={image.alt}
+          width={550}
+          height={550}
+        />
+      </aside>
     </section>
   );
 };
