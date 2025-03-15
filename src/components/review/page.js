@@ -1,10 +1,47 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReviewStars from "../reviewStars/page";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const Review = () => {
+  const ulRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [showButtons, setShowButtons] = useState(false)
+ 
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+     
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [windowWidth]);
+  useEffect(() => {
+    (windowWidth > 1000) ? setShowButtons(true) : setShowButtons(false)
+  }, [windowWidth]);
+ 
+  const generateAvatar = (name) => {
+    const letter = name.charAt(0).toUpperCase();
+    const randomColor = `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`;
+    return { letter, color: randomColor };
+  };
+
+  const scrollLeft = () => {
+    if (ulRef.current) {
+      ulRef.current.scrollBy({ left: -620, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (ulRef.current) {
+      ulRef.current.scrollBy({ left: 620, behavior: "smooth" });
+    }
+  };
+
   const googleReview = {
     reviews: [
       {
@@ -99,23 +136,22 @@ const Review = () => {
 
   return (
     <section className={styles.section}>
-      <header>
-        <article>
+      <header className={styles.header}>
+        <article className={styles.article}>
           <h2>Your Feedback Matters – Help Us Improve</h2>
           <p>
             At Havenova, we continuously strive to improve our services. Your
             feedback helps us enhance the customer experience and provide better
             solutions.
           </p>
-          <Link href="/google_api" className="card">
-            <p>About Us</p>
+          <Link href="/google_api" className={`${styles.link} button`}>
+            Leave a Review
             <Image
-              className={styles.image}
               src="/svg/google.svg"
               priority={true}
               alt="Google logo"
-              width={50}
-              height={50}
+              width={25}
+              height={25}
             />
           </Link>
         </article>
@@ -128,47 +164,39 @@ const Review = () => {
           height={300}
         />
       </header>
-      <main>
-        {/* <section className={styles.review_section}>
-          <div>
-            <Image
-              src="/svg/google-review.svg"
-              alt="Google logo"
-              width={200}
-              height={75}
-            />
-            <p>Verified reviews from Google</p>
-          </div>
-          <div className={styles.wrapper}>
-            <ReviewStars starRating={googleReview.averageRating} />
-            <p className={styles.p}>{googleReview.averageRating}</p>
-          </div>
-        </section> */}
-        {/* <section className={styles.review_section}>
-          <div>
-            <Image
-              src="/svg/myhammer.svg"
-              alt="My Hammer logo"
-              width={200}
-              height={75}
-            />
-            <p>Verified reviews from MyHammer</p>
-          </div>
-          <div className={styles.wrapper}>
-            <ReviewStars starRating={list.averageRating} />
-            <p className={styles.p}>{list.averageRating}</p>
-          </div>
-        </section> */}
-        <ul className={styles.ul}>
-          {list.reviews.map((review, index) => (
-            <li key={index} className={`${styles.li} card`}>
-              <div className={styles.div}>
+      <main className={styles.main}>
+      {showButtons && <aside className={styles.aside}>
+            <button className={styles.button} onClick={scrollLeft}>
+        <IoIosArrowBack />
+      </button>
+      <button className={styles.button} onClick={scrollRight}>
+        <IoIosArrowForward />
+      </button>
+        </aside>}
+        
+        <ul
+          className={styles.ul}
+          ref={ulRef}
+        >
+          {list.reviews.map((review, index) => {
+            const avatar = generateAvatar(review.name);
+
+            return (
+              <li key={index} className={`${styles.li} card`}>
+                <div
+                  className={styles.avatar}
+                  style={{ backgroundColor: avatar.color }}
+                >
+                  {avatar.letter}
+                </div>
                 <h4>{review.name}</h4>
-                <ReviewStars starRating={review.starRating} />
-              </div>
-              <p>{review.comment}</p>
-            </li>
-          ))}
+                <p>{review.comment}</p>
+                <div className={styles.div}>
+                  <ReviewStars starRating={review.starRating} />
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </main>
     </section>

@@ -21,8 +21,9 @@
   background-color: var(--background-color);
   background-image: url(/svg/background-desktop.svg);
   background-position: center;
-  background-size: auto;
-  background-repeat: repeat-y;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -50,20 +51,21 @@ body {
   margin: 0;
 }
 h1 {
-  font-size: clamp(28px, 5vw, 48px);
+  font-size: clamp(26px, 5vw, 46px);
   font-weight: 700;
 }
 h2 {
-  font-size: clamp(24px, 4.5vw, 40px);
+  font-size: clamp(22px, 4.5vw, 38px);
 }
 h3 {
-  font-size: clamp(20px, 4vw, 32px);
+  font-size: clamp(18px, 4vw, 30px);
 }
 h4 {
-  font-size: clamp(18px, 3.5vw, 28px);
+  font-weight: 400;
+  font-size: clamp(16px, 3.5vw, 26px);
 }
 p {
-  font-size: clamp(16px, 3vw, 20px);
+  font-size: clamp(14px, 3vw, 18px);
 }
 a {
   color: inherit;
@@ -77,7 +79,7 @@ a {
   gap: 1rem;
   padding: 0.8rem 1rem;
   border-radius: 6px;
-  border: 1px solid rgba(3, 41, 41, 0.8);
+  border: 1px solid rgba(21, 117, 117, 0.8);
   background: linear-gradient(
     145deg,
     rgba(4, 48, 48, 0.9),
@@ -90,8 +92,8 @@ a {
   border-radius: 8px;
   background: linear-gradient(
     0deg,
-    rgba(0, 185, 173, 0.4) 0%,
-    rgba(0, 185, 173, 0.2) 80%,
+    rgba(0, 185, 173, 0.6) 0%,
+    rgba(0, 185, 173, 0.4) 80%,
     transparent 100%
   );
   box-shadow:

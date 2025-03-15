@@ -1,20 +1,124 @@
-.ul {
+.header,
+.article {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0;
-  list-style: none;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-.li {
-  max-width: 500px;
-  padding: 1rem;
+.main {
+  position: relative;
 }
-.div {
+.ul {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 36px 18px;
+  list-style: none;
+  scrollbar-width: none;
+  mask-image:
+    linear-gradient(90deg, transparent 2% , black 5%, black 90%, transparent 95%);
+}
+.aside {
+  position: absolute;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.button {
+  cursor: pointer;
+  font-size: 64px;
+  border: none;
+  background-color: transparent;
+  transition: all .3s ease-in-out;
+}
+.button:hover {
+  transform: scale(110%);
+}
+.li {
+  position: relative;
+  width: 250px;
+  padding: 16px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.div {
+  top: 32px;
+  right: 8px;
+  position: absolute;
 }
 .image {
+  align-self: center;
   filter: drop-shadow(0px 16px 16px rgba(3, 41, 41, 0.8));
+}
+.link {
+  width: fit-content;
+  padding: 8px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgba(3, 41, 41, 0.8);
+  box-shadow: 0px 8px 16px rgba(3, 41, 41, 0.8);
+}
+@media (min-width: 425px) {
+  .li {
+    width: 300px;
+  }
+}
+@media (min-width: 1024px) {
+  .main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .header {
+    margin-bottom: 64px;
+    flex-direction: row;
+    justify-content: flex-start;
+    position: relative;
+  }
+  .article {
+    width: 500px;
+  }
+  .image {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    right: 0;
+    bottom: -100px;
+    z-index: -3;
+  }
+  .ul {
+    max-width: 750px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    margin-bottom: 128px;
+  }
+  .image {
+    right: 64px;
+  }
+  .ul {
+    max-width: 1100px;
+  }
 }

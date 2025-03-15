@@ -1,11 +1,11 @@
 import styles from "./page.module.css";
 
-const ReviewStars = ({ starRating }) => {
+const ReviewStars = ({ starRating, className }) => {
   const totalStars = 5;
   const percentage = (starRating / totalStars) * 100;
 
   return (
-    <div className={styles.div_stars}>
+    <div className={`${styles.div_stars} ${className}`}>
       <div className={styles.div_gray}>
         {Array.from({ length: totalStars }).map((_, index) => (
           <svg
