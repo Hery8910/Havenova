@@ -53,11 +53,11 @@
 @keyframes setOpen {
   0% {
     opacity: 0;
-    transform: translateY(-60px);
+    transform: translateY(-100px);
   }
   50% {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-50px);
   }
   100% {
     display: block;

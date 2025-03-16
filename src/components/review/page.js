@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Review = () => {
   const ulRef = useRef(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(null);
   const [showButtons, setShowButtons] = useState(false)
  
   useEffect(() => {
