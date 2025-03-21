@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { useUser } from "../../components/contexts/UserContext";
+import Avatar from "../../app/user/avatar/page";
 
-import { IoMenu } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
+import { HiMenuAlt3 } from "react-icons/hi";
 
 export default function Navbar() {
   const { user } = useUser();
@@ -41,9 +41,7 @@ export default function Navbar() {
   const handleMouseLeave = () => {
     setMenuOpen(false);
   };
-  const handleMouseEnter = () => {
-    setMenuOpen(true);
-  };
+
   const handleClick = () => {
     setMenuOpen(!menuOpen);
   };
@@ -57,23 +55,32 @@ export default function Navbar() {
       >
         <header className={styles.header}>
           <Link className={styles.logo} href="/">
-            <Image
-              src="/svg/logo-mobile.svg"
-              priority={true}
-              alt="Havenova logo"
-              width={250}
-              height={100}
-              className={styles.image}
-            />
+            <picture>
+              <source
+              className={styles.logo} 
+              media="(min-width:800px)" 
+              srcSet="/svg/logo-black.svg" 
+              />
+
+              <Image
+               className={styles.logo}
+                src="/svg/logo-black-mobile.svg"
+                alt="Havenova Logo"
+                width={50}
+                height={50}
+              />
+            </picture>
           </Link>
-          <button
-            onClick={handleClick}
-            onMouseEnter={handleMouseEnter}
-            className={styles.icon}
-            aria-label="Toggle menu"
-          >
-            <IoMenu />
-          </button>
+          <div className={styles.header_div}>
+            <Avatar />
+            <button
+              onClick={handleClick}
+              className={styles.icon}
+              aria-label="Toggle menu"
+            >
+              <HiMenuAlt3 />
+            </button>
+          </div>
         </header>
       </div>
       <main
@@ -82,76 +89,76 @@ export default function Navbar() {
         ${menuOpen ? styles.open : styles.close}
         `}
       >
-        <Image
+        {!isMobile && <Image
           src="/svg/menu.svg"
           priority={true}
           alt="Berlin illustration"
           width={800}
           height={350}
-          className={styles.image}
-        />
+          className={styles.main_image}
+        />}
         <section className={styles.section}>
           <ul className={styles.ul}>
             <li>
               <Link className={styles.link} href="/services/furniture-assembly">
-                Furniture Assembly
+              Furniture Assembly
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/services/kitchen-assembly">
-                Kitchen Assembly
+              Kitchen Assembly
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/services/home-service">
-                Home Service
+              Home Service
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/services/house-cleaning">
-                House Cleaning
+              House Cleaning
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/services/kitchen-cleaning">
-                Kitchen Cleaning
+              Kitchen Cleaning
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/services/windows-cleaning">
-                Windows Cleaning
+              Windows Cleaning
               </Link>
             </li>
           </ul>
           <ul className={styles.ul}>
             <li>
               <Link className={styles.link} href="/about">
-                About
+              About
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/contact">
-                Contact
+              Contact
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/q&a">
-                Q&A
+              Q&A
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/reviews">
-                Reviews
+              Reviews
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/Blog">
-                Blog
+              Blog
               </Link>
             </li>
             <li>
               <Link className={styles.link} href="/service">
-                Our Services
+              Our Services
               </Link>
             </li>
           </ul>
@@ -159,12 +166,12 @@ export default function Navbar() {
             <ul className={styles.ul}>
               <li>
                 <Link className={styles.link} href="/user/register">
-                  Register
+                Register
                 </Link>
               </li>
               <li>
                 <Link className={styles.link} href="/user/login">
-                  Login
+                Login
                 </Link>
               </li>
             </ul>
@@ -172,7 +179,7 @@ export default function Navbar() {
             <ul className={styles.ul}>
               <li>
                 <Link className={styles.link} href="/user/profile">
-                  Profile
+                Profile
                 </Link>
               </li>
             </ul>

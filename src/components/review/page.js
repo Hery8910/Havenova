@@ -22,13 +22,13 @@ const Review = () => {
     (windowWidth > 1000) ? setShowButtons(true) : setShowButtons(false)
   }, [windowWidth]);
  
-  const generateAvatar = (name) => {
-    const letter = name.charAt(0).toUpperCase();
-    const randomColor = `#${Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, "0")}`;
-    return { letter, color: randomColor };
-  };
+  // const generateAvatar = (name) => {
+  //   const letter = name.charAt(0).toUpperCase();
+  //   const randomColor = `#${Math.floor(Math.random() * 16777215)
+  //     .toString(16)
+  //     .padStart(6, "0")}`;
+  //   return { letter, color: randomColor };
+  // };
 
   const scrollLeft = () => {
     if (ulRef.current) {
@@ -179,16 +179,16 @@ const Review = () => {
           ref={ulRef}
         >
           {list.reviews.map((review, index) => {
-            const avatar = generateAvatar(review.name);
+            // const avatar = generateAvatar(review.name);
 
             return (
               <li key={index} className={`${styles.li} card`}>
-                <div
+                {/* <div
                   className={styles.avatar}
                   style={{ backgroundColor: avatar.color }}
                 >
                   {avatar.letter}
-                </div>
+                </div> */}
                 <h4>{review.name}</h4>
                 <p>{review.comment}</p>
                 <div className={styles.div}>

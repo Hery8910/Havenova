@@ -5,7 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 
 const Hero = ({ title, description, image, cta, href }) => {
   return (
-    <section className={styles.section}>
+    <section className={`${styles.section} section`}>
       <header className={styles.header}>
         <h1>{title}</h1>
         <p className={styles.p}>{description}</p>

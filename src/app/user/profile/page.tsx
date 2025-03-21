@@ -1,11 +1,11 @@
 "use client";
-import { useUser } from "../../../components/contexts/UserContext";
+// import { useUser } from "../../../components/contexts/UserContext";
 import { useEffect } from "react";
+
 import styles from "./page.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { RiEdit2Fill } from "react-icons/ri";
-import { RxAvatar } from "react-icons/rx";
 import { validateField } from "../../../utils/validators";
 import { updateUser } from "../../../services/userService";
 
@@ -17,7 +17,7 @@ interface FormData {
 
 const Profile = () => {
   const [edit, setEdit] = useState(false);
-  const { user, refreshUser } = useUser();
+  // const { user, refreshUser } = useUser();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     address: "",
@@ -29,6 +29,13 @@ const Profile = () => {
     phone: "",
   });
   const [message, setMessage] = useState("");
+  const user = {
+    name: "Heriberto Santana",
+    address: "Sarah-Kirsch_Str. 5, 12629",
+    phone: "+491777312606",
+    email: "contact@heribertosantana.com",
+    avatar: "Lion"
+  }
 
   // useEffect(() => {
   //   refreshUser();
@@ -86,7 +93,7 @@ const Profile = () => {
 
       setMessage(response.message);
       setTimeout(() => setMessage(""), 3000);
-      refreshUser();
+      // refreshUser();
       setEdit(false);
     } catch (error: any) {
       setMessage(error.message);
@@ -153,13 +160,13 @@ const Profile = () => {
 
       <header className={styles.header}>
         <h1 className={styles.h1}>
-          <RxAvatar /> Profile
+        {user.name}  
         </h1>
         <p className={styles.header_p}>Here you can manage you account</p>
         {message && <p className={styles.error}>{message}</p>}
       </header>
       <section className={styles.section}>
-        <article className={styles.user_article}>
+        <article className={`${styles.user_article} card`}>
           <div className={styles.user_div}>
             <p className={styles.article_p}>
               <span className={styles.span}>Name:</span> {user.name}
@@ -179,7 +186,7 @@ const Profile = () => {
             Edit <RiEdit2Fill />
           </button>
         </article>
-        <article className={styles.services_article}>
+        <article className={`${styles.user_article} card`}>
           <h2 className={styles.h2}>Services</h2>
           <p className={styles.article_p}>
             Aqui van las solicitudes de trabajo

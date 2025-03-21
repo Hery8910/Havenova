@@ -13,14 +13,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   margin: 0;
   list-style: none;
 }
 .li {
   width: 100%;
   position: relative;
-  padding: 16px;
 }
 .h4 {
   display: flex;
@@ -53,15 +52,15 @@
 @keyframes setOpen {
   0% {
     opacity: 0;
-    transform: translateY(-100px);
+    transform: translateY(-60px);
   }
   50% {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(-30px);
   }
   100% {
     display: block;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(16px);
   }
 }
