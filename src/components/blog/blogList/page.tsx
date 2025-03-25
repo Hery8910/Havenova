@@ -1,3 +1,4 @@
+'use client'
 import BlogCard from "../blogCard/page";
 import Modal from "../../modal/page";
 import { IframeProps } from "../../../types/blog";

@@ -9,7 +9,7 @@ interface BlogPageProps {
 }
 
 // Generar metadata dinámico basado en el contenido del post
-export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   try {
     const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
     if (!post) return {};
