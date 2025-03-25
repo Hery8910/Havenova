@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps<{ slug: string }>):
   }
 }
 
-export default async function BlogPage({ params }: { params: { slug: string } }) {
+export default async function BlogPage({ params }: PageProps<{ slug: string }>) {
   try {
     const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
 
