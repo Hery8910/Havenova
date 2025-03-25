@@ -18,9 +18,9 @@
 }
 :root {
   max-width: 100dvw;
-  background-color: var(--background-color);
+  background-image: url('/svg/background-1-hell.svg');
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   font-synthesis: none;
@@ -47,7 +47,8 @@ body {
   overflow-x: hidden;
 }
 section {
-  margin: 160px auto;
+  margin: 0 auto;
+  margin-bottom: 160px;
 }
 h1 {
   font-size: clamp(26px, 5vw, 46px);

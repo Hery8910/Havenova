@@ -1,4 +1,5 @@
 .section {
+  margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,6 +7,11 @@
   position: relative;
   margin-top: 150px;
   width: 250px;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+.section:hover {
+  transform: scale(110%);
 }
 .image {
   position: absolute;
@@ -28,11 +34,11 @@
 
 @media (min-width: 768px) {
   .section {
-    width: 350px;
+    width: 300px;
   }
 }
 @media (min-width: 1024px) {
   .section {
-    width: 350px;
+    width: 300px;
   }
   }

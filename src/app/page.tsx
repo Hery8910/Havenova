@@ -238,16 +238,18 @@ export default function Home() {
 
   // const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const { user, refreshUser } = useUser();
-  const title = "Reliable Home Services, Just One Click Away";
-  const description =
-    "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.";
-  const image = {
-    src: "/svg/hero_home.svg",
-    alt: "llustration of two household cleaning workers",
-  };
-  const cta = "Register & Save 10% ";
-  const href = "/user/register";
-
+  const homeHero = {
+    title: "Reliable Home Services, Just One Click Away",
+    description:
+    "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.",
+    image: {
+      src: "/svg/hero_home.svg",
+      alt: "llustration of two household cleaning workers",
+    },
+    cta: "Register & Save 10%",
+    href: "/user/register"
+  }
+  
   // useEffect(() => {
   //   const token = Cookies.get("authToken");
   //   if (token) {
@@ -270,11 +272,7 @@ export default function Home() {
   return (
     <main>
       <Hero
-        title={title}
-        description={description}
-        image={image}
-        cta={cta}
-        href={href}
+        hero={homeHero}
       />
       <Benefits />
       <WorkFlow />

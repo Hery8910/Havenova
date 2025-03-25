@@ -1,26 +1,25 @@
 "use client";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import styles from "./page.module.css";
-import Image from "next/image";
 import Link from "next/link";
+import styles from "./page.module.css";
+
 // import { useUser } from "../../../components/contexts/UserContext";
-import React from "react";
+import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 
 interface User {
   name: string;
-
 }
 const Avatar = () => {
   const router = useRouter();
-//   const { user, setUser } = useUser();
+  //   const { user, setUser } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const user = {
     name: "Heriberto",
-  }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +36,7 @@ const Avatar = () => {
     setMenuOpen(!menuOpen);
   };
   const handleLink = () => {
-    router.push('/user/profile');
+    router.push("/user/profile");
   };
 
   if (!user) {
@@ -50,32 +49,19 @@ const Avatar = () => {
           `}
           aria-label="Toggle menu"
         >
-          <Image
-            src="/svg/user.svg"
-            priority={true}
-            alt="User icon"
-            width={30}
-            height={30}
-            className={styles.image}
-          />
+          <MdAccountCircle className={styles.icon}/>
           {!isMobile && <p>Register</p>}
         </button>
         {menuOpen && (
-          <ul
-            className={styles.ul}
-          >
-            <li 
-            onClick={handleClick}
-            className={styles.li}>
+          <ul className={styles.ul}>
+            <li onClick={handleClick} className={styles.li}>
               <Link className={styles.link} href="/user/register">
-               <p>Register</p>  <IoIosArrowForward />
+                <p>Register</p> <IoIosArrowForward />
               </Link>
             </li>
-            <li 
-            onClick={handleClick}
-            className={styles.li}>
+            <li onClick={handleClick} className={styles.li}>
               <Link className={styles.link} href="/user/login">
-               <p>Login</p>  <IoIosArrowForward />
+                <p>Login</p> <IoIosArrowForward />
               </Link>
             </li>
           </ul>
@@ -86,24 +72,17 @@ const Avatar = () => {
 
   return (
     <section className={styles.section}>
-        <button
-          onClick={handleLink}
-          className={`${styles.button}
+      <button
+        onClick={handleLink}
+        className={`${styles.button}
           ${isMobile ? styles.mobile : null}
           `}
-          aria-label="Toggle menu"
-        >
-          <Image
-            src="/svg/user.svg"
-            priority={true}
-            alt="User icon"
-            width={30}
-            height={30}
-            className={styles.image}
-          />
-          {!isMobile && <p>{user.name}</p>}
-        </button>
-      </section>
+        aria-label="Toggle menu"
+      >
+        <MdAccountCircle className={styles.icon}/>
+        {!isMobile && <p>{user.name}</p>}
+      </button>
+    </section>
   );
 };
 

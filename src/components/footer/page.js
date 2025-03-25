@@ -9,45 +9,51 @@ import { BsTelephoneFill } from "react-icons/bs";
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <main className={styles.main}>
-        <aside className={styles.aside}>
-          <Link className={styles.logo} href="/">
-            <Image
-              src="/svg/logo-footer.svg"
-              priority={true}
-              alt="Havenova logo"
-              width={100}
-              height={100}
-              className={styles.image}
+      <header className={styles.header}>
+        <Link className={styles.logo} href="/">
+          <picture>
+            <source
+              className={styles.logo}
+              media="(min-width:768px)"
+              srcSet="/svg/logo-white-vertical.svg"
             />
-          </Link>
-          <article className={styles.article}>
-            <h2 className={styles.h2}>Info</h2>
-            <div className={styles.div}>
-              <FaMapMarkerAlt />
-              <p>Stollberger Str.43, 12627 Berlin</p>
-            </div>
-            <div className={styles.div}>
-              <MdEmail />
-              <p>contact@havenova.de</p>
-            </div>
-            <div className={styles.div}>
-              <BsTelephoneFill />
-              <p>+49 176 7091 7803</p>
-            </div>
-            <div className={styles.div}>
-              <p>Mo-Fr</p>
-              <p>08:00-17:00 Uhr</p>
-            </div>
-            <div className={styles.div}>
-              <p>Sa</p>
-              <p>08:00-14:00 Uhr</p>
-            </div>
-          </article>
-        </aside>
 
+            <Image
+              className={styles.logo}
+              src="/svg/logo-white.svg"
+              alt="Havenova Logo"
+              width={300}
+              height={100}
+            />
+          </picture>
+        </Link>
+        <ul className={styles.header_ul}>
+          <h3 className={styles.h3}>Info</h3>
+          <li className={styles.li}>
+            <FaMapMarkerAlt />
+            <p>Stollberger Str.43, 12627 Berlin</p>
+          </li>
+          <li className={styles.li}>
+            <MdEmail />
+            <p>contact@havenova.de</p>
+          </li>
+          <li className={styles.li}>
+            <BsTelephoneFill />
+            <p>+49 176 7091 7803</p>
+          </li>
+          <li className={styles.li}>
+            <p>Mo-Fr</p>
+            <p>08:00-17:00 Uhr</p>
+          </li>
+          <li className={styles.li}>
+            <p>Sa</p>
+            <p>08:00-14:00 Uhr</p>
+          </li>
+        </ul>
+      </header>
+      <main className={styles.main}>
         <ul className={styles.ul}>
-          <h2 className={styles.h2}>Havenova</h2>
+          <h3 className={styles.h3}>Services</h3>
           <li className={styles.li}>
             <Link href="/service/furniture-assembly">Furniture Assembly</Link>
           </li>
@@ -68,7 +74,7 @@ const Footer = () => {
           </li>
         </ul>
         <ul className={styles.ul}>
-          <h2 className={styles.h2}>Services</h2>
+          <h3 className={styles.h3}>Havenova</h3>
           <li className={styles.li}>
             <Link href="/about">About</Link>
           </li>
@@ -89,19 +95,15 @@ const Footer = () => {
           </li>
         </ul>
         <ul className={styles.ul}>
-          <h2 className={styles.h2}>Legal</h2>
+          <h3 className={styles.h3}>Legal</h3>
           <li className={styles.li}>
             <Link href="/legal/privacy-policy">Privacy Policy</Link>
           </li>
-          <li className={styles.li} >
-            <Link href="/legal/cookie-policy">
-              Cookie Policy
-            </Link>
+          <li className={styles.li}>
+            <Link href="/legal/cookie-policy">Cookie Policy</Link>
           </li>
           <li className={styles.li}>
-            <Link href="/legal/therm-of-service">
-              Therm of Service
-            </Link>
+            <Link href="/legal/therm-of-service">Therm of Service</Link>
           </li>
         </ul>
       </main>

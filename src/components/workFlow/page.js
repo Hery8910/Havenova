@@ -28,7 +28,7 @@ const WorkFlow = () => {
       <Image
               src="/svg/workFlow-header.svg"
               priority={true}
-              alt="Young male builder in blue overalls"
+              alt="Male builder in blue overalls"
               width={300}
               height={300}
               className={styles.image}

@@ -118,7 +118,7 @@
     padding-left: 50px;
   }
   .li {
-    width: 350px;
+    width: 300px;
   }
 }
 @media (min-width: 1200px) {
@@ -131,6 +131,6 @@
     padding-left: 50px;
   }
   .li {
-    width: 350px;
+    width: 300px;
   }
 }

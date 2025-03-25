@@ -3,15 +3,25 @@ import { BlogPost } from "../../../types/blog";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { IoIosArrowForward } from "react-icons/io";
+import { useRouter } from "next/navigation";
+
 
 interface BlogCardProps {
   blog: BlogPost;
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
+   const router = useRouter();
   
+    const handleClick = () => {
+      router.push(`/blog/${blog.slug}`);
+    };
+
   return (
-    <section className={styles.section} key={blog.id}>
+    <section 
+    onClick={handleClick}
+    className={styles.section} 
+    key={blog.id}>
       <Image
         className={styles.image}
         src={blog.image}
@@ -23,9 +33,9 @@ export default function BlogCard({ blog }: BlogCardProps) {
       <article className={`${styles.article} card`}>
         <h3>{blog.title}</h3>
         <p>{blog.metaDescription}</p>
-        <Link className={styles.link} href={`/blog/${blog.slug}`}>
+        <p className={styles.link}>
           Read more <IoIosArrowForward />
-        </Link>
+        </p>
       </article>
     </section>
   );
