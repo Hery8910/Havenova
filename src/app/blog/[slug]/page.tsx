@@ -3,13 +3,12 @@ import api from '../../../services/api';
 import BlogContent from '../../../components/blog/blogContent/page';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { PageProps } from '../../../types/page';
 
-interface BlogPageProps {
-  params: { slug: string };
-}
+
 
 // Generar metadata dinámico basado en el contenido del post
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<{ slug: string }>): Promise<Metadata> {
   try {
     const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
     if (!post) return {};
@@ -30,12 +29,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         ],
       },
     };
-  } catch (error) {
+  } catch (error: any) {
     return {};
   }
 }
 
-export default async function BlogPage({ params }: BlogPageProps) {
+export default async function BlogPage({ params }: { params: { slug: string } }) {
   try {
     const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
 
@@ -48,7 +47,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         <BlogContent post={post} />
       </main>
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching blog:', error);
     return notFound();
   }

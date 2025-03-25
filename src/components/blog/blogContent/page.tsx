@@ -5,7 +5,7 @@ interface BlogContentProps {
 }
 
 const BlogContent = ({ post }: BlogContentProps) => (
-  <article className="prose max-w-3xl mx-auto">
+  <article >
     <h1>{post.title}</h1>
     <p>{post.introduction}</p>
 

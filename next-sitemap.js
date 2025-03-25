@@ -1,3 +1,3 @@
-export const siteUrl = "https://tudominio.com";
+export const siteUrl = "https://havenova.de";
 export const generateRobotsTxt = true;
   
