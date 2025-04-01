@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-// import { useUser } from "../../../components/contexts/UserContext";
+import { useUser } from "../../../components/contexts/UserContext";
 import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -14,12 +14,10 @@ interface User {
 }
 const Avatar = () => {
   const router = useRouter();
-  //   const { user, setUser } = useUser();
+    const { user, setUser } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const user = {
-    name: "Heriberto",
-  };
+ 
 
   useEffect(() => {
     const handleResize = () => {

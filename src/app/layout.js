@@ -1,4 +1,4 @@
-import { UserProvider } from "../components/contexts/UserContext";
+import { DashboardProvider } from "../components/contexts/UserContext";
 import { Roboto } from "next/font/google";
 import { homeMetadata } from "./pageMetadata";
 import "./globals.css";
@@ -17,11 +17,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}>
-        <UserProvider>
+        <DashboardProvider>
           <Navbar />
           {children}
           <Footer />
-        </UserProvider>
+        </DashboardProvider>
       </body>
     </html>
   );

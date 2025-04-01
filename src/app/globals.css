@@ -18,11 +18,14 @@
 }
 :root {
   max-width: 100dvw;
-  background-image: url('/svg/background-1-hell.svg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(
+    45deg,
+    rgba(97, 181, 181, 0.5) 0%,
+    rgba(175, 245, 245, 0.5) 50%,
+    rgba(97, 181, 181, 0.5) 100%
+  );
+
+  background-repeat: repeat-y;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -36,14 +39,16 @@
 html,
 body {
   margin: 0 auto;
-  margin-top: 20px;
+
 }
 
 body {
+  background-image: url("/svg/background.svg");
+  background-position: center;
+  background-size: contain;
   color: var(--font-color-black);
   font-family: var(--font-roboto);
   max-width: 1200px;
-  border: 1px solid red;
   overflow-x: hidden;
 }
 section {
@@ -73,7 +78,9 @@ a {
 }
 .quote {
   color: #d93434;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-style: italic;
 }
 .button {
@@ -82,16 +89,28 @@ a {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
-  border: 1px solid rgba(21, 117, 117, 0.8);
-  background: linear-gradient(
-    145deg,
-    #043030e6,
-    rgb(5, 56, 56, 0.9)
-  );
-  box-shadow: 0px 6px 13px #032929;
-  color: var(--font-color-white);
+  text-shadow: -2px -2px 4px hsla(180, 78%, 82%, 0.753);
+  padding: 8px 16px;
+  border-width: 4px;
+  border-style: solid;
+  background:
+    linear-gradient(180deg, #1fb1b1 20%, #96d1d1 100%) padding-box,
+    linear-gradient(0deg, #1fb1b1 70%, #aff5f5 100%) border-box;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  box-shadow:
+    -5px -5px 20px hsla(180, 78%, 82%, 0.753),
+    5px 5px 20px hsla(180, 86%, 9%, 0.5);
+  outline: 1px solid #96d1d16c;
+  color: #062222;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.button:active {
+  transform: scale(98%);
+  box-shadow:
+    -5px -5px 15px hsla(180, 78%, 82%, 0.877),
+    5px 5px 15px hsla(180, 87%, 9%, 0.719);
 }
 .card {
   padding: 16px;
@@ -102,12 +121,10 @@ a {
     #00b9ad42 80%,
     transparent 100%
   );
-  box-shadow:
-    0px 16px 20px rgba(3, 53, 52, 0.5);
+  box-shadow: 0px 16px 20px rgba(3, 53, 52, 0.5);
   border-bottom: 1px solid rgba(0, 185, 173, 0.6);
-
 }
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
   body {
     margin-top: 0;
     max-width: 1200px;
@@ -116,7 +133,7 @@ a {
     margin: 350px auto;
   }
 }
-@media  (max-width: 1024px) { 
+@media (max-width: 1024px) {
   body {
     max-width: 90dvw;
   }
@@ -124,7 +141,7 @@ a {
     margin: 250px auto;
   }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
   body {
     max-width: 90dvw;
   }
@@ -133,7 +150,7 @@ a {
   }
 }
 
-@media (max-width: 425px) { 
+@media (max-width: 425px) {
   body {
     max-width: 90dvw;
   }

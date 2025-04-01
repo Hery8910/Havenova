@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "../components/contexts/UserContext";
+import { useUser, useCalendar } from "../components/contexts/UserContext";
 import { getAllBlogs } from "../services/blogServices";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -238,6 +238,7 @@ export default function Home() {
 
   // const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const { user, refreshUser } = useUser();
+
   const homeHero = {
     title: "Reliable Home Services, Just One Click Away",
     description:
@@ -268,6 +269,8 @@ export default function Home() {
 
   //   fetchBlogs();
   // }, [refreshUser]);
+
+
 
   return (
     <main>

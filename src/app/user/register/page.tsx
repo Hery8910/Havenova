@@ -20,7 +20,7 @@ interface FormData {
 
 const Register = () => {
   const router = useRouter();
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",

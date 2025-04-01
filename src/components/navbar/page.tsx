@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
 import styles from "./page.module.css";
 import Image from "next/image";
 import { useUser } from "../../components/contexts/UserContext";
@@ -10,8 +12,98 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosLogIn } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
 
-export default function Navbar() {
+export interface NavItem {
+  section: "services" | "havenova" | "profile";
+  label: string;
+  href: string;
+  image?: string;
+  alt?: string;
+  icon?: React.ReactNode;
+  auth?: "guest" | "user";
+}
+
+const navItems: NavItem[] = [
+  // Sección de Services
+  {
+    section: "services",
+    label: "Furniture Assembly",
+    href: "/services/furniture-assembly",
+    image: "/svg/furniture-assembly.svg",
+    alt: "Icon Furniture Assembly",
+  },
+  {
+    section: "services",
+    label: "Kitchen Assembly",
+    href: "/services/kitchen-assembly",
+    image: "/svg/kitchen-assembly.svg",
+    alt: "Icon Kitchen Assembly",
+  },
+  {
+    section: "services",
+    label: "Home Service",
+    href: "/services/home-service",
+    image: "/svg/home-service.svg",
+    alt: "Icon home service",
+  },
+  {
+    section: "services",
+    label: "House Cleaning",
+    href: "/services/house-cleaning",
+    image: "/svg/house-cleaning.svg",
+    alt: "Icon House Cleaning",
+  },
+  {
+    section: "services",
+    label: "Kitchen Cleaning",
+    href: "/services/kitchen-cleaning",
+    image: "/svg/kitchen-cleaning.svg",
+    alt: "Icon Kitchen Cleaning",
+  },
+  {
+    section: "services",
+    label: "Windows Cleaning",
+    href: "/services/windows-cleaning",
+    image: "/svg/windows-cleaning.svg",
+    alt: "Icon Windows Cleaning",
+  },
+  // Sección de Havenova
+  { section: "havenova", label: "About", href: "/about" },
+  { section: "havenova", label: "Contact", href: "/contact" },
+  { section: "havenova", label: "Q&A", href: "/q&a" },
+  { section: "havenova", label: "Reviews", href: "/reviews" },
+  { section: "havenova", label: "Blog", href: "/blog" },
+  { section: "havenova", label: "Our Services", href: "/service" },
+  // Sección de Profile para usuarios no autenticados
+  {
+    section: "profile",
+    label: "Register",
+    href: "/user/register",
+    image: "/svg/signin.svg",
+    alt: "Sign in Icon",
+    auth: "guest",
+  },
+  {
+    section: "profile",
+    label: "Login",
+    href: "/user/login",
+    image: "/svg/user.svg",
+    alt: "User Icon",
+    auth: "guest",
+  },
+  // Sección de Profile para usuarios autenticados
+  {
+    section: "profile",
+    label: "Profile",
+    href: "/user/profile",
+    image: "/svg/user.svg",
+    alt: "User Icon",
+    auth: "user",
+  },
+];
+
+export default function Navbar({}) {
   const { user } = useUser();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,17 +115,12 @@ export default function Navbar() {
 
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -43,16 +130,19 @@ export default function Navbar() {
   const handleMouseLeave = () => {
     setMenuOpen(false);
   };
+  const serviceItems = navItems.filter((item) => item.section === "services");
+  const havenovaItems = navItems.filter((item) => item.section === "havenova");
 
-  const handleClick = () => {
-    setMenuOpen(!menuOpen);
-  };
+  // Se filtran los items de profile en función del estado de autenticación
+  const profileItems = navItems.filter(
+    (item) =>
+      item.section === "profile" &&
+      (!item.auth || (user ? item.auth === "user" : item.auth === "guest"))
+  );
 
   return (
     <nav className={styles.nav}>
-      <div
-        className={`${styles.wrapper} ${scrolled ? styles.scrolled : ""}`}
-      >
+      <div className={`${styles.wrapper} ${scrolled ? styles.scrolled : ""}`}>
         <header className={styles.header}>
           <Link className={styles.logo} href="/">
             <picture>
@@ -61,7 +151,6 @@ export default function Navbar() {
                 media="(min-width:800px)"
                 srcSet="/svg/logo-black.svg"
               />
-
               <Image
                 className={styles.logo}
                 src="/svg/logo-black-mobile.svg"
@@ -74,7 +163,7 @@ export default function Navbar() {
           <div className={styles.header_div}>
             <Avatar />
             <button
-              onClick={handleClick}
+              onClick={() => setMenuOpen(!menuOpen)}
               className={styles.icon}
               aria-label="Toggle menu"
             >
@@ -85,165 +174,100 @@ export default function Navbar() {
       </div>
       <main
         onMouseLeave={handleMouseLeave}
-        className={`${styles.main}
-        ${menuOpen ? styles.open : styles.close}
-        `}
+        className={`${styles.main} ${menuOpen ? styles.open : styles.close}`}
       >
         <div>
           <section className={styles.section}>
-        {!isMobile && (
-          <Image
-            src="/svg/menu.svg"
-            priority={true}
-            alt="Berlin illustration"
-            width={400}
-            height={250}
-            className={styles.main_image}
-          />
-        )}
-            <ul className={styles.ul}>
-              <h3 className={styles.h3}>Services</h3>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/furniture-assembly.svg"
-                  priority={true}
-                  alt="Icon Furniture Assembly"
-                  width={25}
-                  height={25}
-                />
-                <Link
-                  className={styles.link}
-                  href="/services/furniture-assembly"
-                >
-                  Furniture Assembly
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/kitchen-assembly.svg"
-                  priority={true}
-                  alt="Icon Kitchen Assembly"
-                  width={25}
-                  height={25}
-                />
-                <Link className={styles.link} href="/services/kitchen-assembly">
-                  Kitchen Assembly
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/home-service.svg"
-                  priority={true}
-                  alt="Icon home service"
-                  width={25}
-                  height={25}
-                />
-                <Link className={styles.link} href="/services/home-service">
-                  Home Service
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/house-cleaning.svg"
-                  priority={true}
-                  alt="Icon House Cleaning"
-                  width={25}
-                  height={25}
-                />
-                <Link className={styles.link} href="/services/house-cleaning">
-                  House Cleaning
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/kitchen-cleaning.svg"
-                  priority={true}
-                  alt="Icon Kitchen Cleaning"
-                  width={25}
-                  height={25}
-                />
-                <Link className={styles.link} href="/services/kitchen-cleaning">
-                  Kitchen Cleaning
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Image
-                  className={styles.image}
-                  src="/svg/windows-cleaning.svg"
-                  priority={true}
-                  alt="Icon Windows Cleaning"
-                  width={25}
-                  height={25}
-                />
-                <Link className={styles.link} href="/services/windows-cleaning">
-                  Windows Cleaning
-                </Link>
-              </li>
-            </ul>
-            <ul className={styles.ul}>
-              <h3 className={styles.h3}>Havenova</h3>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/about">
-                  About
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/contact">
-                  Contact
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/q&a">
-                  Q&A
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/reviews">
-                  Reviews
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/Blog">
-                  Blog
-                </Link>
-              </li>
-              <li className={styles.li}>
-                <Link className={styles.link} href="/service">
-                  Our Services
-                </Link>
-              </li>
-            </ul>
-            {!user ? (
-              <ul className={styles.ul}>
-                <h3 className={styles.h3}>Profile</h3>
-                <li className={styles.li}>
-                  <MdAccountCircle />
-                  <Link className={styles.link} href="/user/register">
-                    Register
-                  </Link>
-                </li>
-                <li className={styles.li}>
-                  <IoIosLogIn />
-                  <Link className={styles.link} href="/user/login">
-                    Login
-                  </Link>
-                </li>
-              </ul>
-            ) : (
-              <ul className={styles.ul}>
-                <li className={styles.li}>
-                  <MdAccountCircle />
-                  <Link className={styles.link} href="/user/profile">
-                    Profile
-                  </Link>
-                </li>
-              </ul>
+            {!isMobile && (
+              <Image
+                src="/svg/menu.svg"
+                priority={true}
+                alt="Berlin illustration"
+                width={400}
+                height={250}
+                className={styles.main_image}
+              />
             )}
+            <ul className={styles.ul}>
+              <li
+                className={styles.li}
+                key="title"
+                onClick={() => {
+                  router.push('/services');
+                  setMenuOpen(false);
+                }}
+              >
+                <h3 className={styles.h3}>Services</h3>
+              </li>
+              {serviceItems.map((link) => (
+                <li
+                  className={styles.li}
+                  key={link.label}
+                  onClick={() => {
+                    router.push(`${link.href}`);
+                    setMenuOpen(false);
+                  }}
+                >
+                 {link.image && (
+                    <Image
+                      className={styles.image}
+                      src={link.image}
+                      priority={true}
+                      alt={link.alt || link.label}
+                      width={25}
+                      height={25}
+                    />
+                  )}
+                  <h4>{link.label}</h4>
+                </li>
+              ))}
+            </ul>
+            <ul className={styles.ul}>
+            <li
+                className={styles.li}
+                key="title"
+                onClick={() => {
+                  router.push('/');
+                  setMenuOpen(false);
+                }}
+              >
+                <h3 className={styles.h3}>Havenova</h3>
+              </li>
+              {havenovaItems.map((link) => (
+                <li 
+                className={styles.li} 
+                key={link.label}
+                onClick={() => {
+                  router.push(`${link.href}`);
+                  setMenuOpen(false);
+                }}
+                >
+                  <h4>
+                    {link.label}
+                  </h4>
+                </li>
+              ))}
+            </ul>
+            <ul className={styles.ul}>
+              <h3 className={styles.h3}>Profile</h3>
+              {profileItems.map((link) => (
+                <li className={styles.li} key={link.label}>
+                   {link.image && (
+                    <Image
+                      className={styles.image}
+                      src={link.image}
+                      priority={true}
+                      alt={link.alt || link.label}
+                      width={25}
+                      height={25}
+                    />
+                  )}
+                  <h4>
+                    {link.label}
+                  </h4>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </main>

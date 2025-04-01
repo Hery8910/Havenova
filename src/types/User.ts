@@ -6,7 +6,7 @@ export interface User {
   address: string;
   isVerified: boolean;
   phone: string;
-  role: boolean;
+  role: string;
 }
 export interface UserError {
   message: string;

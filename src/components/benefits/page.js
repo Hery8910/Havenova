@@ -43,7 +43,6 @@ const Benefits = () => {
         }
     }
   ];
-  console.log(cards);
   
   return (
     <section className={styles.section}>
