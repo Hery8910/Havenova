@@ -20,7 +20,7 @@ export default function Home() {
       title:
         "How to Choose the Best Maintenance Service for Your Home and Avoid Scams",
       slug: "choose-best-maintenance-service",
-      image: "/svg/choose-best-maintenance-service-blog.svg",
+      image: "/images/choose-best-maintenance-service-blog.webp",
       imageAlt: "Illustration of a professional worker in blue overalls",
       metaDescription:
         "Learn how to choose reliable home maintenance services and protect your home from scams.",
@@ -69,7 +69,7 @@ export default function Home() {
       id: "2",
       title: "The Ultimate Home Maintenance Checklist for Every Season",
       slug: "home-maintenance-checklist",
-      image: "/svg/home-maintenance-checklist-blog.svg",
+      image: "/images/home-maintenance-checklist-blog.webp",
       imageAlt: "Illustration of a man booking appointments on a calendar",
       metaDescription:
         "Keep your home in top condition all year round with this seasonal maintenance checklist.",
@@ -121,7 +121,7 @@ export default function Home() {
       id: "3",
       title: "How to Prepare Your Home for Winter",
       slug: "prepare-home-for-winter",
-      image: "/svg/prepare-home-for-winter-blog.svg",
+      image: "/images/prepare-home-for-winter-blog.webp",
       imageAlt: "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
       metaDescription:
         "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
@@ -160,7 +160,7 @@ export default function Home() {
       id: "4",
       title: "Signs You Need to Renovate Your Kitchen",
       slug: "kitchen-renovation-signs",
-      image: "/svg/kitchen-renovation-signs-blog.svg",
+      image: "/images/kitchen-renovation-signs-blog.webp",
       imageAlt: "Illustration of a professional worker renovating a kitchen",
       metaDescription:
         "Is it time for a kitchen renovation? Learn the key signs that your kitchen needs a makeover.",
@@ -199,7 +199,7 @@ export default function Home() {
       id: "5",
       title: "The Benefits of Scheduling Regular Home Inspections",
       slug: "benefits-regular-home-inspections",
-      image: "/svg/benefits-regular-home-inspections-blog.svg",
+      image: "/images/benefits-regular-home-inspections-blog.webp",
       imageAlt: "Illustration of a person checking a list",
       metaDescription:
         "Find out why regular home inspections are key to maintaining your property’s value and safety.",
@@ -244,7 +244,7 @@ export default function Home() {
     description:
     "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.",
     image: {
-      src: "/svg/hero_home.svg",
+      src: "/images/hero_home.webp",
       alt: "llustration of two household cleaning workers",
     },
     cta: "Register & Save 10%",

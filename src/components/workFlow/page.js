@@ -26,7 +26,7 @@ const WorkFlow = () => {
       </Link>
       </main>
       <Image
-              src="/svg/workFlow-header.svg"
+              src="/images/workFlow-header.webp"
               priority={true}
               alt="Male builder in blue overalls"
               width={300}

@@ -100,7 +100,7 @@
     height: 450px;
     right: 0;
     bottom: -100px;
-    z-index: -3;
+    z-index: 3;
   }
   .ul {
     max-width: 750px;

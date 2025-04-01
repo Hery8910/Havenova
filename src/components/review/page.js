@@ -4,6 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReviewStars from "../reviewStars/page";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import AvatarInicial from "../avatarPicture/page";
 
 const Review = () => {
   const ulRef = useRef(null);
@@ -21,14 +22,7 @@ const Review = () => {
   useEffect(() => {
     (windowWidth > 1000) ? setShowButtons(true) : setShowButtons(false)
   }, [windowWidth]);
- 
-  // const generateAvatar = (name) => {
-  //   const letter = name.charAt(0).toUpperCase();
-  //   const randomColor = `#${Math.floor(Math.random() * 16777215)
-  //     .toString(16)
-  //     .padStart(6, "0")}`;
-  //   return { letter, color: randomColor };
-  // };
+
 
   const scrollLeft = () => {
     if (ulRef.current) {
@@ -67,6 +61,7 @@ const Review = () => {
     reviews: [
       {
         name: "John Doe",
+        color:'#1fb1b1',
         starRating: 5,
         comment:
           "Great service! Everything was done professionally and on time.",
@@ -74,18 +69,21 @@ const Review = () => {
       },
       {
         name: "Jane Smith",
+        color:'#ff6b6b', 
         starRating: 5,
         comment: "Highly recommended! The team was efficient and very polite.",
         createTime: "2025-01-21T13:18:18.928158",
       },
       {
         name: "Michael Johnson",
+        color:'#4f46e5',
         starRating: 5.0,
         comment: "Had a great experience. The service was top-notch.",
         createTime: "2024-12-10T13:18:18.928169",
       },
       {
         name: "Emily Davis",
+        color:'#f59e0b',
         starRating: 5,
         comment:
           "Very satisfied with the quality of work. Will hire them again!",
@@ -93,12 +91,14 @@ const Review = () => {
       },
       {
         name: "Daniel Martinez",
+        color:'#10b981',
         starRating: 5,
         comment: "Quick response and excellent customer service.",
         createTime: "2024-12-14T13:18:18.928179",
       },
       {
         name: "Sophia Brown",
+        color:'#ef4444',
         starRating: 5,
         comment:
           "Reliable and skilled professionals. My place looks fantastic!",
@@ -106,24 +106,28 @@ const Review = () => {
       },
       {
         name: "Liam Wilson",
+        color:'#8b5cf6',
         starRating: 5,
         comment: "They went above and beyond to complete the job perfectly.",
         createTime: "2025-02-07T13:18:18.928188",
       },
       {
         name: "Olivia Anderson",
+        color:'#ec4899',
         starRating: 5,
         comment: "Super easy booking process and great results.",
         createTime: "2025-01-03T13:18:18.928195",
       },
       {
         name: "Noah Thomas",
+        color:'#3b82f6',
         starRating: 5,
         comment: "The team was very courteous and efficient. Highly recommend!",
         createTime: "2025-01-17T13:18:18.928207",
       },
       {
         name: "Emma Taylor",
+        color:'#22c55e',
         starRating: 5,
         comment:
           "Best handyman service I’ve used. Will definitely call them again.",
@@ -157,7 +161,7 @@ const Review = () => {
         </article>
         <Image
           className={styles.image}
-          src="/svg/reviews.svg"
+          src="/images/reviews.webp"
           priority={true}
           alt="Reviews Ilustration"
           width={300}
@@ -179,16 +183,10 @@ const Review = () => {
           ref={ulRef}
         >
           {list.reviews.map((review, index) => {
-            // const avatar = generateAvatar(review.name);
 
             return (
               <li key={index} className={`${styles.li} card`}>
-                {/* <div
-                  className={styles.avatar}
-                  style={{ backgroundColor: avatar.color }}
-                >
-                  {avatar.letter}
-                </div> */}
+               <AvatarInicial username={review.name} color={review.color} />
                 <h4>{review.name}</h4>
                 <p>{review.comment}</p>
                 <div className={styles.div}>

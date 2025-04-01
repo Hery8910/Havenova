@@ -58,7 +58,7 @@ export default function BlogList({ blogs }: BlogListProps) {
       <header className={styles.header}>
         <Image
           className={styles.image}
-          src="/svg/header-blog.svg"
+          src="/images/header-blog.webp"
           priority={true}
           alt="Coffee break concept illustration"
           width={250}
