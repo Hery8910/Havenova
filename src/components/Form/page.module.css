@@ -1,0 +1,33 @@
+  .input {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px;
+    border: 1px solid #002442;
+    box-shadow: 0 2px 6px #002442da;
+    background-color: #002442da;
+    min-width: 300px;
+    color: #d7f2f6;
+  }
+
+  .div {
+    position: relative;
+  }
+  .show {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 1.4rem;
+    color: #d7f2f6;
+    background-color: transparent;
+    border: none;
+  }
+  
+  .error {
+    max-width: 300px;
+    text-align: left;
+    color: #d93434;
+    text-shadow: 0px 0px 0px black;
+  }
+ 
+  
+ 

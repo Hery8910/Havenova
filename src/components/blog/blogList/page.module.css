@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 16px;
+  gap: 24px;
 }
 .article {
   width: 100%;

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useUser } from "../../../../components/contexts/UserContext";
+import { useUser } from "../../../../contexts/UserContext";
 import api from "../../../../services/api";
 
 import styles from "./page.module.css";
@@ -27,7 +27,7 @@ const VerifyEmail = () => {
     };
 
     verifyUser();
-  }, [router, setUser]);
+  }, [router, setUser, refreshUser, user?.isVerified]);
 
   const handleResendEmail = async () => {
     const userEmail = user?.email || email;

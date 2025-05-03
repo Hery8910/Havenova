@@ -1,9 +1,8 @@
-'use client'
+"use client";
 import styles from "./page.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
 
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -92,7 +91,6 @@ const Footer = () => {
     },
   ];
 
-
   return (
     <footer className={styles.footer}>
       <header className={styles.header}>
@@ -114,7 +112,9 @@ const Footer = () => {
           </picture>
         </Link>
         <ul className={styles.header_ul}>
-          <li className={styles.h3}>Info</li>
+          <li>
+            <h3 className={styles.h3}>Info</h3>
+          </li>
           <li className={styles.li}>
             <FaMapMarkerAlt />
             <p>Stollberger Str.43, 12627 Berlin</p>
@@ -139,7 +139,9 @@ const Footer = () => {
       </header>
       <main className={styles.main}>
         <ul className={styles.ul}>
-          <h3 className={styles.h3}>Services</h3>
+          <li>
+            <h3 className={styles.h3}>Services</h3>
+          </li>
           <li className={styles.li}>
             <Link href="/service/furniture-assembly">Furniture Assembly</Link>
           </li>
@@ -160,7 +162,9 @@ const Footer = () => {
           </li>
         </ul>
         <ul className={styles.ul}>
-          <h3 className={styles.h3}>Havenova</h3>
+          <li>
+            <h3 className={styles.h3}>Havenova</h3>
+          </li>
           <li className={styles.li}>
             <Link href="/about">About</Link>
           </li>
@@ -181,7 +185,9 @@ const Footer = () => {
           </li>
         </ul>
         <ul className={styles.ul}>
-          <h3 className={styles.h3}>Legal</h3>
+          <li>
+            <h3 className={styles.h3}>Legal</h3>
+          </li>
           <li className={styles.li}>
             <Link href="/legal/privacy-policy">Privacy Policy</Link>
           </li>

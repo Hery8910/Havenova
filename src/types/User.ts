@@ -4,6 +4,7 @@ export interface User {
   name: string;
   email: string;
   address: string;
+  serviceAddress: string;
   isVerified: boolean;
   phone: string;
   role: string;

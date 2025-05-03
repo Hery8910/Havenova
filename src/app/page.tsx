@@ -1,5 +1,5 @@
 "use client";
-import { useUser, useCalendar } from "../components/contexts/UserContext";
+import { useUser, useCalendar } from "../contexts/UserContext";
 import { getAllBlogs } from "../services/blogServices";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
@@ -8,9 +8,9 @@ import { BlogPost } from "../types/blog";
 import Hero from "../components/hero/page";
 import Benefits from "../components/benefits/page";
 import WorkFlow from "../components/workFlow/page";
-import Service from "../components/service/page";
+import Services from "./services/page";
 import QuestionAnswer from "../components/q&a/page";
-import Review from "../components/review/page";
+import Review from "../components/reviews/page";
 import BlogList from "../components/blog/blogList/page";
 
 export default function Home() {
@@ -122,7 +122,8 @@ export default function Home() {
       title: "How to Prepare Your Home for Winter",
       slug: "prepare-home-for-winter",
       image: "/images/prepare-home-for-winter-blog.webp",
-      imageAlt: "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
+      imageAlt:
+        "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
       metaDescription:
         "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
       introduction:
@@ -242,15 +243,15 @@ export default function Home() {
   const homeHero = {
     title: "Reliable Home Services, Just One Click Away",
     description:
-    "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.",
+      "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.",
     image: {
       src: "/images/hero_home.webp",
       alt: "llustration of two household cleaning workers",
     },
     cta: "Register & Save 10%",
-    href: "/user/register"
-  }
-  
+    href: "/user/register",
+  };
+
   // useEffect(() => {
   //   const token = Cookies.get("authToken");
   //   if (token) {
@@ -270,16 +271,12 @@ export default function Home() {
   //   fetchBlogs();
   // }, [refreshUser]);
 
-
-
   return (
     <main>
-      <Hero
-        hero={homeHero}
-      />
+      <Hero hero={homeHero} />
       <Benefits />
       <WorkFlow />
-      <Service />
+      <Services />
       <Review />
       <QuestionAnswer />
       <BlogList blogs={blogs} />

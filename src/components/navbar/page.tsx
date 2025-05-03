@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import styles from "./page.module.css";
 import Image from "next/image";
-import { useUser } from "../../components/contexts/UserContext";
+import { useUser } from "../../contexts/UserContext";
 import Avatar from "../../app/user/avatar/page";
 
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -72,7 +72,7 @@ const navItems: NavItem[] = [
   { section: "havenova", label: "Q&A", href: "/q&a" },
   { section: "havenova", label: "Reviews", href: "/reviews" },
   { section: "havenova", label: "Blog", href: "/blog" },
-  { section: "havenova", label: "Our Services", href: "/service" },
+  { section: "havenova", label: "Our Services", href: "/services" },
   // Sección de Profile para usuarios no autenticados
   {
     section: "profile",

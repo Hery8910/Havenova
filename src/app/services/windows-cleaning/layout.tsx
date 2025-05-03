@@ -1,13 +1,16 @@
 import { Metadata } from "next";
+import { windowsCleaningMetadata } from "../../pageMetadata";
+import { FormProvider } from "../../../contexts/FormContext";
+import { ReactNode } from 'react';
 
-import { kitchenCleaningMetadata } from "../../pageMetadata";
+export const metadata: Metadata = windowsCleaningMetadata;
 
-export const metadata: Metadata = kitchenCleaningMetadata;
+export default function ServiceLayout({ children }: { children: ReactNode }) {
 
-export default function PageLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>;
+
+  return (
+    <FormProvider>
+          {children} {/* Aquí se cargan los pasos del formulario */}
+    </FormProvider>
+  );
 }

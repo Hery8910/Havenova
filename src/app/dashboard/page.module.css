@@ -1,0 +1,22 @@
+.main {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+    "b b b"
+    "a c c";
+}
+.header, .section {
+    border: 1px solid red;
+}
+
+.header {
+    grid-area: b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section {
+    grid-area: c;
+}

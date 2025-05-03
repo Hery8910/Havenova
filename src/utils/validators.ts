@@ -14,6 +14,9 @@ export const isPasswordValid = (password: string): boolean =>
 export const isAddressValid = (address: string): boolean =>
   /^[a-zA-Z0-9\s,'-.#]{5,49}$/.test(address.trim());
 
+export const isServiceAddressValid = (serviceAddress: string): boolean =>
+  /^[a-zA-Z0-9\s,'-.#]{5,49}$/.test(serviceAddress.trim());
+
 export const validateField = (name: string, value: string): string => {
   if (name === "name" && !isNameValid(value)) {
     return "The name must begin with a capital letter and contain only letters, spaces, hyphens, or apostrophes.";

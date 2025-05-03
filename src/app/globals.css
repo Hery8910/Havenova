@@ -1,6 +1,6 @@
 :root {
   --font-roboto: Roboto, sans-serif;
-  --background-color: #d7f2f6;
+  --background-color: #6e8a8f;
   --font-color-white: #f5f3f5;
   --font-color-black: #022e2d;
   --secondary-color: #0e3c67;
@@ -89,6 +89,7 @@ a {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  font-weight: 500;
   text-shadow: -2px -2px 4px hsla(180, 78%, 82%, 0.753);
   padding: 8px 16px;
   border-width: 4px;

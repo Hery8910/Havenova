@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-import { useUser } from "../../../components/contexts/UserContext";
+import { useUser } from "../../../contexts/UserContext";
 import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -37,7 +37,7 @@ const Avatar = () => {
     router.push("/user/profile");
   };
 
-  if (!user) {
+  if (user.role === "guest") {
     return (
       <section className={styles.section}>
         <button

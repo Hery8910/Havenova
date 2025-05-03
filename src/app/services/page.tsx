@@ -1,11 +1,11 @@
 import styles from './page.module.css';
 
-const Review = () => {
+const Services = () => {
   return (
     <>
-      <p className={styles.p}>Review</p>
+      <p className={styles.p}>Services</p>
     </>
   );
 };
 
-export default Review;
+export default Services;

@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { loginUser } from "../../../services/userService";
 import Link from "next/link";
-import { useUser } from "../../../components/contexts/UserContext";
+import { useUser } from "../../../contexts/UserContext";
 
 interface User {
   _id: string;
@@ -14,6 +14,7 @@ interface User {
   email: string;
   role: string;
   address: string;
+  serviceAddress: string;
   phone: string;
 }
 const Login = () => {
@@ -23,7 +24,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
- 
   const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -35,6 +35,7 @@ const Login = () => {
         isVerified: response.user.isVerified,
         role: response.user.role,
         address: response.user.address,
+        serviceAddress: response.user.serviceAddress,
         phone: response.user.phone,
       });
       router.push("/");
@@ -43,7 +44,7 @@ const Login = () => {
         const { message, field } = error.response.data;
         console.error(`Login failed: ${message}`);
         console.log(error.response.data);
-        
+
         if (field === "email") {
           setError("Invalid email provided");
         } else if (field === "password") {
@@ -61,24 +62,6 @@ const Login = () => {
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
-        <Image
-          src="/svg/logo-desktop.svg"
-          priority={true}
-          alt="Havenova logo"
-          width={2400}
-          height={400}
-          className={`${styles.desktop} ${styles.image}`}
-        />
-        <Image
-          src="/svg/logo-mobile.svg"
-          priority={true}
-          alt="Havenova logo"
-          width={450}
-          height={450}
-          className={`${styles.mobile} ${styles.image}`}
-        />
-      </header>
       <section className={styles.section}>
         {error === "Please verify your account before logging in." && (
           <article className={styles.error_article}>
@@ -104,27 +87,34 @@ const Login = () => {
         <aside className={styles.aside}>
           <div className={styles.div}>
             <h1 className={styles.h1}>Welcome Back</h1>
-            
           </div>
           <article className={styles.article}>
             <p className={styles.header_p}>
-              <Link className={styles.article_link} href="/user/forgot-password">Forgot your password?</Link>
+              <Link
+                className={styles.article_link}
+                href="/user/forgot-password"
+              >
+                Forgot your password?
+              </Link>
             </p>
             <p className={styles.header_p}>
-              Don&apos;t have an account?<br/>
-              <Link className={styles.article_link} href="/user/register">Sign up here.</Link>
+              Don&apos;t have an account?
+              <br />
+              <Link className={styles.article_link} href="/user/register">
+                Sign up here.
+              </Link>
             </p>
           </article>
         </aside>
 
         <form className={styles.form} onSubmit={handleLogin}>
-          <button className={styles.button} style={{ padding: "0 .5rem" }}>
+          <button className={styles.button} style={{ padding: ".2rem .5rem" }}>
             Continue with Google{" "}
             <Image
               src="/svg/google.svg"
               alt="Google logo"
-              width={35}
-              height={35}
+              width={30}
+              height={30}
             />
           </button>
           <input

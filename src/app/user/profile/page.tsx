@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "../../../components/contexts/UserContext";
+import { useUser } from "../../../contexts/UserContext";
 import { useEffect } from "react";
 
 import styles from "./page.module.css";
@@ -17,7 +17,7 @@ interface FormData {
 
 const Profile = () => {
   const [edit, setEdit] = useState(false);
-  const { user, refreshUser } = useUser();
+  // const { user, refreshUser } = useUser();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     address: "",
@@ -29,13 +29,13 @@ const Profile = () => {
     phone: "",
   });
   const [message, setMessage] = useState("");
-  // const user = {
-  //   name: "Heriberto Santana",
-  //   address: "Sarah-Kirsch_Str. 5, 12629",
-  //   phone: "+491777312606",
-  //   email: "contact@heribertosantana.com",
-  //   avatar: "Lion"
-  // }
+  const user = {
+    name: "Heriberto Santana",
+    address: "Sarah-Kirsch_Str. 5, 12629",
+    phone: "+491777312606",
+    email: "contact@heribertosantana.com",
+    avatar: "Lion"
+  }
 
   // useEffect(() => {
   //   refreshUser();
