@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { loginUser } from "../../../services/userService";
 import Link from "next/link";
-import { useUser } from "../../../contexts/UserContext";
+import { ServiceOrder, useUser } from "../../../contexts/UserContext";
 
 interface User {
   _id: string;
@@ -14,8 +14,8 @@ interface User {
   email: string;
   role: string;
   address: string;
-  serviceAddress: string;
   phone: string;
+  requests: ServiceOrder[];
 }
 const Login = () => {
   const router = useRouter();
@@ -35,8 +35,8 @@ const Login = () => {
         isVerified: response.user.isVerified,
         role: response.user.role,
         address: response.user.address,
-        serviceAddress: response.user.serviceAddress,
         phone: response.user.phone,
+        requests: [],
       });
       router.push("/");
     } catch (error: any) {

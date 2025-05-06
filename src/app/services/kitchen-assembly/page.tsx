@@ -1,5 +1,5 @@
 import ServicesHeader from '../../../components/services/servicesHeader/page'
-import LivePreview from '../../../components/services/livePreview/page'
+import LivePreview from '../../../components/services/serviceCart/page'
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
 

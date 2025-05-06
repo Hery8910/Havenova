@@ -1,10 +1,9 @@
 import styles from "./page.module.css";
-import { FormProvider } from "../../../contexts/FormContext";
-import ServicesHeader from "../../../components/services/servicesHeader/page";
-import LivePreview from "../../../components/services/livePreview/page";
+import ServiceCart from "../../../components/services/serviceCart/page";
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
 import FurnitureAssemblyForm from "../../../components/services/furnitureAssemblyForm/page";
+import Hero from "../../../components/hero/page";
 
 const FurnitureAssemblyPage = () => {
   const blogs = [
@@ -229,31 +228,25 @@ const FurnitureAssemblyPage = () => {
       author: "Havenova Team",
     },
   ];
-  const furnitureAssemblyHeader = {
-    title: "Furniture Assembly",
-    description:
-      "Need help setting up furniture? Let us know the type and quantity. We’ll confirm everything during the on-site visit.",
-    image: {
-      src: "/images/furniture-assembly.webp",
-      alt: "Furniture Assembly Illustration",
-    },
-  };
-
-  
-  
+const FurnitureAssemblyHero = {
+  title: "Furniture Assembly",
+  description: "Fast & safe furniture assembly in Berlin. Wall-mounted or free-standing.",
+  image: {
+    src: '/svg/furniture-assembly.svg',
+    alt: "Furniture assembly icon",
+  },
+  cta: "",
+  href: "",
+  extraClass: "hero_services"
+}
   return (
     <main className={styles.main}>
-      <ServicesHeader serviceHeader={furnitureAssemblyHeader} />
+      <header>
+        <Hero hero={FurnitureAssemblyHero} />
+      </header>
       <section className={styles.section}>
-        <LivePreview />
-        <ul className={styles.container}>
-          <li>
-            Aqui hay algo
-            <FurnitureAssemblyForm />
-          </li>
-          <li>{/* <CalenderForm /> */}</li>
-          <li>{/* <UserForm /> */}</li>
-        </ul>
+        <FurnitureAssemblyForm />
+        <ServiceCart />
       </section>
       <Reviews />
       <BlogList blogs={blogs} />

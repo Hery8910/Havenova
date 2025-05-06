@@ -662,3 +662,41 @@ export const cookiePolicyMetadata: PageMetadata = {
     ],
   },
 };
+export const checkoutMetadata: PageMetadata = {
+  title: "Checkout - Confirm Your Service Request | Havenova Berlin",
+  description:
+    "Review your selected services, choose a preferred date and time, and submit your home service request securely with Havenova.",
+  keywords:
+    "checkout, service request, confirm booking, Havenova Berlin, home services, handyman booking",
+  openGraph: {
+    title: "Checkout - Book Your Home Services in Berlin",
+    description:
+      "Finalize your Havenova service request. Select appointment details and submit your booking in just a few steps.",
+    type: "website",
+    url: "https://havenova.de/checkout",
+    images: [
+      {
+        url: "https://havenova.de/images/og-checkout.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Havenova Service Checkout",
+      },
+    ],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-light.ico", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" },
+      {
+        url: "/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+};

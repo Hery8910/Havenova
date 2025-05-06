@@ -9,38 +9,38 @@ import React, {
 } from "react";
 import api from "../services/api";
 import { getCalendarAdmin, getCalendarGuest } from "../services/dashboard";
+import {
+  addRequest,
+  clearRequests,
+  removeRequest,
+  updateRequest,
+} from "../services/serviceOrder";
+import { logoutUser } from "../services/userService";
+import { FurnitureAssemblyData, ServiceOrder, ServiceRequestItem } from "../types/services";
+import { User } from "../types/User";
+import { addItem, clearAllRequestItemsFromStorage, clearItems, removeItem, removeRequestItemFromStorage, saveRequestItemToStorage } from "../utils/serviceRequest";
 
-// ------------------
-// USER CONTEXT TYPES
-// ------------------
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  isVerified: boolean;
-  role: string; // "guest", "client", "admin", etc.
-  address: string;
-  serviceAddress: string;
-  phone: string;
-}
 
 interface UserContextProps {
   user: User;
   setUser: (user: User) => void;
   refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
+  addRequestToUser: (newRequest: ServiceRequestItem) => void;
+  removeRequestFromUser: (index: number) => void;
+  clearAllRequests: () => void;
 }
 
 // Usuario inicial guest
-const initialGuestUser: User = {
+export const initialGuestUser: User = {
   _id: "",
   name: "",
   email: "",
   isVerified: false,
   role: "guest",
   address: "",
-  serviceAddress: "",
   phone: "",
+  requests: [], // inicializar vacío
 };
 
 // ---------------------
@@ -74,9 +74,7 @@ interface DashboardProviderProps {
 }
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
-  // Estados del usuario
   const [user, setUser] = useState<User>(initialGuestUser);
-  // Estado para almacenar los calendarios por año (clave: año)
   const [calendars, setCalendars] = useState<{ [year: number]: CalendarData }>(
     {}
   );
@@ -84,7 +82,23 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     new Date().getFullYear()
   );
 
-  // Función para refrescar los datos del usuario
+  useEffect(() => {
+    const stored = localStorage.getItem("user_service_requests");
+    if (stored) {
+      try {
+        const parsed: ServiceRequestItem[] = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setUser((prev) => ({
+            ...prev,
+            requests: parsed,
+          }));
+        }
+      } catch (err) {
+        console.error("Error parsing saved requests:", err);
+      }
+    }
+  }, []);
+
   const refreshUser = useCallback(async () => {
     try {
       const response = await api.get("/api/users/profile");
@@ -98,7 +112,17 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     }
   }, []);
 
-  // Función para fetch del calendario en un año específico, usando el rol del usuario
+  useEffect(() => {
+    if (user.requests.length > 0) {
+      localStorage.setItem(
+        "user_service_requests",
+        JSON.stringify(user.requests)
+      );
+    } else {
+      localStorage.removeItem("user_service_requests");
+    }
+  }, [user.requests]);
+
   const fetchCalendar = useCallback(
     async (year: number) => {
       try {
@@ -116,25 +140,58 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     [user.role]
   );
 
-  // Al montar el proveedor se refresca el usuario y se carga el calendario del año actual
   useEffect(() => {
     refreshUser();
     fetchCalendar(currentYear);
   }, [refreshUser, fetchCalendar, currentYear]);
 
-  // Función de logout que reinicia el usuario a guest
   const logout = async () => {
     try {
-      await api.post("/api/users/logout");
+      await logoutUser(); // llamada a la API
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Logout failed:", error);
     } finally {
-      setUser(initialGuestUser);
+      setUser(initialGuestUser); // limpia el estado
     }
   };
 
+  const addRequestToUser = (newRequest: ServiceRequestItem) => {
+    saveRequestItemToStorage(newRequest); // 🔐 localStorage
+    setUser((prev) => ({
+      ...prev,
+      requests: addItem(prev.requests, newRequest), // 🧠 memoria
+    }));
+  };
+  
+  const removeRequestFromUser = (index: number) => {
+    removeRequestItemFromStorage(index); // 🔐 localStorage
+    setUser((prev) => ({
+      ...prev,
+      requests: removeItem(prev.requests, index),
+    }));
+  };
+  
+  const clearAllRequests = () => {
+    clearAllRequestItemsFromStorage(); // 🔐 localStorage
+    setUser((prev) => ({
+      ...prev,
+      requests: clearItems(),
+    }));
+  };
+  
+
   return (
-    <UserContext.Provider value={{ user, setUser, refreshUser, logout }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        refreshUser,
+        logout,
+        addRequestToUser,
+        removeRequestFromUser,
+        clearAllRequests,
+      }}
+    >
       <CalendarContext.Provider
         value={{ calendars, currentYear, setCurrentYear, fetchCalendar }}
       >

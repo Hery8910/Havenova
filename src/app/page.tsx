@@ -8,7 +8,7 @@ import { BlogPost } from "../types/blog";
 import Hero from "../components/hero/page";
 import Benefits from "../components/benefits/page";
 import WorkFlow from "../components/workFlow/page";
-import Services from "./services/page";
+import Service from "../components/service/page";
 import QuestionAnswer from "../components/q&a/page";
 import Review from "../components/reviews/page";
 import BlogList from "../components/blog/blogList/page";
@@ -276,7 +276,7 @@ export default function Home() {
       <Hero hero={homeHero} />
       <Benefits />
       <WorkFlow />
-      <Services />
+      <Service />
       <Review />
       <QuestionAnswer />
       <BlogList blogs={blogs} />

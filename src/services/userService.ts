@@ -1,5 +1,14 @@
 import api from "./api";
 import { RegisterResponse } from "../types/User";
+import { ServiceRequestItem } from "../types/services";
+
+interface UpdateUserPayload {
+  email: string;
+  name: string;
+  address: string;
+  phone: string;
+  requests?: ServiceRequestItem[]; // 👈 ahora es opcional
+}
 
 export const registerUser = async (
   name: string,
@@ -35,17 +44,10 @@ export const loginUser = async (
   });
   return response.data;
 };
-export const updateUser = async (
-  email: string,
-  name: string,
-  address: string,
-  phone: string
-): Promise<RegisterResponse> => {
-  const response = await api.post<RegisterResponse>("/api/users/update-user", {
-    name,
-    email,
-    address,
-    phone,
-  });
+export const updateUser = async (payload: UpdateUserPayload): Promise<RegisterResponse> => {
+  const response = await api.post<RegisterResponse>("/api/users/update-user", payload);
   return response.data;
+};
+export const logoutUser = async (): Promise<void> => {
+  await api.post("/api/users/logout");
 };

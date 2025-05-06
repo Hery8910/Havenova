@@ -1,3 +1,5 @@
+import { FurnitureAssemblyData } from "../types/services";
+
 // validators.ts
 export const isNameValid = (name: string): boolean =>
   /^[A-Z][a-zA-Z- äöü' ]{1,49}$/.test(name.trim());
@@ -32,3 +34,19 @@ export const validateField = (name: string, value: string): string => {
   return "";
 };
 
+
+export const validateFurnitureForm = (formData: FurnitureAssemblyData): string | null => {
+  if (!formData.title || formData.title.trim() === "") {
+    return "Please enter the furniture name.";
+  }
+
+  if (!formData.quantity || isNaN(Number(formData.quantity)) || Number(formData.quantity) < 1) {
+    return "Please enter a valid quantity.";
+  }
+
+  if (!formData.position || !["wall", "floor"].includes(formData.position)) {
+    return "Please specify whether the furniture will be mounted on the wall or placed on the floor.";
+  }
+
+  return null; // ✅ No errors
+};

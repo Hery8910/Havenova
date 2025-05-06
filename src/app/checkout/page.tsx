@@ -1,11 +1,9 @@
-import ServicesHeader from '../../../components/services/servicesHeader/page'
-import LivePreview from '../../../components/services/serviceCart/page'
-import Reviews from "../../../components/reviews/page";
-import BlogList from "../../../components/blog/blogList/page";
+import styles from "./page.module.css";
+import ServiceCart from "../../components/services/serviceCart/page";
+import Reviews from "../../components/reviews/page";
+import BlogList from "../../components/blog/blogList/page";
 
-import styles from './page.module.css';
-
- const KitchenCleaningPage = () => {
+const CheckOut = () => {
   const blogs = [
     {
       id: "1",
@@ -114,7 +112,8 @@ import styles from './page.module.css';
       title: "How to Prepare Your Home for Winter",
       slug: "prepare-home-for-winter",
       image: "/images/prepare-home-for-winter-blog.webp",
-      imageAlt: "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
+      imageAlt:
+        "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
       metaDescription:
         "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
       introduction:
@@ -227,34 +226,27 @@ import styles from './page.module.css';
       author: "Havenova Team",
     },
   ];
-
-  const kitchenCleaningHeader = {
-    title: "Deep Kitchen Cleaning in Berlin",
+  const furnitureAssemblyHeader = {
+    title: "Furniture Assembly",
     description:
-      "Request a professional kitchen deep clean by answering a few questions. We'll schedule a visit to evaluate your space before providing a final quote.",
+      "Need help setting up furniture? Let us know the type and quantity. We’ll confirm everything during the on-site visit.",
     image: {
-      src: "/images/kitchen-cleaning.webp",
-      alt: "Deep Kitchen Cleaning Illustration",
+      src: "/images/furniture-assembly.webp",
+      alt: "Furniture Assembly Illustration",
     },
-  }
+  };
+
+  
+  
   return (
     <main className={styles.main}>
-      <ServicesHeader serviceHeader={kitchenCleaningHeader}/>
       <section className={styles.section}>
-          <LivePreview />
-          <ul className={styles.container}>
-          <li>
-            Aqui hay algo
-            {/* <FurnitureAssemblyForm/> */}
-          </li>
-          <li>{/* <CalenderForm /> */}</li>
-          <li>{/* <UserForm /> */}</li>
-        </ul>
+        <ServiceCart />
       </section>
-        <Reviews />
-        <BlogList  blogs={blogs}/>
+      <Reviews />
+      <BlogList blogs={blogs} />
     </main>
   );
 };
 
-export default KitchenCleaningPage
+export default CheckOut;

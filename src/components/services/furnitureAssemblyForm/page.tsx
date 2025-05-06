@@ -2,6 +2,11 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
+import { saveRequestItemToStorage } from "../../../utils/serviceRequest";
+import { validateFurnitureForm } from "../../../utils/validators";
+import { FurnitureAssemblyData } from "../../../types/services";
+import { useUser } from "../../../contexts/UserContext";
+import { handleServiceRequest } from "../../../services/serviceRequestHandler";
 
 const FurnitureAssemblyForm = () => {
   const furnitureTypes = [
@@ -162,13 +167,29 @@ const FurnitureAssemblyForm = () => {
       ],
     },
   ];
+  const { user, addRequestToUser } = useUser();
   const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FurnitureAssemblyData>({
+    title: "Furniture Assembly",
+    type: "",
+    location: "",
+    quantity: "1",
+    position: "floor",
+    width: "",
+    height: "",
+    length: "",
+    doors: "",
+    drawers: "",
+    notes: "",
+  });
 
   useEffect(() => {
     if (furnitureTypes.length > 0) {
       setSelectedLocation(furnitureTypes[0].location);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelect = (location: string) => {
@@ -179,47 +200,209 @@ const FurnitureAssemblyForm = () => {
     (group) => group.location === selectedLocation
   );
 
+  const handleClick = (label: string) => {
+    setSelectedItem(label);
+    setOpen(true);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const typedValue = type === "number" ? parseFloat(value) || "" : value;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: typedValue,
+      title: "Furniture Assembly",
+      type: selectedItem,
+      location: selectedLocation,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const error = validateFurnitureForm(formData);
+    if (error) {
+      alert(error);
+      return;
+    }
+    try {
+      await handleServiceRequest({
+        user,
+        newRequest: {
+          serviceType: "furniture-assembly",
+          details: formData,
+        },
+        addRequestToUser,
+      });
+      setFormData({
+        title: "Furniture Assembly",
+        type: "",
+        location: "",
+        quantity: "1",
+        position: "floor",
+        width: "",
+        height: "",
+        length: "",
+        doors: "",
+        drawers: "",
+        notes: "",
+      });
+      alert("Service item added to cart!");
+      setOpen(false)
+    } catch (err) {
+      console.error("❌ Error saving to cart:", err);
+    }
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Location Buttons */}
-      <div className="flex flex-wrap gap-3">
+    <main className={styles.main}>
+      <header className={styles.header}>
         {furnitureTypes.map((group) => (
           <button
             key={group.location}
             onClick={() => handleSelect(group.location)}
-            className={`px-4 py-2 rounded border transition ${
-              selectedLocation === group.location
-                ? "bg-blue-600 text-white border-blue-600"
-                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+            className={` button ${
+              selectedLocation === group.location ? `${styles.active}` : ""
             }`}
           >
             {group.location}
           </button>
         ))}
-      </div>
-
-      {/* Furniture Grid for selected location */}
+      </header>
       {activeGroup && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+        <ul className={styles.ul}>
           {activeGroup.furniture.map((item) => (
-            <div
+            <li
               key={item.id}
-              className="flex flex-col items-center p-3 border rounded hover:shadow cursor-pointer transition"
+              className={styles.li}
+              onClick={() => handleClick(item.label)}
             >
               <Image
                 className={styles.image}
                 src={item.icon}
                 priority={true}
                 alt={item.label}
-                width={30}
-                height={30}
+                width={50}
+                height={50}
               />
-              <span className="text-sm text-center">{item.label}</span>
-            </div>
+              <p>{item.label}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
-    </div>
+      {open && (
+        <aside className={styles.aside}>
+          <header>
+            <h3>{formData.title}</h3>
+            <h4>{selectedLocation}</h4>
+            <button onClick={() => setOpen(false)}>Close</button>
+          </header>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>{selectedItem}</label>
+              <input
+                type="number"
+                name="quantity"
+                value={formData.quantity}
+                placeholder="1"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label>Mount on wall?</label>
+              <div>
+                <label className={styles.container}>
+                  <input
+                    className={styles.checkbox}
+                    type="checkbox"
+                    name="position"
+                    value="wall"
+                    checked={formData.position === "wall"}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        position: e.target.checked ? "wall" : "floor",
+                      }))
+                    }
+                  />
+                  <svg viewBox="0 0 64 64" height="24px" width="24px">
+                    <path
+                      d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                      pathLength="575.0541381835938"
+                      className={styles.path}
+                    ></path>
+                  </svg>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label className="block font-medium">Length (cm)</label>
+              <input
+                type="number"
+                name="width"
+                value={formData.width || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Width (cm)</label>
+              <input
+                type="number"
+                name="height"
+                value={formData.height || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Depth (cm)</label>
+              <input
+                type="number"
+                name="length"
+                value={formData.length || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <label className="block font-medium">Number of Doors</label>
+              <input
+                type="number"
+                name="doors"
+                value={formData.doors || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <label className="block font-medium">Number of Drawers</label>
+              <input
+                type="number"
+                name="drawers"
+                value={formData.drawers || ""}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div>
+              <label>Notes</label>
+              <textarea
+                name="notes"
+                value={formData.notes || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <button type="submit">submit</button>
+          </form>
+        </aside>
+      )}
+    </main>
   );
 };
 

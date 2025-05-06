@@ -55,29 +55,28 @@ export default function UserContactForm({
         email: user.email || "",
         phone: user.phone || "",
         address: user.address || "",
-        serviceAddress: user.serviceAddress || "",
       }));
     }
   }, [user]);
 
 
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
-    let isValid = true;
+  // const validateForm = (): boolean => {
+  //   const newErrors: Partial<FormData> = {};
+  //   let isValid = true;
 
-    Object.keys(formData).forEach((key) => {
-      const fieldName = key as keyof FormData;
-      const error = validateField(fieldName, formData[fieldName]);
-      if (error) {
-        isValid = false;
-        newErrors[fieldName] = error;
-      }
-    });
+  //   Object.keys(formData).forEach((key) => {
+  //     const fieldName = key as keyof FormData;
+  //     const error = validateField(fieldName, formData[fieldName]);
+  //     if (error) {
+  //       isValid = false;
+  //       newErrors[fieldName] = error;
+  //     }
+  //   });
 
-    setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
-    return isValid;
-  };
+  //   setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
+  //   return isValid;
+  // };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -153,28 +152,6 @@ export default function UserContactForm({
         required
       />
       {errors.address && <p className={styles.error}>{errors.address}</p>}
-      {showserviceAddress && (
-        <div>
-          <p>Use the same address as above?</p>
-          <button onClick={() => setSameAdress(true)}>
-            <input
-              className={styles.input}
-              type="text"
-              name="serviceAddress"
-              placeholder="Service Address"
-              value={sameAdress ? formData.address : formData.serviceAddress}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="address"
-              required
-            />
-            Yes, use my saved address
-          </button>
-          {errors.serviceAddress && (
-            <p className={styles.error}>{errors.serviceAddress}</p>
-          )}
-        </div>
-      )}
 
       <input
         className={styles.input}
