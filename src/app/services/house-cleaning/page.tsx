@@ -1,4 +1,4 @@
-import ServicesHeader from '../../../components/services/servicesHeader/page'
+import Hero from "../../../components/hero/page";
 import LivePreview from '../../../components/services/serviceCart/page'
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
@@ -236,10 +236,13 @@ const HouseCleaningPage = () => {
       src: "/images/home-cleaning.webp",
       alt: "Home Cleaning Illustration",
     },
+    cta: "",
+    href: "",
+    extraClass: "hero_services",
   }
   return (
     <main className={styles.main}>
-    <ServicesHeader serviceHeader={houseCleaningHeader}/>
+    <Hero hero={houseCleaningHeader}/>
       <section className={styles.section}>
           <LivePreview />
           <ul className={styles.container}>

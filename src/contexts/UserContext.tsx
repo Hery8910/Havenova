@@ -16,10 +16,21 @@ import {
   updateRequest,
 } from "../services/serviceOrder";
 import { logoutUser } from "../services/userService";
-import { FurnitureAssemblyData, ServiceOrder, ServiceRequestItem } from "../types/services";
+import {
+  FurnitureAssemblyData,
+  ServiceOrder,
+  ServiceRequestItem,
+} from "../types/services";
 import { User } from "../types/User";
-import { addItem, clearAllRequestItemsFromStorage, clearItems, removeItem, removeRequestItemFromStorage, saveRequestItemToStorage } from "../utils/serviceRequest";
-
+import {
+  addItem,
+  clearAllRequestItemsFromStorage,
+  clearItems,
+  getRequestItemsFromStorage,
+  removeItem,
+  removeRequestItemFromStorage,
+  saveRequestItemToStorage,
+} from "../utils/serviceRequest";
 
 interface UserContextProps {
   user: User;
@@ -82,46 +93,29 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     new Date().getFullYear()
   );
 
-  useEffect(() => {
-    const stored = localStorage.getItem("user_service_requests");
-    if (stored) {
-      try {
-        const parsed: ServiceRequestItem[] = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          setUser((prev) => ({
-            ...prev,
-            requests: parsed,
-          }));
-        }
-      } catch (err) {
-        console.error("Error parsing saved requests:", err);
-      }
-    }
-  }, []);
-
   const refreshUser = useCallback(async () => {
     try {
       const response = await api.get("/api/users/profile");
+
       if (response.data) {
-        setUser(response.data);
+        setUser(response.data); // usuario logeado: sin modificar
       } else {
-        setUser(initialGuestUser);
+        // usuario guest
+        const localRequests = getRequestItemsFromStorage();
+        setUser({
+          ...initialGuestUser,
+          requests: localRequests,
+        });
       }
     } catch (error: any) {
-      setUser(initialGuestUser);
+      // también es guest si hay error
+      const localRequests = getRequestItemsFromStorage();
+      setUser({
+        ...initialGuestUser,
+        requests: localRequests,
+      });
     }
   }, []);
-
-  useEffect(() => {
-    if (user.requests.length > 0) {
-      localStorage.setItem(
-        "user_service_requests",
-        JSON.stringify(user.requests)
-      );
-    } else {
-      localStorage.removeItem("user_service_requests");
-    }
-  }, [user.requests]);
 
   const fetchCalendar = useCallback(
     async (year: number) => {
@@ -162,7 +156,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
       requests: addItem(prev.requests, newRequest), // 🧠 memoria
     }));
   };
-  
+
   const removeRequestFromUser = (index: number) => {
     removeRequestItemFromStorage(index); // 🔐 localStorage
     setUser((prev) => ({
@@ -170,7 +164,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
       requests: removeItem(prev.requests, index),
     }));
   };
-  
+
   const clearAllRequests = () => {
     clearAllRequestItemsFromStorage(); // 🔐 localStorage
     setUser((prev) => ({
@@ -178,7 +172,6 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
       requests: clearItems(),
     }));
   };
-  
 
   return (
     <UserContext.Provider

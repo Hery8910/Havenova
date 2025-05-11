@@ -57,7 +57,7 @@
 
 .hero_services {
   width: 1200px;
-  margin-bottom: 0;
+  margin: 200px auto 100px;
   position: relative;
   padding: 8px 16px;
   border-radius: 8px;
@@ -72,6 +72,7 @@
 }
 
 .hero_services_header {
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

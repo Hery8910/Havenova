@@ -1,9 +1,9 @@
-import ServicesHeader from '../../../components/services/servicesHeader/page'
-import LivePreview from '../../../components/services/serviceCart/page'
+import Hero from "../../../components/hero/page";
+import LivePreview from "../../../components/services/serviceCart/page";
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
 
-import styles from './page.module.css';
+import styles from "./page.module.css";
 
 const HomeServicePage = () => {
   const blogs = [
@@ -114,7 +114,8 @@ const HomeServicePage = () => {
       title: "How to Prepare Your Home for Winter",
       slug: "prepare-home-for-winter",
       image: "/images/prepare-home-for-winter-blog.webp",
-      imageAlt: "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
+      imageAlt:
+        "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
       metaDescription:
         "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
       introduction:
@@ -235,14 +236,16 @@ const HomeServicePage = () => {
       src: "/images/home-repair.webp",
       alt: "Home Repair Illustration",
     },
-  
-  }
+    cta: "",
+    href: "",
+    extraClass: "hero_services",
+  };
   return (
     <main className={styles.main}>
-     <ServicesHeader serviceHeader={homeServiceHeader}/>
+      <Hero hero={homeServiceHeader} />
       <section className={styles.section}>
-          <LivePreview />
-          <ul className={styles.container}>
+        <LivePreview />
+        <ul className={styles.container}>
           <li>
             Aqui hay algo
             {/* <FurnitureAssemblyForm/> */}
@@ -251,10 +254,10 @@ const HomeServicePage = () => {
           <li>{/* <UserForm /> */}</li>
         </ul>
       </section>
-        <Reviews />
-        <BlogList  blogs={blogs}/>
+      <Reviews />
+      <BlogList blogs={blogs} />
     </main>
   );
 };
 
-export default HomeServicePage
+export default HomeServicePage;

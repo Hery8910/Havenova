@@ -1,9 +1,10 @@
-import ServicesHeader from '../../../components/services/servicesHeader/page'
-import LivePreview from '../../../components/services/serviceCart/page'
+import Hero from "../../../components/hero/page";
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
 
-import styles from './page.module.css';
+import styles from "./page.module.css";
+import ServiceCart from "../../../components/services/serviceCart/page";
+import WindowsCleaningForm from "../../../components/services/windowsCleaning/windowsCleaningForm/page";
 
 const WindowsCleaningPage = () => {
   const blogs = [
@@ -114,7 +115,8 @@ const WindowsCleaningPage = () => {
       title: "How to Prepare Your Home for Winter",
       slug: "prepare-home-for-winter",
       image: "/images/prepare-home-for-winter-blog.webp",
-      imageAlt: "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
+      imageAlt:
+        "Illustration of a girl sitting on the windowsill drinking a winter drink and wrapped in a blanket Winter background outside the window.",
       metaDescription:
         "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
       introduction:
@@ -236,25 +238,23 @@ const WindowsCleaningPage = () => {
       src: "/images/windows-cleaning.webp",
       alt: "Window Cleaning Illustration",
     },
-  }
+    cta: "",
+    href: "",
+    extraClass: "hero_services",
+  };
   return (
     <main className={styles.main}>
-      <ServicesHeader serviceHeader={windowsCleaningHeader}/>
+      <header>
+        <Hero hero={windowsCleaningHeader} />
+      </header>
       <section className={styles.section}>
-          <LivePreview />
-          <ul className={styles.container}>
-          <li>
-            Aqui hay algo
-            {/* <FurnitureAssemblyForm/> */}
-          </li>
-          <li>{/* <CalenderForm /> */}</li>
-          <li>{/* <UserForm /> */}</li>
-        </ul>
+        <WindowsCleaningForm />
+        <ServiceCart />
       </section>
-        <Reviews />
-        <BlogList  blogs={blogs}/>
+      <Reviews />
+      <BlogList blogs={blogs} />
     </main>
   );
 };
 
-export default WindowsCleaningPage
+export default WindowsCleaningPage;

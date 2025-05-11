@@ -2,7 +2,7 @@ import styles from "./page.module.css";
 import ServiceCart from "../../../components/services/serviceCart/page";
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
-import FurnitureAssemblyForm from "../../../components/services/furnitureAssemblyForm/page";
+import FurnitureAssemblyForm from "../../../components/services/furnitureAssembly/furnitureAssemblyForm/page";
 import Hero from "../../../components/hero/page";
 
 const FurnitureAssemblyPage = () => {
@@ -241,7 +241,7 @@ const FurnitureAssemblyHero = {
 }
   return (
     <main className={styles.main}>
-      <header>
+      <header className={styles.header}>
         <Hero hero={FurnitureAssemblyHero} />
       </header>
       <section className={styles.section}>

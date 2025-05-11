@@ -14,8 +14,6 @@ export const handleServiceRequest = async ({
   newRequest,
   addRequestToUser,
 }: Props) => {
-  addRequestToUser(newRequest);
-
   if (user.role === "guest") {
     saveRequestItemToStorage(newRequest);
   } else {

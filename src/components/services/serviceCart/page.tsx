@@ -4,83 +4,59 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../../../contexts/UserContext";
 import Link from "next/link";
 import styles from "./page.module.css";
-import {ServiceRequestItem } from "../../../types/services";
 import {
-  removeRequestItemFromStorage,
   clearAllRequestItemsFromStorage,
+  getRequestsByType,
 } from "../../../utils/serviceRequest";
+import ServiceRenderer from "../serviceRenderer/page";
+import Image from "next/image";
 
 const ServiceCart = () => {
-  const { user, removeRequestFromUser, clearAllRequests } = useUser();
-  const [localRequests, setLocalRequests] = useState<ServiceRequestItem[]>(
-    []
-  );
+  const { user, clearAllRequests } = useUser();
 
+  const allRequests = user.requests;
 
-  useEffect(() => {
-      setLocalRequests(user.requests);
-  }, [user.requests]);
-  console.log(user);
-  
+  const types = Array.from(new Set(allRequests.map((r) => r.serviceType)));
 
-  if (!localRequests || localRequests.length === 0) {
+  if (!allRequests || allRequests.length === 0) {
     return (
-      <main>
-        <h2 className="text-xl font-semibold">Your Service Cart</h2>
-        <p>No services requests.</p>
+      <main className={styles.main}>
+        <header className={styles.header}>
+          <h3>Your Service Cart</h3>
+        </header>
+        <section className={styles.section}>
+          <p className={styles.p}>No services requests.</p>
+        </section>
       </main>
     );
   }
 
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-xl font-semibold">Your Service Cart</h2>
-      {localRequests.map((item, index) => (
-        <li key={index} className="border p-4 rounded">
-          <p className="font-bold">
-            {item.details.type} in {item.details.location}
-          </p>
-
-          <>
-            <p>Quantity: {item.details.quantity}</p>
-            <p>Position: {item.details.position}</p>
-            <p>
-              Dimensions: {item.details.length} x {item.details.width} x {item.details.height}
-            </p>
-            <p>Doors: {item.details.doors}</p>
-            <p>Drawers: {item.details.drawers}</p>
-            <p>Notes: {item.details.notes}</p>
-          </>
-
-          <button
-            onClick={() => {
-              removeRequestItemFromStorage(index);
-              removeRequestFromUser(index);
-              setLocalRequests((prev) => prev.filter((_, i) => i !== index));
-            }}
-          >
-            Remove
-          </button>
-        </li>
-      ))}
-
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={() => {
-            clearAllRequestItemsFromStorage();
-            clearAllRequests();
-            setLocalRequests([]);
-          }}
-        >
-          Clear All
-        </button>
-        <Link href="/submit-service">
-          <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-            Submit Request
-          </button>
+    <main className={styles.main}>
+      <header className={styles.header}>
+        <h3>Your Service Cart</h3>
+        <Image
+          className={styles.image}
+          src="/svg/shoppingCart.svg"
+          alt="Shopping Cart icon"
+          width={30}
+          height={30}
+        />
+      </header>
+      {types.map((type) => {
+        const requests = getRequestsByType(allRequests, type as any); // TypeScript no infiere bien aquí
+        return (
+          <section className={styles.section} key={type}>
+            <ServiceRenderer type={type} requests={requests} />
+          </section>
+        );
+      })}
+      <section className={styles.checkout}>
+        <Link href="/checkout">
+          <button className={styles.submit}>Checkout</button>
         </Link>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

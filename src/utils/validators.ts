@@ -34,19 +34,21 @@ export const validateField = (name: string, value: string): string => {
   return "";
 };
 
-
-export const validateFurnitureForm = (formData: FurnitureAssemblyData): string | null => {
-  if (!formData.title || formData.title.trim() === "") {
-    return "Please enter the furniture name.";
+export const validateFurnitureForm = (
+  formData: FurnitureAssemblyData
+): string | null => {
+  // Dynamic checks based on 'input' flags
+  if (formData.width === "" || Number(formData.width) <= 0) {
+    return "Please enter a valid width.";
   }
 
-  if (!formData.quantity || isNaN(Number(formData.quantity)) || Number(formData.quantity) < 1) {
-    return "Please enter a valid quantity.";
+  if (formData.height === "" || Number(formData.height) <= 0) {
+    return "Please enter a valid height.";
   }
 
-  if (!formData.position || !["wall", "floor"].includes(formData.position)) {
-    return "Please specify whether the furniture will be mounted on the wall or placed on the floor.";
+  if (formData.depth === "" || Number(formData.depth) <= 0) {
+    return "Please enter a valid depth.";
   }
 
-  return null; // ✅ No errors
+  return null; // ✅ All checks passed
 };

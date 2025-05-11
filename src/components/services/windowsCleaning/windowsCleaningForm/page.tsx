@@ -1,0 +1,212 @@
+"use client";
+import { useEffect, useState } from "react";
+import styles from "./page.module.css";
+import Image from "next/image";
+import { saveRequestItemToStorage } from "../../../../utils/serviceRequest";
+import { validateFurnitureForm } from "../../../../utils/validators";
+import { serviceIcon, WindowCleaningData } from "../../../../types/services";
+import { useUser } from "../../../../contexts/UserContext";
+import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
+import { IoClose } from "react-icons/io5";
+
+const WindowsCleaningForm = () => {
+  const { user, refreshUser, addRequestToUser } = useUser();
+  const [icon, setIcon] = useState<serviceIcon>({
+    src: "/svg/window.svg",
+    alt: "Window icon",
+  });
+  const [formData, setFormData] = useState<WindowCleaningData>({
+    title: "Windows Cleaning",
+    icon: {
+      src: "/svg/window.svg",
+      alt: "Window icon",
+    },
+    windows: 1,
+    doors: 0,
+    access: "no",
+    notes: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const typedValue = type === "number" ? parseFloat(value) || "" : value;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: typedValue,
+      title: "Window Cleaning",
+      icon: {
+        src: icon.src,
+        alt: icon.alt,
+      },
+    }));
+  };
+
+  const handleAdjust = (
+    field: "doors" | "windows",
+    action: "add" | "subtract"
+  ) => {
+    setFormData((prev) => {
+      const current = prev[field];
+      const updated =
+        action === "add"
+          ? current + 1
+          : field === "windows"
+            ? Math.max(1, current - 1)
+            : Math.max(0, current - 1);
+      return {
+        ...prev,
+        [field]: updated,
+      };
+    });
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await handleServiceRequest({
+        user,
+        newRequest: {
+          serviceType: "window-cleaning",
+          details: formData,
+        },
+        addRequestToUser,
+      });
+      setFormData({
+        title: "Windows Cleaning",
+        icon: {
+          src: "/svg/window.svg",
+          alt: "Window icon",
+        },
+        windows: 1,
+        doors: 0,
+        access: "no",
+        notes: "",
+      });
+      alert("Service item added to cart!");
+      refreshUser();
+    } catch (err) {
+      console.error("❌ Error saving to cart:", err);
+    }
+  };
+
+  return (
+    <>
+      <form className={styles.form} onSubmit={handleSubmit}>
+      <header className={styles.header}>
+            <Image
+              className={styles.header_image}
+              src="/svg/windowColor.svg"
+              priority={true}
+              alt="Window Icon"
+              width={70}
+              height={70}
+            />
+              <h3>{formData.title}</h3>
+          </header>
+        <div className={styles.form_div}>
+          <div className={styles.div}>
+            <Image
+              className={styles.image}
+              src="/svg/windowBlack.svg"
+              priority={true}
+              alt="Window Icon"
+              width={30}
+              height={30}
+            />
+            <p>Windows</p>
+          </div>
+          <div className={styles.counter}>
+            <button
+              className={styles.rest_button}
+              type="button"
+              onClick={() => handleAdjust("windows", "subtract")}
+            >
+              -
+            </button>
+            <p className={styles.counter_p}>{formData.windows}</p>
+            <button
+              className={styles.add_button}
+              type="button"
+              onClick={() => handleAdjust("windows", "add")}
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div className={styles.form_div}>
+          <div className={styles.div}>
+            <Image
+              className={styles.image}
+              src="/svg/door.svg"
+              priority={true}
+              alt="Door Icon"
+              width={30}
+              height={30}
+            />
+            <p>Doors</p>
+          </div>
+          <div className={styles.counter}>
+            <button
+              className={styles.rest_button}
+              type="button"
+              onClick={() => handleAdjust("doors", "subtract")}
+            >
+              -
+            </button>
+            <p className={styles.counter_p}>{formData.doors}</p>
+            <button
+              className={styles.add_button}
+              type="button"
+              onClick={() => handleAdjust("doors", "add")}
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div className={styles.form_div}>
+          <div className={styles.div}>
+            <Image
+              className={styles.image}
+              src="/svg/windowAccess.svg"
+              priority={true}
+              alt="Window Icon"
+              width={30}
+              height={30}
+            />
+            <label className={styles.label}>Exterior Access?</label>
+          </div>
+
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              checked={formData.access === "yes"}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  access: e.target.checked ? "yes" : "no",
+                }))
+              }
+            />
+            <span className={styles.slider}></span>
+          </label>
+        </div>
+
+        <textarea
+          className={styles.textarea}
+          name="notes"
+          value={formData.notes || ""}
+          onChange={handleChange}
+          placeholder="Leave us a comment"
+        />
+
+        <button className={styles.submit} type="submit">
+          Submit
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default WindowsCleaningForm;

@@ -23,6 +23,13 @@ export const getRequestItemsFromStorage = (): ServiceRequestItem[] => {
   }
 };
 
+export const getRequestsByType = <T extends ServiceRequestItem>(
+  all: ServiceRequestItem[],
+  type: T["serviceType"]
+): T[] => {
+  return all.filter((req): req is T => req.serviceType === type);
+};
+
 export const removeRequestItemFromStorage = (index: number) => {
   try {
     const stored = localStorage.getItem("service_request_items");
