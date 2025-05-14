@@ -1,24 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { saveRequestItemToStorage } from "../../../../utils/serviceRequest";
-import { validateFurnitureForm } from "../../../../utils/validators";
-import { serviceIcon, WindowCleaningData } from "../../../../types/services";
+import { serviceIcon, ServiceRequestItem, WindowCleaningData } from "../../../../types/services";
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
-import { IoClose } from "react-icons/io5";
 
 const WindowsCleaningForm = () => {
   const { user, refreshUser, addRequestToUser } = useUser();
   const [icon, setIcon] = useState<serviceIcon>({
-    src: "/svg/window.svg",
+    src: "/svg/windowColor.svg",
     alt: "Window icon",
   });
   const [formData, setFormData] = useState<WindowCleaningData>({
     title: "Windows Cleaning",
     icon: {
-      src: "/svg/window.svg",
+      src: "/svg/windows-cleaning.svg",
       alt: "Window icon",
     },
     windows: 1,
@@ -64,19 +62,22 @@ const WindowsCleaningForm = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+  const newRequest: ServiceRequestItem = {
+    id: uuidv4(), 
+    serviceType: "window-cleaning", 
+    details: formData,
+  };
     try {
       await handleServiceRequest({
         user,
-        newRequest: {
-          serviceType: "window-cleaning",
-          details: formData,
-        },
+        newRequest,
         addRequestToUser,
       });
       setFormData({
         title: "Windows Cleaning",
         icon: {
-          src: "/svg/window.svg",
+          src: "/svg/windows-cleaning.svg",
           alt: "Window icon",
         },
         windows: 1,
@@ -97,7 +98,7 @@ const WindowsCleaningForm = () => {
       <header className={styles.header}>
             <Image
               className={styles.header_image}
-              src="/svg/windowColor.svg"
+              src="/svg/windows-cleaning.svg"
               priority={true}
               alt="Window Icon"
               width={70}

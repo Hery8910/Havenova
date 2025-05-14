@@ -38,13 +38,16 @@ export const validateFurnitureForm = (
   formData: FurnitureAssemblyData
 ): string | null => {
   // Dynamic checks based on 'input' flags
+  if(!formData.width) return null
   if (formData.width === "" || Number(formData.width) <= 0) {
     return "Please enter a valid width.";
   }
+  if(!formData.height) return null
 
   if (formData.height === "" || Number(formData.height) <= 0) {
     return "Please enter a valid height.";
   }
+  if(!formData.depth) return null
 
   if (formData.depth === "" || Number(formData.depth) <= 0) {
     return "Please enter a valid depth.";

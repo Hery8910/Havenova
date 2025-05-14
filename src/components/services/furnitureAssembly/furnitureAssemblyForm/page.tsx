@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { saveRequestItemToStorage } from "../../../../utils/serviceRequest";
@@ -8,6 +9,7 @@ import {
   FurnitureAssemblyData,
   serviceIcon,
   serviceInput,
+  ServiceRequestItem,
 } from "../../../../types/services";
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
@@ -467,11 +469,11 @@ const FurnitureAssemblyForm = () => {
   const [formData, setFormData] = useState<FurnitureAssemblyData>({
     title: "Furniture Assembly",
     icon: {
-      src: "",
-      alt: "",
+      src: icon.src,
+      alt: icon.alt,
     },
-    type: "",
-    location: "",
+    type: selectedItem,
+    location: selectedLocation,
     quantity: "1",
     position: "floor",
     width: "",
@@ -506,6 +508,15 @@ const FurnitureAssemblyForm = () => {
     setInput(input);
     setIcon(icon);
     setOpen(true);
+    setFormData((prev) => ({
+      ...prev,
+      title: "Furniture Assembly",
+      icon,
+      type: label,
+      location: selectedLocation,
+      position: "floor", // default
+      quantity: "1",
+    }));
   };
 
   const handleChange = (
@@ -549,6 +560,11 @@ const FurnitureAssemblyForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newRequest: ServiceRequestItem = {
+      id: uuidv4(),
+      serviceType: "furniture-assembly",
+      details: formData,
+    };
     const error = validateFurnitureForm(formData);
     if (error) {
       alert(error);
@@ -557,17 +573,17 @@ const FurnitureAssemblyForm = () => {
     try {
       await handleServiceRequest({
         user,
-        newRequest: {
-          serviceType: "furniture-assembly",
-          details: formData,
-        },
+        newRequest,
         addRequestToUser,
       });
       setFormData({
         title: "Furniture Assembly",
-        icon: { src: "", alt: "" },
-        type: "",
-        location: "",
+        icon: {
+          src: icon.src,
+          alt: icon.alt,
+        },
+        type: selectedItem,
+        location: selectedLocation,
         quantity: "1",
         position: "floor",
         width: "",
@@ -770,32 +786,34 @@ const FurnitureAssemblyForm = () => {
 
             {input.wall && (
               <div className={styles.form_div}>
-              <label className={styles.label}>Mounted on wall?</label>
-              <label className={styles.switch}>
-                <input
-                  type="checkbox"
-                  checked={formData.position === "wall"}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      position: e.target.checked ? "wall" : "floor",
-                    }))
-                  }
-                />
-                <span className={styles.slider}></span>
-              </label>
-            </div>
+                <label className={styles.label}>Mounted on wall?</label>
+                <label className={styles.switch}>
+                  <input
+                    type="checkbox"
+                    checked={formData.position === "wall"}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        position: e.target.checked ? "wall" : "floor",
+                      }))
+                    }
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
             )}
 
-              <textarea
-                className={styles.textarea}
-                name="notes"
-                value={formData.notes || ""}
-                onChange={handleChange}
-                placeholder="Leave us a comment"
-              />
+            <textarea
+              className={styles.textarea}
+              name="notes"
+              value={formData.notes || ""}
+              onChange={handleChange}
+              placeholder="Leave us a comment"
+            />
 
-            <button className={styles.submit} type="submit">Submit</button>
+            <button className={styles.submit} type="submit">
+              Submit
+            </button>
           </form>
         </aside>
       )}

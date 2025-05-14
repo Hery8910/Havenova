@@ -19,7 +19,7 @@ const Hero: React.FC<{ hero: HeroProps }> = ({ hero }) => {
   return (
     <section className={hero.extraClass ? styles[hero.extraClass] : styles.section}>
     <header className={hero.extraClass ? styles[`${hero.extraClass}_header`] : styles.header}>
-      <h1>{hero.title}</h1>
+      <h1 className={hero.extraClass ? styles[`${hero.extraClass}_h1`] : styles.h1}>{hero.title}</h1>
       <p className={styles.p}>{hero.description}</p>
       {hero.cta && (
         <Link href={hero.href} className="button">

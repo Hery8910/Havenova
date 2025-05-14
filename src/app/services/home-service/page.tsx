@@ -233,7 +233,7 @@ const HomeServicePage = () => {
     description:
       "Describe the issue or service needed. We’ll review your request and schedule a visit to determine the scope and pricing.",
     image: {
-      src: "/images/home-repair.webp",
+      src: "/svg/home-service.svg",
       alt: "Home Repair Illustration",
     },
     cta: "",

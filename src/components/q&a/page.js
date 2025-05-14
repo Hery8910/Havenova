@@ -1,4 +1,5 @@
-import Accordion from '../accordion/page'
+import Accordion from "../accordion/page";
+
 const QuestionAnswer = () => {
   const questions = [
     {

@@ -233,7 +233,7 @@ import styles from './page.module.css';
     description:
       "Request a professional kitchen deep clean by answering a few questions. We'll schedule a visit to evaluate your space before providing a final quote.",
     image: {
-      src: "/images/kitchen-cleaning.webp",
+      src: "/svg/kitchen-cleaning.svg",
       alt: "Deep Kitchen Cleaning Illustration",
     },
     cta: "",

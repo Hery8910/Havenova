@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import styles from "./page.module.css";
@@ -32,20 +30,20 @@ const WindowCleaningRequest = ({ requests }: Props) => {
                 height={50}
               />
               <div className={styles.div}>
-                {/* <p>
-                  <strong>{item.details}</strong>
-                </p>
                 <p>
-                  {item.details.quantity}x {item.details.type}
-                </p> */}
+                  <strong>{item.details.windows}x Window</strong>
+                </p>
+                {item.details.doors !== 0 && 
+                <p>
+                <strong>{item.details.doors}x Doors</strong>
+                </p>}
               </div>
             </div>
 
             <button
               className={styles.Btn}
               onClick={() => {
-                removeRequestItemFromStorage(index);
-                removeRequestFromUser(index);
+                removeRequestFromUser(item.id);
               }}
             >
               <div className={styles.sign}>

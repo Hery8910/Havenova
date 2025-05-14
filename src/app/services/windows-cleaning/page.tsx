@@ -235,7 +235,7 @@ const WindowsCleaningPage = () => {
     description:
       "Book a streak-free window cleaning service. Fill out the form and we'll arrange a visit to assess your needs before confirming pricing.",
     image: {
-      src: "/images/windows-cleaning.webp",
+      src: "/svg/windows-cleaning.svg",
       alt: "Window Cleaning Illustration",
     },
     cta: "",

@@ -7,11 +7,11 @@ import Image from "next/image";
 interface Props {
   requests: Extract<
     ServiceRequestItem,
-    { serviceType: "furniture-assembly" }
+    { serviceType: "house-cleaning" }
   >[];
 }
 
-const FurnitureAssemblyRequest = ({ requests }: Props) => {
+const HouseCleaningRequest = ({ requests }: Props) => {
   const { user, removeRequestFromUser } = useUser();
 
   return (
@@ -30,10 +30,10 @@ const FurnitureAssemblyRequest = ({ requests }: Props) => {
               />
               <div className={styles.div}>
                 <p>
-                  <strong>{item.details.location}</strong>
+                  <strong>{item.details.surface} m²</strong>
                 </p>
                 <p>
-                  {item.details.quantity}x {item.details.type}
+                  {item.details.house === "yes" ? "House" : "Apartment"}
                 </p>
               </div>
             </div>
@@ -66,4 +66,4 @@ const FurnitureAssemblyRequest = ({ requests }: Props) => {
   );
 };
 
-export default FurnitureAssemblyRequest;
+export default HouseCleaningRequest;

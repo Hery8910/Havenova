@@ -1,11 +1,11 @@
 :root {
   --font-roboto: Roboto, sans-serif;
-  --background-color: #6e8a8f;
+  --background-color: hsl(189, 13%, 50%);
   --font-color-white: #f5f3f5;
   --font-color-black: #022e2d;
   --secondary-color: #0e3c67;
-  --light-color: #82b6d2;
-  --bgCards-color: #8cd1f6ae;
+  --light-color: hsl(201, 47%, 67%);
+  --bgCards-color: hsla(201, 85%, 76%, 0.682);
 
   --spacing-small: 8px;
   --spacing-medium: 16px;

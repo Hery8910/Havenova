@@ -12,7 +12,7 @@ export interface ServiceOrder {
   preferredTime: string;
   services: ServiceRequestItem[];
 }
-
+// Agregar correo para despues de 15 dias enviar un mahnung si no han pagado.
 export type ServiceStatus = "draft" | "submitted" | "completed" | "cancelled";
 
 export type serviceIcon = {
@@ -29,9 +29,19 @@ export type serviceInput = {
 };
 
 export type ServiceRequestItem =  {
+  id: string;
+  serviceType: "kitchen-assembly";
+  details: KitchenAssemblyData;
+} |{
+  id: string;
+  serviceType: "house-cleaning";
+  details: HouseCleaningData;
+} | {
+  id: string;
   serviceType: "furniture-assembly";
   details: FurnitureAssemblyData;
 } | {
+  id: string;
   serviceType: "window-cleaning";
   details: WindowCleaningData;
 }; 
@@ -58,5 +68,32 @@ export interface WindowCleaningData {
   windows: number;
   doors: number;
   access: string;
+  notes: string;
+}
+
+export interface HouseCleaningData {
+  title: string;
+  icon: serviceIcon;
+  surface: number;
+  livingRoom: number;
+  bedRooms: number;
+  badRooms: number;
+  balcon: number;
+  kitchen: string;
+  house: string;
+  notes: string;
+}
+
+export interface KitchenAssemblyData {
+  title: string;
+  icon: serviceIcon;
+  length: number;
+  lowerCabinets: number;
+  upperCabinets: number;
+  layout: string; // Ej: "Lineal", "L", "U", etc.
+  appliances: string[]; // ✅ Ahora compatible con Select
+  island: string;
+  disassemblyNeed: string;
+  provider: string; // IKEA, Leroy Merlin, etc.
   notes: string;
 }

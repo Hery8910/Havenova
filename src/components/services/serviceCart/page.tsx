@@ -46,9 +46,7 @@ const ServiceCart = () => {
       {types.map((type) => {
         const requests = getRequestsByType(allRequests, type as any); // TypeScript no infiere bien aquí
         return (
-          <section className={styles.section} key={type}>
-            <ServiceRenderer type={type} requests={requests} />
-          </section>
+            <ServiceRenderer key={type} type={type} requests={requests} />
         );
       })}
       <section className={styles.checkout}>

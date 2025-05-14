@@ -234,7 +234,7 @@ const KitchenAssemblyPage = () => {
     description:
       "We assemble kitchens fully or partially. Complete the form to request a visit where we can evaluate and provide a final quote.",
     image: {
-      src: "/images/kitchen-assembly.webp",
+      src: "/svg/kitchen-assembly.svg",
       alt: "Kitchen Assembly Illustration",
     },
     cta: "",
@@ -248,7 +248,7 @@ const KitchenAssemblyPage = () => {
         <Hero hero={kitchenAssemblyHeader} />
       </header>
       <section className={styles.section}>
-      <KitchenAssemblyForm />
+        <KitchenAssemblyForm />
         <ServiceCart />
       </section>
       <Reviews />

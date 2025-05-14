@@ -8,6 +8,7 @@ import React, {
   useCallback,
 } from "react";
 import api from "../services/api";
+import { v4 as uuidv4 } from "uuid";
 import { getCalendarAdmin, getCalendarGuest } from "../services/dashboard";
 import {
   addRequest,
@@ -38,7 +39,7 @@ interface UserContextProps {
   refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
   addRequestToUser: (newRequest: ServiceRequestItem) => void;
-  removeRequestFromUser: (index: number) => void;
+  removeRequestFromUser: (id: string) => void;
   clearAllRequests: () => void;
 }
 
@@ -150,19 +151,23 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   };
 
   const addRequestToUser = (newRequest: ServiceRequestItem) => {
-    saveRequestItemToStorage(newRequest); // 🔐 localStorage
+    const requestWithId = { ...newRequest, id: uuidv4() }; // <--- ID único
+    saveRequestItemToStorage(requestWithId);
     setUser((prev) => ({
       ...prev,
-      requests: addItem(prev.requests, newRequest), // 🧠 memoria
+      requests: addItem(prev.requests, requestWithId),
     }));
   };
 
-  const removeRequestFromUser = (index: number) => {
-    removeRequestItemFromStorage(index); // 🔐 localStorage
-    setUser((prev) => ({
-      ...prev,
-      requests: removeItem(prev.requests, index),
-    }));
+  const removeRequestFromUser = (id: string) => {
+    setUser((prev) => {
+      const updated = prev.requests.filter((req: ServiceRequestItem) => req.id !== id);
+      localStorage.setItem("service_request_items", JSON.stringify(updated));
+      return {
+        ...prev,
+        requests: updated,
+      };
+    });
   };
 
   const clearAllRequests = () => {

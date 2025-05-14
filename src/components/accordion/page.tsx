@@ -2,16 +2,22 @@ import { useState } from "react";
 import styles from "./page.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 
-const Accordion = ({questions}) => {
+// Tipo para cada pregunta
+interface QuestionItem {
+  name: string;
+  answer: string;
+}
 
-  const [open, setOpen] = useState(null);
+// Props del componente
+interface AccordionProps {
+  questions: QuestionItem[];
+}
 
-  const handleClick = (index) => {
-    if (open === null || open !== index) {
-      setOpen(index);
-    } else {
-      setOpen(null);
-    }
+const Accordion: React.FC<AccordionProps> = ({ questions }) => {
+  const [open, setOpen] = useState<number | null>(null);
+
+  const handleClick = (index: number) => {
+    setOpen((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -27,18 +33,19 @@ const Accordion = ({questions}) => {
             onClick={() => handleClick(index)}
           >
             <h4 className={styles.h4}>
-              {question.name}{" "}
+              {question.name}
               <IoIosArrowBack
-                className={`${styles.icon} ${open === index ? styles.open : ""}`}
+                className={`${styles.icon} ${
+                  open === index ? styles.open : ""
+                }`}
               />
             </h4>
-            {open === index && (
-              <p className={`${styles.p}`}>{question.answer} </p>
-            )}
+            {open === index && <p className={styles.p}>{question.answer}</p>}
           </li>
         ))}
       </ul>
     </section>
   );
 };
+
 export default Accordion;

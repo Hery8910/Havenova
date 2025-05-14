@@ -15,7 +15,7 @@
 }
 
 .aside {
-  background: #ade0e1;
+  background-image: url('/svg/backgroundCard.svg');
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   border-radius: 16px;
   padding: 24px;
@@ -74,7 +74,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 .active {
   color: var(--font-color-white);
@@ -105,7 +104,7 @@
   min-width: 100%;
   min-height: 100px;
   border: 1px solid #78a4a5e3;
-  background-color: #78a4a59d;
+  background-color: #88babb7c;
   border-radius: 8px;
   padding: 8px;
   height: 60px;
@@ -114,15 +113,16 @@
 }
 
 .submit {
-  background-color: #26a69a;
-  color: #fff;
-  padding: 10px 24px;
   border: none;
-  border-radius: 8px;
-  font-size: clamp(14px, 3vw, 18px);
+  background-color: #2c6aefe5;
+  color: var(--font-color-white);
   cursor: pointer;
-  margin-top: 16px;
-  width: 100%;
+  border-radius: 4px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  font-size: clamp(14px, 3vw, 18px);
 }
 .aside_button {
   border: none;

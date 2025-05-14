@@ -2,11 +2,11 @@
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   gap: 16px;
   border-radius: 8px;
-  background: #ade0e1;
+  background-image: url('/svg/backgroundCard.svg');
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   padding: 36px;
   width: 100%;
@@ -18,11 +18,7 @@
   align-items: center;
 }
 .header_image {
-  border: 1px solid #8cd1f6ae;
-  padding: 8px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-background-color: var(--background-color);
+  filter: drop-shadow(0px 16px 16px rgba(3, 41, 41, 0.8));
 }
 .counter, .div {
   display: flex;
@@ -85,15 +81,16 @@ background-color: var(--background-color);
   font-size: clamp(14px, 3vw, 18px);
 }
 .submit {
-  background-color: #26a69a;
-  color: #fff;
-  padding: 10px 24px;
   border: none;
-  border-radius: 8px;
-  font-size: clamp(14px, 3vw, 18px);
+  background-color: #2c6aefe5;
+  color: var(--font-color-white);
   cursor: pointer;
-  margin-top: 16px;
-  width: 100%;
+  border-radius: 4px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  font-size: clamp(14px, 3vw, 18px);
 }
 .switch {
   position: relative;
