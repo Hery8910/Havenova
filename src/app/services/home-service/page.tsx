@@ -1,9 +1,10 @@
 import Hero from "../../../components/hero/page";
-import LivePreview from "../../../components/services/serviceCart/page";
 import Reviews from "../../../components/reviews/page";
 import BlogList from "../../../components/blog/blogList/page";
 
 import styles from "./page.module.css";
+import ServiceCart from "../../../components/services/serviceCart/page";
+import HouseServiceForm from "../../../components/services/houseService/houseServiceForm/page";
 
 const HomeServicePage = () => {
   const blogs = [
@@ -244,15 +245,8 @@ const HomeServicePage = () => {
     <main className={styles.main}>
       <Hero hero={homeServiceHeader} />
       <section className={styles.section}>
-        <LivePreview />
-        <ul className={styles.container}>
-          <li>
-            Aqui hay algo
-            {/* <FurnitureAssemblyForm/> */}
-          </li>
-          <li>{/* <CalenderForm /> */}</li>
-          <li>{/* <UserForm /> */}</li>
-        </ul>
+      <HouseServiceForm />
+      <ServiceCart />
       </section>
       <Reviews />
       <BlogList blogs={blogs} />

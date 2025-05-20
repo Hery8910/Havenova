@@ -88,22 +88,17 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  font-weight: 700;
+  gap: 16px;
+  font-weight: 500;
   font-size: clamp(14px, 3vw, 18px);
   padding: 8px 16px;
-  border-width: 4px;
-  border-style: solid;
-  background:
-    linear-gradient(180deg, #1fb1b1 20%, #96d1d1 100%) padding-box,
-    linear-gradient(0deg, #1fb1b1 70%, #aff5f5 100%) border-box;
   border-radius: 8px;
-  border: 3px solid transparent;
-  box-shadow:
-    -5px -5px 20px hsla(180, 78%, 82%, 0.753),
-    5px 5px 20px hsla(180, 86%, 9%, 0.5);
-  outline: 1px solid #96d1d16c;
-  color: #062222;
+  background:  rgb(75, 191, 253);
+  border: 3px solid rgba(117, 203, 250, 0.87);
+  border-bottom: 3px solid rgba(79, 136, 167, 0.39);
+  outline: 1px solid  rgb(68, 176, 235);
+  box-shadow: 0 4px 12px rgb(41, 104, 138);
+  color: #011414;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }

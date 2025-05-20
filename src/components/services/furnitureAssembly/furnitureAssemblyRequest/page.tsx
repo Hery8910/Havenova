@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import styles from "./page.module.css";
 import { ServiceRequestItem } from "../../../../types/services";
@@ -13,14 +14,27 @@ interface Props {
 
 const FurnitureAssemblyRequest = ({ requests }: Props) => {
   const { user, removeRequestFromUser } = useUser();
+  const [hover, setHover] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
 
   return (
-    <ul className={styles.ul}>
+    <section className={styles.section}>
       {requests.map((item, index) => (
-        <li key={index} className={styles.li}>
-          <h3>{item.details.title}</h3>
-          <article className={styles.article}>
-            <div className={styles.first_div}>
+        <>
+          <header key={index} className={styles.li}>
+            <h3>{item.details.title}</h3>
+          </header>
+
+          <main className={styles.article}>
+            <article className={styles.first_div}>
               <Image
                 className={styles.image}
                 src={item.details.icon.src}
@@ -36,33 +50,66 @@ const FurnitureAssemblyRequest = ({ requests }: Props) => {
                   {item.details.quantity}x {item.details.type}
                 </p>
               </div>
-            </div>
+            </article>
 
             <button
-              className={styles.Btn}
+              className={styles.button}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
               onClick={() => {
-                removeRequestFromUser(item.id);
+                setOpen(true);
               }}
             >
-              <div className={styles.sign}>
-                <svg
-                  viewBox="0 0 16 16"
-                  className="bi bi-trash3-fill"
-                  fill="currentColor"
-                  height="18"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"></path>
-                </svg>
-              </div>
-
-              <div className={styles.text}>Delete</div>
+              <Image
+                className={styles.image}
+                src="/svg/delete.svg"
+                alt="Delete icon"
+                width={20}
+                height={20}
+              />{" "}
+              {hover && <p className={styles.delete}>Delete</p>}
             </button>
-          </article>
-        </li>
+            {open && (
+              <aside className={styles.aside}>
+                <Image
+                  className={styles.image}
+                  src="/svg/caution.svg"
+                  alt={item.details.icon.alt}
+                  width={60}
+                  height={60}
+                />
+                <article className={styles.aside_article}>
+                  <h4 className={styles.aside_h4}>
+                    Are you sure you want to delete this request?
+                  </h4>
+                  <p className={styles.aside_p}>
+                    This action cannot be undone.
+                  </p>
+                  <div className={styles.div_buttons}>
+                    <button
+                      className={styles.cancel_button}
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className={styles.delete_button}
+                      onClick={() => {
+                        removeRequestFromUser(item.id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </article>
+              </aside>
+            )}
+          </main>
+        </>
       ))}
-    </ul>
+    </section>
   );
 };
 

@@ -18,8 +18,6 @@ import {
 } from "../services/serviceOrder";
 import { logoutUser } from "../services/userService";
 import {
-  FurnitureAssemblyData,
-  ServiceOrder,
   ServiceRequestItem,
 } from "../types/services";
 import { User } from "../types/User";

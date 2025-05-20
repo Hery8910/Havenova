@@ -25,7 +25,7 @@ const HouseCleaningForm = () => {
     badRooms: 1,
     balcon: 0,
     kitchen: "yes",
-    house: "no",
+    house: "Apartment",
     notes: "",
   });
 
@@ -236,11 +236,11 @@ const HouseCleaningForm = () => {
           <label className={styles.switch}>
             <input
               type="checkbox"
-              checked={formData.house === "yes"}
+              checked={formData.house === "House"}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  house: e.target.checked ? "yes" : "no",
+                  house: e.target.checked ? "House" : "Apartment",
                 }))
               }
             />

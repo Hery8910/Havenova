@@ -8,7 +8,7 @@ import { validateFurnitureForm } from "../../../../utils/validators";
 import {
   FurnitureAssemblyData,
   serviceIcon,
-  serviceInput,
+  furnitureServiceInput,
   ServiceRequestItem,
 } from "../../../../types/services";
 import { useUser } from "../../../../contexts/UserContext";
@@ -457,7 +457,7 @@ const FurnitureAssemblyForm = () => {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [icon, setIcon] = useState<serviceIcon>({ src: "", alt: "" });
-  const [input, setInput] = useState<serviceInput>({
+  const [input, setInput] = useState<furnitureServiceInput>({
     width: true,
     height: true,
     depth: true,
@@ -502,7 +502,7 @@ const FurnitureAssemblyForm = () => {
   const handleClick = (
     label: string,
     icon: serviceIcon,
-    input: serviceInput
+    input: furnitureServiceInput
   ) => {
     setSelectedItem(label);
     setInput(input);

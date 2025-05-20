@@ -19,7 +19,7 @@ export type serviceIcon = {
   src: string;
   alt: string;
 };
-export type serviceInput = {
+export type furnitureServiceInput = {
   width: boolean;
   height: boolean;
   depth: boolean;
@@ -27,12 +27,23 @@ export type serviceInput = {
   drawers: boolean;
   wall: boolean;
 };
-
+export type houseServiceInput = {
+  area: boolean,
+  rooms: boolean,
+  ceiling: boolean,
+  floorType:boolean,
+  remove_old: boolean,
+  length: boolean,
+};
 export type ServiceRequestItem =  {
+  id: string;
+  serviceType: "house-service";
+  details: HouseServiceData;
+} | {
   id: string;
   serviceType: "kitchen-assembly";
   details: KitchenAssemblyData;
-} |{
+} | {
   id: string;
   serviceType: "house-cleaning";
   details: HouseCleaningData;
@@ -96,4 +107,18 @@ export interface KitchenAssemblyData {
   disassemblyNeed: string;
   provider: string; // IKEA, Leroy Merlin, etc.
   notes: string;
+}
+
+export interface HouseServiceData {
+  title: string;
+  icon: serviceIcon;
+  category: string,
+  quantity: number,
+  area: string,
+  length: string,
+  rooms: number,
+  ceiling: string,
+  floorType: string,
+  removeOld: string,
+  notes: string,
 }

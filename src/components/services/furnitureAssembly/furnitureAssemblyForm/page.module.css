@@ -15,7 +15,7 @@
 }
 
 .aside {
-  background-image: url('/svg/backgroundCard.svg');
+  background-image: url("/svg/backgroundCard.svg");
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   border-radius: 16px;
   padding: 24px;
@@ -77,16 +77,13 @@
 }
 .active {
   color: var(--font-color-white);
-  background:
-    linear-gradient(180deg, #198d8d 20%, #6ca5a5 100%) padding-box,
-    linear-gradient(0deg, #188d8d 70%, #77a8a8 100%) border-box;
-  box-shadow:
-    -5px -5px 20px hsla(180, 78%, 82%, 0.884),
-    5px 5px 20px hsla(180, 87%, 9%, 0.651);
+  background: rgb(30, 78, 104);
+  border: 3px solid rgba(37, 94, 124, 0.637);
+  border-bottom: 3px solid rgba(47, 119, 158, 0.493);
+  outline: 1px solid rgba(27, 74, 100, 0.767);
 }
 .add_button,
-.rest_button 
- {
+.rest_button {
   background: #88babbe3;
   border: 1px solid #78a4a5e3;
   border-radius: 4px 0 0 4px;
@@ -133,7 +130,7 @@
   top: 8px;
   right: 8px;
   cursor: pointer;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .aside_button:hover {
   transform: scale(110%);
@@ -143,7 +140,6 @@
   font-weight: 400;
   font-size: clamp(14px, 3vw, 18px);
 }
-
 
 .form_div {
   width: 100%;
@@ -167,16 +163,19 @@
 }
 
 .li {
-  background: #ffffff94;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.48);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.7px);
+  -webkit-backdrop-filter: blur(7.7px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   padding: 12px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  border-radius: 8px;
 }
 .li:hover {
   transform: scale(105%);
@@ -190,7 +189,7 @@
   padding-left: 20px;
 }
 
-  /* Chrome, Safari, Edge, Opera */
+/* Chrome, Safari, Edge, Opera */
 .input[type="number"]::-webkit-outer-spin-button,
 .input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -220,7 +219,6 @@
   transition: 0.4s;
   border-radius: 28px;
   border: 1px solid #78a4a5e3;
-
 }
 
 .slider:before {

@@ -1,57 +1,57 @@
 .section {
-    width: 100%;
-    margin: 8px auto;
-    background-image: url('/svg/backgroundCard.svg');
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    padding: 24px;
-    position: relative;
-  }
+  width: 100%;
+  margin: 8px auto;
+  background-image: url("/svg/backgroundCard.svg");
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 24px;
+  position: relative;
+}
 
-  .div {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .first_div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-  }
-  .article {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-  }
-  .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 35px;
-    height: 35px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition-duration: 0.3s;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-    background-color: transparent;
-    border: 3px solid #e65353;
-  }
-  /* hover effect on button width */
-  .button:hover {
-    width: 100px;
-    border-radius: 8px;
-    transition-duration: 0.3s;
-  }
-  .delete {
-    color: #f5440f;
-  }
- .aside {
+.div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+.first_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.article {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: transparent;
+  border: 3px solid #e65353;
+}
+/* hover effect on button width */
+.button:hover {
+  width: 100px;
+  border-radius: 8px;
+  transition-duration: 0.3s;
+}
+.delete {
+  color: #f5440f;
+}
+.aside {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -62,28 +62,30 @@
   width: 100%;
   height: fit-content;
   background-color: var(--light-color);
-  background-image: url('/svg/backgroundCard.svg');
+  background-image: url("/svg/backgroundCard.svg");
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   padding: 24px;
   border-radius: 8px;
   gap: 16px;
- }
- .aside_article {
+  z-index: 10;
+}
+.aside_article {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 8px;
- }
- 
- .div_buttons {
+}
+
+.div_buttons {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   margin-top: 16px;
- }
- .cancel_button, .delete_button {
+}
+.cancel_button,
+.delete_button {
   border: none;
   background-color: #e65353;
   color: var(--font-color-white);
@@ -94,10 +96,10 @@
   transition: all 0.3s ease-in-out;
   font-weight: 700;
   font-size: clamp(14px, 3vw, 18px);
- }
- .cancel_button {
+}
+.cancel_button {
   background-color: transparent;
   border: 3px solid #e65353;
   color: #e65353;
   padding: 5px 13px;
- }
+}
