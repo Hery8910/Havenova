@@ -4,11 +4,12 @@
 }
 .li {
   width: 100%;
+  height: 120px;
   margin: 8px auto;
   background-image: url("/svg/backgroundCard.svg");
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  padding: 24px;
-  position: relative;
+  padding: 16px;
+overflow: hidden;
 }
 
 .div {
@@ -55,55 +56,4 @@
 .delete {
   color: #f5440f;
 }
-.aside {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: fit-content;
-  background-color: var(--light-color);
-  background-image: url("/svg/backgroundCard.svg");
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  padding: 24px;
-  border-radius: 8px;
-  gap: 16px;
-  z-index: 10;
-}
-.aside_article {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 8px;
-}
 
-.div_buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-.cancel_button,
-.delete_button {
-  border: none;
-  background-color: #e65353;
-  color: var(--font-color-white);
-  cursor: pointer;
-  border-radius: 4px;
-  padding: 8px 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease-in-out;
-  font-weight: 700;
-  font-size: clamp(14px, 3vw, 18px);
-}
-.cancel_button {
-  background-color: transparent;
-  border: 3px solid #e65353;
-  color: #e65353;
-  padding: 5px 13px;
-}

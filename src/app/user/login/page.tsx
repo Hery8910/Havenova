@@ -6,8 +6,8 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { loginUser } from "../../../services/userService";
 import Link from "next/link";
-import { ServiceOrder, useUser } from "../../../contexts/UserContext";
-
+import {  useUser } from "../../../contexts/UserContext";
+import { ServiceRequestItem } from "../../../types/services";
 interface User {
   _id: string;
   name: string;
@@ -15,7 +15,7 @@ interface User {
   role: string;
   address: string;
   phone: string;
-  requests: ServiceOrder[];
+  requests: ServiceRequestItem[];
 }
 const Login = () => {
   const router = useRouter();

@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useUser } from "../../../contexts/UserContext";
 import Link from "next/link";
 import styles from "./page.module.css";
 import {
-  clearAllRequestItemsFromStorage,
   getRequestsByType,
 } from "../../../utils/serviceRequest";
 import ServiceRenderer from "../serviceRenderer/page";
 import Image from "next/image";
 
 const ServiceCart = () => {
-  const { user, clearAllRequests } = useUser();
+  const { user } = useUser();
 
   const allRequests = user.requests;
 

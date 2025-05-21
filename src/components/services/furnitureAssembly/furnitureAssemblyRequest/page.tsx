@@ -1,9 +1,11 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import styles from "./page.module.css";
 import { ServiceRequestItem } from "../../../../types/services";
 import Image from "next/image";
+import attentionAnimation from '../../../../../public/animation/attention.json';
+import ConfirmationAlert from "../../../confirmationAlert/page";
 
 interface Props {
   requests: Extract<
@@ -13,27 +15,19 @@ interface Props {
 }
 
 const FurnitureAssemblyRequest = ({ requests }: Props) => {
-  const { user, removeRequestFromUser } = useUser();
-  const [hover, setHover] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
+  const { removeRequestFromUser } = useUser();
+  const [hoverId, setHoverId] = useState<string | null>(null);
+  const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <section className={styles.section}>
-      {requests.map((item, index) => (
-        <>
-          <header key={index} className={styles.li}>
+    <ul className={styles.ul}>
+      {requests.map((item) => (
+        <li className={styles.li} key={item.id}>
+          <header className={styles.header}>
             <h3>{item.details.title}</h3>
           </header>
 
-          <main className={styles.article}>
+          <main className={styles.main}>
             <article className={styles.first_div}>
               <Image
                 className={styles.image}
@@ -53,12 +47,11 @@ const FurnitureAssemblyRequest = ({ requests }: Props) => {
             </article>
 
             <button
+              key={item.id}
               className={styles.button}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => {
-                setOpen(true);
-              }}
+              onMouseEnter={() => setHoverId(item.id)}
+              onMouseLeave={() => setHoverId(null)}
+              onClick={() => setOpenId(item.id)}
             >
               <Image
                 className={styles.image}
@@ -67,49 +60,24 @@ const FurnitureAssemblyRequest = ({ requests }: Props) => {
                 width={20}
                 height={20}
               />{" "}
-              {hover && <p className={styles.delete}>Delete</p>}
+              {hoverId === item.id && <p className={styles.delete}>Delete</p>}
             </button>
-            {open && (
-              <aside className={styles.aside}>
-                <Image
-                  className={styles.image}
-                  src="/svg/caution.svg"
-                  alt={item.details.icon.alt}
-                  width={60}
-                  height={60}
-                />
-                <article className={styles.aside_article}>
-                  <h4 className={styles.aside_h4}>
-                    Are you sure you want to delete this request?
-                  </h4>
-                  <p className={styles.aside_p}>
-                    This action cannot be undone.
-                  </p>
-                  <div className={styles.div_buttons}>
-                    <button
-                      className={styles.cancel_button}
-                      onClick={() => {
-                        setOpen(false);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className={styles.delete_button}
-                      onClick={() => {
-                        removeRequestFromUser(item.id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </article>
-              </aside>
-            )}
           </main>
-        </>
+          {openId === item.id && (
+            <ConfirmationAlert
+              title="Are you sure you want to delete this request?"
+              message="This action cannot be undone."
+              animationData={attentionAnimation}
+              onCancel={() => setOpenId(null)}
+              onConfirm={() => {
+                removeRequestFromUser(item.id);
+                setOpenId(null);
+              }}
+            />
+          )}
+        </li>
       ))}
-    </section>
+    </ul>
   );
 };
 

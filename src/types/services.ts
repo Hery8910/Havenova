@@ -28,34 +28,45 @@ export type furnitureServiceInput = {
   wall: boolean;
 };
 export type houseServiceInput = {
-  area: boolean,
-  rooms: boolean,
-  ceiling: boolean,
-  floorType:boolean,
-  remove_old: boolean,
-  length: boolean,
+  quantity: boolean;
+  area: boolean;
+  rooms: boolean;
+  ceiling: boolean;
+  floorType: boolean;
+  remove_old: boolean;
+  length: boolean;
 };
-export type ServiceRequestItem =  {
-  id: string;
-  serviceType: "house-service";
-  details: HouseServiceData;
-} | {
-  id: string;
-  serviceType: "kitchen-assembly";
-  details: KitchenAssemblyData;
-} | {
-  id: string;
-  serviceType: "house-cleaning";
-  details: HouseCleaningData;
-} | {
-  id: string;
-  serviceType: "furniture-assembly";
-  details: FurnitureAssemblyData;
-} | {
-  id: string;
-  serviceType: "window-cleaning";
-  details: WindowCleaningData;
-}; 
+export type ServiceRequestItem =
+  | {
+      id: string;
+      serviceType: "house-service";
+      details: HouseServiceData;
+    }
+  | {
+    id: string;
+    serviceType: "kitchen-cleaning";
+    details: KitchenCleaningData;
+  }
+| {
+      id: string;
+      serviceType: "kitchen-assembly";
+      details: KitchenAssemblyData;
+    }
+  | {
+      id: string;
+      serviceType: "house-cleaning";
+      details: HouseCleaningData;
+    }
+  | {
+      id: string;
+      serviceType: "furniture-assembly";
+      details: FurnitureAssemblyData;
+    }
+  | {
+      id: string;
+      serviceType: "window-cleaning";
+      details: WindowCleaningData;
+    };
 // Aquí irán otros tipos como TVMountingData, etc.
 
 export interface FurnitureAssemblyData {
@@ -112,13 +123,20 @@ export interface KitchenAssemblyData {
 export interface HouseServiceData {
   title: string;
   icon: serviceIcon;
-  category: string,
-  quantity: number,
-  area: string,
-  length: string,
-  rooms: number,
-  ceiling: string,
-  floorType: string,
-  removeOld: string,
-  notes: string,
+  label: string;
+  category: string;
+  quantity: number;
+  area: string;
+  length: string;
+  rooms: number;
+  ceiling: string;
+  floorType: string;
+  removeOld: string;
+  notes: string;
+}
+export interface KitchenCleaningData {
+  title: string;
+  icon: serviceIcon;
+  size: number;
+  notes: string;
 }

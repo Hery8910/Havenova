@@ -5,6 +5,8 @@ import FurnitureAssemblyRequest from "../furnitureAssembly/furnitureAssemblyRequ
 import WindowCleaningRequest from '../windowsCleaning/windowsCleaningRequest/page'
 import HouseCleaningRequest from "../houseCleaning/houseCleaningRequest/page";
 import KitchenAssemblyRequest from "../kitchenAssembly/kitchenAssemblyRequest/page";
+import HouseServiceRequest from "../houseService/houseServiceRequest/page";
+import KitchenCleaningRequest from "../kitchenCleaning/kitchenCleaningRequest/page";
 interface Props {
   type: ServiceRequestItem["serviceType"];
   requests: ServiceRequestItem[];
@@ -12,6 +14,20 @@ interface Props {
 
 const ServiceRenderer = ({ type, requests }: Props) => {
   switch (type) {
+    case "kitchen-cleaning": {
+      const filtered = requests.filter(
+        (req): req is { id: string; serviceType: "kitchen-cleaning"; details: any } =>
+          req.serviceType === "kitchen-cleaning"
+      );
+      return <KitchenCleaningRequest requests={filtered} />;
+    }
+    case "house-service": {
+      const filtered = requests.filter(
+        (req): req is { id: string; serviceType: "house-service"; details: any } =>
+          req.serviceType === "house-service"
+      );
+      return <HouseServiceRequest requests={filtered} />;
+    }
     case "kitchen-assembly": {
       const filtered = requests.filter(
         (req): req is { id: string; serviceType: "kitchen-assembly"; details: any } =>

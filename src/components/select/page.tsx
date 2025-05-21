@@ -28,8 +28,6 @@ const Select: React.FC<SelectProps> = ({
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string[]>([]);
 
- 
-
   const handleToggle = () => {
     setOpen((prev) => !prev);
   };
@@ -43,12 +41,12 @@ const Select: React.FC<SelectProps> = ({
         : [...selected, name];
     } else {
       updated = [name];
+      setOpen(false);
     }
 
     setSelected(updated);
     onChange(updated);
     console.log(updated);
-    
   };
 
   return (
@@ -59,6 +57,14 @@ const Select: React.FC<SelectProps> = ({
           className={`${styles.icon} ${open ? styles.open : ""}`}
         />
       </header>
+      {selected.length > 0 && (
+        <ul className={styles.selected_ul}>
+          <p className={styles.selected_p}><strong>{label} :</strong></p>
+          {selected.map((name, index) => (
+            <li className={styles.selected_li} key={name}>{name}{(selected.length > 1 && selected.length - 1 !== index) && ","}</li>
+          ))}
+        </ul>
+      )}
       {open && (
         <ul className={styles.ul}>
           {options.map((option) => (
@@ -74,7 +80,7 @@ const Select: React.FC<SelectProps> = ({
                 width={50}
                 height={50}
               />
-              <p>{option.name}</p>
+              <p>Select {option.name}</p>
             </li>
           ))}
         </ul>

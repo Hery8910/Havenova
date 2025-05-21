@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { useUser } from "../../../../contexts/UserContext";
 import styles from "./page.module.css";
@@ -8,10 +7,10 @@ import attentionAnimation from '../../../../../public/animation/attention.json';
 import ConfirmationAlert from "../../../confirmationAlert/page";
 
 interface Props {
-  requests: Extract<ServiceRequestItem, { serviceType: "kitchen-assembly" }>[];
+  requests: Extract<ServiceRequestItem, { serviceType: "kitchen-cleaning" }>[];
 }
 
-const KitchenAssemblyRequest = ({ requests }: Props) => {
+const KitchenCleaningRequest = ({ requests }: Props) => {
   const { removeRequestFromUser } = useUser();
   const [hoverId, setHoverId] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
@@ -35,9 +34,8 @@ const KitchenAssemblyRequest = ({ requests }: Props) => {
               />
               <div className={styles.div}>
                 <p>
-                  <strong>{item.details.length} m</strong>
+                  <strong>{item.details.size} m²</strong>
                 </p>
-                <p>{item.details.layout} Layout Kitchen</p>
               </div>
             </article>
 
@@ -57,7 +55,7 @@ const KitchenAssemblyRequest = ({ requests }: Props) => {
               />{" "}
               {hoverId === item.id && <p className={styles.delete}>Delete</p>}
             </button>
-          
+           
           </main>
           {openId === item.id && (
             <ConfirmationAlert
@@ -77,4 +75,4 @@ const KitchenAssemblyRequest = ({ requests }: Props) => {
   );
 };
 
-export default KitchenAssemblyRequest;
+export default KitchenCleaningRequest;

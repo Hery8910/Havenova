@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { saveRequestItemToStorage } from "../../../../utils/serviceRequest";
 import { validateFurnitureForm } from "../../../../utils/validators";
 import {
   FurnitureAssemblyData,
@@ -11,9 +11,11 @@ import {
   furnitureServiceInput,
   ServiceRequestItem,
 } from "../../../../types/services";
+import successAnimation from "../../../../../public/animation/success.json";
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
 import { IoClose } from "react-icons/io5";
+import ConfirmationAlert from "../../../confirmationAlert/page";
 
 const FurnitureAssemblyForm = () => {
   const furnitureTypes = [
@@ -453,6 +455,7 @@ const FurnitureAssemblyForm = () => {
       ],
     },
   ];
+  const router = useRouter();
   const { user, refreshUser, addRequestToUser } = useUser();
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<string>("");
@@ -466,6 +469,7 @@ const FurnitureAssemblyForm = () => {
     wall: true,
   });
   const [open, setOpen] = useState<boolean>(false);
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<FurnitureAssemblyData>({
     title: "Furniture Assembly",
     icon: {
@@ -593,7 +597,7 @@ const FurnitureAssemblyForm = () => {
         drawers: 0,
         notes: "",
       });
-      alert("Service item added to cart!");
+      setAlertOpen(true);
       setOpen(false);
       refreshUser();
     } catch (err) {
@@ -816,6 +820,21 @@ const FurnitureAssemblyForm = () => {
             </button>
           </form>
         </aside>
+      )}
+
+      {alertOpen && (
+        <ConfirmationAlert
+          title="Your request has been submitted!"
+          message="Do you want to continue to checkout or keep browsing for more services?"
+          animationData={successAnimation}
+          confirmLabel="Go to Checkout"
+          cancelLabel="Keep Browsing"
+          extraClass="success"
+          onCancel={() => setAlertOpen(false)}
+          onConfirm={() => {
+            router.push("/checkout");
+          }}
+        />
       )}
     </main>
   );

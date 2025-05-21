@@ -8,11 +8,16 @@ import {
   serviceIcon,
   ServiceRequestItem,
 } from "../../../../types/services";
+import successAnimation from '../../../../../public/animation/success.json';
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
+import ConfirmationAlert from "../../../confirmationAlert/page";
+import { useRouter } from "next/navigation";
 
 const HouseCleaningForm = () => {
+  const router = useRouter();
   const { user, refreshUser, addRequestToUser } = useUser();
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<HouseCleaningData>({
     title: "House Cleaning",
     icon: {
@@ -93,7 +98,7 @@ const HouseCleaningForm = () => {
         house: "no",
         notes: "",
       });
-      alert("Service item added to cart!");
+      setAlertOpen(true);
       refreshUser();
     } catch (err) {
       console.error("❌ Error saving to cart:", err);
@@ -260,6 +265,20 @@ const HouseCleaningForm = () => {
           Submit
         </button>
       </form>
+      {alertOpen && (
+        <ConfirmationAlert
+          title="Your request has been submitted!"
+          message="Do you want to continue to checkout or keep browsing for more services?"
+          animationData={successAnimation}
+          confirmLabel="Go to Checkout"
+          cancelLabel="Keep Browsing"
+          extraClass="success"
+          onCancel={() => setAlertOpen(false)}
+          onConfirm={() => {
+            router.push("/checkout")
+          }}
+        />
+      )}
     </>
   );
 };

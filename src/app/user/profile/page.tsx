@@ -79,17 +79,13 @@ const Profile = () => {
       return;
     }
     const updatedData = {
+      email: user?.email,
       name: formData.name || user?.name,
       address: formData.address || user?.address,
       phone: formData.phone || user?.phone,
     };
     try {
-      const response = await updateUser(
-        user?.email,
-        updatedData.name || user?.name,
-        updatedData.address || user?.address,
-        updatedData.phone || user?.phone
-      );
+      const response = await updateUser(updatedData);
 
       setMessage(response.message);
       setTimeout(() => setMessage(""), 3000);

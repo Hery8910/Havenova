@@ -3,17 +3,19 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { saveRequestItemToStorage } from "../../../../utils/serviceRequest";
 import {
   HouseServiceData,
   serviceIcon,
   houseServiceInput,
   ServiceRequestItem,
 } from "../../../../types/services";
+import successAnimation from "../../../../../public/animation/success.json";
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
 import { IoClose } from "react-icons/io5";
 import Select from "../../../select/page";
+import ConfirmationAlert from "../../../confirmationAlert/page";
+import { useRouter } from "next/navigation";
 
 const HouseServiceForm = () => {
   const houseServiceCategory = [
@@ -28,6 +30,7 @@ const HouseServiceForm = () => {
             alt: "Wall Painting icon",
           },
           input: {
+            quantity: false,
             area: true,
             rooms: true,
             ceiling: true,
@@ -45,6 +48,7 @@ const HouseServiceForm = () => {
             alt: "Drywall Installation icon",
           },
           input: {
+            quantity: false,
             area: true,
             rooms: true,
             ceiling: true,
@@ -59,6 +63,7 @@ const HouseServiceForm = () => {
           label: "Flooring Installation",
           icon: { src: "/svg/houseService/flooring.svg", alt: "Flooring icon" },
           input: {
+            quantity: false,
             area: true,
             rooms: false,
             ceiling: false,
@@ -76,6 +81,7 @@ const HouseServiceForm = () => {
             alt: "Wallpapering icon",
           },
           input: {
+            quantity: false,
             area: true,
             rooms: true,
             ceiling: true,
@@ -87,12 +93,13 @@ const HouseServiceForm = () => {
         },
         {
           id: "picture_hanging",
-          label: "Picture or Mirror Hanging",
+          label: "Picture/Mirror Hanging",
           icon: {
             src: "/svg/houseService/picture_hanging.svg",
             alt: "Picture Hanging icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
@@ -103,12 +110,13 @@ const HouseServiceForm = () => {
         },
         {
           id: "curtain_installation",
-          label: "Curtain or Blind Installation",
+          label: "Curtain/Blind Installation",
           icon: {
             src: "/svg/houseService/curtains.svg",
             alt: "Curtain Installation icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
@@ -125,6 +133,7 @@ const HouseServiceForm = () => {
             alt: "Baseboard Installation icon",
           },
           input: {
+            quantity: false,
             area: false,
             rooms: false,
             ceiling: false,
@@ -135,18 +144,19 @@ const HouseServiceForm = () => {
         },
         {
           id: "door_adjustment",
-          label: "Door Adjustment or Repair",
+          label: "Door Adjustment/Repair",
           icon: {
             src: "/svg/houseService/door_adjustment.svg",
             alt: "Door Adjustment icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
       ],
@@ -162,25 +172,27 @@ const HouseServiceForm = () => {
             alt: "Faucet icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: true,
-            length: true,
+            length: false,
           },
         },
         {
           id: "siphon_installation",
-          label: "Siphon Trap Installation (Wash Basin)",
+          label: "Siphon Trap Installation",
           icon: { src: "/svg/houseService/siphon.svg", alt: "Siphon icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: true,
-            length: true,
+            length: false,
           },
         },
         {
@@ -191,12 +203,13 @@ const HouseServiceForm = () => {
             alt: "Washing Machine icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
-            remove_old: false,
-            length: true,
+            remove_old: true,
+            length: false,
           },
         },
         {
@@ -207,12 +220,13 @@ const HouseServiceForm = () => {
             alt: "Dishwasher icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -220,12 +234,13 @@ const HouseServiceForm = () => {
           label: "Bidet Installation",
           icon: { src: "/svg/houseService/bidet.svg", alt: "Bidet icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -236,12 +251,13 @@ const HouseServiceForm = () => {
             alt: "Wash Basin icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -249,41 +265,44 @@ const HouseServiceForm = () => {
           label: "Toilet Installation",
           icon: { src: "/svg/houseService/toilet.svg", alt: "Toilet icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
           id: "hose_replacement",
-          label: "Hose Replacement (Bath/Sink/Wash Basin)",
+          label: "Hose Replacement",
           icon: { src: "/svg/houseService/hose.svg", alt: "Hose icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
           id: "dismantling_sanitary",
-          label: "Dismantling (Bidet, Basin, WC Seat, Urinal)",
+          label: "Dismantling Basin/WC Seat",
           icon: {
             src: "/svg/houseService/dismantling.svg",
             alt: "Dismantling icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -294,12 +313,13 @@ const HouseServiceForm = () => {
             alt: "Drain Cleaning icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
       ],
@@ -315,12 +335,13 @@ const HouseServiceForm = () => {
             alt: "Electrical Point icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -331,57 +352,61 @@ const HouseServiceForm = () => {
             alt: "Fuse Replacement icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
           id: "bulb_replacement",
-          label: "Bulb Replacement (Incandescent, Halogen, Fluorescent)",
+          label: "Bulb Replacement",
           icon: {
             src: "/svg/houseService/bulb_replacement.svg",
             alt: "Bulb Replacement icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
           id: "socket_installation",
-          label: "Socket Installation or Replacement",
+          label: "Socket Installation/Replacement",
           icon: { src: "/svg/houseService/socket.svg", alt: "Socket icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
           id: "lamp_chandelier_installation",
-          label: "Chandelier or Lamp Installation/Replacement",
+          label: "Chandelier Installation/Replacement",
           icon: {
             src: "/svg/houseService/chandelier.svg",
             alt: "Chandelier icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -392,12 +417,13 @@ const HouseServiceForm = () => {
             alt: "Transformer icon",
           },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -405,12 +431,13 @@ const HouseServiceForm = () => {
           label: "Repair of Electrical Connections",
           icon: { src: "/svg/houseService/repair.svg", alt: "Repair icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -418,12 +445,13 @@ const HouseServiceForm = () => {
           label: "Electric Hob Connection",
           icon: { src: "/svg/houseService/hob.svg", alt: "Electric Hob icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
         {
@@ -431,12 +459,13 @@ const HouseServiceForm = () => {
           label: "Switch Installation/Replacement",
           icon: { src: "/svg/houseService/switch.svg", alt: "Switch icon" },
           input: {
+            quantity: true,
             area: false,
             rooms: false,
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: true,
+            length: false,
           },
         },
       ],
@@ -475,12 +504,14 @@ const HouseServiceForm = () => {
       icon: { src: "/svg/floorTypes/pvc.svg", alt: "PVC Flooring" },
     },
   ];
-
+  const router = useRouter();
   const { user, refreshUser, addRequestToUser } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<string>("");
   const [icon, setIcon] = useState<serviceIcon>({ src: "", alt: "" });
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [input, setInput] = useState<houseServiceInput>({
+    quantity: true,
     area: true,
     rooms: true,
     ceiling: true,
@@ -495,6 +526,7 @@ const HouseServiceForm = () => {
       src: icon.src,
       alt: icon.alt,
     },
+    label: "",
     category: selectedCategory,
     area: "",
     length: "0",
@@ -534,7 +566,7 @@ const HouseServiceForm = () => {
       ...prev,
       title: "House Service",
       icon,
-      type: label,
+      label: label,
       category: selectedCategory,
       quantity: 1,
     }));
@@ -594,6 +626,7 @@ const HouseServiceForm = () => {
           src: icon.src,
           alt: icon.alt,
         },
+        label: "",
         category: selectedCategory,
         area: "",
         length: "0",
@@ -604,7 +637,7 @@ const HouseServiceForm = () => {
         quantity: 1,
         notes: "",
       });
-      alert("Service item added to cart!");
+      setAlertOpen(true);
       setOpen(false);
       refreshUser();
     } catch (err) {
@@ -677,26 +710,28 @@ const HouseServiceForm = () => {
             </button>
           </header>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.form_div}>
-              <p>Quantity</p>
-              <div className={styles.counter}>
-                <button
-                  className={styles.rest_button}
-                  type="button"
-                  onClick={() => handleAdjust("quantity", "subtract")}
-                >
-                  -
-                </button>
-                <p className={styles.counter_p}>{formData.quantity}</p>
-                <button
-                  className={styles.add_button}
-                  type="button"
-                  onClick={() => handleAdjust("quantity", "add")}
-                >
-                  +
-                </button>
+            {input.quantity && (
+              <div className={styles.form_div}>
+                <p>Quantity</p>
+                <div className={styles.counter}>
+                  <button
+                    className={styles.rest_button}
+                    type="button"
+                    onClick={() => handleAdjust("quantity", "subtract")}
+                  >
+                    -
+                  </button>
+                  <p className={styles.counter_p}>{formData.quantity}</p>
+                  <button
+                    className={styles.add_button}
+                    type="button"
+                    onClick={() => handleAdjust("quantity", "add")}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
             {input.area && (
               <div className={styles.form_div}>
@@ -765,7 +800,7 @@ const HouseServiceForm = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        position: e.target.checked ? "yes" : "no",
+                        ceiling: e.target.checked ? "yes" : "no",
                       }))
                     }
                   />
@@ -788,25 +823,6 @@ const HouseServiceForm = () => {
               />
             )}
 
-            {input.ceiling && (
-              <div className={styles.form_div}>
-                <label className={styles.label}>Ceiling included?</label>
-                <label className={styles.switch}>
-                  <input
-                    type="checkbox"
-                    checked={formData.ceiling === "yes"}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        position: e.target.checked ? "yes" : "no",
-                      }))
-                    }
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </div>
-            )}
-
             {input.remove_old && (
               <div className={styles.form_div}>
                 <label className={styles.label}>Old should be removed?</label>
@@ -817,7 +833,7 @@ const HouseServiceForm = () => {
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
-                        remove_old: e.target.checked ? "yes" : "no",
+                        removeOld: e.target.checked ? "yes" : "no",
                       }))
                     }
                   />
@@ -839,6 +855,20 @@ const HouseServiceForm = () => {
             </button>
           </form>
         </aside>
+      )}
+      {alertOpen && (
+        <ConfirmationAlert
+          title="Your request has been submitted!"
+          message="Do you want to continue to checkout or keep browsing for more services?"
+          animationData={successAnimation}
+          confirmLabel="Go to Checkout"
+          cancelLabel="Keep Browsing"
+          extraClass="success"
+          onCancel={() => setAlertOpen(false)}
+          onConfirm={() => {
+            router.push("/checkout");
+          }}
+        />
       )}
     </main>
   );

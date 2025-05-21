@@ -5,14 +5,18 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import {
   KitchenAssemblyData,
-  serviceIcon,
   ServiceRequestItem,
 } from "../../../../types/services";
+import successAnimation from "../../../../../public/animation/success.json";
 import { useUser } from "../../../../contexts/UserContext";
 import { handleServiceRequest } from "../../../../services/serviceRequestHandler";
 import Select from "../../../select/page";
+import { useRouter } from "next/navigation";
+import ConfirmationAlert from "../../../confirmationAlert/page";
 
 const KitchenAssemblyForm = () => {
+  const router = useRouter();
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const { user, refreshUser, addRequestToUser } = useUser();
   const [formData, setFormData] = useState<KitchenAssemblyData>({
     title: "Kitchen Assembly",
@@ -144,7 +148,7 @@ const KitchenAssemblyForm = () => {
         provider: "",
         notes: "",
       });
-      alert("Service item added to cart!");
+      setAlertOpen(true);
       refreshUser();
     } catch (err) {
       console.error("❌ Error saving to cart:", err);
@@ -223,7 +227,7 @@ const KitchenAssemblyForm = () => {
 
        
         <Select
-          label="Select Layout"
+          label="Layout"
           options={layoutOptions}
           onChange={(selected) =>
             setFormData((prev) => ({ ...prev, layout: selected[0] || "" }))
@@ -231,7 +235,7 @@ const KitchenAssemblyForm = () => {
           multiple={false}
         />
          <Select
-          label="Select Appliances"
+          label="Appliances"
           options={applianceOptions}
           onChange={handleApplianceChange}
           multiple
@@ -291,6 +295,20 @@ const KitchenAssemblyForm = () => {
           Submit
         </button>
       </form>
+      {alertOpen && (
+        <ConfirmationAlert
+          title="Your request has been submitted!"
+          message="Do you want to continue to checkout or keep browsing for more services?"
+          animationData={successAnimation}
+          confirmLabel="Go to Checkout"
+          cancelLabel="Keep Browsing"
+          extraClass="success"
+          onCancel={() => setAlertOpen(false)}
+          onConfirm={() => {
+            router.push("/checkout");
+          }}
+        />
+      )}
     </>
   );
 };
