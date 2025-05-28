@@ -39,7 +39,7 @@ export default function BlogList({ blogs }: BlogListProps) {
   }, [windowWidth]);
 
   useEffect(() => {
-    windowWidth > 1000 ? setShowButtons(true) : setShowButtons(false);
+    windowWidth > 800 ? setShowButtons(true) : setShowButtons(false);
   }, [windowWidth]);
 
   const scrollLeft = () => {
@@ -98,8 +98,8 @@ export default function BlogList({ blogs }: BlogListProps) {
         )}
         <ul className={styles.ul} ref={ulRef}>
           {blogs.map((blog) => (
-            <li className={styles.li} key={blog.id}>
-              <BlogCard key={blog.id} blog={blog} />
+            <li className={styles.li} key={blog._id}>
+              <BlogCard key={blog._id} blog={blog} canDelete/>
             </li>
           ))}
         </ul>

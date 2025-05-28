@@ -1,15 +1,17 @@
 import { User } from "./User";
 
 export interface ServiceOrder {
-  id?: string;
+  id: string;
   status: ServiceStatus;
-  createdAt?: string;
+  createdAt: string;
   contact: {
     user: User;
   };
   serviceAddress: string;
   preferredDate: string;
   preferredTime: string;
+  totalPrice: number;
+  totalEstimatedDuration: number;
   services: ServiceRequestItem[];
 }
 // Agregar correo para despues de 15 dias enviar un mahnung si no han pagado.
@@ -40,31 +42,43 @@ export type ServiceRequestItem =
   | {
       id: string;
       serviceType: "house-service";
+      price: number;
+      estimatedDuration: number;
       details: HouseServiceData;
     }
   | {
-    id: string;
-    serviceType: "kitchen-cleaning";
-    details: KitchenCleaningData;
-  }
-| {
+      id: string;
+      serviceType: "kitchen-cleaning";
+      price: number;
+      estimatedDuration: number;
+      details: KitchenCleaningData;
+    }
+  | {
       id: string;
       serviceType: "kitchen-assembly";
+      price: number;
+      estimatedDuration: number;
       details: KitchenAssemblyData;
     }
   | {
       id: string;
       serviceType: "house-cleaning";
+      price: number;
+      estimatedDuration: number;
       details: HouseCleaningData;
     }
   | {
       id: string;
       serviceType: "furniture-assembly";
+      price: number;
+      estimatedDuration: number;
       details: FurnitureAssemblyData;
     }
   | {
       id: string;
       serviceType: "window-cleaning";
+      price: number;
+      estimatedDuration: number;
       details: WindowCleaningData;
     };
 // Aquí irán otros tipos como TVMountingData, etc.
@@ -102,7 +116,7 @@ export interface HouseCleaningData {
   badRooms: number;
   balcon: number;
   kitchen: string;
-  house: string;
+  stairs: string;
   notes: string;
 }
 
@@ -115,6 +129,9 @@ export interface KitchenAssemblyData {
   layout: string; // Ej: "Lineal", "L", "U", etc.
   appliances: string[]; // ✅ Ahora compatible con Select
   island: string;
+  islandCabinet: number;
+  islandLength: string;
+  islandWidth: string;
   disassemblyNeed: string;
   provider: string; // IKEA, Leroy Merlin, etc.
   notes: string;
@@ -137,6 +154,7 @@ export interface HouseServiceData {
 export interface KitchenCleaningData {
   title: string;
   icon: serviceIcon;
+  appliances: string[];
   size: number;
   notes: string;
 }

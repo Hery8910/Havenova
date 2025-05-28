@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styles from "./page.module.css";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 
 interface ConfirmationAlertProps {
   title: string;
@@ -27,12 +27,12 @@ const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
   return (
     <section className={styles.wrapper}>
       <main className={styles.section_main}>
-           <Lottie
+           {/* <Lottie
            animationData={animationData}
            loop={true}
            autoplay={true}
            style={{ width: 100, height: 100 }}
-         />
+         /> */}
         <article className={styles.section_article}>
           <h4 className={styles.title}>{title}</h4>
           <p className={styles.message}>{message}</p>

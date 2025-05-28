@@ -14,7 +14,7 @@ import Review from "../components/reviews/page";
 import BlogList from "../components/blog/blogList/page";
 
 export default function Home() {
-  const blogs = [
+  const Blogs = [
     {
       id: "1",
       title:
@@ -237,7 +237,10 @@ export default function Home() {
     },
   ];
 
-  // const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
   const { user, refreshUser } = useUser();
 
   const homeHero = {
@@ -252,24 +255,20 @@ export default function Home() {
     href: "/user/register",
   };
 
-  // useEffect(() => {
-  //   const token = Cookies.get("authToken");
-  //   if (token) {
-  //     refreshUser();
-  //   }
+  const fetchBlogs = async () => {
+    try {
+      const response = await getAllBlogs(page, limit);
+      setBlogs(response.blogs);
+      setTotalPages(response.totalPages);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    }
+  };
 
-  //   // 👉 Llamar a la API desde useEffect
-  //   const fetchBlogs = async () => {
-  //     try {
-  //       const response = await getAllBlogs();
-  //       setBlogs(response);
-  //     } catch (error) {
-  //       console.error("Error fetching blogs:", error);
-  //     }
-  //   };
-
-  //   fetchBlogs();
-  // }, [refreshUser]);
+  useEffect(() => {
+    fetchBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
 
   return (
     <main>
@@ -280,6 +279,7 @@ export default function Home() {
       <Review />
       <QuestionAnswer />
       <BlogList blogs={blogs} />
+
     </main>
   );
 }

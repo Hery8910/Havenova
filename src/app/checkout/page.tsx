@@ -2,8 +2,13 @@ import styles from "./page.module.css";
 import ServiceCart from "../../components/services/serviceCart/page";
 import Reviews from "../../components/reviews/page";
 import BlogList from "../../components/blog/blogList/page";
+import Calendar from "../../components/dashboard/calender/page";
+import { useCalendar} from "../../contexts/UserContext";
+import { useEffect } from "react";
 
 const CheckOut = () => {
+    const { fetchCalendar, calendars } = useCalendar();
+
   const blogs = [
     {
       id: "1",
@@ -226,21 +231,13 @@ const CheckOut = () => {
       author: "Havenova Team",
     },
   ];
-  const furnitureAssemblyHeader = {
-    title: "Furniture Assembly",
-    description:
-      "Need help setting up furniture? Let us know the type and quantity. We’ll confirm everything during the on-site visit.",
-    image: {
-      src: "/images/furniture-assembly.webp",
-      alt: "Furniture Assembly Illustration",
-    },
-  };
 
-  
+
   
   return (
     <main className={styles.main}>
       <section className={styles.section}>
+        {/* <Calendar /> */}
         <ServiceCart />
       </section>
       <Reviews />

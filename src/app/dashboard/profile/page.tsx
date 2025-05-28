@@ -113,7 +113,6 @@ const CreateWorkYear: React.FC = () => {
     fetchCurrentYear()
   }, [currentYear, user.role]);
 console.log(calendar);
-console.log(user);
 
 
 

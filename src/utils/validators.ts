@@ -1,3 +1,4 @@
+import { BlogPost } from "../types/blog";
 import { FurnitureAssemblyData } from "../types/services";
 
 // validators.ts
@@ -38,16 +39,16 @@ export const validateFurnitureForm = (
   formData: FurnitureAssemblyData
 ): string | null => {
   // Dynamic checks based on 'input' flags
-  if(!formData.width) return null
+  if (!formData.width) return null;
   if (formData.width === "" || Number(formData.width) <= 0) {
     return "Please enter a valid width.";
   }
-  if(!formData.height) return null
+  if (!formData.height) return null;
 
   if (formData.height === "" || Number(formData.height) <= 0) {
     return "Please enter a valid height.";
   }
-  if(!formData.depth) return null
+  if (!formData.depth) return null;
 
   if (formData.depth === "" || Number(formData.depth) <= 0) {
     return "Please enter a valid depth.";
@@ -55,3 +56,42 @@ export const validateFurnitureForm = (
 
   return null; // ✅ All checks passed
 };
+
+export function validateTitle(title: string): string | null {
+  if (!title.trim()) return "The title is required.";
+  if (title.length < 5) return "The title must be at least 5 characters.";
+  if (title.length > 120) return "The title must be less than 120 characters.";
+  return null;
+}
+
+export function validateSlug(slug: string, blogs: BlogPost[]): string | null {
+  const slugPattern = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+  if (!slug.trim()) return "The slug is required.";
+  if (!slugPattern.test(slug)) {
+    return "The slug must use only lowercase letters, numbers, and hyphens (no spaces or special characters). It cannot start or end with a hyphen or have double hyphens.";
+  }
+  if (blogs.some(blog => blog.slug === slug)) return "This slug is already in use. Please choose another.";
+  return null;
+}
+
+export function validateMetaDescription(metaDescription: string): string | null {
+  if (!metaDescription.trim()) return "The meta description is required.";
+  if (metaDescription.length < 60) return "The meta description should be at least 60 characters.";
+  if (metaDescription.length > 160) return "The meta description should be less than 160 characters.";
+  return null;
+}
+
+export function validateFeaturedImage(url: string): string | null {
+  if (!url.trim()) return "A featured image is required.";
+  // Optional: check URL is likely an image
+  if (!/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(url)) {
+    return "Please provide a valid image URL (jpg, png, webp, or gif).";
+  }
+  return null;
+}
+
+export function validateIntroduction(introduction: string): string | null {
+  if (!introduction.trim()) return "The introduction is required.";
+  if (introduction.length < 20) return "The introduction should be at least 20 characters.";
+  return null;
+}

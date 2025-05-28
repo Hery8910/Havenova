@@ -29,6 +29,9 @@ const KitchenAssemblyForm = () => {
     lowerCabinets: 0,
     upperCabinets: 0,
     island: "no",
+    islandCabinet: 0,
+    islandWidth: "",
+    islandLength: "",
     appliances: [],
     disassemblyNeed: "no",
     provider: "",
@@ -80,6 +83,10 @@ const KitchenAssemblyForm = () => {
       name: "U-Shape",
       icon: { src: "/svg/u-shape.svg", alt: "U-Shaped Layout" },
     },
+    {
+      name: "Parallel-Shape",
+      icon: { src: "/svg/parallel-shape.svg", alt: "Parallel-Shaped Layout" },
+    },
   ];
 
   const handleChange = (
@@ -100,7 +107,7 @@ const KitchenAssemblyForm = () => {
   };
 
   const handleAdjust = (
-    field: "lowerCabinets" | "upperCabinets",
+    field: "lowerCabinets" | "upperCabinets" | "islandCabinet",
     action: "add" | "subtract"
   ) => {
     setFormData((prev) => {
@@ -143,6 +150,9 @@ const KitchenAssemblyForm = () => {
         lowerCabinets: 0,
         upperCabinets: 0,
         island: "no",
+        islandCabinet: 0,
+        islandWidth: "",
+        islandLength: "",
         appliances: [],
         disassemblyNeed: "no",
         provider: "",
@@ -225,7 +235,6 @@ const KitchenAssemblyForm = () => {
           </div>
         </div>
 
-       
         <Select
           label="Layout"
           options={layoutOptions}
@@ -234,13 +243,13 @@ const KitchenAssemblyForm = () => {
           }
           multiple={false}
         />
-         <Select
+        <Select
           label="Appliances"
           options={applianceOptions}
           onChange={handleApplianceChange}
           multiple
         />
-          <div className={styles.form_div}>
+        <div className={styles.form_div}>
           <label className={styles.label}>Island</label>
           <label className={styles.switch}>
             <input
@@ -256,8 +265,62 @@ const KitchenAssemblyForm = () => {
             <span className={styles.slider}></span>
           </label>
         </div>
+        {formData.island === "yes" && (
+          <>
+            <div className={styles.form_div}>
+              <p>Island Cabinets</p>
+              <div className={styles.counter}>
+                <button
+                  className={styles.rest_button}
+                  type="button"
+                  onClick={() => handleAdjust("islandCabinet", "subtract")}
+                >
+                  -
+                </button>
+                <p className={styles.counter_p}>{formData.islandCabinet}</p>
+                <button
+                  className={styles.add_button}
+                  type="button"
+                  onClick={() => handleAdjust("islandCabinet", "add")}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div className={styles.form_div}>
+              <label className={styles.label}>Island Length</label>
+              <div className={styles.div}>
+                <input
+                  className={styles.input}
+                  type="number"
+                  name="islandLength"
+                  value={formData.islandLength || ""}
+                  onChange={handleChange}
+                  placeholder="0"
+                />
+                <label className={styles.label}>m</label>
+              </div>
+            </div>
+            <div className={styles.form_div}>
+              <label className={styles.label}>Island Width</label>
+              <div className={styles.div}>
+                <input
+                  className={styles.input}
+                  type="number"
+                  name="islandWidth"
+                  value={formData.islandWidth || ""}
+                  onChange={handleChange}
+                  placeholder="0"
+                />
+                <label className={styles.label}>m</label>
+              </div>
+            </div>
+          </>
+        )}
         <div className={styles.form_div}>
-          <label className={styles.label}>Disassembly of the old kitchen needeed?</label>
+          <label className={styles.label}>
+            Disassembly of the old kitchen needeed?
+          </label>
           <label className={styles.switch}>
             <input
               type="checkbox"
@@ -274,14 +337,14 @@ const KitchenAssemblyForm = () => {
         </div>
         <div className={styles.provider_div}>
           <label className={styles.label}>Kitchen provider</label>
-            <input
-              className={styles.provider_input}
-              type="text"
-              name="provider"
-              value={formData.provider || ""}
-              onChange={handleChange}
-              placeholder="E.g. IKEA"
-            />
+          <input
+            className={styles.provider_input}
+            type="text"
+            name="provider"
+            value={formData.provider || ""}
+            onChange={handleChange}
+            placeholder="E.g. IKEA"
+          />
         </div>
         <textarea
           className={styles.textarea}

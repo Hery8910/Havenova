@@ -71,7 +71,7 @@ const navItems: NavItem[] = [
   { section: "havenova", label: "Contact", href: "/contact" },
   { section: "havenova", label: "Q&A", href: "/q&a" },
   { section: "havenova", label: "Reviews", href: "/reviews" },
-  { section: "havenova", label: "Blog", href: "/blog" },
+  { section: "havenova", label: "Blog", href: "/blogs" },
   { section: "havenova", label: "Our Services", href: "/services" },
   // Sección de Profile para usuarios no autenticados
   {

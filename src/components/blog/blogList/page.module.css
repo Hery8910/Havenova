@@ -27,9 +27,10 @@
 }
 .aside {
   position: absolute;
-  width: 100%;
+  width: 110%;
   display: flex;
   justify-content: space-between;
+  left: -5%;
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;

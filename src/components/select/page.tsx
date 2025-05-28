@@ -80,7 +80,7 @@ const Select: React.FC<SelectProps> = ({
                 width={50}
                 height={50}
               />
-              <p>Select {option.name}</p>
+              <p>{option.name}</p>
             </li>
           ))}
         </ul>

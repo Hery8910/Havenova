@@ -30,7 +30,7 @@ const HouseCleaningForm = () => {
     badRooms: 1,
     balcon: 0,
     kitchen: "yes",
-    house: "Apartment",
+    stairs: "no",
     notes: "",
   });
 
@@ -95,7 +95,7 @@ const HouseCleaningForm = () => {
         badRooms: 1,
         balcon: 0,
         kitchen: "yes",
-        house: "no",
+        stairs: "no",
         notes: "",
       });
       setAlertOpen(true);
@@ -237,15 +237,15 @@ const HouseCleaningForm = () => {
         </div>
 
         <div className={styles.form_div}>
-          <label className={styles.label}>Private House</label>
+          <label className={styles.label}>Stairs</label>
           <label className={styles.switch}>
             <input
               type="checkbox"
-              checked={formData.house === "House"}
+              checked={formData.stairs === "yes"}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  house: e.target.checked ? "House" : "Apartment",
+                  stairs: e.target.checked ? "yes" : "no",
                 }))
               }
             />

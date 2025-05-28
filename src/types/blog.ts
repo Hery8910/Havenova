@@ -1,10 +1,13 @@
+export interface SectionContent {
+  type: "paragraph" | "points";
+  subheading?: string;
+  paragraph?: string;
+  points?: string[];
+}
+
 export interface BlogSection {
     heading: string;
-    content: Array<{
-      subheading?: string;
-      points?: string[];
-      paragraph?: string;
-    }>;
+    content: SectionContent[];
   }
   
   export interface BlogFAQ {
@@ -13,17 +16,19 @@ export interface BlogSection {
   }
   
   export interface BlogPost {
-    id: string;
     title: string;
     slug: string;
-    image: string;
-    imageAlt: string;
+    featuredImage: string; // Cambia aquí
     metaDescription: string;
     introduction: string;
     sections: BlogSection[];
     faq: BlogFAQ[];
-    createdAt: string;
     author: string;
+  }
+  export interface BlogFromDB extends BlogPost {
+    _id: string;
+    createdAt: string;
+
   }
   export interface IframeProps {
     width?: string | number;  // Por si quieres sobreescribir desde el componente
@@ -34,4 +39,9 @@ export interface BlogSection {
     allowFullScreen?: boolean;
     style?: React.CSSProperties;
   }
-  
+  export interface BlogPaginationResponse {
+    blogs: BlogFromDB[];
+    total: number;
+    page: number;
+    totalPages: number;
+  }

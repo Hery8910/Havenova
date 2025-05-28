@@ -1,22 +1,19 @@
 .main {
-    margin-top: 100px;
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: 50px 1fr;
-    grid-template-areas:
-    "b b b"
-    "a c c";
+  margin: 100px auto;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-height: 80dvh;
+  justify-content: flex-start;
 }
-.header, .section {
-    border: 1px solid red;
+.section {
+  margin: 0;
+  width: 100%;
+
 }
 
-.header {
-    grid-area: b;
+/* .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.section {
-    grid-area: c;
-}
+} */

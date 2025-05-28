@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 const HouseServiceForm = () => {
   const houseServiceCategory = [
     {
-      category: "Renovation",
+      category: "Painting",
       services: [
         {
           id: "wall_painting",
@@ -36,7 +36,79 @@ const HouseServiceForm = () => {
             ceiling: true,
             floorType: false,
             remove_old: false,
-            floor_type: false,
+            length: false,
+          },
+        },
+        {
+          id: "door_painting",
+          label: "Door Painting",
+          icon: {
+            src: "/svg/houseService/door_painting.svg",
+            alt: "Door Painting icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "window_painting",
+          label: "Window Painting",
+          icon: {
+            src: "/svg/houseService/window_painting.svg",
+            alt: "Window Painting icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "house_facade_painting",
+          label: "House Facade Painting",
+          icon: {
+            src: "/svg/houseService/house_facade_painting.svg",
+            alt: "House Facade Painting icon",
+          },
+          input: {
+            quantity: false,
+            area: true,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+      ],
+    },
+    {
+      category: "Renovation",
+      services: [
+        {
+          id: "TV_hanging",
+          label: "TV Hanging",
+          icon: {
+            src: "/svg/houseService/tv_hanging.svg",
+            alt: "TV Hanging icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
             length: false,
           },
         },
@@ -50,11 +122,10 @@ const HouseServiceForm = () => {
           input: {
             quantity: false,
             area: true,
-            rooms: true,
-            ceiling: true,
+            rooms: false,
+            ceiling: false,
             floorType: false,
-            remove_old: true,
-            floor_type: false,
+            remove_old: false,
             length: false,
           },
         },
@@ -67,8 +138,7 @@ const HouseServiceForm = () => {
             area: true,
             rooms: false,
             ceiling: false,
-            floorType: false,
-            floor_type: true,
+            floorType: true,
             remove_old: true,
             length: false,
           },
@@ -93,13 +163,64 @@ const HouseServiceForm = () => {
         },
         {
           id: "picture_hanging",
-          label: "Picture/Mirror Hanging",
+          label: "Hanging Picture/Mirror",
           icon: {
             src: "/svg/houseService/picture_hanging.svg",
             alt: "Picture Hanging icon",
           },
           input: {
             quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "shower_cabin_instalation",
+          label: "Shower Cabin Instalation",
+          icon: {
+            src: "/svg/houseService/shower_cabin.svg",
+            alt: "Shower Cabin icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "bathtub_instalation",
+          label: "Bathtub Instalation",
+          icon: {
+            src: "/svg/houseService/bathtub.svg",
+            alt: "B   athtub icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "demolition",
+          label: "Demolition",
+          icon: {
+            src: "/svg/houseService/demolition.svg",
+            alt: "Demolition icon",
+          },
+          input: {
+            quantity: false,
             area: false,
             rooms: false,
             ceiling: false,
@@ -122,7 +243,7 @@ const HouseServiceForm = () => {
             ceiling: false,
             floorType: false,
             remove_old: false,
-            length: false,
+            length: true,
           },
         },
         {
@@ -144,10 +265,27 @@ const HouseServiceForm = () => {
         },
         {
           id: "door_adjustment",
-          label: "Door Adjustment/Repair",
+          label: "Repair Door/Windows",
           icon: {
             src: "/svg/houseService/door_adjustment.svg",
             alt: "Door Adjustment icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: false,
+            length: false,
+          },
+        },
+        {
+          id: "door_instalation",
+          label: "Instalation Door/Windows",
+          icon: {
+            src: "/svg/houseService/window_instalation.svg",
+            alt: "Door instalation icon",
           },
           input: {
             quantity: true,
@@ -170,6 +308,40 @@ const HouseServiceForm = () => {
           icon: {
             src: "/svg/houseService/faucet_replacement.svg",
             alt: "Faucet icon",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: true,
+            length: false,
+          },
+        },
+        {
+          id: "shower_instalation",
+          label: "Shower Instalation",
+          icon: {
+            src: "/svg/houseService/shower_instalation.svg",
+            alt: "Shower Instalation",
+          },
+          input: {
+            quantity: true,
+            area: false,
+            rooms: false,
+            ceiling: false,
+            floorType: false,
+            remove_old: true,
+            length: false,
+          },
+        },
+        {
+          id: "water_meter_instalation",
+          label: "Water Meter Instalation",
+          icon: {
+            src: "/svg/houseService/water_meter_instalation.svg",
+            alt: "Water Meter Instalation",
           },
           input: {
             quantity: true,
@@ -345,11 +517,11 @@ const HouseServiceForm = () => {
           },
         },
         {
-          id: "fuse_replacement",
-          label: "Fuse Replacement",
+          id: "distributor_replacement",
+          label: "Distributor Replacement",
           icon: {
-            src: "/svg/houseService/fuse_replacement.svg",
-            alt: "Fuse Replacement icon",
+            src: "/svg/houseService/distributor_replacement.svg",
+            alt: "Distributor Replacement icon",
           },
           input: {
             quantity: true,
@@ -410,11 +582,11 @@ const HouseServiceForm = () => {
           },
         },
         {
-          id: "transformer_installation",
-          label: "Transformer Installation/Replacement",
+          id: "electricity_meter_installation",
+          label: "Electricity Meter Installation",
           icon: {
-            src: "/svg/houseService/transformer.svg",
-            alt: "Transformer icon",
+            src: "/svg/houseService/electricity_meter.svg",
+            alt: "Electricity Meter icon",
           },
           input: {
             quantity: true,
@@ -498,10 +670,6 @@ const HouseServiceForm = () => {
     {
       name: "Parquet",
       icon: { src: "/svg/floorTypes/parquet.svg", alt: "Parquet Flooring" },
-    },
-    {
-      name: "PVC",
-      icon: { src: "/svg/floorTypes/pvc.svg", alt: "PVC Flooring" },
     },
   ];
   const router = useRouter();
@@ -590,6 +758,8 @@ const HouseServiceForm = () => {
       category: selectedCategory,
     }));
   };
+
+
 
   const handleAdjust = (
     field: "rooms" | "quantity",
@@ -745,10 +915,11 @@ const HouseServiceForm = () => {
                     onChange={handleChange}
                     placeholder="0"
                   />
-                  <label className={styles.label}>cm²</label>
+                  <label className={styles.label}>m²</label>
                 </div>
               </div>
             )}
+          
 
             {input.length && (
               <div className={styles.form_div}>
@@ -762,7 +933,7 @@ const HouseServiceForm = () => {
                     onChange={handleChange}
                     placeholder="0"
                   />
-                  <label className={styles.label}>cm</label>
+                  <label className={styles.label}>m</label>
                 </div>
               </div>
             )}

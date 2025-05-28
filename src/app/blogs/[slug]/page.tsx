@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps<{ slug: string }>):
         description: post.metaDescription,
         images: [
           {
-            url: post.image,
+            url: post.featuredImage,
             width: 1200,
             height: 630,
             alt: post.title,
@@ -36,9 +36,10 @@ export async function generateMetadata({ params }: PageProps<{ slug: string }>):
 
 export default async function BlogPage({ params }: PageProps<{ slug: string }>) {
   try {
-    const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
-
+    const { data: post } = await api.get<BlogPost>(`/api/blogs/${params.slug}`);
+    console.log("Blog data received:", post);
     if (!post) {
+      console.log("No post found, calling notFound()");
       return notFound();
     }
 

@@ -13,8 +13,42 @@ import { handleServiceRequest } from "../../../../services/serviceRequestHandler
 import successAnimation from "../../../../../public/animation/success.json";
 import ConfirmationAlert from "../../../confirmationAlert/page";
 import { useRouter } from "next/navigation";
+import Select from "../../../select/page";
 
 const KitchenCleaningForm = () => {
+  const applianceOptions = [
+    {
+      name: "Refrigerator",
+      icon: { src: "/svg/refrigerator.svg", alt: "Refrigerator" },
+    },
+    {
+      name: "Dishwasher",
+      icon: { src: "/svg/dishwasher.svg", alt: "Dishwasher" },
+    },
+    {
+      name: "Cooktop",
+      icon: { src: "/svg/cooktop.svg", alt: "Cooktop" },
+    },
+    {
+      name: "Oven",
+      icon: { src: "/svg/oven.svg", alt: "Oven" },
+    },
+    {
+      name: "Extractor",
+      icon: { src: "/svg/extractor.svg", alt: "Extractor" },
+    },
+    {
+      name: "Washing Machine",
+      icon: {
+        src: "/svg/washing-machine.svg",
+        alt: "Washing Machine",
+      },
+    },
+    {
+      name: "Sink",
+      icon: { src: "/svg/sink.svg", alt: "Sink" },
+    },
+  ];
   const router = useRouter();
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const { user, refreshUser, addRequestToUser } = useUser();
@@ -29,8 +63,16 @@ const KitchenCleaningForm = () => {
       alt: "Window icon",
     },
     size: 0,
+    appliances: [],
     notes: "",
   });
+
+  const handleApplianceChange = (selected: string[]) => {
+    setFormData((prev) => ({
+      ...prev,
+      appliances: selected,
+    }));
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -79,6 +121,7 @@ const KitchenCleaningForm = () => {
           src: "/svg/kitchen-cleaning.svg",
           alt: "Window icon",
         },
+        appliances: [],
         size: 0,
         notes: "",
       });
@@ -117,6 +160,12 @@ const KitchenCleaningForm = () => {
             <label className={styles.label}>m²</label>
           </div>
         </div>
+        <Select
+          label="Appliances"
+          options={applianceOptions}
+          onChange={handleApplianceChange}
+          multiple
+        />
 
         <textarea
           className={styles.textarea}

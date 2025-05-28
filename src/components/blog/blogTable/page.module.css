@@ -1,0 +1,46 @@
+.tableList {
+    padding: 0;
+    list-style: none;
+    width: 100%;
+  }
+  
+  .tableRow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 80px;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(99, 100, 100, 0.267);
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+  }
+  .tableRow:not(.headerRow):hover {
+    background: rgba(103, 103, 103, 0.199);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(103, 103, 103, 0.144);
+  }
+  .headerRow {
+    font-weight: 600;
+    background: rgba(103, 103, 103, 0.308);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(103, 103, 103, 0.144);
+  }
+  
+  .moreButton {
+    padding: 0.3rem 0.7rem;
+    border: none;
+    background: #e3e6ee;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #333;
+    transition: all 0.15s ease-in-out;
+    font-size: clamp(14px, 3vw, 18px);
+  }
+  .moreButton:hover {
+    background: #b8c4d6;
+  }
+  .title {
+    font-weight: 500;
+    color: #292929;
+  }
+ 
+  

@@ -1,9 +1,8 @@
 [
     {
-      "id": "1",
       "title": "How to Choose the Best Maintenance Service for Your Home and Avoid Scams",
       "slug": "choose-best-maintenance-service",
-      "featuredImage": "/images/blog/choose-best-maintenance-service.webp",
+      "featuredImage": "/public/images/choose-best-maintenance-service-blog.webp",
       "metaDescription": "Learn how to choose reliable home maintenance services and protect your home from scams.",
       "introduction": "Did you know that 70% of home repairs could have been prevented with regular maintenance? This guide will help you select the right service and avoid common pitfalls.",
       "sections": [
@@ -43,10 +42,9 @@
       "author": "Havenova Team"
     },
     {
-      "id": "2",
       "title": "The Ultimate Home Maintenance Checklist for Every Season",
       "slug": "home-maintenance-checklist",
-      "featuredImage": "/images/blog/home-maintenance-checklist.webp",
+      "featuredImage": "/images/home-maintenance-checklist.webp",
       "metaDescription": "Keep your home in top condition all year round with this seasonal maintenance checklist.",
       "introduction": "Your home needs care in every season. This checklist will guide you through simple yet essential tasks to protect your home and prevent costly repairs.",
       "sections": [
@@ -98,7 +96,7 @@
     {
       "title": "How to Prepare Your Home for Winter",
       "slug": "prepare-home-for-winter",
-      "featuredImage": "/images/blog/prepare-home-for-winter.webp",
+      "featuredImage": "/images/prepare-home-for-winter.webp",
       "metaDescription": "Learn the essential steps to prepare your home for winter and avoid costly seasonal damages.",
       "introduction": "Winter can be tough on homes. This guide will help you protect your property and stay comfortable during the cold months.",
       "sections": [
@@ -126,7 +124,7 @@
     {
       "title": "Signs You Need to Renovate Your Kitchen",
       "slug": "kitchen-renovation-signs",
-      "featuredImage": "/images/blog/kitchen-renovation-signs.webp",
+      "featuredImage": "/images/kitchen-renovation-signs.webp",
       "metaDescription": "Is it time for a kitchen renovation? Learn the key signs that your kitchen needs a makeover.",
       "introduction": "The kitchen is the heart of the home. Here’s how to tell when it’s time to renovate and improve your kitchen space.",
       "sections": [
@@ -154,7 +152,7 @@
     {
       "title": "The Benefits of Scheduling Regular Home Inspections",
       "slug": "benefits-regular-home-inspections",
-      "featuredImage": "/images/blog/benefits-regular-home-inspections.webp",
+      "featuredImage": "/images/benefits-regular-home-inspections.webp",
       "metaDescription": "Find out why regular home inspections are key to maintaining your property’s value and safety.",
       "introduction": "Home inspections aren’t just for buying or selling. Learn how regular checks can protect your home and save you money.",
       "sections": [

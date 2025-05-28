@@ -246,6 +246,22 @@ const FurnitureAssemblyForm = () => {
           },
         },
         {
+          id: "dining_chair",
+          label: "Dining Chair",
+          icon: {
+            src: "/svg/furnitureTypes/dining_chair.svg",
+            alt: "Dining Table icon",
+          },
+          input: {
+            width: false,
+            height: false,
+            depth: false,
+            doors: false,
+            drawers: false,
+            wall: false,
+          },
+        },
+        {
           id: "kitchen_island",
           label: "Kitchen Island",
           icon: {
@@ -567,6 +583,8 @@ const FurnitureAssemblyForm = () => {
     const newRequest: ServiceRequestItem = {
       id: uuidv4(),
       serviceType: "furniture-assembly",
+      price: 0,
+      estimatedDuration: 0,
       details: formData,
     };
     const error = validateFurnitureForm(formData);
@@ -606,6 +624,7 @@ const FurnitureAssemblyForm = () => {
   };
 
   return (
+    <>
     <main className={styles.main}>
       <header
         className={styles.header}
@@ -821,7 +840,7 @@ const FurnitureAssemblyForm = () => {
           </form>
         </aside>
       )}
-
+    </main>
       {alertOpen && (
         <ConfirmationAlert
           title="Your request has been submitted!"
@@ -836,7 +855,7 @@ const FurnitureAssemblyForm = () => {
           }}
         />
       )}
-    </main>
+    </>
   );
 };
 
