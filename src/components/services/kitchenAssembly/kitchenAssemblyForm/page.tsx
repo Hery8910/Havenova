@@ -131,6 +131,8 @@ const KitchenAssemblyForm = () => {
     const newRequest: ServiceRequestItem = {
       id: uuidv4(),
       serviceType: "kitchen-assembly",
+      price: 0,
+      estimatedDuration: 0,
       details: formData,
     };
     try {

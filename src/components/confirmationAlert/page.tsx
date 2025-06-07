@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 interface ConfirmationAlertProps {
   title: string;
   message: string;
-  animationData: object;
+  animationData?: object;
   confirmLabel?: string;
   cancelLabel?: string;
   extraClass?: string;
@@ -25,14 +25,7 @@ const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
   onCancel,
 }) => {
   return (
-    <section className={styles.wrapper}>
       <main className={styles.section_main}>
-           {/* <Lottie
-           animationData={animationData}
-           loop={true}
-           autoplay={true}
-           style={{ width: 100, height: 100 }}
-         /> */}
         <article className={styles.section_article}>
           <h4 className={styles.title}>{title}</h4>
           <p className={styles.message}>{message}</p>
@@ -50,7 +43,6 @@ const ConfirmationAlert: React.FC<ConfirmationAlertProps> = ({
           </div>
         </article>
       </main>
-    </section>
   );
 };
 

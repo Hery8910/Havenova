@@ -25,7 +25,7 @@ const Info: React.FC<InfoProps> = ({ direction, info, image }) => {
 
   return (
     <main className={styles.main}>
-      <button className={styles.open} onClick={() => setOpen(true)}>
+      <button className={styles.open} onClick={() => setOpen(pre => !pre)}>
         <AiOutlineQuestionCircle />
       </button>
       {open && (

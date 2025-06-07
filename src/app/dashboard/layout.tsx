@@ -10,7 +10,9 @@ export default function DashboardLayout({
 }) {
   return (
     <main className={styles.main}>
+      <nav className={styles.nav}>
         <DashboardSidebar />
+      </nav>
       <section className={styles.section}>{children}</section>
     </main>
   );

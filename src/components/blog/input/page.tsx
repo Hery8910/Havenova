@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import styles from "./page.module.css";
 
 interface InputProps {
@@ -8,6 +8,7 @@ interface InputProps {
   onBlur: (value: string) => void;
   placeholder?: string;
   maxLength?: number;
+  height?: string;
 }
 
 export default function Input({
@@ -17,20 +18,29 @@ export default function Input({
   onBlur,
   placeholder = "Blog Title",
   maxLength = 120,
+  height
 }: InputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Ajuste automático de altura
+  // Ajuste automático de altura cuando el usuario escribe
   const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     const el = textareaRef.current;
     if (el) {
-      el.style.height = "auto";
+      el.style.height = height ? height : "auto";
       el.style.height = `${el.scrollHeight}px`;
     }
     onChange(e.currentTarget.value);
     onBlur(e.currentTarget.value);
-
   };
+
+  // Ajuste automático de altura cuando el valor cambia desde fuera
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = height ? height : "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  }, [value, height]);
 
   return (
     <textarea
@@ -42,6 +52,7 @@ export default function Input({
       rows={1}
       maxLength={maxLength}
       onInput={handleInput}
+      style={height ? { height } : undefined}
     />
   );
 }

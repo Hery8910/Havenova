@@ -1,12 +1,11 @@
-import styles from './page.module.css';
+import styles from "./page.module.css";
 
- const Dashboard = () => {
+const Dashboard = () => {
   return (
-    <main className={styles.main}>
+    <>
       <h1>Dashboard</h1>
-
-    </main>
+    </>
   );
 };
 
-export default Dashboard
+export default Dashboard;

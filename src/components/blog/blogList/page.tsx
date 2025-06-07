@@ -2,14 +2,14 @@
 import BlogCard from "../blogCard/page";
 import Modal from "../../modal/page";
 import { IframeProps } from "../../../types/blog";
-import { BlogPost } from "../../../types/blog";
+import { BlogFromDB } from "../../../types/blog";
 import styles from "./page.module.css";
 import { useRef, useState, useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 
 interface BlogListProps {
-  blogs: BlogPost[];
+  blogs: BlogFromDB[];
 }
 
 export default function BlogList({ blogs }: BlogListProps) {
@@ -99,7 +99,7 @@ export default function BlogList({ blogs }: BlogListProps) {
         <ul className={styles.ul} ref={ulRef}>
           {blogs.map((blog) => (
             <li className={styles.li} key={blog._id}>
-              <BlogCard key={blog._id} blog={blog} canDelete/>
+              <BlogCard key={blog._id} blog={blog}/>
             </li>
           ))}
         </ul>

@@ -1,15 +1,15 @@
-"use client";
 import Image from "next/image";
-import { BlogFromDB, BlogPost } from "../../../types/blog";
+import {  BlogPost } from "../../../types/blog";
 import styles from "./page.module.css";
-import RenderComments from "../renderComments/page";
+
 
 interface BlogContentProps {
-  post: BlogFromDB;
+  post: BlogPost;
   isPreview?: boolean;
 }
 
-const BlogContent = ({ post, isPreview = false }: BlogContentProps) => (
+
+const BlogPreview = ({ post, isPreview = false }: BlogContentProps) => (
   <main className={`${isPreview ? styles.main_preview : styles.main}`}>
     <header className={`${isPreview ? styles.header_preview : styles.header}`}>
       <div
@@ -92,25 +92,7 @@ const BlogContent = ({ post, isPreview = false }: BlogContentProps) => (
         ))}
       </section>
     )}
-    {post.comments && post.comments.length > 0 && (
-      <section
-        className={isPreview ? styles.section_preview : styles.section}
-        style={{ marginTop: 32 }}
-      >
-        <h3 className={isPreview ? styles.h2_preview : ""}>Comments</h3>
-        <ul
-          className={isPreview ? styles.comment_ul_preview : styles.comment_ul}
-        >
-          <RenderComments
-            blog={post}
-            comments={post.comments}
-            isDashboard={false}
-            isPreview={true}
-          />
-        </ul>
-      </section>
-    )}
   </main>
 );
 
-export default BlogContent;
+export default BlogPreview;

@@ -3,68 +3,159 @@ import { useEffect, useState } from "react";
 import BlogTable from "../../../components/blog/blogTable/page";
 import styles from "./page.module.css";
 import { BlogFromDB } from "../../../types/blog";
-import { getAllBlogs } from "../../../services/blogServices";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Suspense } from "react";
+import BlogTableSkeleton from "../../../components/blog/blogTableSkeleton/page";
+import {
+  getAllBlogs,
+  getScheduledBlogs,
+  getPublishedBlogs,
+  getPendingBlogs,
+} from "../../../services/blogServices";
 import CreateBlogForm from "../../../components/blog/createBlogForm/page";
 
-const Blog = () => {
-  const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
+const LIST_OPTIONS = [
+  { key: "all", label: "All" },
+  { key: "scheduled", label: "Scheduled" },
+  { key: "published", label: "Published" },
+  { key: "pending", label: "Pending" },
+] as const;
 
+export type ListType = (typeof LIST_OPTIONS)[number]["key"];
+export type ListPath = (typeof LIST_OPTIONS)[number]["label"];
+
+const Blog = () => {
+  const [activeList, setActiveList] = useState<ListType>("all");
+  const [activePath, setActivePath] = useState<ListPath>("All");
+
+  const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
+  const [open, setOpen] = useState<boolean>(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 10;
+  const [search, setSearch] = useState("");
+  const [order, setOrder] = useState<"desc" | "asc">("desc");
+  const limit = 5;
+  const [loading, setLoading] = useState(false);
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
 
-  const fetchBlogs = async () => {
-    try {
-      const response = await getAllBlogs(page, limit);
-      setBlogs(response.blogs);
-      setTotalPages(response.totalPages);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-    }
-  };
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 1000); // 400ms delay
+
+    return () => clearTimeout(handler);
+  }, [search]);
 
   useEffect(() => {
     fetchBlogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [activeList, page, debouncedSearch, order]);
+
+  const fetchBlogs = async () => {
+    setLoading(true);
+    try {
+      let response;
+      if (activeList === "all") {
+        response = await getAllBlogs(page, limit, search, order);
+      } else if (activeList === "scheduled") {
+        response = await getScheduledBlogs(page, limit, search, order);
+      } else if (activeList === "published") {
+        response = await getPublishedBlogs(page, limit, search, order);
+      } else if (activeList === "pending") {
+        response = await getPendingBlogs(page, limit, search, order);
+      }
+      {
+        response && setBlogs(response.blogs);
+      }
+      {
+        response && setTotalPages(response.totalPages);
+      }
+    } catch (error) {
+      setBlogs([]);
+      setTotalPages(1);
+      console.error("Error fetching blogs:", error);
+    }
+    setLoading(false);
+  };
+
+  const refreshBlog = async (blogId: string) => {
+    // Opcional: refrescar un blog individual, según lógica de tu app.
+    fetchBlogs();
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault;
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleOrderChange = (order: "desc" | "asc") => {
+    setOrder(order);
+    setPage(1);
+  };
+
+  const handleListChange = (type: ListType, label: ListPath) => {
+    setActivePath(label);
+    setActiveList(type);
+    setPage(1);
+    setSearch("");
+    // Puedes resetear otros filtros si quieres
+  };
 
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <h4>Blogs</h4>
-        <button className={styles.button} onClick={() => setOpen(prev =>!prev)}>
-          {open ? "Create New Blog +" : "Blog List"}
-        </button>
+        <aside className={styles.aside}>
+          <button
+            className={`${styles.button} ${open && styles.button_active}`}
+            onClick={() => setOpen(true)}
+          >
+            Blog List
+            <span
+              className={`${styles.span} ${open && styles.span_active}`}
+            ></span>
+          </button>
+          <button
+            className={`${styles.button} ${!open && styles.button_active}`}
+            onClick={() => setOpen(false)}
+          >
+            New Blog
+            <span
+              className={`${styles.span} ${!open && styles.span_active}`}
+            ></span>
+          </button>
+        </aside>
+        <h2>Blog Posts</h2>
       </header>
+
       {open ? (
-        <section className={styles.section}>
-          <BlogTable blogs={blogs} />
-          <aside className={styles.aside}>
-            <button
-              className={styles.aside_button}
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-            >
-              <IoIosArrowBack />
-            </button>
-            <p>
-              Page {page} / {totalPages}
-            </p>
-            <button
-              className={styles.aside_button}
-              disabled={page === totalPages}
-              onClick={() => setPage(page + 1)}
-            >
-              <IoIosArrowForward />
-            </button>
-          </aside>
-        </section>
+          <BlogTable
+            blogs={blogs}
+            page={page}
+            totalPages={totalPages}
+            search={search}
+            order={order}
+            loading={loading}
+            activeList={activeList}
+            activePath={activePath}
+            onChangePage={(newPage) => setPage(newPage)}
+            onChangeSearch={(value) => {
+              setSearch(value);
+              setPage(1);
+            }}
+            onChangeOrder={(order) => {
+              setOrder(order);
+              setPage(1);
+            }}
+            onChangeList={(type, label) => {
+              setActiveList(type);
+              setActivePath(label);
+              setPage(1);
+              setSearch("");
+            }}
+            onRefresh={refreshBlog}
+          />
       ) : (
-        <section className={styles.section}>
-          <CreateBlogForm blogs={blogs}/>
-        </section>
+          <CreateBlogForm blogs={blogs} />
       )}
     </main>
   );

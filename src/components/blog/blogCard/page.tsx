@@ -1,87 +1,41 @@
 "use client";
 
-import { BlogFromDB } from "../../../types/blog";
+import { BlogPost } from "../../../types/blog";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { IoIosArrowForward } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import attentionAnimation from "../../../../public/animation/attention.json";
-
-import { useState } from "react";
-import ConfirmationAlert from "../../confirmationAlert/page";
-import { deleteBlogById } from "../../../services/blogServices";
 
 interface BlogCardProps {
-  blog: BlogFromDB;
-  canDelete?: boolean;
-  onDelete?: (blog: BlogFromDB) => void;
+  blog: BlogPost;
+  isPreview?: boolean;
 }
 
-export default function BlogCard({ blog, canDelete, onDelete }: BlogCardProps) {
+export default function BlogCard({ blog, isPreview}: BlogCardProps) {
   const router = useRouter();
-  const [alertOpen, setAlertOpen] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("Are you sure you want to delete this blog?");
 
 
   const handleClick = () => {
-    router.push(`/blogs/${blog.slug}`);
-  };
-
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Para que no navegue al blog al hacer click en borrar
-    setAlertOpen(true);
+    router.push(`/slug/blogs/${blog.slug}`);
   };
 
   return (
-    <>
-      <section onClick={handleClick} className={styles.section} key={blog._id}>
-        <Image
-          className={styles.image}
-          src={blog.featuredImage}
-          priority={true}
-          alt={blog.title || "Image"}
-          width={200}
-          height={200}
-        />
-        <article className={`${styles.article} card`}>
-          <h3>{blog.title}</h3>
-          <p>{blog.metaDescription}</p>
-          <p className={styles.link}>
-            Read more <IoIosArrowForward />
-          </p>
-        </article>
-
-        {canDelete && (
-          <button
-            type="button"
-            onClick={handleDelete}
-            className={styles.deleteButton} // Puedes agregar estilos
-          >
-            Delete Blog
-          </button>
-        )}
-      </section>
-      {alertOpen && (
-        <ConfirmationAlert
-        title={message}
-        message={message !== "Blog Deleted!" ? "This action cannot be undone." : ""} 
-        animationData={attentionAnimation}
-        confirmLabel="Yes, delete"
-        cancelLabel="Cancel"
-          extraClass="success"
-          onCancel={() => setAlertOpen(false)}
-          onConfirm={async () => {
-            try {
-              await deleteBlogById(blog._id);
-              setMessage("Blog Deleted!")
-              setTimeout(() => setAlertOpen(false), 3000);
-              onDelete?.(blog);
-            } catch (error) {
-              setMessage("Error deleting blog");
-            }
-          }}
-        />
-      )}
-    </>
+    <section onClick={handleClick} className={styles.section}>
+      <Image
+        className={styles.image}
+        src={blog.featuredImage || '/images/blog-image-mock.webp'}
+        priority={true}
+        alt={blog.title || "Image"}
+        width={500}
+        height={236}
+      />
+      <main className={styles.main}>
+        <h3 className={styles.h3}>{blog.title || "The title will appear as the main headline of your blog post."}</h3>
+        <p>{blog.introduction || "A short summary of your blog post. This description helps readers and search engines quickly understand the main topic of your article. It should be concise and engaging, usually between 60 and 160 characters."}</p>
+       {!isPreview && <p className={styles.link}>
+          More <IoIosArrowForward />
+        </p>}
+      </main>
+    </section>
   );
 }

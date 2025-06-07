@@ -6,7 +6,7 @@ import Image from "next/image";
 // Opción individual
 interface SelectOption {
   name: string;
-  icon: {
+  icon?: {
     src: string;
     alt: string;
   };
@@ -73,13 +73,14 @@ const Select: React.FC<SelectProps> = ({
               className={`${styles.li} ${selected.includes(option.name) ? styles.selected : ""}`}
               onClick={() => handleSelect(option.name)}
             >
+              {option.icon &&
               <Image
                 className={styles.image}
                 src={option.icon.src}
                 alt={option.icon.alt}
                 width={50}
                 height={50}
-              />
+              />}
               <p>{option.name}</p>
             </li>
           ))}

@@ -1,7 +1,9 @@
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 import Loading from "../loading/page";
+import { FaRegTrashCan } from "react-icons/fa6";
+import ConfirmationAlert from "../confirmationAlert/page";
 
 interface ImageUploadProps {
   label?: string;
@@ -21,9 +23,15 @@ export default function ImageUpload({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imageUrl, setImageUrl] = useState<string>(initialImage);
   const [uploading, setUploading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
+
+  useEffect(() => {
+    setImageUrl(initialImage || "");
+    if (!initialImage && fileInputRef.current) fileInputRef.current.value = "";
+  }, [initialImage]);
 
   const handleFile = async (file: File) => {
     setError(null);
@@ -93,38 +101,40 @@ export default function ImageUpload({
     >
       {imageUrl ? (
         <section className={styles.image_section}>
-        
           <button
             type="button"
             className={styles.button}
             onMouseEnter={() => {
               setTimeout(() => {
-                setHover(true)
+                setHover(true);
               }, 400);
             }}
             onMouseLeave={() => setHover(false)}
-            onClick={() => {
-              setImageUrl("");
-              onUpload("");
-              setHover(false)
-              if (fileInputRef.current) fileInputRef.current.value = "";
-            }}
+            onClick={() => setOpen(true)}
           >
-            <Image
-              src="/svg/delete.svg"
-              alt="Delete icon"
-              width={20}
-              height={20}
-            />
-          {hover && <p className={styles.delete}>Delete</p>}
+            <FaRegTrashCan />
           </button>
           <Image
             src={imageUrl}
             priority={true}
             alt="Uploaded"
-            width={250}
-            height={250}
+            width={1000}
+            height={472}
           />
+          {open && (
+            <ConfirmationAlert
+              title="Are you sure you want to delete this image?"
+              message=""
+              onCancel={() => setOpen(false)}
+              onConfirm={() => {
+                setImageUrl("");
+                onUpload("");
+                setHover(false);
+                if (fileInputRef.current) fileInputRef.current.value = "";
+                setOpen(false)
+              }}
+            />
+          )}
         </section>
       ) : (
         <section
@@ -159,7 +169,15 @@ export default function ImageUpload({
             />
           </div>
 
-          {uploading ? <Loading /> : <p>Drop an image, or click to select</p>}
+          {uploading ? (
+            <Loading />
+          ) : (
+            <div className={styles.section_div}>
+              <h4>Upload Featured Image</h4>
+              <p>Drop an image here, or click to select</p>
+              <p className={styles.upload_button}>Upload</p>
+            </div>
+          )}
         </section>
       )}
       <input

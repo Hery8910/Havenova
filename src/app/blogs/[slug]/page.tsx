@@ -1,16 +1,18 @@
-import { BlogPost } from '../../../types/blog';
-import api from '../../../services/api';
-import BlogContent from '../../../components/blog/blogContent/page';
-import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
-import { PageProps } from '../../../types/page';
-
-
+import { BlogFromDB } from "../../../types/blog";
+import api from "../../../services/api";
+import BlogContent from "../../../components/blog/blogContent/page";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { PageProps } from "../../../types/page";
+import CommentForm from "../../../components/blog/commentForm/page";
 
 // Generar metadata dinámico basado en el contenido del post
-export async function generateMetadata({ params }: PageProps<{ slug: string }>): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<{ slug: string }>): Promise<Metadata> {
+  
   try {
-    const { data: post } = await api.get<BlogPost>(`/blogs/${params.slug}`);
+    const { data: post } = await api.get<BlogFromDB>(`/api/blogs/slug/${params.slug}`);
     if (!post) return {};
 
     return {
@@ -34,10 +36,12 @@ export async function generateMetadata({ params }: PageProps<{ slug: string }>):
   }
 }
 
-export default async function BlogPage({ params }: PageProps<{ slug: string }>) {
+export default async function BlogPage({
+  params,
+}: PageProps<{ slug: string }>) {
   try {
-    const { data: post } = await api.get<BlogPost>(`/api/blogs/${params.slug}`);
-    console.log("Blog data received:", post);
+
+    const { data: post } = await api.get<BlogFromDB>(`/api/blogs/slug/${params.slug}`);
     if (!post) {
       console.log("No post found, calling notFound()");
       return notFound();
@@ -45,11 +49,15 @@ export default async function BlogPage({ params }: PageProps<{ slug: string }>) 
 
     return (
       <main>
-        <BlogContent post={post} />
+        <BlogContent post={post}/>
+        <CommentForm
+          blogId={post._id}
+          isDashboard={false}
+        />
       </main>
     );
   } catch (error: any) {
-    console.error('Error fetching blog:', error);
+    console.error("Error fetching blog:", error);
     return notFound();
   }
 }

@@ -1,7 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../../services/api";
-import { BlogFAQ, BlogPost, SectionContent } from "../../../types/blog";
+import {
+  BlogFAQ,
+  BlogFromDB,
+  BlogPost,
+  BlogStatus,
+  SectionContent,
+} from "../../../types/blog";
 import ImageUpload from "../../imageUpload/page";
 import styles from "./page.module.css";
 import Input from "../input/page";
@@ -11,9 +17,14 @@ import {
   validateSlug,
   validateTitle,
 } from "../../../utils/validators";
-import Image from "next/image";
 import Info from "../../info/page";
-import { url } from "inspector";
+import ConfirmationAlert from "../../confirmationAlert/page";
+import { GrList } from "react-icons/gr";
+import { HiMenuAlt2 } from "react-icons/hi";
+import BlogCard from "../blogCard/page";
+import BlogPreview from "../blogPreview/page";
+import { useRouter } from "next/navigation";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const initialBlog: BlogPost = {
   title: "",
@@ -23,19 +34,60 @@ const initialBlog: BlogPost = {
   introduction: "",
   sections: [],
   faq: [],
+  status: "draft",
+  scheduledAt: null,
+  comments: [],
   author: "Havenova Team",
 };
+interface CreateBlogFormProps {
+  blogs: BlogPost[];
+  editBlog?: BlogFromDB | null;
+}
 
-export default function CreateBlogForm({ blogs }: { blogs: BlogPost[] }) {
-  const [blog, setBlog] = useState<BlogPost>(initialBlog);
+export default function CreateBlogForm({
+  blogs,
+  editBlog = null,
+}: CreateBlogFormProps) {
+  const [blog, setBlog] = useState<BlogPost>(editBlog ?? initialBlog);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
   const [error, setError] = useState<string | null>(null);
+  const [sectionId, setSectionId] = useState<number | null>(null);
+  const [openContentId, setOpenContentId] = useState<string | null>(null);
+  const [openFaqId, setOpenFaqId] = useState<string | null>(null);
+  const [hoverFaqId, setHoverFaqId] = useState<string | null>(null);
+  const [hoverId, setHoverId] = useState<number | null>(null);
+  const [submitType, setSubmitType] = useState<BlogStatus>("draft");
+  const router = useRouter();
 
-  function validateBlog(
-    blog: BlogPost,
-    existingBlogs: BlogPost[]
-  ): string | null {
+  useEffect(() => {
+    if (editBlog) {
+      // Asegura IDs únicos en FAQ
+      const faqWithIds = (editBlog.faq || []).map((faq) =>
+        faq.id ? faq : { ...faq, id: `${Date.now()}-${Math.random()}` }
+      );
+
+      // Asegura IDs únicos en sections y en sus content blocks
+      const sectionsWithIds = (editBlog.sections || []).map((section) => ({
+        ...section,
+        content: (section.content || []).map((content) =>
+          content.id
+            ? content
+            : { ...content, id: `${Date.now()}-${Math.random()}` }
+        ),
+      }));
+
+      setBlog({
+        ...editBlog,
+        faq: faqWithIds,
+        sections: sectionsWithIds,
+      });
+    } else {
+      setBlog(initialBlog);
+    }
+  }, [editBlog]);
+
+  function validateBlog(blog: BlogPost): string | null {
     if (!blog.title.trim()) return "Title is required";
     if (!blog.metaDescription.trim()) return "Meta description is required";
     if (!blog.introduction.trim()) return "Introduction is required";
@@ -86,11 +138,27 @@ export default function CreateBlogForm({ blogs }: { blogs: BlogPost[] }) {
     type: "paragraph" | "points"
   ) => {
     const newSections = [...blog.sections];
-    newSections[sectionIdx].content.push(
-      type === "paragraph"
-        ? { type: "paragraph", subheading: "", paragraph: "" }
-        : { type: "points", subheading: "", points: [""] }
-    );
+    if (type === "paragraph") {
+      const newParagraph = { id: `${Date.now()}-${Math.random()}`, value: "" };
+      newSections[sectionIdx].content.push({
+        id: `${Date.now()}-${Math.random()}`,
+        type: "paragraph",
+        paragraph: { id: `${Date.now()}-${Math.random()}`, value: "" },
+      });
+    } else {
+      const newPoint = { id: `${Date.now()}-${Math.random()}`, value: "" };
+      newSections[sectionIdx].content.push({
+        id: `${Date.now()}-${Math.random()}`,
+        type: "points",
+        points: [newPoint],
+      });
+    }
+    setBlog({ ...blog, sections: newSections });
+  };
+  // Eliminar un bloque de contenido completo
+  const removeSectionContent = (sectionIdx: number, contentIdx: number) => {
+    const newSections = [...blog.sections];
+    newSections[sectionIdx].content.splice(contentIdx, 1);
     setBlog({ ...blog, sections: newSections });
   };
 
@@ -102,17 +170,30 @@ export default function CreateBlogForm({ blogs }: { blogs: BlogPost[] }) {
     value: any
   ) => {
     const newSections = [...blog.sections];
-    newSections[sectionIdx].content[contentIdx][field] = value;
+    const contentBlock = newSections[sectionIdx].content[contentIdx];
+
+    if (field === "paragraph" && contentBlock.type === "paragraph") {
+      if (typeof contentBlock.paragraph === "object") {
+        contentBlock.paragraph.value = value;
+      } else {
+        // Crea el objeto si por alguna razón no existe
+        contentBlock.paragraph = {
+          id: `${Date.now()}-${Math.random()}`,
+          value,
+        };
+      }
+    }
     setBlog({ ...blog, sections: newSections });
   };
 
   // Agrega un punto a la lista
   const addPoint = (sectionIdx: number, contentIdx: number) => {
     const newSections = [...blog.sections];
-    if (!newSections[sectionIdx].content[contentIdx].points) {
-      newSections[sectionIdx].content[contentIdx].points = [""];
-    } else {
-      newSections[sectionIdx].content[contentIdx].points!.push("");
+    const newPoint = { id: `${Date.now()}-${Math.random()}`, value: "" };
+    const contentBlock = newSections[sectionIdx].content[contentIdx];
+    if (contentBlock.type === "points") {
+      if (!contentBlock.points) contentBlock.points = [];
+      contentBlock.points.push(newPoint);
     }
     setBlog({ ...blog, sections: newSections });
   };
@@ -121,462 +202,588 @@ export default function CreateBlogForm({ blogs }: { blogs: BlogPost[] }) {
   const updatePoint = (
     sectionIdx: number,
     contentIdx: number,
-    pointIdx: number,
+    pointId: string,
     value: string
   ) => {
     const newSections = [...blog.sections];
-    newSections[sectionIdx].content[contentIdx].points![pointIdx] = value;
-    setBlog({ ...blog, sections: newSections });
+    const points = newSections[sectionIdx].content[contentIdx].points!;
+    const idx = points.findIndex((p) => p.id === pointId);
+    if (idx > -1) {
+      points[idx].value = value;
+      setBlog({ ...blog, sections: newSections });
+    }
   };
 
   // Elimina un punto de la lista
   const removePoint = (
     sectionIdx: number,
     contentIdx: number,
-    pointIdx: number
+    pointId: string
   ) => {
     const newSections = [...blog.sections];
-    newSections[sectionIdx].content[contentIdx].points!.splice(pointIdx, 1);
-    setBlog({ ...blog, sections: newSections });
-  };
-
-  // Eliminar un bloque de contenido completo
-  const removeSectionContent = (sectionIdx: number, contentIdx: number) => {
-    const newSections = [...blog.sections];
-    newSections[sectionIdx].content.splice(contentIdx, 1);
-    setBlog({ ...blog, sections: newSections });
+    const contentBlock = newSections[sectionIdx].content[contentIdx];
+    if (contentBlock.type === "points") {
+      contentBlock.points = contentBlock.points!.filter(
+        (p) => p.id !== pointId
+      );
+      setBlog({ ...blog, sections: newSections });
+    }
   };
 
   // FAQ
   const addFaq = () => {
-    setBlog({ ...blog, faq: [...blog.faq, { question: "", answer: "" }] });
+    setBlog((prev) => ({
+      ...prev,
+      faq: [
+        ...prev.faq,
+        { id: `${Date.now()}-${Math.random()}`, question: "", answer: "" },
+      ],
+    }));
   };
 
-  const updateFaq = (idx: number, field: keyof BlogFAQ, value: string) => {
-    const newFaq = [...blog.faq];
-    newFaq[idx][field] = value as any;
-    setBlog({ ...blog, faq: newFaq });
+  // Actualizar FAQ
+  const updateFaq = (faqId: string, field: keyof BlogFAQ, value: string) => {
+    const newFaq = blog.faq.map((item) =>
+      item.id === faqId ? { ...item, [field]: value } : item
+    );
+    setBlog((prev) => ({ ...prev, faq: newFaq }));
   };
 
-  const removeFaq = (idx: number) => {
-    const newFaq = blog.faq.filter((_, i) => i !== idx);
-    setBlog({ ...blog, faq: newFaq });
+  // Eliminar FAQ
+  const removeFaq = (faqId: string) => {
+    const newFaq = blog.faq.filter((item) => item.id !== faqId);
+    setBlog((prev) => ({ ...prev, faq: newFaq }));
+  };
+  const updateSchedule = (value: string) => {
+    setBlog((prev) => ({
+      ...prev,
+      scheduledAt: value ? new Date(value) : null,
+      status: value ? "scheduled" : prev.status, // ¡opcional! cambia status si hay fecha
+    }));
   };
 
-  // Envío
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setSuccess(false);
     setError(null);
-
-    const validationError = validateBlog(blog, blogs);
+    const validationError = validateBlog(blog);
     if (validationError) {
       setError(validationError);
       return;
     }
-
     try {
-      await api.post("/api/blogs", blog);
-      setSuccess(true);
-      setBlog(initialBlog);
+      if (editBlog && editBlog._id) {
+        await api.patch(`/api/blogs/id/${editBlog._id}`, {
+          ...blog,
+          status: submitType,
+        });
+        setSuccess(true);
+      } else {
+        await api.post("/api/blogs", {
+          ...blog,
+          status: submitType,
+        });
+        setSuccess(true);
+        setBlog(initialBlog);
+      }
+      setTimeout(() => setSuccess(false), 5000);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Error creating blog post");
+      setError(err.response?.data?.message || "Error saving blog post");
     }
   };
 
   return (
     <main className={styles.main}>
-      <header className={styles.header}>
-        <div className={styles.header_div}>
-          <h2>New Blog Post</h2>
-          <p className={styles.header_p}>
-            This form guides you through the process of creating a new blog
-            post. All fields and sections are structured to represent the final
-            published version as closely as possible. Please read the guidelines
-            for each field to ensure the best results.
-          </p>
-        </div>
-        <Image
-          className={styles.image}
-          image-mockup
-          src="/images/header-blog.webp"
-          priority={true}
-          alt="Blog image"
-          width={250}
-          height={250}
-        />
-      </header>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <section className={styles.title_section}>
-          <Info
-            direction="left"
-            info={{
-              question: "Title",
-              answer:
-                "The title will appear as the main headline of your blog post.",
-            }}
-          />
-          <div className={styles.div}>
-            <h3 className={styles.h3}>Blog Title:</h3>
-            <Input
-              heading="subheading"
-              value={blog.title}
-              onChange={handleTitleChange}
-              onBlur={(value) =>
-                setErrors((errs) => ({
-                  ...errs,
-                  title: validateTitle(value),
-                }))
-              }
-              placeholder="Enter your blog title"
-            />
-          </div>
-        </section>
-        <section className={styles.section}>
-          <Info
-            direction="left"
-            info={{
-              question: "Meta Description",
-              answer:
-                "A short summary, between 100 and 160 characters, for SEO and social sharing.",
-            }}
-            image={{
-              url: "/images/metadataExample.webp",
-              alt: "Example of Meta Description",
-            }}
-          />
-          <div className={styles.div}>
-            <h3 className={styles.h3}>Meta Description:</h3>
-            <Input
-              heading="paragraph"
-              value={blog.metaDescription}
-              onChange={(value) =>
-                setBlog((prev) => ({
-                  ...prev,
-                  metaDescription: value,
-                }))
-              }
-              onBlur={(value) =>
-                setErrors((errs) => ({
-                  ...errs,
-                  metaDescription: validateMetaDescription(value),
-                }))
-              }
-              placeholder="Meta Description"
-            />
-          </div>
-          {errors.metaDescription && (
-            <p className={styles.error}>{errors.metaDescription}</p>
-          )}
-        </section>
-        <section className={styles.slug_section}>
-          <Info
-            direction="left"
-            info={{
-              question: "URL",
-              answer:
-                "This url will be created with the blog’s title (e.g., my-blog-title). If you want to use a diferent one, please make sure you use only lowercase letters, numbers, and hyphens (-). No spaces or special characters.",
-            }}
-          />
-          <div className={styles.div}>
-            <h3>URL</h3>
-            <aside className={styles.slug_aside}>
-              <p>https://www.havenova.de/blogs/</p>
+        <section className={styles.section_header}>
+          <article className={styles.header_article}>
+            <aside className={styles.aside}>
+              <div className={styles.div}>
+                <h3 className={styles.h3}>Title</h3>
+                <Info
+                  direction="left"
+                  info={{
+                    question: "Title",
+                    answer:
+                      "The title will appear as the main headline of your blog post.",
+                  }}
+                />
+              </div>
+              <Input
+                heading="subheading"
+                value={blog.title}
+                onChange={handleTitleChange}
+                onBlur={(value) =>
+                  setErrors((errs) => ({
+                    ...errs,
+                    title: validateTitle(value),
+                  }))
+                }
+                placeholder="Enter your blog title"
+              />
+            </aside>
+            <aside className={styles.aside}>
+              <div className={styles.div}>
+                <h3 className={styles.h3}>Introduction</h3>
+                <Info
+                  direction="left"
+                  info={{
+                    question: "Introduction",
+                    answer:
+                      "A short summary of your blog post. This description helps readers and search engines quickly understand the main topic of your article. It should be concise and engaging, usually between 60 and 160 characters.",
+                  }}
+                />
+              </div>
               <Input
                 heading="paragraph"
-                value={blog.slug}
+                value={blog.introduction}
                 onChange={(value) =>
                   setBlog((prev) => ({
                     ...prev,
-                    slug: value,
+                    introduction: value,
                   }))
                 }
                 onBlur={(value) =>
                   setErrors((errs) => ({
                     ...errs,
-                    slug: validateSlug(value, blogs),
+                    introduction: validateIntroduction(value),
                   }))
                 }
-                placeholder="url-example"
+                height="150px"
+                placeholder="Introduction"
               />
+              {errors.introduction && (
+                <p className={styles.error}>{errors.introduction}</p>
+              )}
             </aside>
-          </div>
-          {errors.slug && <p className={styles.error}>{errors.slug}</p>}
-        </section>
-        <section className={styles.image_section}>
-          <Info
-            direction="left"
-            info={{
-              question: "Blog Image",
-              answer:
-                "The image should have a 1:1 aspect ratio (square). It will be shown as the blog’s header and in the blog card preview.",
-            }}
-          />
-          <div className={styles.image_div}>
-            <h3>Blog Image</h3>
+          </article>
+          <aside className={styles.aside}>
+            <div className={styles.div}>
+              <h3>Blog Image</h3>
+              <Info
+                direction="left"
+                info={{
+                  question: "Blog Image",
+                  answer:
+                    "The image should have a 1:1 aspect ratio (square). It will be shown as the blog’s header and in the blog card preview.",
+                }}
+              />
+            </div>
             <ImageUpload
               label="Featured Image"
-              uploadPreset="havenova_upload" // Tu upload preset creado en Cloudinary
-              cloudName="dd1i5d0iq" // Tu cloud name de Cloudinary
+              uploadPreset="havenova_upload"
+              cloudName="dd1i5d0iq"
               initialImage={blog.featuredImage}
               onUpload={(url) =>
                 setBlog((prev) => ({ ...prev, featuredImage: url }))
               }
             />
+            {errors.featuredImage && (
+              <p className={styles.error}>{errors.featuredImage}</p>
+            )}
+          </aside>
+        </section>
+
+        {/* Sections */}
+        <section className={styles.section}>
+          <div className={styles.section_div}>
+            <h3>Sections</h3>
+            <Info
+              direction="left"
+              info={{
+                question: "Section",
+                answer:
+                  "You can add multiple content blocks to your blog. Each block can be a paragraph (text) or a points list (bulleted). Use points for steps, recommendations, or checklists.”",
+              }}
+            />
           </div>
-          {errors.featuredImage && (
-            <p className={styles.error}>{errors.featuredImage}</p>
-          )}
+          {blog.sections.map((section, sectionIdx) => (
+            <article key={sectionIdx} className={styles.section_article}>
+              <button
+                type="button"
+                key={sectionIdx}
+                className={styles.delete_button}
+                onMouseEnter={() => {
+                  setTimeout(() => {
+                    setHoverId(sectionIdx);
+                  }, 400);
+                }}
+                onMouseLeave={() => setHoverId(null)}
+                onClick={() => setSectionId(sectionIdx)}
+              >
+                <FaRegTrashCan />
+              </button>
+              {sectionId === sectionIdx && (
+                <ConfirmationAlert
+                  title="Are you sure you want to delete this section?"
+                  message=""
+                  onCancel={() => setSectionId(null)}
+                  onConfirm={() => {
+                    setSectionId(null);
+                    removeSection(sectionIdx);
+                  }}
+                />
+              )}
+              <section className={styles.sections_heading}>
+                <h3 className={styles.h3}>Heading</h3>
+                <Input
+                  heading="paragraph"
+                  value={section.heading}
+                  onChange={(value) => {
+                    updateSectionHeading(sectionIdx, value);
+                  }}
+                  onBlur={() =>
+                    setErrors((errs) => ({
+                      ...errs,
+                      sectionHeading: "Please introduce a heading line",
+                    }))
+                  }
+                  placeholder="Section Heading"
+                />
+                {errors.introduction && (
+                  <p className={styles.error}>{errors.sectionHeading}</p>
+                )}
+              </section>
+
+              <section className={styles.content_section}>
+                <h3>Content</h3>
+                {section.content.map((content, contentIdx) => (
+                  <div key={content.id} className={styles.content_div}>
+                    {/* Paragraph */}
+                    {content.type === "paragraph" && (
+                      <Input
+                        heading="paragraph"
+                        value={content.paragraph?.value || ""}
+                        onChange={(value) => {
+                          updateSectionContentField(
+                            sectionIdx,
+                            contentIdx,
+                            "paragraph",
+                            value
+                          );
+                        }}
+                        onBlur={(value) => {
+                          if (value === "") {
+                            setErrors((errs) => ({
+                              ...errs,
+                              contentParagraph: "Please introduce a paragraph",
+                            }));
+                          }
+                        }}
+                        height="150px"
+                        placeholder="Paragraph"
+                      />
+                    )}
+                    {errors.contentParagraph && (
+                      <p className={styles.error}>{errors.contentParagraph}</p>
+                    )}
+
+                    {/* Points */}
+                    {content.type === "points" && (
+                      <ul className={styles.ul}>
+                        {content.points?.map((point) => (
+                          <li key={point.id} className={styles.li}>
+                            <Input
+                              heading="paragraph"
+                              value={point.value}
+                              onChange={(value) => {
+                                updatePoint(
+                                  sectionIdx,
+                                  contentIdx,
+                                  point.id,
+                                  value
+                                );
+                              }}
+                              onBlur={(value) => {
+                                if (value === "") {
+                                  setErrors((errs) => ({
+                                    ...errs,
+                                    contentPoint: "Please introduce a point",
+                                  }));
+                                }
+                              }}
+                              placeholder="Point..."
+                            />
+                            <button
+                              type="button"
+                              className={styles.delete_button}
+                              onClick={() => setOpenContentId(point.id)}
+                              disabled={
+                                content.points && content.points.length <= 1
+                              }
+                            >
+                              <FaRegTrashCan />
+                            </button>
+                            {openContentId === point.id && (
+                              <ConfirmationAlert
+                                title="Are you sure you want to delete this point?"
+                                message=""
+                                onCancel={() => setOpenContentId(null)}
+                                onConfirm={() => {
+                                  setOpenContentId(null);
+                                  removePoint(sectionIdx, contentIdx, point.id);
+                                }}
+                              />
+                            )}
+                          </li>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => addPoint(sectionIdx, contentIdx)}
+                          className={styles.button}
+                        >
+                          + Point
+                        </button>
+                      </ul>
+                    )}
+
+                    <button
+                      type="button"
+                      className={styles.delete_button}
+                      onClick={() => setOpenContentId(content.id)}
+                    >
+                      <FaRegTrashCan />
+                    </button>
+                    {openContentId === content.id && (
+                      <ConfirmationAlert
+                        title="Are you sure you want to delete this content?"
+                        message=""
+                        onCancel={() => setOpenContentId(null)}
+                        onConfirm={() => {
+                          setOpenContentId(null);
+                          removeSectionContent(sectionIdx, contentIdx);
+                        }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </section>
+
+              <div className={styles.content_buttons}>
+                <button
+                  className={styles.content_button}
+                  type="button"
+                  onClick={() => addSectionContent(sectionIdx, "paragraph")}
+                >
+                  + Paragraph <HiMenuAlt2 />
+                </button>
+                <button
+                  className={styles.content_button}
+                  type="button"
+                  onClick={() => addSectionContent(sectionIdx, "points")}
+                >
+                  + Points List <GrList />
+                </button>
+              </div>
+            </article>
+          ))}
+          <button type="button" onClick={addSection} className={styles.button}>
+            + Section
+          </button>
+        </section>
+
+        {/* FAQ */}
+        <section className={styles.faq_section}>
+          <h3>Frequently Asked Questions (FAQ)</h3>
+          {blog.faq.map((item) => (
+            <div className={styles.faq_div} key={item.id}>
+              <aside className={styles.faq_aside}>
+                <Input
+                  heading="paragraph"
+                  value={item.question}
+                  onChange={(value) => updateFaq(item.id, "question", value)}
+                  onBlur={(value) => {
+                    if (value === "") {
+                      setErrors((errs) => ({
+                        ...errs,
+                        question: "Please introduce a question",
+                      }));
+                    }
+                  }}
+                  placeholder="Question..."
+                />
+                <Input
+                  heading="paragraph"
+                  value={item.answer}
+                  onChange={(value) => updateFaq(item.id, "answer", value)}
+                  onBlur={(value) => {
+                    if (value === "") {
+                      setErrors((errs) => ({
+                        ...errs,
+                        answer: "Please introduce an answer",
+                      }));
+                    }
+                  }}
+                  placeholder="Answer..."
+                  height="100px"
+                />
+              </aside>
+              <button
+                type="button"
+                className={styles.delete_button}
+                onMouseEnter={() => {
+                  setTimeout(() => {
+                    setHoverFaqId(item.id);
+                  }, 400);
+                }}
+                onMouseLeave={() => setHoverFaqId(null)}
+                onClick={() => setOpenFaqId(item.id)}
+              >
+                <FaRegTrashCan />
+              </button>
+              {openFaqId === item.id && (
+                <ConfirmationAlert
+                  title="Are you sure you want to delete this FAQ?"
+                  message=""
+                  onCancel={() => setOpenFaqId(null)}
+                  onConfirm={() => {
+                    setOpenFaqId(null);
+                    removeFaq(item.id);
+                  }}
+                />
+              )}
+            </div>
+          ))}
+
+          <button type="button" onClick={addFaq} className={styles.button}>
+            + FAQ
+          </button>
         </section>
 
         <section className={styles.section}>
-          <Info
-            direction="left"
-            info={{
-              question: "Introduction",
-              answer:
-                "A short summary of your blog post. This description helps readers and search engines quickly understand the main topic of your article. It should be concise and engaging, usually between 60 and 160 characters.",
-            }}
-          />
           <div className={styles.div}>
-            <h3 className={styles.h3}>Introduction:</h3>
+            <h3 className={styles.h3}>Meta Description:</h3>
+            <Info
+              direction="left"
+              info={{
+                question: "Meta Description",
+                answer:
+                  "A short summary, between 100 and 160 characters, for SEO and social sharing.",
+              }}
+              image={{
+                url: "/images/metadataExample.webp",
+                alt: "Example of Meta Description",
+              }}
+            />
+          </div>
+
+          <Input
+            heading="paragraph"
+            value={blog.metaDescription}
+            onChange={(value) =>
+              setBlog((prev) => ({
+                ...prev,
+                metaDescription: value,
+              }))
+            }
+            onBlur={(value) =>
+              setErrors((errs) => ({
+                ...errs,
+                metaDescription: validateMetaDescription(value),
+              }))
+            }
+            height="150px"
+            placeholder="Meta Description"
+          />
+          {errors.metaDescription && (
+            <p className={styles.error}>{errors.metaDescription}</p>
+          )}
+        </section>
+
+        <section className={styles.slug_section}>
+          <div className={styles.div}>
+            <h3>URL</h3>
+            <Info
+              direction="left"
+              info={{
+                question: "URL",
+                answer:
+                  "This url will be created with the blog’s title (e.g., my-blog-title). If you want to use a diferent one, please make sure you use only lowercase letters, numbers, and hyphens (-). No spaces or special characters.",
+              }}
+            />
+          </div>
+          <aside className={styles.slug_aside}>
+            <p>https://www.havenova.de/blogs/</p>
             <Input
               heading="paragraph"
-              value={blog.introduction}
+              value={blog.slug}
               onChange={(value) =>
                 setBlog((prev) => ({
                   ...prev,
-                  introduction: value,
+                  slug: value,
                 }))
               }
               onBlur={(value) =>
                 setErrors((errs) => ({
                   ...errs,
-                  introduction: validateIntroduction(value),
+                  slug: validateSlug(value, blogs),
                 }))
               }
-              placeholder="Introduction"
+              placeholder="url-example"
             />
-          </div>
-          {errors.introduction && (
-            <p className={styles.error}>{errors.introduction}</p>
-          )}
+          </aside>
+          {errors.slug && <p className={styles.error}>{errors.slug}</p>}
         </section>
 
-        {/* Sections */}
-        <section className={styles.section}>
-          <Info
-            direction="left"
-            info={{
-              question: "Section",
-              answer:
-                "You can add multiple content blocks to your blog. Each block can be a paragraph (text) or a points list (bulleted). Use points for steps, recommendations, or checklists.”",
-            }}
+        <section className={styles.date_section}>
+          <aside className={styles.date_aside}>
+            <h3>Schedule publication date</h3>
+            <p>If you want to publish now, please leave this field empty</p>
+          </aside>
+          <input
+            className={styles.date_input}
+            type="date"
+            value={
+              blog.scheduledAt
+                ? new Date(blog.scheduledAt).toISOString().split("T")[0] // formato yyyy-MM-ddTHH:mm
+                : ""
+            }
+            min={new Date().toISOString().split("T")[0]}
+            onChange={(e) => updateSchedule(e.target.value)}
           />
-          <div className={styles.div}>
-            <h3>Sections</h3>
-
-            {blog.sections.map((section, sectionIdx) => (
-              <article
-                key={sectionIdx}
-                style={{
-                  border: "1px solid #ccc",
-                  marginBottom: "1rem",
-                  padding: "1rem",
-                }}
-              >
-                <section className={styles.sections_heading}>
-                  <h3 className={styles.h3}>Heading:</h3>
-                  <Input
-                    heading="paragraph"
-                    value={section.heading}
-                    onChange={(value) => {
-                      updateSectionHeading(sectionIdx, value);
-                    }}
-                    onBlur={() =>
-                      setErrors((errs) => ({
-                        ...errs,
-                        sectionHeading: "Please introduce a heading line",
-                      }))
-                    }
-                    placeholder="Section Heading..."
-                  />
-                  {errors.introduction && (
-                    <p className={styles.error}>{errors.sectionHeading}</p>
-                  )}
-                </section>
-
-                <div>
-                  <h3>Content</h3>
-                  {section.content.map((content, contentIdx) => (
-                    <div
-                      key={contentIdx}
-                      style={{
-                        marginBottom: "1rem",
-                        background: "#f8f8f8",
-                        padding: 8,
-                      }}
-                    >
-                      <select
-                        value={content.type}
-                        onChange={(e) =>
-                          updateSectionContentField(
-                            sectionIdx,
-                            contentIdx,
-                            "type",
-                            e.target.value as "paragraph" | "points"
-                          )
-                        }
-                      >
-                        <option value="paragraph">Paragraph</option>
-                        <option value="points">Points List</option>
-                      </select>
-                     
-                      {/* Paragraph */}
-                      {content.type === "paragraph" && (
-                        <textarea
-                          placeholder="Paragraph"
-                          value={content.paragraph || ""}
-                          onChange={(e) =>
-                            updateSectionContentField(
-                              sectionIdx,
-                              contentIdx,
-                              "paragraph",
-                              e.target.value
-                            )
-                          }
-                          style={{ width: "100%", marginTop: 4 }}
-                        />
-                      )}
-                      {/* Points */}
-                      {content.type === "points" && (
-                        <div style={{ marginTop: 8 }}>
-                          {content.points?.map((point, pointIdx) => (
-                            <div
-                              key={pointIdx}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: 4,
-                              }}
-                            >
-                              <input
-                                placeholder={`Point ${pointIdx + 1}`}
-                                value={point}
-                                onChange={(e) =>
-                                  updatePoint(
-                                    sectionIdx,
-                                    contentIdx,
-                                    pointIdx,
-                                    e.target.value
-                                  )
-                                }
-                                style={{ flex: 1 }}
-                              />
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  removePoint(sectionIdx, contentIdx, pointIdx)
-                                }
-                                style={{ marginLeft: 6, color: "red" }}
-                                disabled={content.points!.length <= 1}
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          ))}
-                          <button
-                            type="button"
-                            onClick={() => addPoint(sectionIdx, contentIdx)}
-                            style={{ marginTop: 4 }}
-                          >
-                            Add Point
-                          </button>
-                        </div>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          removeSectionContent(sectionIdx, contentIdx)
-                        }
-                        style={{ marginTop: 6, color: "red" }}
-                      >
-                        Remove Content Block
-                      </button>
-                    </div>
-                  ))}
-                  <div style={{ display: "flex", gap: 8 }}>
-                    <button
-                      type="button"
-                      onClick={() => addSectionContent(sectionIdx, "paragraph")}
-                    >
-                      Add Paragraph
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => addSectionContent(sectionIdx, "points")}
-                    >
-                      Add Points List
-                    </button>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeSection(sectionIdx)}
-                  style={{ color: "red", marginTop: 10 }}
-                >
-                  Remove Section
-                </button>
-              </article>
-            ))}
-            <button
-              type="button"
-              onClick={addSection}
-              className={styles.button}
-            >
-              + Add Section
-            </button>
-          </div>
         </section>
-
-        {/* FAQ */}
-        <div style={{ marginTop: "2rem" }}>
-          <h3>Frequently Asked Questions (FAQ)</h3>
-          {blog.faq.map((item, idx) => (
-            <div key={idx} style={{ marginBottom: "1rem" }}>
-              <input
-                placeholder="Question"
-                value={item.question}
-                onChange={(e) => updateFaq(idx, "question", e.target.value)}
-              />
-              <input
-                placeholder="Answer"
-                value={item.answer}
-                onChange={(e) => updateFaq(idx, "answer", e.target.value)}
-              />
-              <button
-                type="button"
-                onClick={() => removeFaq(idx)}
-                style={{ color: "red", marginLeft: 10 }}
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={addFaq} style={{ marginTop: 5 }}>
-            Add Question
+        <section className={styles.button_section}>
+          <button
+            type="submit"
+            className={styles.button}
+            onClick={() => {
+              setSubmitType("draft");
+              setTimeout(() => {
+                router.push("/dashboard/blog");
+              }, 2000);
+            }}
+          >
+            Save as draft
           </button>
-        </div>
-
-        <button type="submit" style={{ marginTop: 20 }}>
-          Create Blog Post
-        </button>
+          <button
+            type="submit"
+            className={styles.button}
+            onClick={() => {
+              if (!blog.scheduledAt) {
+                setSubmitType("published");
+                setTimeout(() => {
+                  router.push("/dashboard/blog");
+                }, 2000);
+              } else {
+                setSubmitType("scheduled");
+                setTimeout(() => {
+                  router.push("/dashboard/blog");
+                }, 2000);
+              }
+            }}
+          >
+            {editBlog ? "Update Blog" : "Publish Blog"}
+          </button>
+        </section>
         {success && (
           <p style={{ color: "green" }}>Blog post created successfully ✅</p>
         )}
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
+      <article className={styles.view_article}>
+        <BlogCard blog={blog} isPreview />
+        <BlogPreview post={blog} isPreview />
+      </article>
     </main>
   );
 }
