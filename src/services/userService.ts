@@ -7,6 +7,7 @@ interface UpdateUserPayload {
   name: string;
   address: string;
   phone: string;
+  profileImage: string;
   requests?: ServiceRequestItem[]; // 👈 ahora es opcional
 }
 
@@ -15,6 +16,7 @@ export const registerUser = async (
   email: string,
   password: string,
   address: string,
+  profileImage: string,
   phone: string
 ): Promise<RegisterResponse> => {
   try {
@@ -23,6 +25,7 @@ export const registerUser = async (
       email,
       password,
       address,
+      profileImage,
       phone,
     });
 

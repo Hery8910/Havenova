@@ -700,3 +700,41 @@ export const checkoutMetadata: PageMetadata = {
     ],
   },
 };
+export const userProfileMetadata: PageMetadata = {
+  title: "Havenova Profile – Manage Your Account and Services in Berlin",
+  description:
+    "Access your Havenova profile to manage your account, view and update your personal information, track your service requests, and discover exclusive tips and offers for home services in Berlin.",
+  keywords:
+    "havenova profile, account management, home services Berlin, track requests, exclusive offers, service tips",
+  openGraph: {
+    title: "Havenova Profile – Effortless Account and Service Management",
+    description:
+      "Log in to your Havenova profile to easily manage your services, stay updated on your requests, and access personalized home maintenance tips.",
+    type: "website",
+    url: "https://havenova.de/profile",
+    images: [
+      {
+        url: "https://havenova.de/images/og-profile.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Havenova Profile Page",
+      },
+    ],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-light.ico", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" },
+      {
+        url: "/favicon-light.svg",
+        media: "(prefers-color-scheme: light)",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/favicon-dark.svg",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/svg+xml",
+      },
+    ],
+  },
+};

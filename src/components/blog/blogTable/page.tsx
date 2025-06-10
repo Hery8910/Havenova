@@ -167,13 +167,12 @@ export default function BlogTable({
                     <p className={styles.p}>Created at</p>
                     <p className={styles.p}>Comments</p>
                     <p className={styles.p}>Status</p>
-                    <p></p>
-                    <p></p>
+                    <p className={styles.p}></p>
+                    <p className={styles.p}></p>
                   </li>
                   {blogs.map((blog) => (
                     <li
                       key={blog._id}
-                     
                       className={styles.li}
                     >
                       <p className={styles.p}>
@@ -208,7 +207,7 @@ export default function BlogTable({
                       </button>
                       {blog._id === openBlogId && (
                         <ConfirmationAlert
-                          title={`${blog.title} Are you sure you want to delete this blog?`}
+                          title="Are you sure you want to delete this blog?"
                           message=""
                           onCancel={() => setOpenBlogId(null)}
                           onConfirm={() => {

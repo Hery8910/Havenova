@@ -1,10 +1,9 @@
 "use client";
 import { useUser } from "../../../contexts/UserContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./page.module.css";
 import Image from "next/image";
-import { useState } from "react";
 import { RiEdit2Fill } from "react-icons/ri";
 import { validateField } from "../../../utils/validators";
 import { updateUser } from "../../../services/userService";
@@ -13,37 +12,41 @@ interface FormData {
   name: string;
   address: string;
   phone: string;
+  profileImage: string;
 }
 
 const Profile = () => {
   const [edit, setEdit] = useState(false);
-  // const { user, refreshUser } = useUser();
+  const { user, refreshUser } = useUser();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     address: "",
     phone: "",
+    profileImage: "",
   });
-  const [errors, setErrors] = useState<FormData>({
-    name: "",
-    address: "",
-    phone: "",
-  });
+  const [errors, setErrors] = useState<Partial<FormData>>({});
   const [message, setMessage] = useState("");
-  const user = {
-    name: "Heriberto Santana",
-    address: "Sarah-Kirsch_Str. 5, 12629",
-    phone: "+491777312606",
-    email: "contact@heribertosantana.com",
-    avatar: "Lion"
-  }
 
-  // useEffect(() => {
-  //   refreshUser();
-  // }, [refreshUser]);
+  // Inicializa los datos del formulario al cargar el usuario
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        address: user.address || "",
+        phone: user.phone || "",
+        profileImage: user.profileImage || "",
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
 
   if (!user) {
     return <p>Loading...</p>;
   }
+
   const toggleEdit = () => setEdit((prev) => !prev);
 
   const validateForm = (): boolean => {
@@ -53,7 +56,7 @@ const Profile = () => {
     Object.keys(formData).forEach((key) => {
       const fieldName = key as keyof FormData;
       const value = formData[fieldName];
-      if (value.trim() && validateField(fieldName, value)) {
+      if (validateField(fieldName, value)) {
         newErrors[fieldName] = validateField(fieldName, value);
         isValid = false;
       }
@@ -71,6 +74,14 @@ const Profile = () => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -79,18 +90,19 @@ const Profile = () => {
       return;
     }
     const updatedData = {
-      email: user?.email,
-      name: formData.name || user?.name,
-      address: formData.address || user?.address,
-      phone: formData.phone || user?.phone,
+      email: user.email, // el email nunca cambia
+      name: formData.name,
+      address: formData.address,
+      phone: formData.phone,
+      profileImage: formData.profileImage,
     };
     try {
       const response = await updateUser(updatedData);
 
       setMessage(response.message);
       setTimeout(() => setMessage(""), 3000);
-      // refreshUser();
       setEdit(false);
+      refreshUser(); // <- refresca el usuario tras actualizar
     } catch (error: any) {
       setMessage(error.message);
     }
@@ -104,15 +116,23 @@ const Profile = () => {
             X
           </button>
           <form className={styles.form} onSubmit={handleSubmit}>
+            <div className={styles.avatar_edit}>
+              <Image
+                src={formData.profileImage || "/avatars/avatar-1.svg"}
+                alt="Profile"
+                width={80}
+                height={80}
+                className={styles.avatar}
+              />
+              {/* Aquí podrías agregar un input para cambiar o subir nueva foto */}
+            </div>
             <input
               className={styles.input}
               type="text"
               name="name"
-              placeholder={user?.name}
+              placeholder="Your name"
               value={formData.name}
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
+              onChange={handleChange}
               onBlur={handleBlur}
               autoComplete="name"
             />
@@ -122,11 +142,9 @@ const Profile = () => {
               className={styles.input}
               type="text"
               name="address"
-              placeholder={user?.address}
+              placeholder="Address"
               value={formData.address}
-              onChange={(e) =>
-                setFormData({ ...formData, address: e.target.value })
-              }
+              onChange={handleChange}
               onBlur={handleBlur}
               autoComplete="address"
             />
@@ -136,15 +154,25 @@ const Profile = () => {
               className={styles.input}
               type="tel"
               name="phone"
-              placeholder={user?.phone}
+              placeholder="Phone +49 123456789"
               value={formData.phone}
-              onChange={(e) =>
-                setFormData({ ...formData, phone: e.target.value })
-              }
+              onChange={handleChange}
               onBlur={handleBlur}
               autoComplete="phone"
             />
             {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+
+            {/* Puedes agregar el input para cambiar imagen aquí */}
+            {/* 
+            <input
+              type="text"
+              name="profileImage"
+              placeholder="URL imagen perfil"
+              value={formData.profileImage}
+              onChange={handleChange}
+            />
+            */}
+
             {message && <p className={styles.error}>{message}</p>}
 
             <button type="submit" className={styles.submit_button}>
@@ -155,10 +183,17 @@ const Profile = () => {
       )}
 
       <header className={styles.header}>
-        <h1 className={styles.h1}>
-        {user.name}  
-        </h1>
-        <p className={styles.header_p}>Here you can manage you account</p>
+        <div className={styles.avatar_header}>
+          <Image
+            src={user.profileImage || "/avatars/avatar-1.svg"}
+            alt="Profile"
+            width={80}
+            height={80}
+            className={styles.avatar}
+          />
+        </div>
+        <h1 className={styles.h1}>{user.name}</h1>
+        <p className={styles.header_p}>Here you can manage your account</p>
         {message && <p className={styles.error}>{message}</p>}
       </header>
       <section className={styles.section}>
@@ -167,7 +202,6 @@ const Profile = () => {
             <p className={styles.article_p}>
               <span className={styles.span}>Name:</span> {user.name}
             </p>
-
             <p className={styles.article_p}>
               <span className={styles.span}>Address:</span> {user.address}
             </p>
@@ -177,6 +211,9 @@ const Profile = () => {
             <p className={styles.article_p}>
               <span className={styles.span}>Email:</span> {user.email}
             </p>
+            <span>
+              Member since: {new Date(user.createdAt).toLocaleDateString()}
+            </span>
           </div>
           <button className={styles.button} onClick={toggleEdit}>
             Edit <RiEdit2Fill />
@@ -185,18 +222,9 @@ const Profile = () => {
         <article className={`${styles.user_article} card`}>
           <h2 className={styles.h2}>Services</h2>
           <p className={styles.article_p}>
-            Aqui van las solicitudes de trabajo
+            Aquí van las solicitudes de trabajo
           </p>
         </article>
-        {/* <div className={styles.div}>
-          <Image
-            className={styles.image}
-            src="/svg/profile.svg"
-            alt="Loading animation"
-            width={450}
-            height={450}
-          />
-        </div> */}
       </section>
     </main>
   );

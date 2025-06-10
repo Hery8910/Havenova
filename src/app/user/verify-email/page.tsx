@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useUser } from "../../../../contexts/UserContext";
-import api from "../../../../services/api";
+import { useUser } from "../../../contexts/UserContext";
+import api from "../../../services/api";
 
 import styles from "./page.module.css";
 

@@ -5,6 +5,7 @@ import { BlogComment } from "../../../types/blog";
 import styles from "./page.module.css";
 import { IoClose } from "react-icons/io5";
 import Image from "next/image";
+import { useUser } from "../../../contexts/UserContext";
 
 interface CommentFormProps {
   blogId: string;
@@ -17,6 +18,7 @@ interface CommentFormProps {
 
 const initialComment: BlogComment = {
   author: "",
+  profileImage: "",
   content: "",
   parentId: null,
   approved: false,
@@ -30,10 +32,16 @@ const CommentForm: React.FC<CommentFormProps> = ({
   onRefresh,
   onClose,
 }) => {
+  const { user , setUser } = useUser();
   const [comment, setComment] = useState<BlogComment>({
     ...initialComment,
     parentId,
-    author: isDashboard ? "Havenova Team" : "",
+    author: isDashboard
+      ? "Havenova Team"
+      : user.role === "guest" && user.name === "Guest"
+      ? "" 
+      : user.name,
+      profileImage: user.profileImage,
     approved: isDashboard ? true : false,
   });
   const [loading, setLoading] = useState(false);
@@ -44,10 +52,13 @@ const CommentForm: React.FC<CommentFormProps> = ({
     setComment((prev) => ({
       ...prev,
       parentId,
-      author: isDashboard ? "Havenova Team" : "",
+      author: isDashboard ? "Havenova Team" : user.role === "guest" && user.name === "Guest"
+      ? "" 
+      : user.name,
+      profileImage: user.profileImage,
       approved: isDashboard ? true : false,
     }));
-  }, [parentId, isDashboard]);
+  }, [parentId, isDashboard, user.profileImage, user.name, user.role]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -63,25 +74,34 @@ const CommentForm: React.FC<CommentFormProps> = ({
     e.preventDefault();
     setError(null);
     setSuccess(false);
-  
+
     if (!comment.author.trim() || !comment.content.trim()) {
       setError("Please fill in all fields.");
       return;
     }
-  
+
     setLoading(true);
-  
-    // Solo agrega parentId si existe y no es null
+
     const payload: any = {
       author: comment.author,
+      profileImage: comment.profileImage,
       content: comment.content,
       approved: comment.approved,
     };
     if (comment.parentId) {
       payload.parentId = comment.parentId;
     }
-  
+
     try {
+      // 1. Si es guest y puso un nombre, actualiza el contexto y localStorage
+      if (user.role === "guest" && comment.author !== "Guest" && comment.author.trim()) {
+        setUser({
+          ...user,
+          name: comment.author.trim(),
+        });
+        // ¡El contexto hará el guardado automático en localStorage!
+      }
+
       const response = await api.post(
         `/api/blogs/id/${blogId}/comments`,
         payload
@@ -91,7 +111,11 @@ const CommentForm: React.FC<CommentFormProps> = ({
       setComment({
         ...initialComment,
         parentId,
-        author: isDashboard ? "Havenova Team" : "",
+        author: isDashboard
+          ? "Havenova Team"
+          : user.role === "guest"
+          ? ""
+          : user.name,
         approved: isDashboard ? true : false,
       });
       if (onRefresh) onRefresh(blogId);

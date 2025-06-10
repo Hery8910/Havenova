@@ -1,4 +1,5 @@
 .main {
+  margin-top: 250px;
   height: 100dvh;
   display: flex;
   flex-direction: column;

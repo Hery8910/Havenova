@@ -781,6 +781,8 @@ const HouseServiceForm = () => {
     const newRequest: ServiceRequestItem = {
       id: uuidv4(),
       serviceType: "house-service",
+      price: 0,
+      estimatedDuration: 0,
       details: formData,
     };
 

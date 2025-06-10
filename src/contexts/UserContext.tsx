@@ -10,27 +10,72 @@ import React, {
 import api from "../services/api";
 import { v4 as uuidv4 } from "uuid";
 import { getCalendarAdmin, getCalendarGuest } from "../services/dashboard";
-import {
-  addRequest,
-  clearRequests,
-  removeRequest,
-  updateRequest,
-} from "../services/serviceOrder";
 import { logoutUser } from "../services/userService";
-import {
-  ServiceRequestItem,
-} from "../types/services";
+import { ServiceRequestItem } from "../types/services";
 import { User } from "../types/User";
-import {
-  addItem,
-  clearAllRequestItemsFromStorage,
-  clearItems,
-  getRequestItemsFromStorage,
-  removeItem,
-  removeRequestItemFromStorage,
-  saveRequestItemToStorage,
-} from "../utils/serviceRequest";
 
+// ---- Utilidades para localStorage ----
+const USER_KEY = "havenova_user";
+
+function getRandomAvatarNumber(): number {
+  return Math.floor(Math.random() * 10) + 1;
+}
+function getRandomAvatarPath(): string {
+  const number = getRandomAvatarNumber();
+  return `/avatars/avatar-${number}.svg`;
+}
+function getPersistentGuestAvatar(): string {
+  if (typeof window === "undefined") return "/avatars/avatar-1.svg";
+  const key = "guest_avatar";
+  let avatar = localStorage.getItem(key);
+  if (!avatar) {
+    avatar = getRandomAvatarPath();
+    localStorage.setItem(key, avatar);
+  }
+  return avatar;
+}
+
+function saveUserToStorage(user: User) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+function getUserFromStorage(): User | null {
+  const data = localStorage.getItem(USER_KEY);
+  if (data) {
+    try {
+      const user = JSON.parse(data);
+      if (user && user.createdAt) {
+        user.createdAt = new Date(user.createdAt);
+      }
+      return user;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+function clearUserFromStorage() {
+  localStorage.removeItem(USER_KEY);
+  localStorage.removeItem("guest_avatar");
+}
+
+// ---- Usuario inicial guest ----
+export const initialGuestUser: User = {
+  _id: "",
+  name: "Guest",
+  email: "",
+  isVerified: false,
+  role: "guest",
+  address: "",
+  phone: "",
+  profileImage:
+    typeof window !== "undefined"
+      ? getPersistentGuestAvatar()
+      : "/avatars/avatar-1.svg",
+  requests: [],
+  createdAt: new Date(),
+};
+
+// ---- Context Types ----
 interface UserContextProps {
   user: User;
   setUser: (user: User) => void;
@@ -41,26 +86,10 @@ interface UserContextProps {
   clearAllRequests: () => void;
 }
 
-// Usuario inicial guest
-export const initialGuestUser: User = {
-  _id: "",
-  name: "",
-  email: "",
-  isVerified: false,
-  role: "guest",
-  address: "",
-  phone: "",
-  requests: [], // inicializar vacío
-};
-
-// ---------------------
-// CALENDAR CONTEXT TYPES
-// ---------------------
 interface CalendarData {
   year: number;
-  months: any[]; // Aquí deberías definir un tipo más específico según tu modelo
+  months: any[]; // Mejor definir tu tipo de calendario
 }
-
 interface CalendarContextProps {
   calendars: { [year: number]: CalendarData };
   currentYear: number;
@@ -68,23 +97,26 @@ interface CalendarContextProps {
   fetchCalendar: (year: number) => Promise<void>;
 }
 
-// ------------------
-// CREACIÓN DE CONTEXTOS
-// ------------------
+// ---- CREACIÓN DE CONTEXTOS ----
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 const CalendarContext = createContext<CalendarContextProps | undefined>(
   undefined
 );
 
-// ----------------------
-// PROVEEDOR COMBINADO
-// ----------------------
+// ---- PROVEEDOR COMBINADO ----
 interface DashboardProviderProps {
   children: ReactNode;
 }
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
-  const [user, setUser] = useState<User>(initialGuestUser);
+  // ---- Inicializa el usuario desde localStorage o como guest ----
+  const [user, setUser] = useState<User>(() => {
+    if (typeof window !== "undefined") {
+      return getUserFromStorage() || initialGuestUser;
+    }
+    return initialGuestUser;
+  });
+
   const [calendars, setCalendars] = useState<{ [year: number]: CalendarData }>(
     {}
   );
@@ -92,27 +124,25 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     new Date().getFullYear()
   );
 
+  // ---- Sincroniza siempre el usuario guest en localStorage ----
+  useEffect(() => {
+    if (typeof window !== "undefined" && user.role === "guest") {
+      saveUserToStorage(user);
+    }
+  }, [user]);
+
   const refreshUser = useCallback(async () => {
     try {
       const response = await api.get("/api/users/profile");
-
       if (response.data) {
         setUser(response.data); // usuario logeado: sin modificar
       } else {
         // usuario guest
-        const localRequests = getRequestItemsFromStorage();
-        setUser({
-          ...initialGuestUser,
-          requests: localRequests,
-        });
+        setUser(getUserFromStorage() || initialGuestUser);
       }
     } catch (error: any) {
       // también es guest si hay error
-      const localRequests = getRequestItemsFromStorage();
-      setUser({
-        ...initialGuestUser,
-        requests: localRequests,
-      });
+      setUser(getUserFromStorage() || initialGuestUser);
     }
   }, []);
 
@@ -140,40 +170,47 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const logout = async () => {
     try {
-      await logoutUser(); // llamada a la API
+      await logoutUser();
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
+      clearUserFromStorage();
       setUser(initialGuestUser); // limpia el estado
     }
   };
 
+  // ---- Solicitudes: solo se actualiza el user y se guarda ----
   const addRequestToUser = (newRequest: ServiceRequestItem) => {
-    const requestWithId = { ...newRequest, id: uuidv4() }; // <--- ID único
-    saveRequestItemToStorage(requestWithId);
-    setUser((prev) => ({
-      ...prev,
-      requests: addItem(prev.requests, requestWithId),
-    }));
+    const requestWithId = { ...newRequest, id: uuidv4() };
+    setUser((prev) => {
+      const updated = {
+        ...prev,
+        requests: [...(prev.requests || []), requestWithId],
+      };
+      saveUserToStorage(updated);
+      return updated;
+    });
   };
 
   const removeRequestFromUser = (id: string) => {
     setUser((prev) => {
-      const updated = prev.requests.filter((req: ServiceRequestItem) => req.id !== id);
-      localStorage.setItem("service_request_items", JSON.stringify(updated));
-      return {
+      const updated = {
         ...prev,
-        requests: updated,
+        requests: prev.requests.filter(
+          (req: ServiceRequestItem) => req.id !== id
+        ),
       };
+      saveUserToStorage(updated);
+      return updated;
     });
   };
 
   const clearAllRequests = () => {
-    clearAllRequestItemsFromStorage(); // 🔐 localStorage
-    setUser((prev) => ({
-      ...prev,
-      requests: clearItems(),
-    }));
+    setUser((prev) => {
+      const updated = { ...prev, requests: [] };
+      saveUserToStorage(updated);
+      return updated;
+    });
   };
 
   return (
@@ -197,7 +234,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   );
 };
 
-// Hooks para consumir los contextos
+// ---- Hooks para consumir los contextos ----
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {

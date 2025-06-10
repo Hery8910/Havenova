@@ -8,16 +8,16 @@ import styles from "./page.module.css";
 import { useUser } from "../../../contexts/UserContext";
 import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
+import Image from "next/image";
 
 interface User {
   name: string;
 }
 const Avatar = () => {
   const router = useRouter();
-    const { user, setUser } = useUser();
+  const { user, setUser } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
- 
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,8 +47,14 @@ const Avatar = () => {
           `}
           aria-label="Toggle menu"
         >
-          <MdAccountCircle className={styles.icon}/>
-          {!isMobile && <p>Register</p>}
+          <Image
+            className={styles.image}
+            src={user.profileImage}
+            alt="Profile Image"
+            width={40}
+            height={40}
+          />
+          {!isMobile && <p>{user.role === "guest" ? "Register" : user.name}</p>}
         </button>
         {menuOpen && (
           <ul className={styles.ul}>
@@ -77,7 +83,13 @@ const Avatar = () => {
           `}
         aria-label="Toggle menu"
       >
-        <MdAccountCircle className={styles.icon}/>
+          <Image
+            className={styles.image}
+            src={user.profileImage}
+            alt="Profile Image"
+            width={40}
+            height={40}
+          />
         {!isMobile && <p>{user.name}</p>}
       </button>
     </section>

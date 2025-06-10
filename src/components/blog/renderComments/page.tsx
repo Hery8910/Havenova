@@ -45,7 +45,7 @@ const RenderComments: React.FC<RenderCommentsProps> = ({
           <section className={styles.section}>
             <Image
               className={styles.image}
-              src="/avatars/avatar-1.svg"
+              src={comment.profileImage}
               alt="Avatar"
               width={40}
               height={40}

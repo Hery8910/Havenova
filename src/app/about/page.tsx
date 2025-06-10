@@ -1,6 +1,6 @@
 "use client";
 import Benefits from "../../components/benefits/page";
-import BlogList from "../../components/blog/blogList/page";
+// import BlogList from "../../components/blog/blogList/page";
 import Hero from "../../components/hero/page";
 import Review from "../../components/reviews/page";
 import WhoWeAre from "../../components/whoWeAre/page";
@@ -295,7 +295,7 @@ const About = () => {
       <Benefits />
       <Review />
       <Cta cta={cta} />
-      <BlogList blogs={blogs} />
+      {/* <BlogList blogs={blogs} /> */}
     </main>
   );
 };

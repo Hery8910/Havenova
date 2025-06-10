@@ -57,3 +57,4 @@ export const getPendingBlogs = async (
 export async function deleteBlogById(id: string): Promise<void> {
   await api.delete(`/api/blogs/id/${id}`);
 }
+

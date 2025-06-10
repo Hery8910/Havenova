@@ -1,7 +1,7 @@
 import { User } from "../types/User";
 import { ServiceRequestItem } from "../types/services"; // suponiendo que lo tengas separado
-import { saveRequestItemToStorage } from "../utils/serviceRequest";
 import { updateUser } from "./userService";
+import { saveUserToStorage } from "../utils/guestUserStorage";
 
 interface Props {
   user: User;
@@ -15,7 +15,11 @@ export const handleServiceRequest = async ({
   addRequestToUser,
 }: Props) => {
   if (user.role === "guest") {
-    saveRequestItemToStorage(newRequest);
+    // Opcional: puedes agregarle un ID a la request aquí si lo necesitas
+    const updatedRequests = [...user.requests, newRequest];
+    const updatedUser = { ...user, requests: updatedRequests };
+    saveUserToStorage(updatedUser);      // 🔑 Guarda el usuario actualizado
+    addRequestToUser(newRequest);        // Actualiza el contexto también
   } else {
     try {
       await updateUser({

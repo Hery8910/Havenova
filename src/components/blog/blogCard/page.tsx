@@ -16,7 +16,7 @@ export default function BlogCard({ blog, isPreview}: BlogCardProps) {
 
 
   const handleClick = () => {
-    router.push(`/slug/blogs/${blog.slug}`);
+    router.push(`/blogs/${blog.slug}`);
   };
 
   return (

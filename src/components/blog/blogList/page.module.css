@@ -76,8 +76,7 @@
 
 @media (min-width: 768px) {
   .section {
-  margin: 250px auto;
-
+    margin: 250px auto;
   }
   .header {
     width: 100%;
@@ -86,7 +85,7 @@
   }
   .image {
     filter: drop-shadow(0px 8px 8px rgba(3, 41, 41, 0.8));
-z-index: 10;
+    z-index: 10;
     position: absolute;
     right: 0;
     top: -200px;
@@ -105,7 +104,6 @@ z-index: 10;
   }
 }
 @media (min-width: 1024px) {
-
   .header {
     position: initial;
     flex-direction: row-reverse;
@@ -124,7 +122,6 @@ z-index: 10;
   }
 }
 @media (min-width: 1200px) {
- 
   .image {
     width: 400px;
     height: 400px;

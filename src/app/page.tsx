@@ -1,6 +1,6 @@
 "use client";
 import { useUser, useCalendar } from "../contexts/UserContext";
-import { getAllBlogs } from "../services/blogServices";
+import { getPublishedBlogs } from "../services/blogServices";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { BlogFromDB } from "../types/blog";
@@ -11,9 +11,30 @@ import WorkFlow from "../components/workFlow/page";
 import Service from "../components/service/page";
 import QuestionAnswer from "../components/q&a/page";
 import Review from "../components/reviews/page";
-import BlogList from "../components/blog/blogList/page";
+// import BlogList from "../components/blog/blogList/page";
 
 export default function Home() {
+  const { user, refreshUser } = useUser();
+  // const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
+  // const [page, setPage] = useState(1);
+  // const [search, setSearch] = useState("");
+  // const [order, setOrder] = useState<"desc" | "asc">("desc");
+  // const limit = 5;
+
+  //   useEffect(() => {
+  //     fetchBlogs();
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [ page, order]);
+  
+  //   const fetchBlogs = async () => {
+  //     try {
+  //       let response;
+  //         response = await getPublishedBlogs(page, limit, search, order);
+  //         setBlogs(response.blogs);
+  //     } catch (error) {
+  //       setBlogs([]);
+  //     }
+  //   };
   // const Blogs = [
   //   {
   //     id: "1",
@@ -243,7 +264,6 @@ export default function Home() {
   // const [search, setSearch] = useState("");
   // const [order, setOrder] = useState<"desc" | "asc">("desc");
   // const limit = 10;
-  const { user, refreshUser } = useUser();
 
   const homeHero = {
     title: "Reliable Home Services, Just One Click Away",
@@ -257,24 +277,8 @@ export default function Home() {
     href: "/user/register",
   };
 
-  // const fetchBlogs = async () => {
-  //   try {
-  //     const response = await getAllBlogs(page, limit, search, order);
-  //     setBlogs(response.blogs);
-  //     setTotalPages(response.totalPages);
-  //   } catch (error) {
-  //     console.error("Error fetching blogs:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchBlogs();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [page]);
-
   return (
     <main>
-      
       <Hero hero={homeHero} />
       <Benefits />
       <WorkFlow />
@@ -282,7 +286,6 @@ export default function Home() {
       <Review />
       <QuestionAnswer />
       {/* <BlogList blogs={blogs} /> */}
-
     </main>
   );
 }

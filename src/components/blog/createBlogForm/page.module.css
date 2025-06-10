@@ -157,6 +157,7 @@ position: relative;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  margin-bottom: 8px;
 }
 .faq_section {
   width: 100%;

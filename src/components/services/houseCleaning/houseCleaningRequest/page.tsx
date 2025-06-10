@@ -38,7 +38,6 @@ const HouseCleaningRequest = ({ requests }: Props) => {
                 <p>
                   <strong>{item.details.surface} m²</strong>
                 </p>
-                <p>{item.details.house}</p>
               </div>
             </article>
 

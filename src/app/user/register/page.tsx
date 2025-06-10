@@ -1,5 +1,6 @@
-"use client";
-import { useState } from "react";
+'use client'
+import { useState, useEffect } from "react";
+import { getUserFromStorage } from "../../../utils/guestUserStorage"; // ajusta la ruta
 import { registerUser } from "../../../services/userService";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
@@ -13,7 +14,7 @@ interface FormData {
     email: string;
     password: string;
     address: string;
-    serviceAddress: string;
+    profileImage: string;
     phone: string;
   };
 }
@@ -26,12 +27,29 @@ const Register = () => {
       email: "",
       password: "",
       address: "",
-      serviceAddress: "",
+      profileImage: "",
       phone: "",
     },
   });
   const [message, setMessage] = useState("");
- 
+
+  // --- Recuperar usuario del storage al montar ---
+  useEffect(() => {
+    const guestUser = getUserFromStorage();
+    if (guestUser) {
+      setFormData({
+        user: {
+          name: guestUser.name || "",
+          email: guestUser.email || "",
+          password: "",
+          address: guestUser.address || "",
+          profileImage: guestUser.profileImage || "",
+          phone: guestUser.phone || "",
+        },
+      });
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -40,6 +58,7 @@ const Register = () => {
         formData.user.email,
         formData.user.password,
         formData.user.address,
+        formData.user.profileImage,
         formData.user.phone
       );
 
@@ -51,6 +70,7 @@ const Register = () => {
       setMessage(error.message);
     }
   };
+
   return (
     <main className={styles.main}>
       <section className={styles.section}>
@@ -83,7 +103,10 @@ const Register = () => {
               height={35}
             />
           </button>
-          <UserContactForm onChange={(data) => setFormData({ user: data })} />
+          <UserContactForm
+            value={formData.user} // <-- asegúrate de pasar los valores actuales
+             onChange={(updatedUser) => setFormData({ user: updatedUser })}
+          />
           <button type="submit" className={styles.button}>
             Register
           </button>

@@ -6,9 +6,11 @@ export interface User {
   name: string;
   email: string;
   address: string;
-  isVerified: boolean;
+  profileImage: string;
   phone: string;
+  isVerified: boolean;
   role: string;
+  createdAt: Date;
   requests: ServiceRequestItem[];
 }
 export interface UserError {

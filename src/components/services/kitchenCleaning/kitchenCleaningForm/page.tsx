@@ -107,6 +107,8 @@ const KitchenCleaningForm = () => {
     const newRequest: ServiceRequestItem = {
       id: uuidv4(),
       serviceType: "kitchen-cleaning",
+      price: 0,
+      estimatedDuration: 0,
       details: formData,
     };
     try {

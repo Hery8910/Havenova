@@ -71,6 +71,8 @@ const WindowsCleaningForm = () => {
   const newRequest: ServiceRequestItem = {
     id: uuidv4(), 
     serviceType: "window-cleaning", 
+    price: 0,
+    estimatedDuration: 0,
     details: formData,
   };
     try {

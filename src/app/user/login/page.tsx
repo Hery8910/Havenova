@@ -34,8 +34,10 @@ const Login = () => {
         email: response.user.email,
         isVerified: response.user.isVerified,
         role: response.user.role,
+        profileImage: response.user.profileImage,
         address: response.user.address,
         phone: response.user.phone,
+        createdAt: response.user.createdAt,
         requests: [],
       });
       router.push("/");

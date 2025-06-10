@@ -23,6 +23,7 @@ export interface BlogSection {
 
   export interface BlogComment {
     author: string;
+    profileImage: string;
     content: string;
     parentId?: string | null; // null = comentario general, o el _id del comentario padre
     approved: boolean;

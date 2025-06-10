@@ -75,6 +75,8 @@ const HouseCleaningForm = () => {
     const newRequest: ServiceRequestItem = {
       id: uuidv4(),
       serviceType: "house-cleaning",
+      price: 0,
+      estimatedDuration: 0,
       details: formData,
     };
     try {

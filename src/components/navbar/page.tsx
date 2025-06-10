@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { useUser } from "../../contexts/UserContext";
-import Avatar from "../../app/user/avatar/page";
+import Avatar from "../user/avatar/page";
 
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosLogIn } from "react-icons/io";

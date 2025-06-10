@@ -183,7 +183,6 @@
 }
 .li:not(.headerRow):hover {
   background: rgba(103, 103, 103, 0.199);
-  cursor: pointer;
 }
 .header_li {
   border: none;
@@ -191,7 +190,7 @@
   font-weight: 600;
 }
 .p {
-  padding: 16px;
+  padding: 16px 28px;
 }
 
 .details {

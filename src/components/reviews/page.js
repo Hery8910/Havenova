@@ -6,7 +6,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ReviewStars from "../reviewStars/page";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import AvatarInicial from "../avatarPicture/page";
+// import AvatarInicial from "../avatarPicture/page";
 
 const Reviews = () => {
   const ulRef = useRef(null);
@@ -181,7 +181,7 @@ const Reviews = () => {
 
             return (
               <li key={index} className={`${styles.li} card`}>
-               <AvatarInicial username={review.name} color={review.color} />
+               {/* <AvatarInicial username={review.name} color={review.color} /> */}
                 <h4>{review.name}</h4>
                 <p>{review.comment}</p>
                 <div className={styles.div}>
