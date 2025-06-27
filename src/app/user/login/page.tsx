@@ -6,8 +6,9 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { loginUser } from "../../../services/userService";
 import Link from "next/link";
-import {  useUser } from "../../../contexts/UserContext";
+import { useUser } from "../../../contexts/UserContext";
 import { ServiceRequestItem } from "../../../types/services";
+import { saveUserToStorage } from "../../../utils/guestUserStorage";
 interface User {
   _id: string;
   name: string;
@@ -28,7 +29,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await loginUser(email, password);
-      setUser({
+      const loggedInUser = {
         _id: response.user._id,
         name: response.user.name,
         email: response.user.email,
@@ -38,8 +39,12 @@ const Login = () => {
         address: response.user.address,
         phone: response.user.phone,
         createdAt: response.user.createdAt,
+        isFromBackend: true,
         requests: [],
-      });
+      };
+
+      setUser(loggedInUser);
+      saveUserToStorage(loggedInUser);
       router.push("/");
     } catch (error: any) {
       if (error.response && error.response.status === 401) {

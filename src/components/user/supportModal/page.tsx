@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { IoMdMail } from "react-icons/io";
 import { FaWhatsapp } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { BiSupport } from "react-icons/bi";
 
 interface SupportModalProps {
   context: "user-profile" | "admin-dashboard";
@@ -24,7 +25,9 @@ const SupportModal: React.FC<SupportModalProps> = ({ context }) => {
   return (
     <>
       {!isOpen ? (
-        <button onClick={() => setIsOpen(true)}>Soporte</button>
+        <button
+        className={styles.button}
+        onClick={() => setIsOpen(true)}><BiSupport /> Support</button>
       ) : (
         <div className={styles.overlay}>
           <div className={styles.modal}>

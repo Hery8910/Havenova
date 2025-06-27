@@ -2,11 +2,12 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import styles from "./page.module.css";
 import generateYear from "../../../components/dashboard/generateYear/page";
-import { Schedules, WorkDaySettings } from "../../../types/dashboard";
-import { createCalendar, getCalendarGuest } from "../../../services/dashboard";
+import { Schedules, WorkDaySettings } from "../../../types/calendar";
 import { Router } from "next/router";
 import { useCalendar, useUser } from "../../../contexts/UserContext";
 import Calendar from "../../../components/dashboard/calender/page";
+import { createCalendar, getCalendarAdmin, getCalendarGuest } from "../../../services/calendar";
+import { useClient } from "../../../contexts/ClientContext";
 
 const defaultSchedules: Schedules = {
   monday: { start: "08:00", end: "16:00" },
@@ -29,6 +30,8 @@ const defaultWorkDaySettings: WorkDaySettings = {
 };
 
 const CreateWorkYear: React.FC = () => {
+  const { client } = useClient();
+  const clientId = client?._id;
   const { calendars, fetchCalendar } = useCalendar();
 
   const { user } = useUser();
@@ -67,9 +70,9 @@ const CreateWorkYear: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user || !clientId) return;
+console.log(typeof(year));
 
-    const clientId = user._id;
     const newYear = generateYear(
       clientId,
       year,
@@ -80,7 +83,7 @@ const CreateWorkYear: React.FC = () => {
     );
     // Send the 'calendar' object to your backend via fetch or axios
     try {
-      const response = await createCalendar(newYear);
+      const response = await createCalendar( newYear, clientId);
       setCalendar(response);
       setMessage(response.message);
       setTimeout(() => {
@@ -101,24 +104,22 @@ const CreateWorkYear: React.FC = () => {
     "saturday",
     "sunday",
   ];
-   useEffect(() => {
+  useEffect(() => {
     const fetchCurrentYear = async () => {
-      try {
-        const response = await getCalendarGuest(currentYear);
-        setCalendar(response);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-      }
+      if (clientId)
+        try {
+          const response = await getCalendarAdmin( currentYear, clientId);
+          setCalendar(response);
+        } catch (error) {
+          console.error("Error fetching blogs:", error);
+        }
     };
-    fetchCurrentYear()
-  }, [currentYear, user.role]);
-console.log(calendar);
-
-
+    fetchCurrentYear();
+  }, [currentYear, user.role, clientId]);
+  console.log(calendar);
 
   return (
     <>
-
       <form className={styles.form} onSubmit={handleSubmit}>
         <p>{message}</p>
         <div>
@@ -172,7 +173,6 @@ console.log(calendar);
         <button type="submit">Create Work Days</button>
       </form>
       <Calendar calendars={calendars} />
-
     </>
   );
 };

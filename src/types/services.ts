@@ -15,7 +15,7 @@ export interface ServiceOrder {
   services: ServiceRequestItem[];
 }
 // Agregar correo para despues de 15 dias enviar un mahnung si no han pagado.
-export type ServiceStatus = "draft" | "submitted" | "completed" | "cancelled";
+export type ServiceStatus = "submitted" | "in progress" | "completed" | "cancelled";
 
 export type serviceIcon = {
   src: string;

@@ -4,72 +4,38 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import Card from "../card/page";
 import { IoIosArrowForward } from "react-icons/io";
-
-// 🔹 Tipo para las tarjetas
-interface BenefitCard {
-  title: string;
-  description: string;
-  image: {
-    src: string;
-    alt?: string;
-  };
-}
+import { useClient } from "../../contexts/ClientContext";
+import Image from "next/image";
 
 const Benefits: React.FC = () => {
-  const cards: BenefitCard[] = [
-    {
-      title: "Professional & Skilled Experts",
-      description:
-        "Our team consists of experienced professionals committed to delivering top-quality service.",
-      image: {
-        src: "/svg/tool-box.svg",
-        alt: "Illustration of a toolbox",
-      },
-    },
-    {
-      title: "Solutions for Every Job",
-      description:
-        "We tailor our services to your specific needs, ensuring the best results",
-      image: {
-        src: "/svg/solution.svg",
-        alt: "Illustration of a hand",
-      },
-    },
-    {
-      title: "Reliable & On-Time Service",
-      description:
-        "We value your time, our team ensures punctuality and efficiency in every project.",
-      image: {
-        src: "/svg/on-time.svg",
-        alt: "Illustration of a pocket watch",
-      },
-    },
-    {
-      title: "Satisfaction Guaranteed",
-      description:
-        "Your happiness is our priority, if you’re not satisfied, we’ll make it right!",
-      image: {
-        src: "/svg/rating.svg",
-        alt: "happy emoji",
-      },
-    },
-  ];
+  const { client, loading } = useClient();
+  if (loading || !client) return <p>loading...</p>;
 
   return (
     <section className={styles.section}>
       <header className={styles.header}>
-        <h2>Why Choose Havenova?</h2>
-        <h3>Experience Quality & Reliability</h3>
+        <h2>{client.texts.en.benefits.title}</h2>
       </header>
-      <main className={styles.main}>
-        <Card cards={cards} />
+      <main>
+        <ul>
+          {client.texts.en.benefits.items.map(
+            (item: { title: string; description: string }, idx: number) => {
+              return (<li key={idx}>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </li>);
+            }
+          )}
+        </ul>
+        <Image
+          className={styles.image}
+          src={client.texts.en.benefits.image}
+          priority
+          alt={client.texts.en.benefits.alt}
+          width={500}
+          height={504}
+        />
       </main>
-      <article className={styles.article}>
-        <h3>Learn More About Our Services</h3>
-        <Link href="/about" className="button">
-          About Us <IoIosArrowForward />
-        </Link>
-      </article>
     </section>
   );
 };

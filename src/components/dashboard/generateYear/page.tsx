@@ -1,5 +1,5 @@
 import isHoliday from "../../../utils/dashboardValidators";
-import {  Schedules, WorkDaySettings, Calendar, Day, Month } from "../../../types/dashboard";
+import {  Schedules, WorkDaySettings, Calendar, Day, Month } from "../../../types/calendar";
 
 
 const generateYear = (

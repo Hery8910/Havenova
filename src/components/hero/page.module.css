@@ -1,22 +1,36 @@
 .section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 36px;
+  margin: 0;
+  position: relative;
+  width: 110%;
 }
 .header {
-  max-width: 550px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
-.p {
-  margin-bottom: 24px;
-}
-
 .image {
-  filter: drop-shadow(0px 16px 16px rgba(3, 41, 41, 0.8));
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.h1 {
+  color: #1f1f1f;
+}
+.h2 {
+  font-size: clamp(28px, 5vw, 50px);
+  font-weight: 700;
+  color: #1f1f1f;
+}
+.h4 {
+  font-weight: 700;
+  color: #1f1f1f;
 }
 @media (min-width: 1200px) {
   .section {
@@ -65,7 +79,7 @@
   margin: 200px auto 20px;
   padding: 8px 16px;
   border-radius: 8px;
-  background-image: url('/svg/backgroundCard.svg');
+  background-image: url("/svg/backgroundCard.svg");
   box-shadow: 0px 16px 20px rgba(3, 53, 52, 0.5);
   border-bottom: 1px solid rgba(0, 185, 173, 0.6);
 }
@@ -79,7 +93,6 @@
 }
 .hero_services_h1 {
   font-size: clamp(22px, 4.5vw, 38px);
-
 }
 
 .hero_services_image {
@@ -87,4 +100,3 @@
   height: 100px;
   filter: drop-shadow(0px 8px 8px rgba(3, 41, 41, 0.8));
 }
-

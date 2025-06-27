@@ -11,6 +11,7 @@ import Avatar from "../user/avatar/page";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosLogIn } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
+import ThemeToggler from "../themeToggler/page";
 
 export interface NavItem {
   section: "services" | "havenova" | "profile";
@@ -73,7 +74,6 @@ const navItems: NavItem[] = [
   { section: "havenova", label: "Reviews", href: "/reviews" },
   { section: "havenova", label: "Blog", href: "/blogs" },
   { section: "havenova", label: "Our Services", href: "/services" },
-  // Sección de Profile para usuarios no autenticados
   {
     section: "profile",
     label: "Register",
@@ -161,6 +161,7 @@ export default function Navbar({}) {
             </picture>
           </Link>
           <div className={styles.header_div}>
+             <ThemeToggler />
             <Avatar />
             <button
               onClick={() => setMenuOpen(!menuOpen)}

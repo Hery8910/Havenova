@@ -2,43 +2,31 @@ import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { IoIosArrowForward } from "react-icons/io";
+import { useClient } from "../../contexts/ClientContext";
 
-interface HeroProps {
-  title: string;
-  description: string;
-  image: {
-    src: string;
-    alt: string;
-  };
-  cta: string;
-  href: string;
-  extraClass?: string; // ⬅️ clase extra opcional
-}
-
-const Hero: React.FC<{ hero: HeroProps }> = ({ hero }) => {
+const Hero: React.FC = () => {
+  const { client, loading } = useClient();
+  if (loading || !client) return <p>loading...</p>;
   return (
-    <section className={hero.extraClass ? styles[hero.extraClass] : styles.section}>
-    <header className={hero.extraClass ? styles[`${hero.extraClass}_header`] : styles.header}>
-      <h1 className={hero.extraClass ? styles[`${hero.extraClass}_h1`] : styles.h1}>{hero.title}</h1>
-      <p className={styles.p}>{hero.description}</p>
-      {hero.cta && (
-        <Link href={hero.href} className="button">
-          {hero.cta} <IoIosArrowForward />
+    <section className={styles.section}>
+      <header className={styles.header}>
+        <h1 className={styles.h1}>{client.texts.en.hero.headline1}</h1>
+        <h2 className={styles.h2}>{client.texts.en.hero.headline2}</h2>
+        <h4 className={styles.h4}>{client.texts.en.hero.subtitle}</h4>
+        <Link href={client.texts.en.hero.cta.href} className="button">
+          {client.texts.en.hero.cta.label}
         </Link>
-      )}
-    </header>
+      </header>
 
-    <aside className={hero.extraClass ? styles[`${hero.extraClass}_aside`] : styles.aside}>
       <Image
-        className={hero.extraClass ? styles[`${hero.extraClass}_image`] : styles.image}
-        src={hero.image.src}
+        className={styles.image}
+        src={client.texts.en.hero.image}
         priority
-        alt={hero.image.alt}
-        width={550}
-        height={550}
+        alt={client.texts.en}
+        width={1500}
+        height={504}
       />
-    </aside>
-  </section>
+    </section>
   );
 };
 

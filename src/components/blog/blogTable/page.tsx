@@ -12,6 +12,7 @@ import BlogTableSkeleton from "../blogTableSkeleton/page";
 import { deleteBlogById } from "../../../services/blogServices";
 import { FaRegTrashCan } from "react-icons/fa6";
 import ConfirmationAlert from "../../confirmationAlert/page";
+import { useClient } from "../../../contexts/ClientContext";
 
 const LIST_OPTIONS = [
   { key: "all", label: "All" },
@@ -54,10 +55,15 @@ export default function BlogTable({
   onChangeList,
   onRefresh,
 }: BlogListProps) {
+  const { client } = useClient();
+  const clientId = client?._id;
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
   const [orderOpen, setOrderOpen] = React.useState(false);
   const [openBlogId, setOpenBlogId] = useState<string | null>(null);
+
+  if (loading) return <div>Loading...</div>;
+  if (!client) return <div>Client not Found</div>;
 
   return (
     <>
@@ -205,14 +211,14 @@ export default function BlogTable({
                       >
                         <FaRegTrashCan />
                       </button>
-                      {blog._id === openBlogId && (
+                      {clientId && blog._id === openBlogId && (
                         <ConfirmationAlert
                           title="Are you sure you want to delete this blog?"
                           message=""
                           onCancel={() => setOpenBlogId(null)}
                           onConfirm={() => {
                             setOpenBlogId(null);
-                            deleteBlogById(blog._id);
+                            deleteBlogById(clientId, blog._id);
                             onRefresh(blog._id)
                           }}
                         />

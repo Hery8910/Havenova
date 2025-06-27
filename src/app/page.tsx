@@ -11,10 +11,12 @@ import WorkFlow from "../components/workFlow/page";
 import Service from "../components/service/page";
 import QuestionAnswer from "../components/q&a/page";
 import Review from "../components/reviews/page";
+import { useClient } from "../contexts/ClientContext";
 // import BlogList from "../components/blog/blogList/page";
 
 export default function Home() {
   const { user, refreshUser } = useUser();
+  const { client, loading } = useClient();
   // const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
   // const [page, setPage] = useState(1);
   // const [search, setSearch] = useState("");
@@ -265,21 +267,18 @@ export default function Home() {
   // const [order, setOrder] = useState<"desc" | "asc">("desc");
   // const limit = 10;
 
-  const homeHero = {
-    title: "Reliable Home Services, Just One Click Away",
-    description:
-      "Professional and tailored handyman services to meet your needs. Get started today and enjoy a 10% discount on your first order.",
-    image: {
-      src: "/images/hero_home.webp",
-      alt: "llustration of two household cleaning workers",
-    },
-    cta: "Register & Save 10%",
-    href: "/user/register",
-  };
+  
+ useEffect(() => {
+    refreshUser();
+   
+  }, [refreshUser ]);
+  
+
+  if (!client || loading) return <p>Cargando...</p>;
 
   return (
-    <main>
-      <Hero hero={homeHero} />
+    <main >
+      <Hero />
       <Benefits />
       <WorkFlow />
       <Service />

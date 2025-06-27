@@ -1,4 +1,4 @@
-import { ServiceRequestItem } from "./services";
+import { ServiceOrder } from "./services";
 
 // src/types/User.ts
 export interface User {
@@ -11,7 +11,8 @@ export interface User {
   isVerified: boolean;
   role: string;
   createdAt: Date;
-  requests: ServiceRequestItem[];
+  isFromBackend?: boolean;
+  requests: ServiceOrder[];
 }
 export interface UserError {
   message: string;

@@ -11,6 +11,7 @@ import { IoNotifications } from "react-icons/io5";
 import { RxActivityLog } from "react-icons/rx";
 import { ImBlog } from "react-icons/im";
 import { IoSettingsSharp } from "react-icons/io5";
+import { BiSolidOffer } from "react-icons/bi";
 
 export default function DashboardLayout({
   children,
@@ -24,6 +25,7 @@ export default function DashboardLayout({
     { label: "Clients", href: "/dashboard/clients", icon: <MdPeopleAlt /> },
     { label: "Notifications", href: "/dashboard/notifications", icon: <IoNotifications />},
     { label: "Activity", href: "/dashboard/activity", icon: <RxActivityLog /> },
+    { label: "Offers", href: "/dashboard/offer", icon: <BiSolidOffer /> },
     { label: "Blogs", href: "/dashboard/blog", icon: <ImBlog />},
     { label: "Profile", href: "/dashboard/profile", icon: <IoSettingsSharp /> },
   ];

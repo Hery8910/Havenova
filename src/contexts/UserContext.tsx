@@ -9,21 +9,19 @@ import React, {
 } from "react";
 import api from "../services/api";
 import { v4 as uuidv4 } from "uuid";
-import { getCalendarAdmin, getCalendarGuest } from "../services/dashboard";
 import { logoutUser } from "../services/userService";
 import { ServiceRequestItem } from "../types/services";
 import { User } from "../types/User";
+import { getCalendarAdmin, getCalendarGuest } from "../services/calendar";
+import { useClient } from "./ClientContext";
 
-// ---- Utilidades para localStorage ----
 const USER_KEY = "havenova_user";
 
-function getRandomAvatarNumber(): number {
-  return Math.floor(Math.random() * 10) + 1;
-}
 function getRandomAvatarPath(): string {
-  const number = getRandomAvatarNumber();
+  const number = Math.floor(Math.random() * 10) + 1;
   return `/avatars/avatar-${number}.svg`;
 }
+
 function getPersistentGuestAvatar(): string {
   if (typeof window === "undefined") return "/avatars/avatar-1.svg";
   const key = "guest_avatar";
@@ -36,8 +34,10 @@ function getPersistentGuestAvatar(): string {
 }
 
 function saveUserToStorage(user: User) {
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
+  const userToSave = { ...user, isFromBackend: user.isFromBackend ?? false };
+  localStorage.setItem(USER_KEY, JSON.stringify(userToSave));
 }
+
 function getUserFromStorage(): User | null {
   const data = localStorage.getItem(USER_KEY);
   if (data) {
@@ -53,29 +53,26 @@ function getUserFromStorage(): User | null {
   }
   return null;
 }
+
 function clearUserFromStorage() {
   localStorage.removeItem(USER_KEY);
   localStorage.removeItem("guest_avatar");
 }
 
-// ---- Usuario inicial guest ----
 export const initialGuestUser: User = {
   _id: "",
-  name: "Guest",
+  name: "",
   email: "",
   isVerified: false,
   role: "guest",
   address: "",
   phone: "",
-  profileImage:
-    typeof window !== "undefined"
-      ? getPersistentGuestAvatar()
-      : "/avatars/avatar-1.svg",
+  profileImage: "",
   requests: [],
   createdAt: new Date(),
+  isFromBackend: false,
 };
 
-// ---- Context Types ----
 interface UserContextProps {
   user: User;
   setUser: (user: User) => void;
@@ -88,8 +85,9 @@ interface UserContextProps {
 
 interface CalendarData {
   year: number;
-  months: any[]; // Mejor definir tu tipo de calendario
+  months: any[];
 }
+
 interface CalendarContextProps {
   calendars: { [year: number]: CalendarData };
   currentYear: number;
@@ -97,22 +95,27 @@ interface CalendarContextProps {
   fetchCalendar: (year: number) => Promise<void>;
 }
 
-// ---- CREACIÓN DE CONTEXTOS ----
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 const CalendarContext = createContext<CalendarContextProps | undefined>(
   undefined
 );
 
-// ---- PROVEEDOR COMBINADO ----
 interface DashboardProviderProps {
   children: ReactNode;
 }
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
-  // ---- Inicializa el usuario desde localStorage o como guest ----
+  const { client } = useClient();
+  const clientId = client?._id;
   const [user, setUser] = useState<User>(() => {
     if (typeof window !== "undefined") {
-      return getUserFromStorage() || initialGuestUser;
+      return (
+        getUserFromStorage() || {
+          ...initialGuestUser,
+          isFromBackend: false,
+          profileImage: getPersistentGuestAvatar(),
+        }
+      );
     }
     return initialGuestUser;
   });
@@ -124,49 +127,58 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     new Date().getFullYear()
   );
 
-  // ---- Sincroniza siempre el usuario guest en localStorage ----
-  useEffect(() => {
-    if (typeof window !== "undefined" && user.role === "guest") {
-      saveUserToStorage(user);
-    }
-  }, [user]);
-
   const refreshUser = useCallback(async () => {
     try {
       const response = await api.get("/api/users/profile");
       if (response.data) {
-        setUser(response.data); // usuario logeado: sin modificar
+        const backendUser = { ...response.data, isFromBackend: true };
+        setUser(backendUser);
+        saveUserToStorage(backendUser);
       } else {
-        // usuario guest
-        setUser(getUserFromStorage() || initialGuestUser);
+        const fallback = getUserFromStorage() || {
+          ...initialGuestUser,
+          profileImage: getPersistentGuestAvatar(),
+          isFromBackend: false,
+        };
+        setUser(fallback);
+        saveUserToStorage(fallback);
       }
-    } catch (error: any) {
-      // también es guest si hay error
-      setUser(getUserFromStorage() || initialGuestUser);
+    } catch {
+      const fallback = getUserFromStorage() || {
+        ...initialGuestUser,
+        profileImage: getPersistentGuestAvatar(),
+        isFromBackend: false,
+      };
+      setUser(fallback);
+      saveUserToStorage(fallback);
     }
   }, []);
 
   const fetchCalendar = useCallback(
     async (year: number) => {
-      try {
-        let data;
-        if (user.role === "admin") {
-          data = await getCalendarAdmin(year);
-        } else {
-          data = await getCalendarGuest(year);
+      if (clientId)
+        try {
+          let data;
+          if (user.role === "admin") {
+            data = await getCalendarAdmin(year, clientId);
+          } else {
+            data = await getCalendarGuest(year, clientId);
+          }
+          setCalendars((prev) => ({ ...prev, [year]: data }));
+        } catch (error) {
+          console.error("Error fetching calendar:", error);
         }
-        setCalendars((prev) => ({ ...prev, [year]: data }));
-      } catch (error) {
-        console.error("Error fetching calendar:", error);
-      }
     },
-    [user.role]
+    [user.role, clientId]
   );
 
   useEffect(() => {
     refreshUser();
-    fetchCalendar(currentYear);
-  }, [refreshUser, fetchCalendar, currentYear]);
+  }, [refreshUser]);
+
+  useEffect(() => {
+    if (user) fetchCalendar(currentYear);
+  }, [user, currentYear, fetchCalendar]);
 
   const logout = async () => {
     try {
@@ -174,12 +186,23 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
+      console.log("Clearing storage and setting guest user...");
       clearUserFromStorage();
-      setUser(initialGuestUser); // limpia el estado
+
+      const guestUser = {
+        ...initialGuestUser,
+        profileImage: getPersistentGuestAvatar(),
+        isFromBackend: false,
+      };
+
+      setUser(guestUser);
+      saveUserToStorage(guestUser);
+
+      console.log("User set to guest:", guestUser);
+      console.log("LocalStorage now:", localStorage.getItem("havenova_user"));
     }
   };
 
-  // ---- Solicitudes: solo se actualiza el user y se guarda ----
   const addRequestToUser = (newRequest: ServiceRequestItem) => {
     const requestWithId = { ...newRequest, id: uuidv4() };
     setUser((prev) => {
@@ -234,7 +257,6 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   );
 };
 
-// ---- Hooks para consumir los contextos ----
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {

@@ -1,47 +1,6 @@
 import api from "./api";
 
 
-// ----- CALENDAR -----
-
-// Crea un nuevo calendario (año)
-export const createCalendar = async (calendarData: any): Promise<any> => {
-  try {
-    const response = await api.post('/api/dashboard/calendar', calendarData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// Actualiza parcialmente un calendario existente para un año
-export const updateCalendar = async (year: number, updateData: any): Promise<any> => {
-  try {
-    const response = await api.patch(`/api/dashboard/calendar/${year}`, updateData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// Obtiene el calendario de un año específico (guest)
-export const getCalendarGuest = async (year: number): Promise<any> => {
-  try {
-    const response = await api.get(`/api/dashboard/calendar/guest/${year}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// Obtiene el calendario de un año específico (admin)
-export const getCalendarAdmin = async (year: number): Promise<any> => {
-  try {
-    const response = await api.get(`/api/dashboard/calendar/${year}`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
 // ----- WORKER MANAGEMENT -----
 

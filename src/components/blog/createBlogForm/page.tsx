@@ -25,6 +25,8 @@ import BlogCard from "../blogCard/page";
 import BlogPreview from "../blogPreview/page";
 import { useRouter } from "next/navigation";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { useClient } from "../../../contexts/ClientContext";
+import { createBlog, updateBlog } from "../../../services/blogServices";
 
 const initialBlog: BlogPost = {
   title: "",
@@ -48,6 +50,7 @@ export default function CreateBlogForm({
   blogs,
   editBlog = null,
 }: CreateBlogFormProps) {
+  const { client } = useClient();
   const [blog, setBlog] = useState<BlogPost>(editBlog ?? initialBlog);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
@@ -263,34 +266,33 @@ export default function CreateBlogForm({
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccess(false);
-    setError(null);
-    const validationError = validateBlog(blog);
-    if (validationError) {
-      setError(validationError);
-      return;
+  e.preventDefault();
+  setSuccess(false);
+  setError(null);
+  const validationError = validateBlog(blog);
+  if (validationError) {
+    setError(validationError);
+    return;
+  }
+  if (!client || !client._id) {
+    setError('No clientId');
+    return;
+  }
+
+  try {
+    if (editBlog && editBlog._id) {
+      await updateBlog(blog, editBlog._id, client._id, submitType);
+      setSuccess(true);
+    } else {
+      await createBlog(blog, client._id, submitType);
+      setSuccess(true);
+      setBlog(initialBlog);
     }
-    try {
-      if (editBlog && editBlog._id) {
-        await api.patch(`/api/blogs/id/${editBlog._id}`, {
-          ...blog,
-          status: submitType,
-        });
-        setSuccess(true);
-      } else {
-        await api.post("/api/blogs", {
-          ...blog,
-          status: submitType,
-        });
-        setSuccess(true);
-        setBlog(initialBlog);
-      }
-      setTimeout(() => setSuccess(false), 5000);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Error saving blog post");
-    }
-  };
+    setTimeout(() => setSuccess(false), 5000);
+  } catch (err: any) {
+    setError(err.response?.data?.message || "Error saving blog post");
+  }
+};
 
   return (
     <main className={styles.main}>
@@ -377,6 +379,8 @@ export default function CreateBlogForm({
               onUpload={(url) =>
                 setBlog((prev) => ({ ...prev, featuredImage: url }))
               }
+              width="800px"
+              aspectRatio={16 / 9}
             />
             {errors.featuredImage && (
               <p className={styles.error}>{errors.featuredImage}</p>

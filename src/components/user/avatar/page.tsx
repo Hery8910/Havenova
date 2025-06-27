@@ -1,23 +1,23 @@
 "use client";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
 
 import { useUser } from "../../../contexts/UserContext";
-import { MdAccountCircle } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
 
-interface User {
-  name: string;
-}
 const Avatar = () => {
   const router = useRouter();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,14 +37,15 @@ const Avatar = () => {
     router.push("/user/profile");
   };
 
-  if (user.role === "guest") {
+  // ✅ Previene render hasta estar en cliente
+  if (!hasMounted || !user || !user.profileImage) return <p>Loading...</p>;
+  
+  if (!user.isFromBackend || user.role === "guest") {
     return (
       <section className={styles.section}>
         <button
           onClick={handleClick}
-          className={`${styles.button}
-          ${isMobile ? styles.mobile : null}
-          `}
+          className={`${styles.button} ${isMobile ? styles.mobile : ""}`}
           aria-label="Toggle menu"
         >
           <Image
@@ -54,7 +55,7 @@ const Avatar = () => {
             width={40}
             height={40}
           />
-          {!isMobile && <p>{user.role === "guest" ? "Register" : user.name}</p>}
+          {!isMobile && <p>Register</p>}
         </button>
         {menuOpen && (
           <ul className={styles.ul}>
@@ -78,19 +79,17 @@ const Avatar = () => {
     <section className={styles.section}>
       <button
         onClick={handleLink}
-        className={`${styles.button}
-          ${isMobile ? styles.mobile : null}
-          `}
-        aria-label="Toggle menu"
+        className={`${styles.button} ${isMobile ? styles.mobile : ""}`}
+        aria-label="Go to profile"
       >
-          <Image
-            className={styles.image}
-            src={user.profileImage}
-            alt="Profile Image"
-            width={40}
-            height={40}
-          />
-        {!isMobile && <p>{user.name}</p>}
+        <Image
+          className={styles.image}
+          src={user.profileImage}
+          alt="Profile Image"
+          width={40}
+          height={40}
+        />
+        {!isMobile &&  <p>{user.name}</p>}
       </button>
     </section>
   );

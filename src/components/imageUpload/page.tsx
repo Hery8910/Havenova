@@ -11,6 +11,8 @@ interface ImageUploadProps {
   uploadPreset: string;
   cloudName: string;
   initialImage?: string;
+  width?: string | number;
+  aspectRatio?: number;
 }
 
 export default function ImageUpload({
@@ -19,6 +21,8 @@ export default function ImageUpload({
   uploadPreset,
   cloudName,
   initialImage = "",
+  width,
+  aspectRatio,
 }: ImageUploadProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [imageUrl, setImageUrl] = useState<string>(initialImage);
@@ -100,10 +104,10 @@ export default function ImageUpload({
       }}
     >
       {imageUrl ? (
-        <section className={styles.image_section}>
+        <>
           <button
             type="button"
-            className={styles.button}
+            className={styles.deleteButton}
             onMouseEnter={() => {
               setTimeout(() => {
                 setHover(true);
@@ -114,30 +118,45 @@ export default function ImageUpload({
           >
             <FaRegTrashCan />
           </button>
-          <Image
-            src={imageUrl}
-            priority={true}
-            alt="Uploaded"
-            width={1000}
-            height={472}
-          />
-          {open && (
-            <ConfirmationAlert
-              title="Are you sure you want to delete this image?"
-              message=""
-              onCancel={() => setOpen(false)}
-              onConfirm={() => {
-                setImageUrl("");
-                onUpload("");
-                setHover(false);
-                if (fileInputRef.current) fileInputRef.current.value = "";
-                setOpen(false)
-              }}
+          <section
+            style={{
+              width: typeof width === "number" ? `${width}px` : width || "100%",
+              aspectRatio: aspectRatio ? `${aspectRatio}` : undefined,
+              position: "relative",
+              overflow: "hidden",
+              borderRadius: "8px",
+            }}
+            className={styles.image_section}
+          >
+            <Image
+              src={imageUrl}
+              priority={true}
+              alt="Uploaded"
+              fill
+              style={{ objectFit: "cover" }}
             />
-          )}
-        </section>
+            {open && (
+              <ConfirmationAlert
+                title="Are you sure you want to delete this image?"
+                message=""
+                onCancel={() => setOpen(false)}
+                onConfirm={() => {
+                  setImageUrl("");
+                  onUpload("");
+                  setHover(false);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                  setOpen(false);
+                }}
+              />
+            )}
+          </section>
+        </>
       ) : (
         <section
+        style={{
+          width: typeof width === "number" ? `${width}px` : width || "100%",
+          aspectRatio: aspectRatio ? `${aspectRatio}` : undefined,
+        }}
           onMouseEnter={() => setDragActive(true)}
           onMouseLeave={() => setDragActive(false)}
           className={`${styles.input_section} ${dragActive ? styles.section_active : ""}`}
@@ -152,7 +171,7 @@ export default function ImageUpload({
               height={100}
             />
             <Image
-              className={styles.imge_top}
+              className={styles.image_top}
               src="/svg/image_icon.svg"
               priority={true}
               alt="Image Icon"

@@ -5,227 +5,293 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
 import { RiEdit2Fill } from "react-icons/ri";
-import { validateField } from "../../../utils/validators";
-import { updateUser } from "../../../services/userService";
+import { getActiveOffers } from "../../../services/offers";
+import { OfferDB } from "../../../types/offers";
 
-interface FormData {
-  name: string;
-  address: string;
-  phone: string;
-  profileImage: string;
-}
+import { useRouter } from "next/navigation";
+import RequestTable from "../../../components/user/requestTable/page";
+import { ServiceOrder } from "../../../types/services";
+import { OfferList } from "../../../components/offerList/page";
+import UserStats from "../../../components/user/userStats/page";
+import { TbPointFilled } from "react-icons/tb";
+import { BlogFromDB } from "../../../types/blog";
+import { getPublishedBlogs } from "../../../services/blogServices";
+import BlogCard from "../../../components/blog/blogCard/page";
+import Link from "next/link";
+import { useClient } from "../../../contexts/ClientContext";
+
+const mockOrders: ServiceOrder[] = [
+  {
+    id: "1",
+    status: "in progress",
+    createdAt: new Date().toISOString(),
+    contact: {
+      user: {
+        _id: "u1",
+        name: "John",
+        email: "john@example.com",
+        role: "user",
+        address: "",
+        phone: "",
+        isVerified: true,
+        profileImage: "",
+        requests: [],
+        createdAt: new Date(),
+      },
+    },
+    serviceAddress: "Alexanderplatz 1, Berlin",
+    preferredDate: "2025-06-20",
+    preferredTime: "10:00",
+    totalPrice: 120,
+    totalEstimatedDuration: 2,
+    services: [
+      {
+        id: "srv1",
+        serviceType: "furniture-assembly",
+        price: 120,
+        estimatedDuration: 2,
+        details: {
+          title: "Montaje de armario Pax",
+          icon: { src: "/icons/armario.svg", alt: "armario" },
+          type: "wardrobe",
+          location: "Bedroom",
+          quantity: "1",
+          position: "against wall",
+          width: "200",
+          height: "236",
+          depth: "60",
+          doors: 2,
+          drawers: 3,
+          notes: "Cliente necesita fijación a la pared",
+        },
+      },
+    ],
+  },
+  {
+    id: "2",
+    status: "submitted",
+    createdAt: new Date().toISOString(),
+    contact: {
+      user: {
+        _id: "u1",
+        name: "John",
+        email: "john@example.com",
+        role: "user",
+        address: "",
+        phone: "",
+        isVerified: true,
+        profileImage: "",
+        requests: [],
+        createdAt: new Date(),
+      },
+    },
+    serviceAddress: "Alexanderplatz 2, Berlin",
+    preferredDate: "2025-06-20",
+    preferredTime: "10:00",
+    totalPrice: 120,
+    totalEstimatedDuration: 2,
+    services: [
+      {
+        id: "srv1",
+        serviceType: "furniture-assembly",
+        price: 120,
+        estimatedDuration: 2,
+        details: {
+          title: "Montaje de armario Pax",
+          icon: { src: "/icons/armario.svg", alt: "armario" },
+          type: "wardrobe",
+          location: "Bedroom",
+          quantity: "1",
+          position: "against wall",
+          width: "200",
+          height: "236",
+          depth: "60",
+          doors: 2,
+          drawers: 3,
+          notes: "Cliente necesita fijación a la pared",
+        },
+      },
+    ],
+  },
+  {
+    id: "3",
+    status: "completed",
+    createdAt: "2025-05-10T10:00:00.000Z",
+    contact: {
+      user: {
+        _id: "u1",
+        name: "John",
+        email: "john@example.com",
+        role: "user",
+        address: "",
+        phone: "",
+        isVerified: true,
+        profileImage: "",
+        requests: [],
+        createdAt: new Date(),
+      },
+    },
+    serviceAddress: "Prenzlauer Allee 100, Berlin",
+    preferredDate: "2025-05-12",
+    preferredTime: "14:00",
+    totalPrice: 90,
+    totalEstimatedDuration: 1.5,
+    services: [
+      {
+        id: "srv2",
+        serviceType: "window-cleaning",
+        price: 90,
+        estimatedDuration: 1.5,
+        details: {
+          title: "Limpieza de ventanas",
+          icon: { src: "/icons/windows.svg", alt: "ventanas" },
+          windows: 5,
+          doors: 2,
+          access: "desde interior",
+          notes: "Sin persianas",
+        },
+      },
+    ],
+  },
+];
 
 const Profile = () => {
+    const { client } = useClient();
+    const clientId = client?._id;
+  const router = useRouter();
   const [edit, setEdit] = useState(false);
   const { user, refreshUser } = useUser();
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    address: "",
-    phone: "",
-    profileImage: "",
-  });
-  const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [message, setMessage] = useState("");
 
-  // Inicializa los datos del formulario al cargar el usuario
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        name: user.name || "",
-        address: user.address || "",
-        phone: user.phone || "",
-        profileImage: user.profileImage || "",
-      });
+  const [hasMounted, setHasMounted] = useState(false);
+  const [offers, setOffers] = useState<OfferDB[]>([]);
+  const [blogs, setblogs] = useState<BlogFromDB[]>([]);
+  const [order, setOrder] = useState<"desc" | "asc">("desc");
+  const [page, setPage] = useState(1);
+  const limit = 1;
+
+  const loadOffers = async () => {
+    try {
+      const data = await getActiveOffers();
+      setOffers(data);
+      console.log(user);
+    } catch (err) {
+      console.error("Error loading offers", err);
     }
-  }, [user]);
+  };
+  const loadBlogs = async () => {
+    if (clientId)
+    try {
+      const data = await getPublishedBlogs(clientId, page, limit, order);
+      setblogs(data.blogs);
+    } catch (err) {
+      console.error("Error loading offers", err);
+    }
+  };
+
+  useEffect(() => {
+    loadOffers();
+    loadBlogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     refreshUser();
   }, [refreshUser]);
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
-  const toggleEdit = () => setEdit((prev) => !prev);
+  if (!hasMounted || !user || !offers) return null;
 
-  const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
-    let isValid = true;
-
-    Object.keys(formData).forEach((key) => {
-      const fieldName = key as keyof FormData;
-      const value = formData[fieldName];
-      if (validateField(fieldName, value)) {
-        newErrors[fieldName] = validateField(fieldName, value);
-        isValid = false;
-      }
-    });
-
-    setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
-    return isValid;
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (value.trim()) {
-      const error = validateField(name, value);
-      setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      setMessage("Please fix the errors in the form.");
-      return;
-    }
-    const updatedData = {
-      email: user.email, // el email nunca cambia
-      name: formData.name,
-      address: formData.address,
-      phone: formData.phone,
-      profileImage: formData.profileImage,
-    };
-    try {
-      const response = await updateUser(updatedData);
-
-      setMessage(response.message);
-      setTimeout(() => setMessage(""), 3000);
-      setEdit(false);
-      refreshUser(); // <- refresca el usuario tras actualizar
-    } catch (error: any) {
-      setMessage(error.message);
-    }
-  };
-
+  if (!user || !user.profileImage || !offers) return <p>Loading...</p>;
+  if (!user.isFromBackend || user.role === "guest")
+    return (
+      <div className={styles.messageWrapper}>
+        <h2 className={styles.title}>You are not logged in</h2>
+        <p className={styles.text}>
+          To access and manage your profile, please log in to your Havenova
+          account. This way, you can view your personal information, track your
+          service requests, and update your preferences.
+        </p>
+        <Link href="/user/login">
+          <button className={styles.button}>Log in to your account</button>
+        </Link>
+      </div>
+    );
   return (
     <main className={styles.main}>
-      {edit && (
-        <aside className={`${styles.aside} ${edit ? styles.show : ""}`}>
-          <button className={styles.close_button} onClick={toggleEdit}>
-            X
-          </button>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.avatar_edit}>
-              <Image
-                src={formData.profileImage || "/avatars/avatar-1.svg"}
-                alt="Profile"
-                width={80}
-                height={80}
-                className={styles.avatar}
-              />
-              {/* Aquí podrías agregar un input para cambiar o subir nueva foto */}
-            </div>
-            <input
-              className={styles.input}
-              type="text"
-              name="name"
-              placeholder="Your name"
-              value={formData.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="name"
-            />
-            {errors.name && <p className={styles.error}>{errors.name}</p>}
-
-            <input
-              className={styles.input}
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="address"
-            />
-            {errors.address && <p className={styles.error}>{errors.address}</p>}
-
-            <input
-              className={styles.input}
-              type="tel"
-              name="phone"
-              placeholder="Phone +49 123456789"
-              value={formData.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="phone"
-            />
-            {errors.phone && <p className={styles.error}>{errors.phone}</p>}
-
-            {/* Puedes agregar el input para cambiar imagen aquí */}
-            {/* 
-            <input
-              type="text"
-              name="profileImage"
-              placeholder="URL imagen perfil"
-              value={formData.profileImage}
-              onChange={handleChange}
-            />
-            */}
-
-            {message && <p className={styles.error}>{message}</p>}
-
-            <button type="submit" className={styles.submit_button}>
-              Save Changes
-            </button>
-          </form>
-        </aside>
-      )}
-
-      <header className={styles.header}>
-        <div className={styles.avatar_header}>
+      <aside className={styles.user_aside}>
+        <header>
+          <h3 className={styles.h1}>Profile</h3>
+          <p className={styles.header_p}>
+            Manage your account settings, and view your profile information.
+          </p>
+        </header>
+        <article className={styles.main_article}>
           <Image
-            src={user.profileImage || "/avatars/avatar-1.svg"}
+            src={user.profileImage}
             alt="Profile"
             width={80}
             height={80}
-            className={styles.avatar}
+            className={styles.image}
           />
-        </div>
-        <h1 className={styles.h1}>{user.name}</h1>
-        <p className={styles.header_p}>Here you can manage your account</p>
-        {message && <p className={styles.error}>{message}</p>}
-      </header>
-      <section className={styles.section}>
-        <article className={`${styles.user_article} card`}>
-          <div className={styles.user_div}>
-            <p className={styles.article_p}>
-              <span className={styles.span}>Name:</span> {user.name}
-            </p>
-            <p className={styles.article_p}>
-              <span className={styles.span}>Address:</span> {user.address}
-            </p>
-            <p className={styles.article_p}>
-              <span className={styles.span}>Phone:</span> {user.phone}
-            </p>
-            <p className={styles.article_p}>
-              <span className={styles.span}>Email:</span> {user.email}
-            </p>
-            <span>
+          <div className={styles.article_div}>
+            <h4 className={styles.h1}>{user.name}</h4>
+            <p className={styles.header_p}>
               Member since: {new Date(user.createdAt).toLocaleDateString()}
-            </span>
+            </p>
+            <p
+              className={styles.verified_p}
+              style={
+                !user.isVerified ? { color: "#fa4903" } : { color: "#00ad34" }
+              }
+            >
+              {user.isVerified
+                ? "Verified"
+                : "You need to verfied your account"}
+              <TbPointFilled />
+            </p>
           </div>
-          <button className={styles.button} onClick={toggleEdit}>
-            Edit <RiEdit2Fill />
-          </button>
         </article>
-        <article className={`${styles.user_article} card`}>
-          <h2 className={styles.h2}>Services</h2>
-          <p className={styles.article_p}>
-            Aquí van las solicitudes de trabajo
-          </p>
-        </article>
-      </section>
+        <table className={styles.table}>
+          <tbody className={styles.tbody}>
+            <tr className={styles.tr}>
+              <th className={styles.th}>Name:</th>
+              <td className={styles.td}>{user.name}</td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>Address:</th>
+              <td className={styles.td}>{user.address}</td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>Phone:</th>
+              <td className={styles.td}>{user.phone}</td>
+            </tr>
+            <tr className={styles.tr}>
+              <th className={styles.th}>Email:</th>
+              <td className={styles.td}>{user.email}</td>
+            </tr>
+          </tbody>
+        </table>
+      </aside>
+      <aside className={styles.blog_aside}>
+        <h4>Tips of the Day</h4>
+        {blogs &&
+          blogs.map((blog, idx) => (
+            <div key={idx}>
+              <BlogCard blog={blog} />
+            </div>
+          ))}
+      </aside>
+      <aside className={styles.offer_aside}>
+        <h4>Promotion</h4>
+        <OfferList offers={offers} dashboard />
+      </aside>
+      {/* <aside className={styles.stats_aside}>
+        <h4>Your Stats</h4>
+        <UserStats />
+      </aside> */}
     </main>
   );
 };
