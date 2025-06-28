@@ -16,8 +16,8 @@ import { ClientConfig, ClientContextProps } from "../types/client";
 
 const ClientContext = createContext<ClientContextProps | undefined>(undefined);
 
-export function ClientProvider({ children }: { children: ReactNode }) {
-  const [client, setClient] = useState<ClientConfig | null>(null);
+export function ClientProvider({ children, initialClient }: { children: ReactNode, initialClient: ClientConfig }) {
+  const [client, setClient] = useState<ClientConfig | null>(initialClient);
   const [loading, setLoading] = useState(true);
 
   //   const hostname = typeof window !== "undefined" ? window.location.hostname : "";
@@ -29,7 +29,6 @@ export function ClientProvider({ children }: { children: ReactNode }) {
     const fetchClient = async () => {
       try {
         const { data } = await api.get(`/api/clients/by-domain/${hostname}`);
-        setClient(data);
         if (data?.branding && data?.typography) {
           // Aplica colores y tipografía al DOM
           applyBrandingToDOM(data.branding, data.typography);

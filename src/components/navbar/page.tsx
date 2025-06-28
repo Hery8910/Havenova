@@ -12,6 +12,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosLogIn } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
 import ThemeToggler from "../themeToggler/page";
+import LanguageSwitcher from "../languageSwitcher/page";
 
 export interface NavItem {
   section: "services" | "havenova" | "profile";
@@ -160,6 +161,7 @@ export default function Navbar({}) {
               />
             </picture>
           </Link>
+          <LanguageSwitcher />
           <div className={styles.header_div}>
              <ThemeToggler />
             <Avatar />

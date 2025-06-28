@@ -54,3 +54,9 @@ export const updateUser = async (payload: UpdateUserPayload): Promise<RegisterRe
 export const logoutUser = async (): Promise<void> => {
   await api.post("/api/users/logout");
 };
+export async function getUser({ clientId, guestId }: { clientId: string, guestId?: string }) {
+  let url = `/api/users/profile?clientId=${clientId}`;
+  if (guestId) url += `&guestId=${guestId}`;
+  const { data } = await api.get(url);
+  return data;
+}

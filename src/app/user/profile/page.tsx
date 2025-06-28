@@ -20,147 +20,147 @@ import BlogCard from "../../../components/blog/blogCard/page";
 import Link from "next/link";
 import { useClient } from "../../../contexts/ClientContext";
 
-const mockOrders: ServiceOrder[] = [
-  {
-    id: "1",
-    status: "in progress",
-    createdAt: new Date().toISOString(),
-    contact: {
-      user: {
-        _id: "u1",
-        name: "John",
-        email: "john@example.com",
-        role: "user",
-        address: "",
-        phone: "",
-        isVerified: true,
-        profileImage: "",
-        requests: [],
-        createdAt: new Date(),
-      },
-    },
-    serviceAddress: "Alexanderplatz 1, Berlin",
-    preferredDate: "2025-06-20",
-    preferredTime: "10:00",
-    totalPrice: 120,
-    totalEstimatedDuration: 2,
-    services: [
-      {
-        id: "srv1",
-        serviceType: "furniture-assembly",
-        price: 120,
-        estimatedDuration: 2,
-        details: {
-          title: "Montaje de armario Pax",
-          icon: { src: "/icons/armario.svg", alt: "armario" },
-          type: "wardrobe",
-          location: "Bedroom",
-          quantity: "1",
-          position: "against wall",
-          width: "200",
-          height: "236",
-          depth: "60",
-          doors: 2,
-          drawers: 3,
-          notes: "Cliente necesita fijación a la pared",
-        },
-      },
-    ],
-  },
-  {
-    id: "2",
-    status: "submitted",
-    createdAt: new Date().toISOString(),
-    contact: {
-      user: {
-        _id: "u1",
-        name: "John",
-        email: "john@example.com",
-        role: "user",
-        address: "",
-        phone: "",
-        isVerified: true,
-        profileImage: "",
-        requests: [],
-        createdAt: new Date(),
-      },
-    },
-    serviceAddress: "Alexanderplatz 2, Berlin",
-    preferredDate: "2025-06-20",
-    preferredTime: "10:00",
-    totalPrice: 120,
-    totalEstimatedDuration: 2,
-    services: [
-      {
-        id: "srv1",
-        serviceType: "furniture-assembly",
-        price: 120,
-        estimatedDuration: 2,
-        details: {
-          title: "Montaje de armario Pax",
-          icon: { src: "/icons/armario.svg", alt: "armario" },
-          type: "wardrobe",
-          location: "Bedroom",
-          quantity: "1",
-          position: "against wall",
-          width: "200",
-          height: "236",
-          depth: "60",
-          doors: 2,
-          drawers: 3,
-          notes: "Cliente necesita fijación a la pared",
-        },
-      },
-    ],
-  },
-  {
-    id: "3",
-    status: "completed",
-    createdAt: "2025-05-10T10:00:00.000Z",
-    contact: {
-      user: {
-        _id: "u1",
-        name: "John",
-        email: "john@example.com",
-        role: "user",
-        address: "",
-        phone: "",
-        isVerified: true,
-        profileImage: "",
-        requests: [],
-        createdAt: new Date(),
-      },
-    },
-    serviceAddress: "Prenzlauer Allee 100, Berlin",
-    preferredDate: "2025-05-12",
-    preferredTime: "14:00",
-    totalPrice: 90,
-    totalEstimatedDuration: 1.5,
-    services: [
-      {
-        id: "srv2",
-        serviceType: "window-cleaning",
-        price: 90,
-        estimatedDuration: 1.5,
-        details: {
-          title: "Limpieza de ventanas",
-          icon: { src: "/icons/windows.svg", alt: "ventanas" },
-          windows: 5,
-          doors: 2,
-          access: "desde interior",
-          notes: "Sin persianas",
-        },
-      },
-    ],
-  },
-];
+// const mockOrders: ServiceOrder[] = [
+//   {
+//     id: "1",
+//     status: "in progress",
+//     createdAt: new Date().toISOString(),
+//     contact: {
+//       user: {
+//         _id: "u1",
+//         name: "John",
+//         email: "john@example.com",
+//         role: "user",
+//         address: "",
+//         phone: "",
+//         isVerified: true,
+//         profileImage: "",
+//         requests: [],
+//         createdAt: new Date(),
+//       },
+//     },
+//     serviceAddress: "Alexanderplatz 1, Berlin",
+//     preferredDate: "2025-06-20",
+//     preferredTime: "10:00",
+//     totalPrice: 120,
+//     totalEstimatedDuration: 2,
+//     services: [
+//       {
+//         id: "srv1",
+//         serviceType: "furniture-assembly",
+//         price: 120,
+//         estimatedDuration: 2,
+//         details: {
+//           title: "Montaje de armario Pax",
+//           icon: { src: "/icons/armario.svg", alt: "armario" },
+//           type: "wardrobe",
+//           location: "Bedroom",
+//           quantity: "1",
+//           position: "against wall",
+//           width: "200",
+//           height: "236",
+//           depth: "60",
+//           doors: 2,
+//           drawers: 3,
+//           notes: "Cliente necesita fijación a la pared",
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     id: "2",
+//     status: "submitted",
+//     createdAt: new Date().toISOString(),
+//     contact: {
+//       user: {
+//         _id: "u1",
+//         name: "John",
+//         email: "john@example.com",
+//         role: "user",
+//         address: "",
+//         phone: "",
+//         isVerified: true,
+//         profileImage: "",
+//         requests: [],
+//         createdAt: new Date(),
+//       },
+//     },
+//     serviceAddress: "Alexanderplatz 2, Berlin",
+//     preferredDate: "2025-06-20",
+//     preferredTime: "10:00",
+//     totalPrice: 120,
+//     totalEstimatedDuration: 2,
+//     services: [
+//       {
+//         id: "srv1",
+//         serviceType: "furniture-assembly",
+//         price: 120,
+//         estimatedDuration: 2,
+//         details: {
+//           title: "Montaje de armario Pax",
+//           icon: { src: "/icons/armario.svg", alt: "armario" },
+//           type: "wardrobe",
+//           location: "Bedroom",
+//           quantity: "1",
+//           position: "against wall",
+//           width: "200",
+//           height: "236",
+//           depth: "60",
+//           doors: 2,
+//           drawers: 3,
+//           notes: "Cliente necesita fijación a la pared",
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     id: "3",
+//     status: "completed",
+//     createdAt: "2025-05-10T10:00:00.000Z",
+//     contact: {
+//       user: {
+//         _id: "u1",
+//         name: "John",
+//         email: "john@example.com",
+//         role: "user",
+//         address: "",
+//         phone: "",
+//         isVerified: true,
+//         profileImage: "",
+//         requests: [],
+//         createdAt: new Date(),
+//       },
+//     },
+//     serviceAddress: "Prenzlauer Allee 100, Berlin",
+//     preferredDate: "2025-05-12",
+//     preferredTime: "14:00",
+//     totalPrice: 90,
+//     totalEstimatedDuration: 1.5,
+//     services: [
+//       {
+//         id: "srv2",
+//         serviceType: "window-cleaning",
+//         price: 90,
+//         estimatedDuration: 1.5,
+//         details: {
+//           title: "Limpieza de ventanas",
+//           icon: { src: "/icons/windows.svg", alt: "ventanas" },
+//           windows: 5,
+//           doors: 2,
+//           access: "desde interior",
+//           notes: "Sin persianas",
+//         },
+//       },
+//     ],
+//   },
+// ];
 
 const Profile = () => {
     const { client } = useClient();
     const clientId = client?._id;
   const router = useRouter();
   const [edit, setEdit] = useState(false);
-  const { user, refreshUser } = useUser();
+  const { user } = useUser();
 
   const [hasMounted, setHasMounted] = useState(false);
   const [offers, setOffers] = useState<OfferDB[]>([]);
@@ -195,17 +195,13 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    refreshUser();
-  }, [refreshUser]);
-
-  useEffect(() => {
     setHasMounted(true);
   }, []);
 
   if (!hasMounted || !user || !offers) return null;
 
   if (!user || !user.profileImage || !offers) return <p>Loading...</p>;
-  if (!user.isFromBackend || user.role === "guest")
+  if (user.role === "guest")
     return (
       <div className={styles.messageWrapper}>
         <h2 className={styles.title}>You are not logged in</h2>

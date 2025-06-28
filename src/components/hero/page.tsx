@@ -1,28 +1,34 @@
 import Link from "next/link";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { IoIosArrowForward } from "react-icons/io";
-import { useClient } from "../../contexts/ClientContext";
+import { useI18n } from "../../contexts/I18nContext";
 
+export interface HeroData {
+headline1: string;
+    headline2: string;
+    subtitle: string;
+    cta: { label: string, href: string },
+    image: { src: string, alt: string };
+}
 const Hero: React.FC = () => {
-  const { client, loading } = useClient();
-  if (loading || !client) return <p>loading...</p>;
+  const { texts } = useI18n();
+   const hero: HeroData = texts.home.hero;
   return (
     <section className={styles.section}>
       <header className={styles.header}>
-        <h1 className={styles.h1}>{client.texts.en.hero.headline1}</h1>
-        <h2 className={styles.h2}>{client.texts.en.hero.headline2}</h2>
-        <h4 className={styles.h4}>{client.texts.en.hero.subtitle}</h4>
-        <Link href={client.texts.en.hero.cta.href} className="button">
-          {client.texts.en.hero.cta.label}
+        <h1 className={styles.h1}>{hero.headline1}</h1>
+        <h2 className={styles.h2}>{hero.headline2}</h2>
+        <h4 className={styles.h4}>{hero.subtitle}</h4>
+        <Link href={hero.cta.href} className="button">
+          {hero.cta.label}
         </Link>
       </header>
 
       <Image
         className={styles.image}
-        src={client.texts.en.hero.image}
+        src={hero.image.src}
         priority
-        alt={client.texts.en}
+        alt={hero.image.alt}
         width={1500}
         height={504}
       />

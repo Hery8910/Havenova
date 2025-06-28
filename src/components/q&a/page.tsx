@@ -1,39 +1,41 @@
-import { useState } from "react";
+"use client";
 import styles from "./page.module.css";
+import { useI18n } from "../../contexts/I18nContext";
+import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 
-// Tipo para cada pregunta
-interface QuestionItem {
-  name: string;
+interface QuestionAnswerItem {
+  question: string;
   answer: string;
 }
 
-// Props del componente
-interface AccordionProps {
-  questions: QuestionItem[];
+interface QuestionAnswerProps {
+  title: string;
+  items: QuestionAnswerItem[];
 }
-
-const Accordion: React.FC<AccordionProps> = ({ questions }) => {
+const QuestionAnswer: React.FC = () => {
   const [open, setOpen] = useState<number | null>(null);
 
   const handleClick = (index: number) => {
     setOpen((prev) => (prev === index ? null : index));
   };
+  const { texts } = useI18n();
+  const faq: QuestionAnswerProps = texts.home.faq;
 
   return (
     <section className={styles.section}>
       <header>
-        <h2>Frequently Asked Questions (FAQ)</h2>
+        <h2>{faq.title}</h2>
       </header>
       <ul className={styles.ul}>
-        {questions.map((question, index) => (
+        {faq.items.map((question, index) => (
           <li
             key={index}
             className={`${styles.li} card`}
             onClick={() => handleClick(index)}
           >
             <h4 className={styles.h4}>
-              {question.name}
+              {question.question}
               <IoIosArrowBack
                 className={`${styles.icon} ${
                   open === index ? styles.open : ""
@@ -48,4 +50,4 @@ const Accordion: React.FC<AccordionProps> = ({ questions }) => {
   );
 };
 
-export default Accordion;
+export default QuestionAnswer;

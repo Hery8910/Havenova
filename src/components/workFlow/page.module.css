@@ -1,52 +1,47 @@
+/* page.module.css */
 .section {
-  position: relative;
   display: flex;
-  flex-direction: column-reverse;
-}
-.main {
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1rem;
-  color: var(--font-color);
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
 }
-.image {
-  align-self: center;
-  filter: drop-shadow(0px 8px 8px rgba(3, 41, 41, 0.8));
+
+.main {
+  max-width: 600px;
+  flex: 1 1 350px;
 }
-@media (min-width: 768px) {
-  .section {
-    margin-top: 500px;
-  }
-  .image {
-    width: 400px;
-    height: 325px;
-    position: absolute;
-    top: -270px;
-    right: 0;
-  }
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
-@media (min-width: 1024px) {
-  .section {
-    margin-top: 600px;
-  }
-  .image {
-    width: 500px;
-    height: 500px;
-    top: -400px;
-  }
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 200px;
 }
-@media (min-width: 1200px) {
-  .section {
-    margin-top: 400px;
-  }
-  .image {
-    width: 500px;
-    height: 500px;
-    top: auto;
-    bottom: 0;
-    right: 0;
-  }
+.stepImage {
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #0001;
+}
+.cta {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background: #2352a2;
+  color: white;
+  border-radius: 2rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.cta:hover {
+  background: #183b6b;
 }

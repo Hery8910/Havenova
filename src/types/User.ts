@@ -11,7 +11,8 @@ export interface User {
   isVerified: boolean;
   role: string;
   createdAt: Date;
-  isFromBackend?: boolean;
+  language: string;
+  theme: "light" | "dark";
   requests: ServiceOrder[];
 }
 export interface UserError {
