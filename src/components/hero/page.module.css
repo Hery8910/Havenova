@@ -1,56 +1,64 @@
 .section {
-  margin: 0;
   position: relative;
-  width: 110%;
-}
-.header {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+  margin: 250px auto;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
+}
+.header {
+  max-width: 900px;
+  margin: 0 auto;
+  width: fit-content;
+  padding: 32px 64px;
+  border-radius: 8px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 .image {
+  opacity: .7;
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
 }
-.h1 {
-  color: #1f1f1f;
-}
+
 .h2 {
+  color: var(--text-secondary);
   font-size: clamp(28px, 5vw, 50px);
   font-weight: 700;
-  color: #1f1f1f;
+  margin-bottom: 16px;
 }
 .h4 {
+  margin-bottom: 16px;
   font-weight: 700;
-  color: #1f1f1f;
 }
 @media (min-width: 1200px) {
-  .section {
-    margin-top: 250px;
-  }
 }
 @media (max-width: 1024px) {
-  .section {
-    margin-top: 250px;
-  }
   .image {
     width: 350px;
     height: 350px;
   }
 }
 @media (max-width: 768px) {
-  .section {
-    margin-top: 256px;
-    justify-content: flex-start;
-  }
   .image {
     width: 350px;
     height: 350px;
@@ -58,45 +66,8 @@
 }
 
 @media (max-width: 425px) {
-  .section {
-    margin-top: 120px;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
   .image {
     width: 300px;
     height: 300px;
   }
-}
-
-.hero_services {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 32px;
-  width: 1200px;
-  margin: 200px auto 20px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background-image: url("/svg/backgroundCard.svg");
-  box-shadow: 0px 16px 20px rgba(3, 53, 52, 0.5);
-  border-bottom: 1px solid rgba(0, 185, 173, 0.6);
-}
-
-.hero_services_header {
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 8px;
-}
-.hero_services_h1 {
-  font-size: clamp(22px, 4.5vw, 38px);
-}
-
-.hero_services_image {
-  width: 100px;
-  height: 100px;
-  filter: drop-shadow(0px 8px 8px rgba(3, 41, 41, 0.8));
 }

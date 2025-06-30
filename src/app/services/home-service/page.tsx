@@ -243,7 +243,7 @@ const HomeServicePage = () => {
   };
   return (
     <main className={styles.main}>
-      <Hero hero={homeServiceHeader} />
+      {/* <Hero hero={homeServiceHeader} /> */}
       <section className={styles.section}>
       <HouseServiceForm />
       <ServiceCart />

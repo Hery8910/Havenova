@@ -11,7 +11,7 @@ import WorkFlow from "../components/workFlow/page";
 import QuestionAnswer from "../components/q&a/page";
 import Review from "../components/reviews/page";
 import { useClient } from "../contexts/ClientContext";
-import Services from "./services/page";
+import Service from "../components/service/page";
 // import BlogList from "../components/blog/blogList/page";
 
 export default function Home() {
@@ -278,7 +278,7 @@ export default function Home() {
       <Hero />
       <Benefits />
       <WorkFlow />
-      <Services />
+      <Service />
       <Review />
       <QuestionAnswer />
       {/* <BlogList blogs={blogs} /> */}

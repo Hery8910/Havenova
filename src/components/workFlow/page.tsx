@@ -30,31 +30,24 @@ const WorkFlow: React.FC = () => {
 
   return (
     <section className={styles.section}>
-      <main className={styles.main}>
-        <h2>{howItWorks.title}</h2>
-        <h3>{howItWorks.subtitle}</h3>
-        <p>{howItWorks.description}</p>
-        <ul className={styles.steps}>
-          {howItWorks.steps.map((step, idx) => (
-            <li className={styles.step} key={step.title}>
-              <Image
-                src={step.image.src}
-                alt={step.image.alt}
-                width={120}
-                height={120}
-                className={styles.stepImage}
-              />
-              <div>
-                <h4>{step.title}</h4>
-                <p>{step.description}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <Link href={howItWorks.cta.href} className={styles.cta}>
-          {howItWorks.cta.label}
-        </Link>
-      </main>
+      <h2>{howItWorks.title}</h2>
+      <h3 className={styles.h3}>{howItWorks.subtitle}</h3>
+      <p className={styles.p}>{howItWorks.description}</p>
+      <ul className={styles.ul}>
+        {howItWorks.steps.map((step) => (
+          <li className={styles.li} key={step.title}>
+            <Image
+              className={styles.image}
+              src={step.image.src}
+              alt={step.image.alt}
+              width={450}
+              height={350}
+            />
+            <h4 className={styles.h4}>{step.title}</h4>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

@@ -245,7 +245,7 @@ const WindowsCleaningPage = () => {
   return (
     <main className={styles.main}>
       <header>
-        <Hero hero={windowsCleaningHeader} />
+        {/* <Hero hero={windowsCleaningHeader} /> */}
       </header>
       <section className={styles.section}>
         <WindowsCleaningForm />

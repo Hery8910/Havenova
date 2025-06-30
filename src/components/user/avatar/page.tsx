@@ -40,7 +40,7 @@ const Avatar = () => {
   // ✅ Previene render hasta estar en cliente
   if (!hasMounted || !user || !user.profileImage) return <p>Loading...</p>;
   
-  if (!user.isFromBackend || user.role === "guest") {
+  if (user.role === "guest") {
     return (
       <section className={styles.section}>
         <button

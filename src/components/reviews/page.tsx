@@ -29,36 +29,36 @@ const Reviews = () => {
   return (
     <section className={styles.section}>
       <header className={styles.header}>
-        <h2 className={styles.h2}>{testimonials.title}</h2>
+        <h2>{testimonials.title}</h2>
         <h2 className={styles.h2}>{testimonials.subTitle}</h2>
-        <p>{testimonials.description}</p>
-            <Link href={testimonials.cta.href} className={styles.cta}>
+        <p className={styles.p}>{testimonials.description}</p>
+        <Link href={testimonials.cta.href} className='button'>
           {testimonials.cta.label}
         </Link>
       </header>
 
-      <ul className={styles.steps}>
+      <ul className={styles.ul}>
         {testimonials.items.map((item, idx) => (
-          <li className={styles.step} key={idx}>
-            <div>
+          <li className={styles.li} key={idx}>
+            <div className={`${styles.div} card`}>
               <Image
-                src={item.profileImage.src}
-                alt={item.profileImage.alt}
-                width={120}
-                height={120}
-                className={styles.stepImage}
-              />
-              <p></p>
-            </div>
-            <div>
-              <Image
+                className={styles.image}
                 src={item.starImage.src}
                 alt={item.starImage.alt}
-                width={120}
-                height={120}
-                className={styles.stepImage}
+                width={150}
+                height={50}
               />
-              <p></p>
+              <p>{item.text}</p>
+            </div>
+            <div className={`${styles.profil} card`}>
+              <Image
+                className={styles.profileImage}
+                src={item.profileImage.src}
+                alt={item.profileImage.alt}
+                width={50}
+                height={50}
+              />
+              <h4>{item.author}</h4>
             </div>
           </li>
         ))}

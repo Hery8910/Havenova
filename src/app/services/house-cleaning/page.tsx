@@ -244,7 +244,7 @@ const HouseCleaningPage = () => {
   };
   return (
     <main className={styles.main}>
-      <Hero hero={houseCleaningHeader} />
+      {/* <Hero hero={houseCleaningHeader} /> */}
       <section className={styles.section}>
         <HouseCleaningForm />
         <ServiceCart />

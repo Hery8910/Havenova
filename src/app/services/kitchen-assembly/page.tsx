@@ -245,7 +245,7 @@ const KitchenAssemblyPage = () => {
   return (
     <main className={styles.main}>
       <header>
-        <Hero hero={kitchenAssemblyHeader} />
+        {/* <Hero hero={kitchenAssemblyHeader} /> */}
       </header>
       <section className={styles.section}>
         <KitchenAssemblyForm />

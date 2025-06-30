@@ -243,7 +243,7 @@ import KitchenCleaningForm from "../../../components/services/kitchenCleaning/ki
   }
   return (
     <main className={styles.main}>
-      <Hero hero={kitchenCleaningHeader}/>
+      {/* <Hero hero={kitchenCleaningHeader}/> */}
       <section className={styles.section}>
       <KitchenCleaningForm />
       <ServiceCart />

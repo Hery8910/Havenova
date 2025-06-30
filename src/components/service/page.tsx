@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import { useI18n } from "../../contexts/I18nContext";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface ServicesItems {
   title: string;
@@ -15,33 +16,33 @@ export interface ServicesData {
   cta: { label: string; href: string };
 }
 
-const Services = () => {
+const Service = () => {
   const { texts } = useI18n();
-const services: ServicesData = texts.home.services;
+  const services: ServicesData = texts.home.services;
   return (
     <section className={styles.section}>
-      <header className={styles.header}>
-        <h2 className={styles.h2}>{services.title}</h2>
-      </header>
-
-   <ul className={styles.steps}>
-          {services.items.map((item, idx) => (
-            <li className={styles.step} key={idx}>
-              <Image
-                src={item.image.src}
-                alt={item.image.alt}
-                width={120}
-                height={120}
-                className={styles.stepImage}
-              />
-              <div>
-                <h4>{item.title}</h4>
-              </div>
-            </li>
-          ))}
-        </ul>
+      <h2 className={styles.h2}>{services.title}</h2>
+      <ul className={styles.ul}>
+        {services.items.map((item, idx) => (
+          <li className={styles.li} key={idx}>
+            <Image
+              className={styles.image}
+              src={item.image.src}
+              alt={item.image.alt}
+              width={120}
+              height={120}
+            />
+            <div>
+              <h4>{item.title}</h4>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <Link href={services.cta.href} className="button">
+        {services.cta.label}
+      </Link>
     </section>
   );
 };
 
-export default Services;
+export default Service;

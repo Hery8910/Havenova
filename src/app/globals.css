@@ -8,13 +8,13 @@
   --brand-accent: #ff9500;
 
   /* Backgrounds & Text */
-  --bg-main: #f0f0f0;
-  --bg-gradient: hsla(210, 100%, 52%, 0.527);
+  --bg-main: #afafaf;
+  --bg-gradient: #0e2439;
   --bg-card: #f8f8f8;
   --text-primary: #1f1f1f;
   --text-secondary: #6b6b6b;
   --text-inverted: #f0f0f0;
-  --shadow-dark: 0px 0px 16px rgba(75, 75, 75, 0.466);
+  --shadow-dark: 0px 0px 16px rgba(46, 46, 46, 0.719);
   --shadow-light: 0px 0px 16px rgba(165, 165, 165, 0.466);
   /* Font */
   --font-family-main: "Inter", sans-serif;
@@ -24,7 +24,7 @@
   --color-success: #28a745;
   --color-error: #dc3545;
   --color-warning: #ffc107;
-  --color-info: #17a2b8;
+  --color-info: #4c929c;
 
   --bg-success: #e6f4ea;
   --bg-error: #f8d7da;
@@ -73,9 +73,11 @@ body {
   font-family: var(--font-family-main);
   background-color: var(--bg-main);
   background: linear-gradient(
-    0deg,
-    var( --bg-gradient) 0%,
-    var(--bg-main) 100%
+    25deg,
+    var(--bg-gradient) 0%,
+    var(--bg-main) 30%,
+    var(--bg-main) 70%,
+    var(--bg-gradient) 100%
   );
   background-size: contain;
   background-attachment: fixed;
@@ -115,7 +117,8 @@ a {
 /* ============================
    COMPONENTES REUTILIZABLES
 ============================ */
-.button, .button_invert {
+.button,
+.button_invert {
   width: fit-content;
   display: flex;
   justify-content: center;
@@ -125,18 +128,17 @@ a {
   font-size: clamp(14px, 3vw, 18px);
   padding: 8px 16px;
   border-radius: 4px;
-  background: var(--brand-accent);
+  background: var(--brand-primary);
   box-shadow: var(--shadow-dark);
-  color: rgb(218, 218, 218);
+  color: var(--text-primary);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   border: none;
-  outline: 2px solid var(--brand-accent);
+  outline: 2px solid var(--brand-primary);
 }
 .button_invert {
   background-color: transparent;
-  color: var(--brand-accent);
-
+  color: var(--brand-primary);
 }
 .button:active {
   transform: scale(0.9);
@@ -145,10 +147,11 @@ a {
 .card {
   padding: 16px;
   border-radius: 8px;
-  background-color: var(--bg-card);
-  color: var(--text-primary);
-  box-shadow: 0px 16px 20px rgba(3, 53, 52, 0.5);
-  border-bottom: 1px solid rgba(0, 185, 173, 0.6);
+  background: var(--bg-gradient) ;
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.1px);
+  border: 1px solid var(--bg-gradient);
 }
 
 .quote {

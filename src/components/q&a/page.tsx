@@ -2,7 +2,8 @@
 import styles from "./page.module.css";
 import { useI18n } from "../../contexts/I18nContext";
 import { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
+import { LuPlus } from "react-icons/lu";
+import Link from "next/link";
 
 interface QuestionAnswerItem {
   question: string;
@@ -12,6 +13,12 @@ interface QuestionAnswerItem {
 interface QuestionAnswerProps {
   title: string;
   items: QuestionAnswerItem[];
+  cta: {
+    label: string;
+    href: string;
+    title: string;
+    description: string;
+  };
 }
 const QuestionAnswer: React.FC = () => {
   const [open, setOpen] = useState<number | null>(null);
@@ -31,12 +38,12 @@ const QuestionAnswer: React.FC = () => {
         {faq.items.map((question, index) => (
           <li
             key={index}
-            className={`${styles.li} card`}
+            className={styles.li}
             onClick={() => handleClick(index)}
           >
             <h4 className={styles.h4}>
               {question.question}
-              <IoIosArrowBack
+              <LuPlus
                 className={`${styles.icon} ${
                   open === index ? styles.open : ""
                 }`}
@@ -46,6 +53,13 @@ const QuestionAnswer: React.FC = () => {
           </li>
         ))}
       </ul>
+      <aside className={styles.aside}>
+        <h2>{faq.cta.title}</h2>
+        <h4 className={styles.description}>{faq.cta.description}</h4>
+        <Link href={faq.cta.href} className="button">
+          {faq.cta.label}
+        </Link>
+      </aside>
     </section>
   );
 };

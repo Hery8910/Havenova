@@ -4,11 +4,9 @@ import ServiceCart from "../../components/services/serviceCart/page";
 import Reviews from "../../components/reviews/page";
 // import BlogList from "../../components/blog/blogList/page";
 import Calendar from "../../components/dashboard/calender/page";
-import { useCalendar} from "../../contexts/UserContext";
 import { useEffect } from "react";
 
 const CheckOut = () => {
-    const { fetchCalendar, calendars } = useCalendar();
 
   const blogs = [
     {

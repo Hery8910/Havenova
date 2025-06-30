@@ -4,10 +4,9 @@ import styles from "./page.module.css";
 import generateYear from "../../../components/dashboard/generateYear/page";
 import { Schedules, WorkDaySettings } from "../../../types/calendar";
 import { Router } from "next/router";
-import { useCalendar, useUser } from "../../../contexts/UserContext";
-import Calendar from "../../../components/dashboard/calender/page";
 import { createCalendar, getCalendarAdmin, getCalendarGuest } from "../../../services/calendar";
 import { useClient } from "../../../contexts/ClientContext";
+import { useUser } from "../../../contexts/UserContext";
 
 const defaultSchedules: Schedules = {
   monday: { start: "08:00", end: "16:00" },
@@ -32,7 +31,6 @@ const defaultWorkDaySettings: WorkDaySettings = {
 const CreateWorkYear: React.FC = () => {
   const { client } = useClient();
   const clientId = client?._id;
-  const { calendars, fetchCalendar } = useCalendar();
 
   const { user } = useUser();
   const today = new Date();
@@ -172,7 +170,7 @@ console.log(typeof(year));
         </div>
         <button type="submit">Create Work Days</button>
       </form>
-      <Calendar calendars={calendars} />
+      {/* <Calendar calendars={calendars} /> */}
     </>
   );
 };

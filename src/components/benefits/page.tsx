@@ -24,12 +24,14 @@ const Benefits: React.FC = () => {
       <header className={styles.header}>
         <h2>{benefits.title}</h2>
       </header>
-      <main>
-        <ul>
+      <main className={styles.main}>
+        <ul className={styles.ul}>
           {benefits.items.map(
             (item: { title: string; description: string }, idx: number) => {
               return (
-                <li key={idx}>
+                <li 
+                 className={styles.li}
+                key={idx}>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
                 </li>
@@ -42,9 +44,10 @@ const Benefits: React.FC = () => {
           src={benefits.image.src}
           priority
           alt={benefits.image.alt}
-          width={500}
-          height={504}
+          width={650}
+          height={450}
         />
+        <div className={styles.div}></div>
       </main>
     </section>
   );

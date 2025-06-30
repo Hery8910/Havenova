@@ -242,7 +242,7 @@ const FurnitureAssemblyHero = {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <Hero hero={FurnitureAssemblyHero} />
+        {/* <Hero hero={FurnitureAssemblyHero} /> */}
       </header>
       <section className={styles.section}>
         <FurnitureAssemblyForm />

@@ -38,7 +38,7 @@ export default function BlogPage() {
   return (
     <main>
       <h1>Latest Blog Posts</h1>
-      <BlogList blogs={blogs} />
+      {/* <BlogList blogs={blogs} /> */}
     </main>
   );
 }
