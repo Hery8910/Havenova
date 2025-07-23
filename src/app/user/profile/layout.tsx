@@ -1,7 +1,7 @@
 // app/profile/layout.tsx
 import React, { ReactNode } from "react";
 import Sidebar from "../../../components/sidebar/page";
-import styles from "./page.module.css";
+import styles from "./layout.module.css";
 import { Metadata } from "next";
 
 import { userProfileMetadata } from "../../pageMetadata";
@@ -12,7 +12,6 @@ import { IoNotifications } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaUserEdit } from "react-icons/fa";
 import { MdNotifications } from "react-icons/md";
-
 
 export const metadata: Metadata = userProfileMetadata;
 
@@ -30,13 +29,11 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
       href: "/user/profile/notification",
       icon: <MdNotifications />,
     },
-  ]
+  ];
   return (
-      <main className={styles.layout}>
-        <aside className={styles.sidebar}>
-          <Sidebar items={userProfileNavItems} context="user-profile" />
-        </aside>
-        <section className={styles.content}>{children}</section>
-      </main>
+    <main className={styles.layout}>
+      <Sidebar items={userProfileNavItems} context="user-profile" />
+      <section className={styles.content}>{children}</section>
+    </main>
   );
 }

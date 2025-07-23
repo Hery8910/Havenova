@@ -5,12 +5,15 @@ interface I18nContextType {
   language: string;
   setLanguage: (lang: string) => void;
   texts: Record<string, any>;
-  setTexts: (t: Record<string, any>) => void;
 }
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
-export function I18nProvider({ children, initialLanguage, initialTexts }: {
+export function I18nProvider({
+  children,
+  initialLanguage,
+  initialTexts,
+}: {
   children: React.ReactNode;
   initialLanguage: string;
   initialTexts: Record<string, any>;
@@ -18,17 +21,35 @@ export function I18nProvider({ children, initialLanguage, initialTexts }: {
   const [language, setLanguage] = useState(initialLanguage);
   const [texts, setTexts] = useState(initialTexts);
 
-  // Guarda idioma en cookie o localStorage al cambiarlo
+    useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLang = localStorage.getItem("havenova_lang");
+      if (storedLang && storedLang !== language) {
+        setLanguage(storedLang); // Dispara useEffect de abajo
+      }
+    }
+    // eslint-disable-next-line
+  }, []);
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("havenova_lang", language);
-      // Si quieres cookie para SSR
       document.cookie = `lang=${language}; path=/;`;
     }
-  }, [language]);
+
+    fetch(`/i18n/${language}.json`)
+      .then((res) => res.json())
+      .then((data) => setTexts(data))
+      .catch((err) => {
+        console.error("Error loading language file:", err);
+        // Opcional: Si falla, muestra los textos iniciales
+        setTexts(initialTexts);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]); 
 
   return (
-    <I18nContext.Provider value={{ language, setLanguage, texts, setTexts }}>
+    <I18nContext.Provider value={{ language, setLanguage, texts }}>
       {children}
     </I18nContext.Provider>
   );

@@ -18,7 +18,17 @@ export interface ServicesData {
 
 const Service = () => {
   const { texts } = useI18n();
-  const services: ServicesData = texts.home.services;
+  const services: ServicesData | undefined = texts?.pages?.home?.services;
+  
+      if (!services) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
+  
+  
   return (
     <section className={styles.section}>
       <h2 className={styles.h2}>{services.title}</h2>

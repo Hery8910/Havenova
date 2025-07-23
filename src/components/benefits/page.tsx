@@ -17,7 +17,15 @@ export interface BenefitsData {
 
 const Benefits: React.FC = () => {
   const { texts } = useI18n();
-  const benefits: BenefitsData = texts.home.benefits;
+  const benefits: BenefitsData | undefined = texts?.pages?.home?.benefits;
+
+     if (!benefits) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
 
   return (
     <section className={styles.section}>

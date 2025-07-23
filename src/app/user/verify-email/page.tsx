@@ -2,67 +2,187 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "../../../contexts/UserContext";
-import api from "../../../services/api";
+import { useClient } from "../../../contexts/ClientContext";
+import { useI18n } from "../../../contexts/I18nContext";
+import { AlertPopup } from "../../../components/alertPopup/page";
 
 import styles from "./page.module.css";
+import { resendVerificationEmail } from "../../../services/userService";
+import MessageBox from "../../../components/messageBox/page";
+import UserContactForm from "../../../components/Form/page";
+import { VerifyEmailPayload } from "../../../types/User";
+
+export interface VerifyEmailData {
+  title: string;
+  info: string;
+  input: { button: string; placeholder: string; info: string };
+}
 
 const VerifyEmail = () => {
-  const { user, setUser, refreshUser } = useUser();
+  const { user, setUser } = useUser();
+  const { client } = useClient();
   const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+
   const router = useRouter();
-  const [message, setMessage] = useState<string>(
-    "We send you an verification email, please check your Mail."
-  );
+  const { texts } = useI18n();
+  const popups = texts.popups;
+  const messages = texts.message.verifyEmail;
+  const verifyEmail: VerifyEmailData = texts?.pages?.user.verifyEmail;
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const [message, setMessage] = useState<{
+    message: string;
+    className: "error" | "info" | "success";
+  }>({ message: messages.alreadySend, className: "success" });
 
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        refreshUser();
         if (!user?.isVerified) return;
-        setMessage("Email successfully verified. Redirecting...");
+        const popupData = popups?.USER_ALREADY_VERIFIED || {};
+        setOpen(false);
+        setAlert({
+          type: "success",
+          title: popupData.title || "Benutzer bereits bestätigt",
+          description:
+            popupData.description ||
+            "Deine E-Mail war bereits bestätigt. Du bist jetzt eingeloggt und kannst Havenova uneingeschränkt verwenden.",
+        });
         setTimeout(() => router.push("/"), 3000);
       } catch (error: any) {
-        console.error("Unexpected error:", error);
+        const popupData = popups?.INTERNAL_ERROR || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || "Unerwarteter Fehler",
+          description:
+            popupData.description ||
+            "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.",
+        });
       }
     };
 
     verifyUser();
-  }, [router, setUser, refreshUser, user?.isVerified]);
+  }, [
+    router,
+    setUser,
+    user?.isVerified,
+    popups?.INTERNAL_ERROR,
+    popups?.USER_ALREADY_VERIFIED,
+  ]);
 
-  const handleResendEmail = async () => {
-    const userEmail = user?.email || email;
-    try {
-      const response = await api.post("/api/users/resend-verification", {
-        userEmail,
-      });
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage("Error resending verification email.");
-    }
-  };
+  const handleResendEmail = async (formData: VerifyEmailPayload) => {
+      try {
+        if (!client?._id) {
+          const popupData = popups?.INTERNAL_ERROR || {};
+          setAlert({
+            type: "error",
+            title: popupData.title || "Unerwarteter Fehler",
+            description:
+              popupData.description ||
+              "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.",
+          });
+          return;
+        }
+        if (
+          !formData.email ||
+          !formData.language ||
+          !formData.clientId
+        ) {
+          return;
+        }
+        const response = await resendVerificationEmail(formData);
+        if (response.success) {
+          const popupData = popups?.[response.code] || {};
+          setAlert({
+            type: "success",
+            title: popupData.title || "Bestätigungs-E-Mail neue gesendet",
+            description:
+              popupData.description ||
+              "Eine neue Bestätigungs-E-Mail wurde an deine Adresse gesendet. Bitte überprüfe dein Postfach.",
+          });
+        }
+        setTimeout(() => {
+          router.push("/user/verify-email");
+        }, 3000);
+      } catch (error: any) {
+        if (error.response && error.response.data) {
+          const errorKey =
+            error.response.data.errorCode || error.response.data.code;
+          const popupData = popups?.[errorKey] || {};
+          setAlert({
+            type: "error",
+            title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+            description:
+              popupData.description ||
+              error.response.data.message ||
+              popups.GLOBAL_INTERNAL_ERROR.description,
+          });
+        } else {
+          setAlert({
+            type: "error",
+            title: popups.GLOBAL_INTERNAL_ERROR.title,
+            description: popups.GLOBAL_INTERNAL_ERROR.description,
+          });
+        }
+      }
+    };
+
+  if (!verifyEmail) {
+    return (
+      <section className={styles.section}>
+        <div
+          className={styles.skeleton}
+          style={{ width: "100%", height: 504, background: "#eee" }}
+        />
+      </section>
+    );
+  }
 
   return (
     <main className={styles.main}>
       <section className={styles.section}>
-        <div className={styles.div}>
-        <h1 className={styles.h1}>Email Verification</h1>
-          <p className={styles.p}>{message}</p>
-        </div>
-
-        <form className={styles.form} onSubmit={handleResendEmail}>
-          <label>If you have not received any email, please try again.</label>
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+        <header className={styles.header}>
+          <h1 className={styles.h1}>{verifyEmail.title}</h1>
+        </header>
+        {!open ? (
+          <article className={styles.article}>
+            <MessageBox
+              message={message.message}
+              className={message.className}
+            />
+            <button
+              onClick={() => setOpen(true)}
+              className={styles.link}
+              type="button"
+            >
+              {verifyEmail.info}
+            </button>
+          </article>
+        ) : (
+         <UserContactForm
+            fields={[
+              "email",
+              "language",
+              "clientId",
+            ]}
+            onSubmit={handleResendEmail}
+            mode="register"
           />
-          <button className={styles.button} type="submit">
-            Resend verification email.
-          </button>
-        </form>
+        )}
       </section>
+      {alert && (
+        <AlertPopup
+          type={alert.type}
+          title={alert.title}
+          description={alert.description}
+          onClose={() => setAlert(null)}
+        />
+      )}
     </main>
   );
 };

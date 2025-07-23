@@ -1,62 +1,61 @@
 import api from "./api";
-import { RegisterResponse } from "../types/User";
+import { ApiResponse } from "../types/api";
+import { GetUserPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, UpdateUserPayload, User, VerifyEmailPayload } from "../types/User";
 import { ServiceRequestItem } from "../types/services";
 
-interface UpdateUserPayload {
-  email: string;
-  name: string;
-  address: string;
-  phone: string;
-  profileImage: string;
-  requests?: ServiceRequestItem[]; // 👈 ahora es opcional
-}
 
+// REGISTER
 export const registerUser = async (
-  name: string,
-  email: string,
-  password: string,
-  address: string,
-  profileImage: string,
-  phone: string
-): Promise<RegisterResponse> => {
-  try {
-    const response = await api.post<RegisterResponse>("/api/users/register", {
-      name,
-      email,
-      password,
-      address,
-      profileImage,
-      phone,
-    });
-
-    return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.message) {
-      throw new Error(error.response.data.message);
-    }
-    throw new Error("Something went wrong on the register, please try again.");
-  }
+  payload: RegisterPayload
+): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/register", payload);
+  return response.data;
 };
+
+// LOGIN
 export const loginUser = async (
-  email: string,
-  password: string
-): Promise<RegisterResponse> => {
-  const response = await api.post<RegisterResponse>("/api/users/login", {
-    email,
-    password,
+payload: LoginPayload
+): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/login", payload);
+  return response.data;
+};
+
+// UPDATE USER
+export const updateUser = async (
+  payload: UpdateUserPayload
+): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/update-user", payload);
+  return response.data;
+};
+
+// RESET PASSWORD
+export const resetPassword = async (payload: ResetPasswordPayload): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/reset-password", payload);
+  return response.data;
+};
+
+// LOGOUT
+export const logoutUser = async (): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>("/api/users/logout", {}, {
+    withCredentials: true,
   });
   return response.data;
 };
-export const updateUser = async (payload: UpdateUserPayload): Promise<RegisterResponse> => {
-  const response = await api.post<RegisterResponse>("/api/users/update-user", payload);
+
+// GET USER PROFILE
+export const getUser = async (clientId: string): Promise<ApiResponse<User>> => {
+  let url = `/api/users/profile?clientId=${clientId}`;
+  const response = await api.get<ApiResponse<User>>(url);
   return response.data;
 };
-export const logoutUser = async (): Promise<void> => {
-  await api.post("/api/users/logout");
+
+// RESEND VERIFICATION
+export const resendVerificationEmail = async (payload: VerifyEmailPayload): Promise<ApiResponse<null>> => {
+  const response = await api.post<ApiResponse<null>>(
+    "/api/users/resend-verification",
+    { payload }
+  );
+  return response.data;
 };
-export async function getUser({ clientId, guestId }: { clientId: string, guestId?: string }) {
-  let url = `/api/users/profile?clientId=${clientId}`;
-  if (guestId) url += `&guestId=${guestId}`;
-  const { data } = await api.get(url);
-  return data;
-}
+
+

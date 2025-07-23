@@ -167,24 +167,24 @@ export default function ImageUpload({
               src="/svg/image_icon.svg"
               priority={true}
               alt="Image Icon"
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
             <Image
               className={styles.image_top}
               src="/svg/image_icon.svg"
               priority={true}
               alt="Image Icon"
-              width={100}
-              height={100}
+              width={80}
+              height={80}
             />
             <Image
               className={`${styles.image_right} ${dragActive ? styles.image_right_active : ""}`}
               src="/svg/image_icon.svg"
               priority={true}
               alt="Image Icon"
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
           </div>
 
@@ -192,9 +192,8 @@ export default function ImageUpload({
             <Loading />
           ) : (
             <div className={styles.section_div}>
-              <h4>Upload Featured Image</h4>
-              <p>Drop an image here, or click to select</p>
-              <p className={styles.upload_button}>Upload</p>
+              <p className={styles.p}>Drop an image here, or click to select</p>
+              <p className="button_invert">Upload</p>
             </div>
           )}
         </section>

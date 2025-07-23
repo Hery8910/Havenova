@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "./page.module.css";
@@ -12,6 +12,7 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosLogIn } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
 import ThemeToggler from "../themeToggler/page";
+import AvatarSkeleton from "../user/avatarSkeleton/page";
 import LanguageSwitcher from "../languageSwitcher/page";
 
 export interface NavItem {
@@ -163,8 +164,10 @@ export default function Navbar({}) {
           </Link>
           <LanguageSwitcher />
           <div className={styles.header_div}>
-             <ThemeToggler />
-            <Avatar />
+            <ThemeToggler />
+            <Suspense fallback={<AvatarSkeleton />}>
+              <Avatar />
+            </Suspense>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={styles.icon}
@@ -196,7 +199,7 @@ export default function Navbar({}) {
                 className={styles.li}
                 key="title"
                 onClick={() => {
-                  router.push('/services');
+                  router.push("/services");
                   setMenuOpen(false);
                 }}
               >
@@ -211,7 +214,7 @@ export default function Navbar({}) {
                     setMenuOpen(false);
                   }}
                 >
-                 {link.image && (
+                  {link.image && (
                     <Image
                       className={styles.image}
                       src={link.image}
@@ -226,28 +229,26 @@ export default function Navbar({}) {
               ))}
             </ul>
             <ul className={styles.ul}>
-            <li
+              <li
                 className={styles.li}
                 key="title"
                 onClick={() => {
-                  router.push('/');
+                  router.push("/");
                   setMenuOpen(false);
                 }}
               >
                 <h3 className={styles.h3}>Havenova</h3>
               </li>
               {havenovaItems.map((link) => (
-                <li 
-                className={styles.li} 
-                key={link.label}
-                onClick={() => {
-                  router.push(`${link.href}`);
-                  setMenuOpen(false);
-                }}
+                <li
+                  className={styles.li}
+                  key={link.label}
+                  onClick={() => {
+                    router.push(`${link.href}`);
+                    setMenuOpen(false);
+                  }}
                 >
-                  <h4>
-                    {link.label}
-                  </h4>
+                  <h4>{link.label}</h4>
                 </li>
               ))}
             </ul>
@@ -255,7 +256,7 @@ export default function Navbar({}) {
               <h3 className={styles.h3}>Profile</h3>
               {profileItems.map((link) => (
                 <li className={styles.li} key={link.label}>
-                   {link.image && (
+                  {link.image && (
                     <Image
                       className={styles.image}
                       src={link.image}
@@ -265,9 +266,7 @@ export default function Navbar({}) {
                       height={25}
                     />
                   )}
-                  <h4>
-                    {link.label}
-                  </h4>
+                  <h4>{link.label}</h4>
                 </li>
               ))}
             </ul>

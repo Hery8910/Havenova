@@ -1,0 +1,553 @@
+{
+  "navigation": [
+    {
+      "label": "Services",
+      "href": "#services"
+    },
+    {
+      "label": "How it works",
+      "href": "#how-it-works"
+    },
+    {
+      "label": "Membership",
+      "href": "#membership"
+    },
+    { "label": "Blog", "href": "#blog" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "pages": {
+    "home": {
+      "hero": {
+        "headline1": "Professional Property Maintenance",
+        "headline2": "Cleaning Services in Berlin",
+        "subtitle": "Fast, reliable, and trustworthy services for your home or office.",
+        "cta": {
+          "label": "Request Service Now",
+          "href": "/services"
+        },
+        "image": {
+          "src": "/images/Havenova-Hero.png",
+          "alt": "Cozy living room with sideboard and dried flowers."
+        }
+      },
+      "benefits": {
+        "title": "Why Choose Havenova?",
+        "items": [
+          {
+            "title": "Qualified Staff",
+            "description": "Our team is experienced, trained, and vetted."
+          },
+          {
+            "title": "Quick Response",
+            "description": "Book today and get service within 24–48 hours."
+          },
+          {
+            "title": "Guaranteed Quality",
+            "description": "We ensure every job meets the highest standards."
+          }
+        ],
+        "image": {
+          "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/2150576450_w3ezpl.webp",
+          "alt": "Construction equipment and blueprints"
+        }
+      },
+      "howItWorks": {
+        "title": "How it works",
+        "subtitle": "Seamless, transparent, and reliable",
+        "description": "At Havenova, we make booking a handyman simple and stress-free...",
+        "steps": [
+          {
+            "title": "Request Service",
+            "description": "Submit your details online or by phone.",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/639_eq1uxp.webp",
+              "alt": "Fill out service request"
+            }
+          },
+          {
+            "title": "Receive Offer",
+            "description": "We review your needs and send you a personalized quote.",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/2373_w9dcc3.webp",
+              "alt": "Receive offer"
+            }
+          },
+          {
+            "title": "Get Service",
+            "description": "Our professionals complete the job at your preferred time.",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/3147_y3qeps.webp",
+              "alt": "Professional at work"
+            }
+          }
+        ],
+        "cta": {
+          "label": "Discover Our Services",
+          "href": "/user/register"
+        }
+      },
+      "services": {
+        "title": "Our Services",
+        "items": [
+          {
+            "title": "Kitchen Assembly",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/kitchen-furniture_8052817_c8q7bu.webp",
+              "alt": "Icon kitchen assembly"
+            }
+          },
+          {
+            "title": "Home Services",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/home-renovation_10726215_uingrs.webp",
+              "alt": "Icon home services"
+            }
+          },
+          {
+            "title": "Window Cleaning",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927434/window-cleaning_16872519_aghok7.webp",
+              "alt": "Icon window cleaning"
+            }
+          },
+          {
+            "title": "Apartment Cleaning",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/cleaning_3475522_hyzxc6.webp",
+              "alt": "Icon apartment cleaning"
+            }
+          },
+          {
+            "title": "Furniture Assembly",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/furniture-assembly_shu6wd.webp",
+              "alt": "Icon furniture assembly"
+            }
+          },
+          {
+            "title": "Kitchen Cleaning",
+            "image": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/washing-plates_16430273_slliqf.webp",
+              "alt": "Icon kitchen cleaning"
+            }
+          }
+        ],
+        "cta": {
+          "label": "View All Services",
+          "href": "/services"
+        }
+      },
+      "testimonials": {
+        "title": "Trusted by Berlin households.",
+        "subTitle": "See what our customers are saying.",
+        "description": "At Havenova, we continually strive to improve our services. Your feedback helps us develop better solutions and enhance our offerings.",
+        "items": [
+          {
+            "text": "Havenova made my move so easy and stress-free.",
+            "author": "Anna",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8_cudvoc.svg",
+              "alt": "Customer avatar Anna"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Star rating"
+            }
+          },
+          {
+            "text": "Professional, friendly, and reliable! Highly recommended cleaning service.",
+            "author": "Markus",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg",
+              "alt": "Customer avatar Markus"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Star rating"
+            }
+          },
+          {
+            "text": "Finally, a provider I can trust with my home.",
+            "author": "Sophie",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1_fdqyy8.svg",
+              "alt": "Customer avatar Sophie"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Star rating"
+            }
+          }
+        ],
+        "cta": {
+          "label": "Leave a review",
+          "href": "/review"
+        }
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": [
+          {
+            "question": "What services does Havenova offer?",
+            "answer": "Havenova provides cleaning, repairs, maintenance, and moving assistance in Berlin."
+          },
+          {
+            "question": "How quickly can I book a service?",
+            "answer": "We typically schedule appointments within 24–48 hours of your request."
+          },
+          {
+            "question": "Are your employees qualified and insured?",
+            "answer": "Yes, our entire team is trained and fully insured."
+          },
+          {
+            "question": "Are there discounts for members?",
+            "answer": "Yes, members receive exclusive discounts and benefits."
+          }
+        ],
+        "cta": {
+          "label": "Contact Support",
+          "href": "/contact",
+          "description": "Contact our team for tailored support.",
+          "title": "Need more help?"
+        }
+      },
+      "blog": {
+        "title": "Latest from our Blog",
+        "subTitle": "News & Insights for Your Home",
+        "cta": {
+          "title": "Stay Informed:",
+          "subtitle": "Tips, guides, and updates for your home. Subscribe to our newsletter and never miss an update!",
+          "label": "Subscribe"
+        }
+      }
+    },
+    "user": {
+      "register": {
+        "tilte": "Welcome",
+        "description": "Create an account to manage your requests and explore your benefits.",
+        "cta": {
+          "title": "Already have an account?",
+          "label": "Go to Login",
+          "url": "/user/login"
+        },
+        "image": {
+          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
+          "alt": "Berlin illustration"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
+        "button": "Register"
+      },
+      "login": {
+        "tilte": "Welcome Back",
+        "cta": {
+          "title": "Don't have an account yet?",
+          "label": "Go to Register",
+          "url": "/user/register"
+        },
+        "image": {
+          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
+          "alt": "Berlin illustration"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
+        "button": "Register"
+      },
+      "edit": {
+        "tilte": "Welcome Back",
+        "cta": {
+          "title": "Don't have an account yet?",
+          "label": "Go to Register",
+          "url": "/user/register"
+        },
+        "image": {
+          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
+          "alt": "Berlin illustration"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
+        "button": "Register"
+      },
+      "resetPassword": {
+        "tilte": "Welcome Back",
+        "cta": {
+          "title": "Don't have an account yet?",
+          "label": "Go to Register",
+          "url": "/user/register"
+        },
+        "image": {
+          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
+          "alt": "Berlin illustration"
+        },
+        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
+        "button": "Register"
+      },
+      "verifyEmail": {
+        "title": "Email Verification",
+        "info": "If you have not received any email, please try again.",
+        "input": {
+          "placeholder": "Email address",
+          "button": "Resend verification email.",
+          "info": "Please use the same email address you used to create your profile."
+        }
+      },
+      "profile": {
+        "greeting": "Hi,",
+        "manageAccount": "Manage your account settings, and view your profile information.",
+        "memberSince": "Member since:",
+        "verified": "Verified",
+        "name": "Name:",
+        "address": "Address:",
+        "phone": "Phone:",
+        "email": "Email:",
+        "theme": {
+          "title": "Theme:",
+          "light": "Light",
+          "dark": "Dark"
+        },
+        "language": {
+          "title": "Language:",
+          "lang": "English"
+        },
+        "notLoggedInTitle": "You are not logged in",
+        "notLoggedInText": "To access and manage your profile, please log in to your Havenova account. This way, you can view your personal information, track your service requests, and update your preferences.",
+        "loginButton": "Log in to your account"
+      }
+    }
+  },
+  "footer": {
+    "contact": [
+      {
+        "data": "contact@havenova.de",
+        "image": "/images/email.webp"
+      },
+      {
+        "data": "+49 176 7091 7803",
+        "image": "/images/phone.webp"
+      },
+      {
+        "data": "Stollberger Str.43, 12627 Berlin",
+        "image": "/images/navigation.webp"
+      },
+      {
+        "label": "Mon-Fri",
+        "data": "08:00-17:00"
+      },
+      {
+        "label": "Sat",
+        "data": "08:00-14:00"
+      }
+    ],
+    "havenova": [
+      {
+        "label": "About Us",
+        "href": "/about"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      },
+      { "label": "FAQ", "href": "/q&a" },
+      {
+        "label": "Reviews",
+        "href": "/reviews"
+      },
+      { "label": "Blog", "href": "/blog" },
+      {
+        "label": "Our Services",
+        "href": "/service"
+      }
+    ],
+    "services": [
+      {
+        "label": "Furniture Assembly",
+        "href": "/services/furniture-assembly"
+      },
+      {
+        "label": "Kitchen Assembly",
+        "href": "/services/kitchen-assembly"
+      },
+      {
+        "label": "Home Service",
+        "href": "/services/home-service"
+      },
+      {
+        "label": "House Cleaning",
+        "href": "/services/house-cleaning"
+      },
+      {
+        "label": "Kitchen Cleaning",
+        "href": "/services/kitchen-cleaning"
+      },
+      {
+        "label": "Window Cleaning",
+        "href": "/services/windows-cleaning"
+      }
+    ],
+    "legal": [
+      {
+        "label": "Privacy Policy",
+        "href": "/privacy-policy"
+      },
+      {
+        "label": "Cookie Policy",
+        "href": "/cookie-policy"
+      },
+      {
+        "label": "Terms of Service",
+        "href": "/terms-of-service"
+      }
+    ],
+    "social": [
+      {
+        "label": "Facebook",
+        "href": "https://facebook.com/havenova"
+      },
+      {
+        "label": "Instagram",
+        "href": "https://instagram.com/havenova"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/company/havenova"
+      }
+    ],
+    "cta": "This digital platform was designed and developed by Maped Solutions to provide modern, efficient, and tailored solutions for service companies."
+  },
+  "message": {
+    "verifyEmail": {
+      "alreadySend": "We sent you a verification email, please check your Mail.",
+      "verified": "Email successfully verified.",
+      "missingEmail": "Please enter your email.",
+      "missingClient": "Client information missing."
+    }
+  },
+  "error": {
+    "userForm": {
+      "name": {
+        "required": "Name is required.",
+        "invalid": "Name must start with a capital letter."
+      },
+      "email": {
+        "required": "Email is required.",
+        "invalid": "Invalid email format."
+      },
+      "phone": {
+        "required": "Phone number is required.",
+        "invalid": "Invalid phone number."
+      },
+      "password": {
+        "required": "Password is required.",
+        "tooShort": "Password must be at least 8 characters.",
+        "missingUppercase": "Password needs an uppercase letter.",
+        "missingNumber": "Password needs a number.",
+        "missingSymbol": "Password needs a special character."
+      },
+      "address": {
+        "required": "Address is required.",
+        "invalid": "Invalid address format."
+      },
+      "serviceAddress": {
+        "required": "Service address is required.",
+        "invalid": "Invalid service address format."
+      }
+    }
+  },
+  "popups": {
+    "CLIENT_MISSING_CLIENT_ID": {
+      "title": "Oops, something is missing!",
+      "description": "We couldn't process your registration because some information was missing. Please reload the page or contact support."
+    },
+    "CLIENT_CLIENT_NOT_FOUND": {
+      "title": "Account Setup Problem",
+      "description": "We couldn't find the client information. Please check the registration link or contact support if the problem persists."
+    },
+
+    "USER_REGISTER_USER_ALREADY_EXISTS": {
+      "title": "User Already Registered",
+      "description": "An account with this email already exists. Please log in, or use a different email address to register."
+    },
+    "USER_REGISTER_EMAIL_INVALID": {
+      "title": "Invalid Email",
+      "description": "Please enter a valid email address to continue with registration."
+    },
+    "USER_REGISTER_PASSWORD_INVALID": {
+      "title": "Weak Password",
+      "description": "Your password must be at least 8 characters long. Please try again with a stronger password."
+    },
+    "USER_REGISTER_NAME_INVALID": {
+      "title": "Name Required",
+      "description": "Please enter your name to complete your registration."
+    },
+    "USER_REGISTER_INVALID_DATA": {
+      "title": "Invalid Data",
+      "description": "Some registration details were incorrect. Please review your information and try again."
+    },
+    "USER_REGISTER_SUCCESS": {
+      "title": "Registration Successful!",
+      "description": "Please check your email to verify your address and activate your account."
+    },
+
+    "USER_LOGIN_USER_NOT_FOUND": {
+      "title": "User Not Found",
+      "description": "We could not find a user with this email and client. Please check your information or register first."
+    },
+    "USER_LOGIN_INVALID_PASSWORD": {
+      "title": "Invalid Password",
+      "description": "The password entered is incorrect. Please try again."
+    },
+    "USER_LOGIN_NOT_VERIFIED": {
+      "title": "Account Not Verified",
+      "description": "Please verify your email address before logging in. Check your inbox for the verification email."
+    },
+    "USER_LOGIN_NOT_AUTHENTICATED": {
+      "title": "Not authenticated",
+      "description": "You need to log in to access your account. Please sign in to continue."
+    },
+    "USER_LOGIN_SUCCESS": {
+      "title": "Registration successful!",
+      "description": "You have successfully logged in. Welcome to Havenova!"
+    },
+    "USER_LOGOUT_SUCCESS": {
+      "title": "Logged Out Successfully",
+      "description": "You have been logged out. See you next time!"
+    },
+
+    "USER_EDIT_EMPTY_NEW_PASSWORD": {
+      "title": "Missing new password",
+      "description": "Please provide a new password to update your account."
+    },
+    "USER_EDIT_USER_UPDATE_SUCCESS": {
+      "title": "Profile Updated",
+      "description": "Your changes have been saved successfully."
+    },
+
+    "USER_VERIFY_INVALID_OR_EXPIRED_TOKEN": {
+      "title": "Invalid or Expired Link",
+      "description": "Your verification link is invalid or has expired. Please request a new verification email."
+    },
+    "USER_VERIFY_TOKEN_MISSING_DATA": {
+      "title": "Invalid Verification Link",
+      "description": "This verification link is invalid. Please request a new verification email."
+    },
+    "USER_VERIFY_EMAIL_VERIFIED": {
+      "title": "Email Verified!",
+      "description": "Your email has been successfully verified. You are now logged in and can enjoy all features of Havenova."
+    },
+    "USER_VERIFY_ALREADY_VERIFIED": {
+      "title": "User Already Verified",
+      "description": "Your email was already verified. You are now logged in and can use Havenova without any restrictions."
+    },
+
+    "EMAIL_VERIFICATION_SENT": {
+      "title": "Verification Email Sent",
+      "description": "A verification email was sent to your address. Please check your inbox."
+    },
+    "EMAIL_VERIFICATION_RESENT": {
+      "title": "Verification Email Sent",
+      "description": "A new verification email was sent to your address. Please check your inbox."
+    },
+
+    "GLOBAL_INTERNAL_ERROR": {
+      "title": "Unexpected Error",
+      "description": "Something went wrong on our side. Please try again later or contact support."
+    }
+  }
+}

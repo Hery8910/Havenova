@@ -1,119 +1,170 @@
-'use client'
+"use client";
 import { useState, useEffect } from "react";
 import { getUserFromStorage } from "../../../utils/guestUserStorage"; // ajusta la ruta
 import { registerUser } from "../../../services/userService";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import Image from "next/image";
 import Link from "next/link";
 import UserContactForm from "../../../components/Form/page";
+import { useClient } from "../../../contexts/ClientContext";
+import { useI18n } from "../../../contexts/I18nContext";
+import { AlertPopup } from "../../../components/alertPopup/page";
 
-interface FormData {
-  user: {
-    name: string;
-    email: string;
-    password: string;
-    address: string;
-    profileImage: string;
-    phone: string;
-  };
+export interface RegisterData {
+  tilte: string;
+  description: string;
+  cta: { title: string; label: string; url: string };
+  image: { src: string; alt: string };
+  backgroundImage: string;
+  button: string;
+}
+interface RegisterFormData {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  profileImage: string;
+  language: string;
+  theme: string;
+  phone: string;
+  clientId: string;
 }
 
 const Register = () => {
+  const { client } = useClient();
   const router = useRouter();
-  const [formData, setFormData] = useState<FormData>({
-    user: {
-      name: "",
-      email: "",
-      password: "",
-      address: "",
-      profileImage: "",
-      phone: "",
-    },
-  });
-  const [message, setMessage] = useState("");
+  const { texts } = useI18n();
+  const popups = texts.popups;
+  const register: RegisterData = texts?.pages?.user.register;
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    title: string;
+    description: string;
+  } | null>(null);
 
-  // --- Recuperar usuario del storage al montar ---
   useEffect(() => {
-    const guestUser = getUserFromStorage();
-    if (guestUser) {
-      setFormData({
-        user: {
-          name: guestUser.name || "",
-          email: guestUser.email || "",
-          password: "",
-          address: guestUser.address || "",
-          profileImage: guestUser.profileImage || "",
-          phone: guestUser.phone || "",
-        },
-      });
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 4000);
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [alert]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleRegister = async (formData: RegisterFormData) => {
     try {
-      const response = await registerUser(
-        formData.user.name,
-        formData.user.email,
-        formData.user.password,
-        formData.user.address,
-        formData.user.profileImage,
-        formData.user.phone
-      );
-
-      setMessage(response.message);
+      if (!client?._id) {
+        const popupData = popups?.INTERNAL_ERROR || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || "Unerwarteter Fehler",
+          description:
+            popupData.description ||
+            "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.",
+        });
+        return;
+      }
+      if (
+        !formData.name ||
+        !formData.email ||
+        !formData.password ||
+        !formData.address ||
+        !formData.phone ||
+        !formData.profileImage ||
+        !formData.language ||
+        !formData.theme ||
+        !formData.clientId
+      ) {
+        return;
+      }
+      const response = await registerUser(formData);
+      if (response.success) {
+        const popupData = popups?.[response.code] || {};
+        setAlert({
+          type: "success",
+          title: popupData.title || "Registrierung erfolgreich!",
+          description:
+            popupData.description ||
+            "Bitte überprüfen Sie Ihre E-Mails, um Ihre Adresse zu bestätigen und Ihr Konto zu aktivieren.",
+        });
+      }
       setTimeout(() => {
-        router.push("/user/email/verify-email");
+        router.push("/user/verify-email");
       }, 3000);
     } catch (error: any) {
-      setMessage(error.message);
+      if (error.response && error.response.data) {
+        const errorKey =
+          error.response.data.errorCode || error.response.data.code;
+        const popupData = popups?.[errorKey] || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description:
+            popupData.description ||
+            error.response.data.message ||
+            popups.GLOBAL_INTERNAL_ERROR.description,
+        });
+      } else {
+        setAlert({
+          type: "error",
+          title: popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popups.GLOBAL_INTERNAL_ERROR.description,
+        });
+      }
     }
   };
 
-  return (
-    <main className={styles.main}>
+  if (!register) {
+    return (
       <section className={styles.section}>
-        <aside className={styles.aside}>
-          <div className={styles.aside_div}>
-            <h1 className={styles.h1}>Welcome</h1>
-            <p className={styles.header_p}>
-              Create an account to manage your requests and explore your
-              benefits.
-            </p>
-          </div>
-          <article className={styles.article}>
-            <p className={styles.header_p}>
-              You have an account already?
-              <br />
-              <Link className={styles.link} href="/user/login">
-                Go to Login
-              </Link>
-            </p>
-          </article>
-        </aside>
-
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <button className={styles.button} style={{ padding: "0 .5rem" }}>
-            Continue with Google{" "}
-            <Image
-              src="/svg/google.svg"
-              alt="Google logo"
-              width={35}
-              height={35}
-            />
-          </button>
-          <UserContactForm
-            value={formData.user} // <-- asegúrate de pasar los valores actuales
-             onChange={(updatedUser) => setFormData({ user: updatedUser })}
-          />
-          <button type="submit" className={styles.button}>
-            Register
-          </button>
-          {message && <p className={styles.error}>{message}</p>}
-        </form>
+        <div
+          className={styles.skeleton}
+          style={{ width: "100%", height: 504, background: "#eee" }}
+        />
       </section>
-    </main>
+    );
+  }
+
+  return (
+    <section className={styles.section}>
+      <main className={styles.main}>
+        <header className={`${styles.header} card`}>
+          <article className={styles.article}>
+            <h1 className={styles.h1}>{register?.tilte}</h1>
+            <p className={styles.header_p}>{register?.description}</p>
+          </article>
+          <aside className={styles.aside}>
+            <p className={styles.header_p}>{register?.cta.title}</p>
+            <Link className={styles.link} href={register?.cta.url}>
+              {register?.cta.label}
+            </Link>
+          </aside>
+        </header>
+        <aside className={styles.aside}>
+          <UserContactForm
+            fields={[
+              "name",
+              "email",
+              "password",
+              "address",
+              "phone",
+              "profileImage",
+              "language",
+              "theme",
+              "clientId",
+            ]}
+            onSubmit={handleRegister}
+            mode="register"
+          />
+        </aside>
+      </main>
+      {alert && (
+        <AlertPopup
+          type={alert.type}
+          title={alert.title}
+          description={alert.description}
+          onClose={() => setAlert(null)}
+        />
+      )}
+    </section>
   );
 };
 

@@ -12,7 +12,16 @@ export interface HeroData {
 }
 const Hero: React.FC = () => {
   const { texts } = useI18n();
-  const hero: HeroData = texts.home.hero;
+  const hero: HeroData | undefined = texts?.pages?.home?.hero;
+
+    if (!hero) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
+
   return (
     <section className={styles.section}>
       <Image
@@ -21,7 +30,7 @@ const Hero: React.FC = () => {
         priority
         alt={hero.image.alt}
         width={1500}
-        height={504}
+        height={800}
       />
       <header className={styles.header}>
         <h1 className={styles.h1}>{hero.headline1}</h1>

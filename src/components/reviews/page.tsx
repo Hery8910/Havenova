@@ -25,7 +25,17 @@ export interface ReviewsData {
 
 const Reviews = () => {
   const { texts } = useI18n();
-  const testimonials: ReviewsData = texts.home.testimonials;
+  const testimonials: ReviewsData | undefined  = texts?.pages?.home?.testimonials;
+  
+       if (!testimonials) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
+  
+
   return (
     <section className={styles.section}>
       <header className={styles.header}>

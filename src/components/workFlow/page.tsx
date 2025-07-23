@@ -26,7 +26,15 @@ export interface HowItWorksData {
 
 const WorkFlow: React.FC = () => {
   const { texts } = useI18n();
-  const howItWorks: HowItWorksData = texts.home.howItWorks;
+  const howItWorks: HowItWorksData | undefined = texts?.pages?.home?.howItWorks;
+
+      if (!howItWorks) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
 
   return (
     <section className={styles.section}>

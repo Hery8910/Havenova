@@ -3,14 +3,14 @@
 ============================ */
 :root {
   /* Brand Colors */
-  --brand-primary: hsl(210, 100%, 52%);
-  --brand-secondary: hsl(0, 0%, 95%);
-  --brand-accent: #ff9500;
+  --brand-primary: #0a85ff;
+  --brand-secondary: #daffed;
+  --brand-accent: #0d5c63;
 
   /* Backgrounds & Text */
-  --bg-main: #afafaf;
-  --bg-gradient: #0e2439;
-  --bg-card: #f8f8f8;
+  --bg-main: #0e2439b3;
+  --bg-gradient: #0e2439b3;
+  --bg-card: #d1edffcc;
   --text-primary: #1f1f1f;
   --text-secondary: #6b6b6b;
   --text-inverted: #f0f0f0;
@@ -25,9 +25,8 @@
   --color-error: #dc3545;
   --color-warning: #ffc107;
   --color-info: #4c929c;
-
-  --bg-success: #e6f4ea;
-  --bg-error: #f8d7da;
+  --bg-success: #28a745b3;
+  --bg-error: #dc3546b3;
   --bg-warning: #fff3cd;
   --bg-info: #d1ecf1;
 }
@@ -37,7 +36,7 @@
 ============================ */
 [data-theme="dark"] {
   --bg-main: #2c2c2cb4;
-  --bg-card: #1e1e1e;
+  --bg-card: #d1edff87;
 
   --text-primary: #f2f2f2;
   --text-secondary: #aaaaaa;
@@ -47,15 +46,17 @@
   --brand-secondary: #2e2e2e;
   --brand-accent: #ffb347;
 
+  /* Success */
   --color-success: #28d07a;
-  --color-error: #ff6b6b;
-  --color-warning: #ffd966;
-  --color-info: #66d9ef;
+  --bg-success: #163b2ab3;
 
-  --bg-success: #173c2b;
-  --bg-error: #3c1a1a;
-  --bg-warning: #3c361a;
-  --bg-info: #1a2e3c;
+  /* Error */
+  --color-error: #ff6b6b;
+  --bg-error: #3d1a1ab3;
+
+  /* Info */
+  --color-info: #66d9ef;
+  --bg-info: #1a2e3db3;
 }
 
 /* ============================
@@ -71,16 +72,12 @@ html {
 }
 body {
   font-family: var(--font-family-main);
-  background-color: var(--bg-main);
-  background: linear-gradient(
-    25deg,
-    var(--bg-gradient) 0%,
-    var(--bg-main) 30%,
-    var(--bg-main) 70%,
+  background: var(--bg-main);
+  background: radial-gradient(
+    circle,
+    var(--bg-main) 0%,
     var(--bg-gradient) 100%
   );
-  background-size: contain;
-  background-attachment: fixed;
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -118,7 +115,8 @@ a {
    COMPONENTES REUTILIZABLES
 ============================ */
 .button,
-.button_invert {
+.button_invert,
+.button_close {
   width: fit-content;
   display: flex;
   justify-content: center;
@@ -134,11 +132,16 @@ a {
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   border: none;
-  outline: 2px solid var(--brand-primary);
 }
 .button_invert {
+  border: 2px solid var(--brand-primary);
   background-color: transparent;
   color: var(--brand-primary);
+}
+.button_close {
+  border: 2px solid var(--color-error);
+  background-color: transparent;
+  color: var(--color-error);
 }
 .button:active {
   transform: scale(0.9);
@@ -146,12 +149,14 @@ a {
 
 .card {
   padding: 16px;
+  background: var(--bg-card);
+  background: radial-gradient(
+    circle,
+    var(--bg-card) 0%,
+    var(--bg-gradient) 100%
+  );
   border-radius: 8px;
-  background: var(--bg-gradient) ;
-  border-radius: 8px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(7.1px);
-  border: 1px solid var(--bg-gradient);
+  box-shadow: var(--shadow-dark);
 }
 
 .quote {

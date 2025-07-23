@@ -27,7 +27,16 @@ const QuestionAnswer: React.FC = () => {
     setOpen((prev) => (prev === index ? null : index));
   };
   const { texts } = useI18n();
-  const faq: QuestionAnswerProps = texts.home.faq;
+  const faq: QuestionAnswerProps | undefined = texts?.pages?.home?.faq;
+
+  
+       if (!faq) {
+    return (
+      <section className={styles.section}>
+        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+      </section>
+    );
+  }
 
   return (
     <section className={styles.section}>

@@ -1,9 +1,11 @@
+
 {
+  "_id": { "$oid": "68665c03c231befb4c6f6bd0" },
   "companyName": "Havenova",
   "domain": "havenova.de",
   "email": "info@havenova.de",
-  "phone": "+49 30 12345678",
-  "address": "Prenzlauer Allee 123, 10409 Berlin",
+  "phone": "+49 17670917803",
+  "address": "Stollberger Strasse 43, 12627 Berlin",
   "branding": {
     "light": {
       "primaryColor": "#4D9DE0",
@@ -21,8 +23,7 @@
       "bgError": "#fef2f2",
       "bgWarning": "#fefce8",
       "bgInfo": "#eff6ff",
-      "backgroundGradient": "#4d9de038",
-      "cardBackground": "#92b7bd96"
+      "backgroundGradient": "#4d9de038"
     },
     "dark": {
       "primaryColor": "#4D9DE0",
@@ -40,16 +41,15 @@
       "bgError": "#7f1d1d",
       "bgWarning": "#78350f",
       "bgInfo": "#1e40af",
-      "backgroundGradient": "#4d9de038",
-      "cardBackground": "#181b208f"
+      "backgroundGradient": "#4d9de038"
     }
   },
   "images": {
     "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751007003/bbblurry_4_l9igjt.svg"
   },
   "logos": {
-    "main": "/assets/havenova-logo-light.svg",
-    "mainDark": "/assets/havenova-logo-dark.svg",
+    "main": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/2_d7eysv.webp",
+    "mainDark": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/1_siqxxe.webp",
     "alt": "/assets/havenova-logo-alt.svg",
     "favicon": "/assets/favicon.ico"
   },
@@ -70,20 +70,47 @@
     "coordinates": []
   },
   "schedule": {
-    "monday": { "start": "09:00", "end": "18:00" },
-    "tuesday": { "start": "09:00", "end": "18:00" },
-    "wednesday": { "start": "09:00", "end": "18:00" },
-    "thursday": { "start": "09:00", "end": "18:00" },
-    "friday": { "start": "09:00", "end": "18:00" },
-    "saturday": { "start": "10:00", "end": "16:00" },
+    "monday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "tuesday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "wednesday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "thursday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "friday": {
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "saturday": {
+      "start": "10:00",
+      "end": "16:00"
+    },
     "sunday": { "start": "", "end": "" }
   },
   "texts": {
     "de": {
       "navigation": [
-        { "label": "Leistungen", "href": "#services" },
-        { "label": "So funktioniert’s", "href": "#how-it-works" },
-        { "label": "Mitgliedschaft", "href": "#membership" },
+        {
+          "label": "Leistungen",
+          "href": "#services"
+        },
+        {
+          "label": "So funktioniert’s",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Mitgliedschaft",
+          "href": "#membership"
+        },
         { "label": "Blog", "href": "#blog" },
         { "label": "Kontakt", "href": "#contact" }
       ],
@@ -92,7 +119,10 @@
           "headline1": "Professionelle Hauswartung",
           "headline2": "Reinigungsservice in Berlin",
           "subtitle": "Schnelle, zuverlässige und vertrauenswürdige Dienstleistungen für Ihr Zuhause oder Büro.",
-          "cta": { "label": "Jetzt Service anfragen", "href": "/services" },
+          "cta": {
+            "label": "Jetzt Service anfragen",
+            "href": "/services"
+          },
           "image": {
             "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750932957/warm-cozy-interior-living-room-space-with-copy-space-black-commode-vase-with-dried-flowers_s1gbix.webp",
             "alt": "Gemütliches Wohnzimmer mit Kommode und Trockenblumen."
@@ -200,7 +230,10 @@
               }
             }
           ],
-          "cta": { "label": "Alle Leistungen ansehen", "href": "/services" }
+          "cta": {
+            "label": "Alle Leistungen ansehen",
+            "href": "/services"
+          }
         },
         "testimonials": {
           "title": "Vertrauenswürdig von Berliner Haushalten.",
@@ -244,7 +277,10 @@
               }
             }
           ],
-          "cta": { "label": "Bewertung abgeben", "href": "/review" }
+          "cta": {
+            "label": "Bewertung abgeben",
+            "href": "/review"
+          }
         },
         "faq": {
           "title": "Häufig gestellte Fragen",
@@ -284,18 +320,18 @@
         }
       },
       "footer": {
-          "contact": [
+        "contact": [
           {
-            "image": "/images/email.webp",
-            "data": "contact@havenova.de"
+            "data": "contact@havenova.de",
+            "image": "/images/email.webp"
           },
           {
-            "image": "/images/phone.webp",
-            "data": "+49 176 7091 7803"
+            "data": "+49 176 7091 7803",
+            "image": "/images/phone.webp"
           },
           {
-            "image": "/images/navigation.webp",
-            "data": "Stollberger Str.43, 12627 Berlin"
+            "data": "Stollberger Str.43, 12627 Berlin",
+            "image": "/images/navigation.webp"
           },
           {
             "label": "Mo-Fr",
@@ -307,12 +343,24 @@
           }
         ],
         "havenova": [
-          { "label": "Uber Uns", "href": "/about" },
-          { "label": "Kontakt", "href": "/contact" },
+          {
+            "label": "Uber Uns",
+            "href": "/about"
+          },
+          {
+            "label": "Kontakt",
+            "href": "/contact"
+          },
           { "label": "F&A", "href": "/q&a" },
-          { "label": "Rezensionen", "href": "/reviews" },
+          {
+            "label": "Rezensionen",
+            "href": "/reviews"
+          },
           { "label": "Blog", "href": "/blog" },
-          { "label": "Unsere Leistungen", "href": "/service" }
+          {
+            "label": "Unsere Leistungen",
+            "href": "/service"
+          }
         ],
         "services": [
           {
@@ -341,25 +389,50 @@
           }
         ],
         "legal": [
-          { "label": "Datenschutzrichtlinie", "href": "/privacy-policy" },
-          { "label": "Cookie-Richtlinie", "href": "/cookie-policy" },
-          { "label": "Nutzungsbedingungen", "href": "/terms-of-service" }
+          {
+            "label": "Datenschutzrichtlinie",
+            "href": "/privacy-policy"
+          },
+          {
+            "label": "Cookie-Richtlinie",
+            "href": "/cookie-policy"
+          },
+          {
+            "label": "Nutzungsbedingungen",
+            "href": "/terms-of-service"
+          }
         ],
         "social": [
-          { "label": "Facebook", "href": "https://facebook.com/havenova" },
-          { "label": "Instagram", "href": "https://instagram.com/havenova" },
+          {
+            "label": "Facebook",
+            "href": "https://facebook.com/havenova"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://instagram.com/havenova"
+          },
           {
             "label": "LinkedIn",
             "href": "https://linkedin.com/company/havenova"
           }
-        ]
+        ],
+        "cta": "Diese digitale Plattform wurde von Maped Solutions entworfen und entwickelt, um moderne, effiziente und maßgeschneiderte Lösungen für Dienstleistungsunternehmen bereitzustellen."
       }
     },
     "en": {
       "navigation": [
-        { "label": "Services", "href": "#services" },
-        { "label": "How it Works", "href": "#how-it-works" },
-        { "label": "Membership", "href": "#membership" },
+        {
+          "label": "Services",
+          "href": "#services"
+        },
+        {
+          "label": "How it Works",
+          "href": "#how-it-works"
+        },
+        {
+          "label": "Membership",
+          "href": "#membership"
+        },
         { "label": "Blog", "href": "#blog" },
         { "label": "Contact", "href": "#contact" }
       ],
@@ -368,7 +441,10 @@
           "headline1": "Professional Home Maintenance",
           "headline2": "Cleaning Service in Berlin",
           "subtitle": "Fast, reliable, and trusted services for your home or office.",
-          "cta": { "label": "Request Your Service Now", "href": "/services" },
+          "cta": {
+            "label": "Request Your Service Now",
+            "href": "/services"
+          },
           "image": {
             "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750932957/warm-cozy-interior-living-room-space-with-copy-space-black-commode-vase-with-dried-flowers_s1gbix.webp",
             "alt": "Warm cozy interior living room space with copy space black commode vase with dried flowers."
@@ -425,7 +501,10 @@
               }
             }
           ],
-          "cta": { "label": "Explore Our Services", "href": "/user/register" }
+          "cta": {
+            "label": "Explore Our Services",
+            "href": "/user/register"
+          }
         },
         "services": {
           "title": "Our Services",
@@ -473,7 +552,10 @@
               }
             }
           ],
-          "cta": { "label": "See All Services", "href": "/services" }
+          "cta": {
+            "label": "See All Services",
+            "href": "/services"
+          }
         },
         "testimonials": {
           "title": "Trusted by Berlin homeowners.",
@@ -529,7 +611,10 @@
               }
             }
           ],
-          "cta": { "label": "Leave a review", "href": "/review" }
+          "cta": {
+            "label": "Leave a review",
+            "href": "/review"
+          }
         },
         "faq": {
           "title": "Frequently Asked Questions",
@@ -569,18 +654,18 @@
         }
       },
       "footer": {
-       "contact": [
+        "contact": [
           {
-            "image": "/images/email.webp",
-            "data": "contact@havenova.de"
+            "data": "contact@havenova.de",
+            "image": "/images/email.webp"
           },
           {
-            "image": "/images/phone.webp",
-            "data": "+49 176 7091 7803"
+            "data": "+49 176 7091 7803",
+            "image": "/images/phone.webp"
           },
           {
-            "image": "/images/navigation.webp",
-            "data": "Stollberger Str.43, 12627 Berlin"
+            "data": "Stollberger Str.43, 12627 Berlin",
+            "image": "/images/navigation.webp"
           },
           {
             "label": "Mo-Fr",
@@ -593,11 +678,20 @@
         ],
         "havenova": [
           { "label": "About", "href": "/about" },
-          { "label": "Contact", "href": "/contact" },
+          {
+            "label": "Contact",
+            "href": "/contact"
+          },
           { "label": "Q&A", "href": "/q&a" },
-          { "label": "Reviews", "href": "/reviews" },
+          {
+            "label": "Reviews",
+            "href": "/reviews"
+          },
           { "label": "Blog", "href": "/blog" },
-          { "label": "Our Services", "href": "/service" }
+          {
+            "label": "Our Services",
+            "href": "/service"
+          }
         ],
         "services": [
           {
@@ -626,19 +720,42 @@
           }
         ],
         "legal": [
-          { "label": "Privacy Policy", "href": "/privacy-policy" },
-          { "label": "Cookies Policy", "href": "/cookie-policy" },
-          { "label": "Terms of Service", "href": "/terms-of-service" }
+          {
+            "label": "Privacy Policy",
+            "href": "/privacy-policy"
+          },
+          {
+            "label": "Cookies Policy",
+            "href": "/cookie-policy"
+          },
+          {
+            "label": "Terms of Service",
+            "href": "/terms-of-service"
+          }
         ],
         "social": [
-          { "label": "Facebook", "href": "https://facebook.com/havenova" },
-          { "label": "Instagram", "href": "https://instagram.com/havenova" },
+          {
+            "label": "Facebook",
+            "href": "https://facebook.com/havenova"
+          },
+          {
+            "label": "Instagram",
+            "href": "https://instagram.com/havenova"
+          },
           {
             "label": "LinkedIn",
             "href": "https://linkedin.com/company/havenova"
           }
-        ]
+        ],
+        "cta": "This digital platform was designed and developed by Maped Solutions, with the goal of delivering modern, efficient, and tailored solutions for service-based businesses."
       }
     }
-  }
+  },
+  "createdAt": {
+    "$date": { "$numberLong": "1751286841956" }
+  },
+  "updatedAt": {
+    "$date": { "$numberLong": "1751286841956" }
+  },
+  "__v": { "$numberInt": "0" }
 }

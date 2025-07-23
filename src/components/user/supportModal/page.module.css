@@ -1,20 +1,17 @@
 .button {
-  border: none;
-  background-color: transparent;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  padding: 8px;
   transition: all 0.3s ease-in-out;
   font-size: clamp(16px, 3vw, 20px);
   width: 100%;
-  color: var(--text-primary);
   cursor: pointer;
+  color: var(--text-secundary);
+  background-color: transparent;
+  border: none;
 }
-.button:hover {
-  color: #2c6aefe5;
-}
+
 
 .overlay {
   position: fixed;

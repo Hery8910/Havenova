@@ -1,18 +1,26 @@
+
 .article {
-  top: 0;
-  left: 0;
   position: absolute;
-  background: rgba(48, 48, 48, 0.59);
+  top: -16px;
+  left: 0;
+  right: 0;
+  inset: 0;
+  background: var(--bg-card);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(17, 17, 17, 0.623);
+  box-shadow: var(--shadow-dark);
   backdrop-filter: blur(8.1px);
-  border: 1px solid rgba(68, 68, 68, 0.671);
+  border: 1px solid var(--bg-gradient);
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-end;
-  gap: 16px;
+}
+.aside {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .ul {
   display: flex;
@@ -22,6 +30,7 @@
   flex-wrap: wrap;
   margin-bottom: 16px;
   list-style: none;
+  max-width: 300px;
 }
 .li {
   cursor: pointer;
@@ -32,9 +41,9 @@
   border: 2px solid rgba(184, 184, 184, 0.671);
   transition: all .2s ease-in-out;
 }
-.selected {
-  border: 2px solid rgba(0, 110, 253, 0.623);
-  outline: 2px solid rgba(0, 110, 253, 0.623);
+.image.selected {
+  border: 2px solid var(--brand-accent);
+  outline: 2px solid var(--brand-accent);
 }
 .button {
   display: flex;

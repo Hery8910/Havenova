@@ -9,151 +9,119 @@ import Link from "next/link";
 import { useUser } from "../../../contexts/UserContext";
 import { ServiceRequestItem } from "../../../types/services";
 import { saveUserToStorage } from "../../../utils/guestUserStorage";
-interface User {
-  _id: string;
-  name: string;
+import { useClient } from "../../../contexts/ClientContext";
+import { useI18n } from "../../../contexts/I18nContext";
+import UserContactForm from "../../../components/Form/page";
+import { AlertPopup } from "../../../components/alertPopup/page";
+
+export interface LoginData {
+  tilte: string;
+  cta: { title: string; label: string; url: string };
+  image: { src: string; alt: string };
+  backgroundImage: string;
+  button: string;
+}
+interface LoginFormData {
   email: string;
-  role: string;
-  address: string;
-  phone: string;
-  requests: ServiceRequestItem[];
+  password: string;
+  clientId: string;
 }
 const Login = () => {
+  const { refreshUser } = useUser();
+  const { client } = useClient();
   const router = useRouter();
-  const { user, setUser } = useUser();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const { texts } = useI18n();
+  const popups = texts.popups;
+  const login: LoginData = texts?.pages?.user.login;
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    title: string;
+    description: string;
+  } | null>(null);
 
-  const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLogin = async (formData: LoginFormData) => {
     try {
-      const response = await loginUser(email, password);
-      const loggedInUser = {
-        _id: response.user._id,
-        name: response.user.name,
-        email: response.user.email,
-        isVerified: response.user.isVerified,
-        role: response.user.role,
-        profileImage: response.user.profileImage,
-        address: response.user.address,
-        phone: response.user.phone,
-        createdAt: response.user.createdAt,
-        isFromBackend: true,
-        requests: [],
-      };
-
-      setUser(loggedInUser);
-      saveUserToStorage(loggedInUser);
-      router.push("/");
+      if (!client?._id) {
+        const popupData = popups?.INTERNAL_ERROR || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description:
+            popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
+        });
+        return;
+      }
+      if (!formData.email || !formData.password) {
+        return;
+      }
+      const response = await loginUser(formData);
+      if (response.success) {
+        const popupData = popups?.[response.code] || {};
+        await refreshUser();
+        setAlert({
+          type: "success",
+          title: popupData.title || popups.USER_LOGIN_SUCCESS.title,
+          description:
+            popupData.description || popups.USER_LOGIN_SUCCESS.description,
+        });
+      }
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
     } catch (error: any) {
-      if (error.response && error.response.status === 401) {
-        const { message, field } = error.response.data;
-        console.error(`Login failed: ${message}`);
-        console.log(error.response.data);
-
-        if (field === "email") {
-          setError("Invalid email provided");
-        } else if (field === "password") {
-          setError("Incorrect password");
-        } else if (
-          message === "Please verify your account before logging in."
-        ) {
-          setError("Please verify your account before logging in.");
-        }
+      if (error.response && error.response.data) {
+        const errorKey =
+          error.response.data.errorCode;
+        const popupData = popups?.[errorKey] || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description:
+            popupData.description ||
+            error.response.data.message ||
+            popups.GLOBAL_INTERNAL_ERROR.description,
+        });
       } else {
-        console.error("Unexpected error:", error);
+        setAlert({
+          type: "error",
+          title: popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popups.GLOBAL_INTERNAL_ERROR.description,
+        });
       }
     }
   };
 
   return (
-    <main className={styles.main}>
-      <section className={styles.section}>
-        {error === "Please verify your account before logging in." && (
-          <article className={styles.error_article}>
-            <div className={styles.error_div}>
-              <Image
-                src="/svg/attention.svg"
-                priority={true}
-                alt="Havenova logo"
-                width={200}
-                height={200}
-                className={styles.article_image}
-              />
-              <p className={styles.article_p}>{error}</p>
-              <p className={styles.article_p}>
-                We send you a verification email, please check your email.
-              </p>
-              <Link className={styles.link} href="/user/email/verify-email">
-                Resend verification email
-              </Link>
-            </div>
-          </article>
-        )}
-        <aside className={styles.aside}>
-          <div className={styles.div}>
-            <h1 className={styles.h1}>Welcome Back</h1>
-          </div>
+    <section className={styles.section}>
+      <main className={styles.main}>
+        <header className={`${styles.header} card`}>
           <article className={styles.article}>
-            <p className={styles.header_p}>
-              <Link
-                className={styles.article_link}
-                href="/user/forgot-password"
-              >
-                Forgot your password?
-              </Link>
-            </p>
-            <p className={styles.header_p}>
-              Don&apos;t have an account?
-              <br />
-              <Link className={styles.article_link} href="/user/register">
-                Sign up here.
-              </Link>
-            </p>
+            <h1 className={styles.h1}>{login?.tilte}</h1>
           </article>
+          <aside className={styles.aside}>
+            <p className={styles.header_p}>{login?.cta.title}</p>
+            <Link className={styles.link} href={login?.cta.url}>
+              {login?.cta.label}
+            </Link>
+          </aside>
+        </header>
+        <aside className={styles.aside}>
+          <UserContactForm
+            fields={["email", "password", "clientId"]}
+            onSubmit={handleLogin}
+            mode="login"
+          />
         </aside>
-
-        <form className={styles.form} onSubmit={handleLogin}>
-          <button className={styles.button} style={{ padding: ".2rem .5rem" }}>
-            Continue with Google{" "}
-            <Image
-              src="/svg/google.svg"
-              alt="Google logo"
-              width={30}
-              height={30}
-            />
-          </button>
-          <input
-            className={styles.input}
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-          />
-          {error === "Invalid email provided" && (
-            <p className={styles.error_p}>{error}</p>
-          )}
-
-          <input
-            className={styles.input}
-            name="email"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {error === "Incorrect password" && (
-            <p className={styles.error_p}>{error}</p>
-          )}
-          <button className={styles.button} type="submit">
-            Log In
-          </button>
-        </form>
-      </section>
-    </main>
+      </main>
+      {alert && (
+        <AlertPopup
+          type={alert.type}
+          title={alert.title}
+          description={alert.description}
+          onClose={() => setAlert(null)}
+        />
+      )}
+    </section>
   );
 };
 

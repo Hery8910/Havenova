@@ -113,8 +113,7 @@ console.log(typeof(year));
         }
     };
     fetchCurrentYear();
-  }, [currentYear, user.role, clientId]);
-  console.log(calendar);
+  }, [currentYear, user?.role, clientId]);
 
   return (
     <>

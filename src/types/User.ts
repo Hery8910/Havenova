@@ -1,26 +1,66 @@
-import { ServiceOrder } from "./services";
+import { ServiceOrder, ServiceRequestItem } from "./services";
 
 // src/types/User.ts
 export interface User {
+  clientId: string;
   _id: string;
   name: string;
   email: string;
+  password: string;
   address: string;
   profileImage: string;
   phone: string;
   isVerified: boolean;
   role: string;
-  createdAt: Date;
   language: string;
   theme: "light" | "dark";
   requests: ServiceOrder[];
+  createdAt: Date;
 }
-export interface UserError {
-  message: string;
+export interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  profileImage: string;
+  phone: string;
+  clientId: string;
 }
-export interface RegisterResponse {
-  message: string;
-  field: string;
-  error: string;
-  user: User;
+export interface LoginPayload {
+  email: string;
+  password: string;
+  clientId: string;
+}
+export interface VerifyEmailPayload {
+  email: string;
+  language: string;
+  clientId: string;
+}
+export interface AvatarSelectorPayload {
+  email: string;
+  profileImage: string;
+  clientId: string;
+}
+export interface UpdateUserPayload {
+  name?: string;
+  address?: string;
+  phone?: string;
+  profileImage?: string;
+  theme?: "light" | "dark";
+  language?: string;
+  clientId: string;
+}
+export interface ResetPasswordPayload {
+  email: string;
+  password: string;
+  newPassword: string;
+  clientId: string;
+}
+export interface GetUserPayload {
+  clientId: string;
+}
+export interface ResetPasswordPayload {
+  email: string;
+  clientId: string;
+  language?: string;
 }
