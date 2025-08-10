@@ -1,160 +1,148 @@
-import { User } from "./User";
+// service.ts
 
-export interface ServiceOrder {
+// --------------------------------------
+// Tipos generales
+// --------------------------------------
+export type ServiceStatus = 'submitted' | 'in progress' | 'completed' | 'cancelled';
+
+export type ServiceType =
+  | 'house-service'
+  | 'kitchen-cleaning'
+  | 'kitchen-assembly'
+  | 'house-cleaning'
+  | 'furniture-assembly'
+  | 'window-cleaning'; 
+
+export type ServiceIcon = {
+  src: string;
+  alt: string;
+};
+
+// --------------------------------------
+// Base para todos los detalles de servicio
+// --------------------------------------
+export interface BaseServiceDetails {
+  title: string;
+  icon: ServiceIcon;
+  notes?: string;
+}
+
+// --------------------------------------
+// Estructura de solicitud general
+// --------------------------------------
+export interface ServiceRequest {
   id: string;
-  status: ServiceStatus;
+  userId: string;
   createdAt: string;
-  contact: {
-    user: User;
-  };
   serviceAddress: string;
   preferredDate: string;
   preferredTime: string;
+  status: ServiceStatus;
   totalPrice: number;
   totalEstimatedDuration: number;
   services: ServiceRequestItem[];
 }
-// Agregar correo para despues de 15 dias enviar un mahnung si no han pagado.
-export type ServiceStatus = "submitted" | "in progress" | "completed" | "cancelled";
 
-export type serviceIcon = {
-  src: string;
-  alt: string;
-};
-export type furnitureServiceInput = {
-  width: boolean;
-  height: boolean;
-  depth: boolean;
-  doors: boolean;
-  drawers: boolean;
-  wall: boolean;
-};
-export type houseServiceInput = {
-  quantity: boolean;
-  area: boolean;
-  rooms: boolean;
-  ceiling: boolean;
-  floorType: boolean;
-  remove_old: boolean;
-  length: boolean;
-};
+// --------------------------------------
+// Definición de cada tipo de servicio
+// --------------------------------------
+export interface FurnitureAssemblyRequest {
+  id: string;
+  serviceType: 'furniture-assembly';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    type: string;
+    location: string;
+    quantity: number;
+    position: string;
+    width?: string;
+    height?: string;
+    depth?: string;
+    doors?: number;
+    drawers?: number;
+  };
+}
+
+export interface KitchenAssemblyRequest {
+  serviceType: 'kitchen-assembly';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    length: number;
+    lowerCabinets: number;
+    upperCabinets: number;
+    layout: string;
+    appliances: string[];
+    island?: string;
+    islandCabinet?: number;
+    islandLength?: string;
+    islandWidth?: string;
+    disassemblyNeed?: string;
+    provider?: string;
+  };
+}
+
+export interface KitchenCleaningRequest {
+  serviceType: 'kitchen-cleaning';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    appliances: string[];
+    size: number;
+  };
+}
+
+export interface HouseCleaningRequest {
+  serviceType: 'house-cleaning';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    surface: number;
+    livingRoom: number;
+    bedRooms: number;
+    badRooms: number;
+    balcon?: number;
+    kitchen: string;
+    stairs?: string;
+  };
+}
+
+export interface WindowCleaningRequest {
+  serviceType: 'window-cleaning';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    windows: number;
+    doors: number;
+    access: string;
+  };
+}
+
+export interface HouseServiceRequest {
+  serviceType: 'house-service';
+  price: number;
+  estimatedDuration: number;
+  details: BaseServiceDetails & {
+    label: string;
+    category: string;
+    quantity: number;
+    area: string;
+    length: string;
+    rooms: number;
+    ceiling: string;
+    floorType: string;
+    removeOld?: string;
+  };
+}
+
+// --------------------------------------
+// Unión de todos los servicios
+// --------------------------------------
 export type ServiceRequestItem =
-  | {
-      id: string;
-      serviceType: "house-service";
-      price: number;
-      estimatedDuration: number;
-      details: HouseServiceData;
-    }
-  | {
-      id: string;
-      serviceType: "kitchen-cleaning";
-      price: number;
-      estimatedDuration: number;
-      details: KitchenCleaningData;
-    }
-  | {
-      id: string;
-      serviceType: "kitchen-assembly";
-      price: number;
-      estimatedDuration: number;
-      details: KitchenAssemblyData;
-    }
-  | {
-      id: string;
-      serviceType: "house-cleaning";
-      price: number;
-      estimatedDuration: number;
-      details: HouseCleaningData;
-    }
-  | {
-      id: string;
-      serviceType: "furniture-assembly";
-      price: number;
-      estimatedDuration: number;
-      details: FurnitureAssemblyData;
-    }
-  | {
-      id: string;
-      serviceType: "window-cleaning";
-      price: number;
-      estimatedDuration: number;
-      details: WindowCleaningData;
-    };
-// Aquí irán otros tipos como TVMountingData, etc.
-
-export interface FurnitureAssemblyData {
-  title: string;
-  icon: serviceIcon;
-  type: string;
-  location: string;
-  quantity: string;
-  position: string;
-  width: string;
-  height: string;
-  depth: string;
-  doors: number;
-  drawers: number;
-  notes: string;
-}
-
-export interface WindowCleaningData {
-  title: string;
-  icon: serviceIcon;
-  windows: number;
-  doors: number;
-  access: string;
-  notes: string;
-}
-
-export interface HouseCleaningData {
-  title: string;
-  icon: serviceIcon;
-  surface: number;
-  livingRoom: number;
-  bedRooms: number;
-  badRooms: number;
-  balcon: number;
-  kitchen: string;
-  stairs: string;
-  notes: string;
-}
-
-export interface KitchenAssemblyData {
-  title: string;
-  icon: serviceIcon;
-  length: number;
-  lowerCabinets: number;
-  upperCabinets: number;
-  layout: string; // Ej: "Lineal", "L", "U", etc.
-  appliances: string[]; // ✅ Ahora compatible con Select
-  island: string;
-  islandCabinet: number;
-  islandLength: string;
-  islandWidth: string;
-  disassemblyNeed: string;
-  provider: string; // IKEA, Leroy Merlin, etc.
-  notes: string;
-}
-
-export interface HouseServiceData {
-  title: string;
-  icon: serviceIcon;
-  label: string;
-  category: string;
-  quantity: number;
-  area: string;
-  length: string;
-  rooms: number;
-  ceiling: string;
-  floorType: string;
-  removeOld: string;
-  notes: string;
-}
-export interface KitchenCleaningData {
-  title: string;
-  icon: serviceIcon;
-  appliances: string[];
-  size: number;
-  notes: string;
-}
+  | FurnitureAssemblyRequest
+  | KitchenAssemblyRequest
+  | KitchenCleaningRequest
+  | HouseCleaningRequest
+  | WindowCleaningRequest
+  | HouseServiceRequest;

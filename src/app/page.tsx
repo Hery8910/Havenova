@@ -16,7 +16,7 @@ import Service from "../components/service/page";
 
 export default function Home() {
   const { client, loading } = useClient();
-  const {refreshUser} = useUser()
+  const {refreshUser, user} = useUser()
  
   // const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
   // const [page, setPage] = useState(1);

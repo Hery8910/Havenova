@@ -146,7 +146,7 @@
             "text": "Havenova made my move so easy and stress-free.",
             "author": "Anna",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8_cudvoc.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8.svg",
               "alt": "Customer avatar Anna"
             },
             "starImage": {
@@ -158,7 +158,7 @@
             "text": "Professional, friendly, and reliable! Highly recommended cleaning service.",
             "author": "Markus",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6.svg",
               "alt": "Customer avatar Markus"
             },
             "starImage": {
@@ -170,7 +170,7 @@
             "text": "Finally, a provider I can trust with my home.",
             "author": "Sophie",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1_fdqyy8.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1.svg",
               "alt": "Customer avatar Sophie"
             },
             "starImage": {
@@ -244,6 +244,11 @@
           "label": "Go to Register",
           "url": "/user/register"
         },
+        "forgotPassword": {
+          "title": "Forgot Password?",
+          "label": "Reset your password",
+          "url": "/user/forgot-password"
+        },
         "image": {
           "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
           "alt": "Berlin illustration"
@@ -252,32 +257,19 @@
         "button": "Register"
       },
       "edit": {
-        "tilte": "Welcome Back",
-        "cta": {
-          "title": "Don't have an account yet?",
-          "label": "Go to Register",
-          "url": "/user/register"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+        "title": "Edit",
+        "description": "Keep your details up to date to ensure a seamless service experience.",
+        "subheading": "Personal information"
       },
-      "resetPassword": {
-        "tilte": "Welcome Back",
-        "cta": {
-          "title": "Don't have an account yet?",
-          "label": "Go to Register",
-          "url": "/user/register"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+      "forgotPasswordText": {
+        "title": "Reset your password",
+        "info": "To create a new password, please enter your email address. We will send you a link to reset your password. Follow the instructions in the email to set a new password for your account.",
+        "button": "Send reset link"
+      },
+      "resetPasswordText": {
+        "title": "Set a new password",
+        "info": "Please enter your new password below. The password must be at least 8 characters long.",
+        "button": "Save password"
       },
       "verifyEmail": {
         "title": "Email Verification",
@@ -309,6 +301,105 @@
         "notLoggedInTitle": "You are not logged in",
         "notLoggedInText": "To access and manage your profile, please log in to your Havenova account. This way, you can view your personal information, track your service requests, and update your preferences.",
         "loginButton": "Log in to your account"
+      }
+    }
+  },
+  "components": {
+    "user": {
+      "register": {
+        "button": "Register"
+      },
+      "login": {
+        "button": "Log in"
+      },
+      "edit": {
+        "button": "Save Changes"
+      },
+      "changePassword": {
+        "button": "Save password"
+      },
+      "forgotPassword": {
+        "button": "Send reset link"
+      },
+      "resetPassword": {
+        "button": "Save password"
+      }
+    },
+    "services": {
+      "furnitureAssembly": {
+        "form": {
+          "header": {
+            "title": "Furniture Assembly",
+            "img": {
+              "src": "/svg/furniture-assembly.svg",
+              "alt": "Möbelmontage Icon"
+            }
+          },
+          "input": {
+            "quantity": "Quantity",
+            "width": "Width",
+            "height": "Height",
+            "depth": "Depth",
+            "doors": "Number of Doors",
+            "drawers": "Number of Drawers",
+            "wall": "Mounted on wall?",
+            "comment": "Leave us a comment"
+          },
+          "back_button": "Back",
+          "submit": "Submit"
+        },
+        "steps": {
+          "1": {
+            "title": "Choose the location",
+            "description": "Select the room where the furniture will be assembled.",
+            "step": "Location"
+          },
+          "2": {
+            "title": "Choose the furniture",
+            "description": "Select the type of furniture to be assembled.",
+            "step": "Furniture"
+          },
+          "3": {
+            "title": "Furniture details",
+            "description": "Provide dimensions or any special instructions for assembly.",
+            "step": "Details"
+          }
+        },
+        "locations": {
+          "bedroom": "Bedroom",
+          "living_room": "Living Room",
+          "bathroom": "Bathroom",
+          "kitchen": "Kitchen",
+          "office": "Office / Study",
+          "hallway": "Hallway / Entry",
+          "balcony": "Balcony / Outdoor"
+        },
+        "furniture": {
+          "wardrobe": "Wardrobe",
+          "bed_frame": "Bed Frame",
+          "dresser": "Dresser",
+          "nightstand": "Nightstand",
+          "bookshelf": "Bookshelf",
+          "tv_unit": "TV Unit",
+          "coffee_table": "Coffee Table",
+          "display_cabinet": "Display Cabinet",
+          "bathroom_cabinet": "Bathroom Cabinet",
+          "mirror_cabinet": "Mirror Cabinet",
+          "shelf_unit": "Shelf Unit",
+          "dining_table": "Dining Table",
+          "dining_chair": "Dining Chair",
+          "kitchen_island": "Kitchen Island",
+          "kitchen_cabinet": "Kitchen Cabinet",
+          "desk": "Desk",
+          "office_chair": "Office Chair",
+          "filing_cabinet": "Filing Cabinet",
+          "shoe_rack": "Shoe Rack",
+          "coat_rack": "Coat Rack",
+          "console_table": "Console Table",
+          "outdoor_table": "Outdoor Table",
+          "garden_chair": "Garden Chair",
+          "plant_shelf": "Plant Shelf"
+        }
       }
     }
   },
@@ -510,6 +601,15 @@
       "description": "You have been logged out. See you next time!"
     },
 
+    "USER_FORGOT_PASSWORD_EMPTY_EMAIL": {
+      "title": "Email required",
+      "description": "Please enter your email address to start the password reset process."
+    },
+    "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
+      "title": "Email sent",
+      "description": "An email with a link to reset your password has been sent to your address. Please check your inbox and follow the instructions."
+    },
+
     "USER_EDIT_EMPTY_NEW_PASSWORD": {
       "title": "Missing new password",
       "description": "Please provide a new password to update your account."
@@ -543,6 +643,43 @@
     "EMAIL_VERIFICATION_RESENT": {
       "title": "Verification Email Sent",
       "description": "A new verification email was sent to your address. Please check your inbox."
+    },
+
+    "CALENDAR_MISSING_CLIENT_ID": {
+      "title": "Client ID Missing",
+      "description": "We couldn't identify the client making this request. Please try again or contact support."
+    },
+    "CALENDAR_MISSING_YEAR": {
+      "title": "Year Not Provided",
+      "description": "You need to specify the year for the calendar you want to create."
+    },
+    "CALENDAR_NOT_FOUND": {
+      "title": "Calendar Not Found",
+      "description": "No calendar was found for the requested year. Please make sure the calendar exists."
+    },
+    "CALENDAR_RETRIEVED_ADMIN": {
+      "title": "Calendar Loaded",
+      "description": "The full calendar for the year has been successfully loaded."
+    },
+    "CALENDAR_REDUCED_RETRIEVED": {
+      "title": "Available Days Loaded",
+      "description": "The available service dates were successfully loaded."
+    },
+    "CALENDAR_RETRIEVAL_FAILED": {
+      "title": "Calendar Load Failed",
+      "description": "An unexpected error occurred while retrieving the calendar."
+    },
+    "CALENDAR_YEAR_EXISTS": {
+      "title": "Calendar Already Exists",
+      "description": "A calendar for this year has already been created. You can update it instead of creating a new one."
+    },
+    "CALENDAR_CREATED": {
+      "title": "Calendar Created",
+      "description": "The calendar was successfully created and is now available in your dashboard."
+    },
+    "CALENDAR_CREATION_FAILED": {
+      "title": "Calendar Creation Failed",
+      "description": "An unexpected error occurred while creating the calendar. Please try again later."
     },
 
     "GLOBAL_INTERNAL_ERROR": {

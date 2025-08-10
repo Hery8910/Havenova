@@ -15,8 +15,9 @@ import UserContactForm from "../../../components/Form/page";
 import { AlertPopup } from "../../../components/alertPopup/page";
 
 export interface LoginData {
-  tilte: string;
+  title: string;
   cta: { title: string; label: string; url: string };
+  forgotPassword: { title: string; label: string; url: string };
   image: { src: string; alt: string };
   backgroundImage: string;
   button: string;
@@ -70,8 +71,7 @@ const Login = () => {
       }, 3000);
     } catch (error: any) {
       if (error.response && error.response.data) {
-        const errorKey =
-          error.response.data.errorCode;
+        const errorKey = error.response.data.errorCode;
         const popupData = popups?.[errorKey] || {};
         setAlert({
           type: "error",
@@ -95,17 +95,23 @@ const Login = () => {
     <section className={styles.section}>
       <main className={styles.main}>
         <header className={`${styles.header} card`}>
-          <article className={styles.article}>
-            <h1 className={styles.h1}>{login?.tilte}</h1>
-          </article>
+          <h1 className={styles.h1}>{login?.title}</h1>
           <aside className={styles.aside}>
-            <p className={styles.header_p}>{login?.cta.title}</p>
-            <Link className={styles.link} href={login?.cta.url}>
-              {login?.cta.label}
-            </Link>
+            <div>
+              <p className={styles.header_p}>{login?.cta.title}</p>
+              <Link className={styles.link} href={login?.cta.url}>
+                {login?.cta.label}
+              </Link>
+            </div>
+            <div>
+              <p className={styles.header_p}>{login?.forgotPassword.title}</p>
+              <Link className={styles.link} href={login?.forgotPassword.url}>
+                {login?.forgotPassword.label}
+              </Link>
+            </div>
           </aside>
         </header>
-        <aside className={styles.aside}>
+        <aside className={styles.aside_form}>
           <UserContactForm
             fields={["email", "password", "clientId"]}
             onSubmit={handleLogin}

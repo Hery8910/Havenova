@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getUserFromStorage } from "../../../utils/guestUserStorage"; // ajusta la ruta
 import { registerUser } from "../../../services/userService";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
@@ -18,6 +17,7 @@ export interface RegisterData {
   backgroundImage: string;
   button: string;
 }
+
 interface RegisterFormData {
   name: string;
   email: string;
@@ -73,6 +73,14 @@ const Register = () => {
         !formData.theme ||
         !formData.clientId
       ) {
+        const popupData = popups?.INTERNAL_ERROR || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || "Unerwarteter Fehler",
+          description:
+            popupData.description ||
+            "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support.",
+        });
         return;
       }
       const response = await registerUser(formData);
@@ -138,7 +146,7 @@ const Register = () => {
             </Link>
           </aside>
         </header>
-        <aside className={styles.aside}>
+        <aside className={styles.aside_form}>
           <UserContactForm
             fields={[
               "name",

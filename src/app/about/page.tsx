@@ -1,13 +1,12 @@
-"use client";
-import Benefits from "../../components/benefits/page";
+'use client';
+import Benefits from '../../components/benefits/page';
 // import BlogList from "../../components/blog/blogList/page";
-import Hero from "../../components/hero/page";
-import Review from "../../components/reviews/page";
-import WhoWeAre from "../../components/whoWeAre/page";
-import Mission from "../../components/mission/page";
-import styles from "./page.module.css";
-import Cta from "../../components/cta/page";
-
+import Hero from '../../components/hero/page';
+import Review from '../../components/reviews/page';
+import WhoWeAre from '../../components/whoWeAre/page';
+import Mission from '../../components/mission/page';
+import styles from './page.module.css';
+import Cta from '../../components/cta/page';
 
 const About = () => {
   // const aboutHero = {
@@ -60,7 +59,7 @@ const About = () => {
   //   cta: "Book a Service Now",
   //   image: "/images/choose-best-maintenance-service-blog.webp",
   //   alt: "Illustration of a professional worker in blue overalls"
-    
+
   //   };
   // const blogs = [
   //   {

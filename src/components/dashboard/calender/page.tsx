@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface Day {
   date: string; // Formato: YYYY-MM-DD
@@ -103,31 +103,39 @@ const Calendar: React.FC<CalendarProps> = ({ calendars, onToggleDay }) => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <button onClick={() => {
-          if (currentMonth === 0) {
-            setCurrentMonth(11);
-            setCurrentYear(currentYear - 1);
-          } else {
-            setCurrentMonth(currentMonth - 1);
-          }
-        }}>Previous</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <button
+          onClick={() => {
+            if (currentMonth === 0) {
+              setCurrentMonth(11);
+              setCurrentYear(currentYear - 1);
+            } else {
+              setCurrentMonth(currentMonth - 1);
+            }
+          }}
+        >
+          Previous
+        </button>
         <h2>
-          {new Date(currentYear, currentMonth).toLocaleString("default", {
-            month: "long",
-            year: "numeric",
+          {new Date(currentYear, currentMonth).toLocaleString('default', {
+            month: 'long',
+            year: 'numeric',
           })}
         </h2>
-        <button onClick={() => {
-          if (currentMonth === 11) {
-            setCurrentMonth(0);
-            setCurrentYear(currentYear + 1);
-          } else {
-            setCurrentMonth(currentMonth + 1);
-          }
-        }}>Next</button>
+        <button
+          onClick={() => {
+            if (currentMonth === 11) {
+              setCurrentMonth(0);
+              setCurrentYear(currentYear + 1);
+            } else {
+              setCurrentMonth(currentMonth + 1);
+            }
+          }}
+        >
+          Next
+        </button>
       </div>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
             <th>Mon</th>
@@ -146,19 +154,15 @@ const Calendar: React.FC<CalendarProps> = ({ calendars, onToggleDay }) => {
                 <td
                   key={dayIndex}
                   style={{
-                    border: "1px solid #ccc",
-                    padding: "8px",
-                    backgroundColor: day
-                      ? day.available
-                        ? "#fff"
-                        : "#fdd"
-                      : "#eee",
-                    textAlign: "center",
-                    cursor: day ? "pointer" : "default",
+                    border: '1px solid #ccc',
+                    padding: '8px',
+                    backgroundColor: day ? (day.available ? '#fff' : '#fdd') : '#eee',
+                    textAlign: 'center',
+                    cursor: day ? 'pointer' : 'default',
                   }}
                   onClick={() => day && toggleDayBlock(day)}
                 >
-                  {day ? day.date : ""}
+                  {day ? day.date.slice(8) : ''}
                 </td>
               ))}
             </tr>

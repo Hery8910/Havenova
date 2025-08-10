@@ -23,21 +23,29 @@ import {
   formErrorProps,
   RegisterFormData,
   UserContactFormProps,
+  UserFormMode,
 } from "../../types/userForm";
+
 
 const UserContactForm: React.FC<UserContactFormProps> = ({
   fields,
   onSubmit,
   mode,
 }) => {
-  const {user} = useUser()
+  const { user } = useUser();
   const { client } = useClient();
   const clientId = client?._id;
   const { texts } = useI18n();
-  const register: RegisterData = texts?.pages?.user.register;
-  const login: RegisterData = texts?.pages?.user.login;
-  const edit: RegisterData = texts?.pages?.user.edit;
-  const resetPassword: RegisterData = texts?.pages?.user.resetPassword;
+  const buttonLabels: Record<UserFormMode, string> = {
+    register: texts.components.user.register.button,
+    login: texts.components.user.login.button,
+    edit: texts.components.user.edit.button,
+    forgotPassword: texts.components.user.forgotPassword.button,
+    resetPassword: texts.components.user.resetPassword.button,
+  };
+
+  // Por si mode es desconocido, fallback:
+  const submitLabel = buttonLabels[mode as UserFormMode] || texts.components.user.register.button;
 
   const [formData, setFormData] = useState<RegisterFormData>({
     name: user?.name || "",
@@ -56,14 +64,14 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
   const formError: formErrorProps = texts.error.userForm;
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-useEffect(() => {
-  if (clientId && formData.clientId !== clientId) {
-    setFormData(prev => ({
-      ...prev,
-      clientId,
-    }));
-  }
-}, [clientId, formData.clientId ]);
+  useEffect(() => {
+    if (clientId && formData.clientId !== clientId) {
+      setFormData((prev) => ({
+        ...prev,
+        clientId,
+      }));
+    }
+  }, [clientId, formData.clientId]);
 
   const getValidationErrors = (
     fieldName: string,
@@ -121,17 +129,15 @@ useEffect(() => {
     }));
   };
 
-
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     const newErrors: Record<string, string> = {};
     fields.forEach((field) => {
       const value = formData[field] as string;
       const error = getValidationErrors(field, value);
       if (error) newErrors[field] = error;
-    });   
+    });
 
     setErrors(newErrors);
 
@@ -142,7 +148,7 @@ useEffect(() => {
       fields.reduce(
         (obj, key) => ({ ...obj, [key]: formData[key] }),
         {} as RegisterFormData
-      ),
+      )
     );
   };
 
@@ -167,7 +173,7 @@ useEffect(() => {
           )}
         </div>
       )}
-      {fields.includes("email") && mode !== "edit"  && (
+      {fields.includes("email") && mode !== "resetPassword" && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
@@ -252,7 +258,7 @@ useEffect(() => {
         </div>
       )}
       <button type="submit" className="button">
-        {register.button}
+        {submitLabel}
       </button>
     </form>
   );

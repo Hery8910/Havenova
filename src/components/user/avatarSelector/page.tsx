@@ -8,6 +8,7 @@ import { AvatarSelectorPayload } from "../../../types/User";
 import { updateUser } from "../../../services/userService";
 import { AlertPopup } from "../../alertPopup/page"; // Ajusta la ruta si es necesario
 import { useI18n } from "../../../contexts/I18nContext";
+import { IoClose } from "react-icons/io5";
 
 const avatarList = Array.from(
   { length: 10 },
@@ -104,9 +105,9 @@ export default function AvatarSelector() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className={styles.button}
+              className="button_close"
             >
-              X
+              <IoClose />
             </button>
             <aside className={styles.aside}>
               <ul className={styles.ul}>
@@ -138,7 +139,7 @@ export default function AvatarSelector() {
             <button
               type="button"
               onClick={handleSubmit}
-              className={styles.button}
+              className="button_invert"
             >
               Choose Selected
             </button>

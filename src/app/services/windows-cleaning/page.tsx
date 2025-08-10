@@ -1,4 +1,3 @@
-import Hero from "../../../components/hero/page";
 import Reviews from "../../../components/reviews/page";
 // import BlogList from "../../../components/blog/blogList/page";
 

@@ -19,17 +19,17 @@ export interface ProfileData {
   phone: string;
   email: string;
   theme: {
-          title: string;
-          light: string;
-          dark: string;
-        };
+    title: string;
+    light: string;
+    dark: string;
+  };
   language: {
     title: string;
     lang: string;
   };
-  notLoggedInTitle:  string;
-  notLoggedInText:  string;
-  loginButton:  string;
+  notLoggedInTitle: string;
+  notLoggedInText: string;
+  loginButton: string;
 }
 
 const Profile = () => {
@@ -50,13 +50,14 @@ const Profile = () => {
   if (user.role === "guest") return null;
 
   return (
-    <main className={styles.main}>
-        <header className={styles.header}>
-          <h3 className={styles.h1}>
-            {profile.greeting} {user.name}
-          </h3>
-          <p className={styles.header_p}>{profile.manageAccount}</p>
-        </header>
+    <section className={styles.section}>
+      <header className={styles.header}>
+        <h3 className={styles.h1}>
+          {profile.greeting} {user.name}
+        </h3>
+        <p className={styles.header_p}>{profile.manageAccount}</p>
+      </header>
+      <main className={styles.main}>
         <article className={styles.article}>
           <Image
             src={user.profileImage}
@@ -67,8 +68,9 @@ const Profile = () => {
           />
           <div className={styles.div}>
             <h3>{user.name}</h3>
-              <h4 >
-              {profile.memberSince} {new Date(user.createdAt).toLocaleDateString()}
+            <h4>
+              {profile.memberSince}{" "}
+              {new Date(user.createdAt).toLocaleDateString()}
             </h4>
             <p
               className={styles.verified_p}
@@ -101,7 +103,11 @@ const Profile = () => {
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>{profile.theme.title}</th>
-              <td className={styles.td}>{user.theme === "light" ? profile.theme.light : profile.theme.dark}</td>
+              <td className={styles.td}>
+                {user.theme === "light"
+                  ? profile.theme.light
+                  : profile.theme.dark}
+              </td>
             </tr>
             <tr className={styles.tr}>
               <th className={styles.th}>{profile.language.title}</th>
@@ -109,7 +115,8 @@ const Profile = () => {
             </tr>
           </tbody>
         </table>
-    </main>
+      </main>
+    </section>
   );
 };
 

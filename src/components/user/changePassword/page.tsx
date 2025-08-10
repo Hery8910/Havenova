@@ -7,8 +7,9 @@ import { validatePassword } from "../../../utils/validators/userFormValidator";
 import { formErrorProps, RegisterFormData } from "../../../types/userForm";
 import { useI18n } from "../../../contexts/I18nContext";
 import { ImEye, ImEyeBlocked } from "react-icons/im";
-import { resetPassword } from "../../../services/userService";
+import { chagePassword } from "../../../services/userService";
 import { AlertPopup } from "../../alertPopup/page";
+import { IoClose } from "react-icons/io5";
 
 interface ChangePasswordFormData {
   email: string;
@@ -21,6 +22,7 @@ export default function ChangePassword() {
   const { user } = useUser();
   const { client } = useClient();
   const { texts } = useI18n();
+  const  changePasswordButton = texts.components.user.changePassword.button;
   const popups = texts.popups;
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -98,7 +100,7 @@ export default function ChangePassword() {
       if (!formData.email || !formData.password || !formData.newPassword)
         return;
 
-      const response = await resetPassword(formData);
+      const response = await chagePassword(formData);
       if (response.success) {
         const popupData = popups?.[response.code] || {};
         setAlert({
@@ -153,6 +155,14 @@ export default function ChangePassword() {
         </button>
       ) : (
         <form className={styles.form} onSubmit={handleSubmit}>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="button_close"
+          >
+            <IoClose />
+          </button>
+          <article className={styles.article}>
           <div className={styles.wrapper}>
             <div className={styles.div}>
               <input
@@ -202,8 +212,9 @@ export default function ChangePassword() {
             )}
           </div>
           <button type="submit" className="button">
-            submit
+            {changePasswordButton}
           </button>
+          </article>
         </form>
       )}
       {alert && (

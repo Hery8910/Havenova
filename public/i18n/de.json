@@ -146,7 +146,7 @@
             "text": "Havenova hat meinen Umzug so einfach und stressfrei gemacht.",
             "author": "Anna",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8_cudvoc.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8.svg",
               "alt": "Kundenavatar Anna"
             },
             "starImage": {
@@ -158,7 +158,7 @@
             "text": "Professionell, freundlich und zuverlässig! Sehr empfehlenswerter Reinigungsservice.",
             "author": "Markus",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6.svg",
               "alt": "Kundenavatar Markus"
             },
             "starImage": {
@@ -170,7 +170,7 @@
             "text": "Endlich habe ich einen Dienstleister gefunden, dem ich mein Zuhause anvertrauen kann.",
             "author": "Sophie",
             "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1_fdqyy8.svg",
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1.svg",
               "alt": "Kundenavatar Sophie"
             },
             "starImage": {
@@ -228,8 +228,9 @@
         "cta": {
           "title": "Sie haben bereits ein Konto?",
           "label": "Gehen Sie zu Anmelden",
-          "url": "/user/register"
+          "url": "/user/login"
         },
+
         "image": {
           "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
           "alt": "Illustration aus Berlin"
@@ -244,6 +245,11 @@
           "label": "Gehen Sie zu Register",
           "url": "/user/register"
         },
+        "forgotPassword": {
+          "title": "Passwort vergessen?",
+          "label": "Passwort zurücksetzen",
+          "url": "/user/forgot-password"
+        },
         "image": {
           "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
           "alt": "Berlin illustration"
@@ -252,32 +258,19 @@
         "button": "Anmelden"
       },
       "edit": {
-        "tilte": "Welcome Back",
-        "cta": {
-          "title": "Don't have an account yet?",
-          "label": "Go to Register",
-          "url": "/user/register"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+        "title": "Bearbeiten",
+        "description": "Halten Sie Ihre Angaben aktuell, um einen reibungslosen Service zu gewährleisten.",
+        "subheading": "Persönliche Informationen"
       },
-      "resetPassword": {
-        "tilte": "Welcome Back",
-        "cta": {
-          "title": "Don't have an account yet?",
-          "label": "Go to Register",
-          "url": "/user/register"
-        },
-        "image": {
-          "url": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751552219/card-background_z1tng9.webp",
-          "alt": "Berlin illustration"
-        },
-        "backgroundImage": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751551347/user-background_guvack.png",
-        "button": "Register"
+      "forgotPasswordText": {
+        "title": "Setze dein Passwort zurück",
+        "info": "Um ein neues Passwort zu erstellen, gib bitte deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts. Folge den Anweisungen in der E-Mail, um ein neues Passwort für dein Konto festzulegen.",
+        "button": "Link zum Zurücksetzen senden"
+      },
+      "resetPasswordText": {
+        "title": "Neues Passwort festlegen",
+        "info": "Bitte gib dein neues Passwort ein. Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "button": "Passwort speichern"
       },
       "verifyEmail": {
         "title": "E-Mail-Verifizierung",
@@ -309,6 +302,105 @@
         "notLoggedInTitle": "Sie sind nicht eingeloggt",
         "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
         "loginButton": "Zum Login"
+      }
+    }
+  },
+  "components": {
+    "user": {
+      "register": {
+        "button": "Registrieren"
+      },
+      "login": {
+        "button": "Einloggen"
+      },
+      "edit": {
+        "button": "Änderungen speichern"
+      },
+      "changePassword": {
+        "button": "Passwort speichern"
+      },
+      "forgotPassword": {
+        "button": "Link zum Zurücksetzen senden"
+      },
+      "resetPassword": {
+        "button": "Passwort speichern"
+      }
+    },
+    "services": {
+      "furnitureAssembly": {
+        "form": {
+          "header": {
+            "title": "Möbelmontage",
+            "img": {
+              "src": "/svg/furniture-assembly.svg",
+              "alt": "Furniture Assembly Symbol"
+            }
+          },
+          "input": {
+            "quantity": "Menge",
+            "width": "Breite",
+            "height": "Höhe",
+            "depth": "Tiefe",
+            "doors": "Anzahl der Türen",
+            "drawers": "Anzahl der Schubladen",
+            "wall": "An der Wand montiert?",
+            "comment": "Hinterlassen Sie uns einen Kommentar"
+          },
+          "back_button": "Zurück",
+          "submit": "Einreichen"
+        },
+        "steps": {
+          "1": {
+            "title": "Wählen Sie den Standort",
+            "description": "Wählen Sie den Raum aus, in dem sich das Möbelstück befindet.",
+            "step": "Standort"
+          },
+          "2": {
+            "title": "Wählen Sie das Möbelstück",
+            "description": "Wählen Sie die Art des Möbelstücks, das montiert werden soll.",
+            "step": "Möbelstück"
+          },
+          "3": {
+            "title": "Details des Möbelstücks",
+            "description": "Geben Sie Maße oder besondere Hinweise für die Montage an.",
+            "step": "Details"
+          }
+        },
+        "locations": {
+          "bedroom": "Schlafzimmer",
+          "living_room": "Wohnzimmer",
+          "bathroom": "Badezimmer",
+          "kitchen": "Küche",
+          "office": "Büro / Arbeitszimmer",
+          "hallway": "Flur / Eingang",
+          "balcony": "Balkon / Außenbereich"
+        },
+        "furniture": {
+          "wardrobe": "Kleiderschrank",
+          "bed_frame": "Bettgestell",
+          "dresser": "Kommode",
+          "nightstand": "Nachttisch",
+          "bookshelf": "Bücherregal",
+          "tv_unit": "TV-Möbel",
+          "coffee_table": "Couchtisch",
+          "display_cabinet": "Vitrine",
+          "bathroom_cabinet": "Badezimmerschrank",
+          "mirror_cabinet": "Spiegelschrank",
+          "shelf_unit": "Regaleinheit",
+          "dining_table": "Esstisch",
+          "dining_chair": "Essstuhl",
+          "kitchen_island": "Kücheninsel",
+          "kitchen_cabinet": "Küchenschrank",
+          "desk": "Schreibtisch",
+          "office_chair": "Bürostuhl",
+          "filing_cabinet": "Aktenschrank",
+          "shoe_rack": "Schuhregal",
+          "coat_rack": "Garderobe",
+          "console_table": "Konsolentisch",
+          "outdoor_table": "Gartentisch",
+          "garden_chair": "Gartenstuhl",
+          "plant_shelf": "Pflanzenregal"
+        }
       }
     }
   },
@@ -510,14 +602,23 @@
       "description": "Sie wurden abgemeldet. Bis zum nächsten Mal!"
     },
 
+    "USER_FORGOT_PASSWORD_EMPTY_EMAIL": {
+      "title": "E-Mail erforderlich",
+      "description": "Bitte geben Sie Ihre E-Mail-Adresse ein, um das Zurücksetzen des Passworts zu starten."
+    },
+    "USER_FORGOT_PASSWORD_EMAIL_SENDED": {
+      "title": "E-Mail gesendet",
+      "description": "Eine E-Mail mit einem Link zum Zurücksetzen Ihres Passworts wurde an Ihre Adresse gesendet. Bitte überprüfen Sie Ihr Postfach und folgen Sie den Anweisungen."
+    },
+
     "USER_EDIT_EMPTY_NEW_PASSWORD": {
       "title": "Neues Passwort fehlt.",
       "description": "Bitte geben Sie ein neues Passwort ein, um Ihr Konto zu aktualisieren."
     },
-      "USER_EDIT_USER_UPDATE_SUCCESS": {
-     "title": "Profil aktualisiert",
-    "description": "Ihre Änderungen wurden erfolgreich gespeichert."
-  },
+    "USER_EDIT_USER_UPDATE_SUCCESS": {
+      "title": "Profil aktualisiert",
+      "description": "Ihre Änderungen wurden erfolgreich gespeichert."
+    },
 
     "USER_VERIFY_INVALID_OR_EXPIRED_TOKEN": {
       "title": "Ungültiger oder abgelaufener Link.",
@@ -543,6 +644,43 @@
     "EMAIL_VERIFICATION_RESENT": {
       "title": "Bestätigungs-E-Mail neue gesendet.",
       "description": "Eine neue Bestätigungs-E-Mail wurde an deine Adresse gesendet. Bitte überprüfe dein Postfach."
+    },
+
+    "CALENDAR_MISSING_CLIENT_ID": {
+      "title": "Client-ID fehlt",
+      "description": "Wir konnten den anfragenden Kunden nicht identifizieren. Bitte versuche es erneut oder kontaktiere den Support."
+    },
+    "CALENDAR_MISSING_YEAR": {
+      "title": "Jahresangabe fehlt",
+      "description": "Bitte gib das Jahr an, für das du den Kalender erstellen möchtest."
+    },
+    "CALENDAR_NOT_FOUND": {
+      "title": "Kalender nicht gefunden",
+      "description": "Für das angeforderte Jahr wurde kein Kalender gefunden. Bitte überprüfe, ob er existiert."
+    },
+    "CALENDAR_RETRIEVED_ADMIN": {
+      "title": "Kalender geladen",
+      "description": "Der vollständige Kalender für das Jahr wurde erfolgreich geladen."
+    },
+    "CALENDAR_REDUCED_RETRIEVED": {
+      "title": "Verfügbare Tage geladen",
+      "description": "Die verfügbaren Servicetermine wurden erfolgreich geladen."
+    },
+    "CALENDAR_RETRIEVAL_FAILED": {
+      "title": "Fehler beim Laden des Kalenders",
+      "description": "Beim Abrufen des Kalenders ist ein unerwarteter Fehler aufgetreten."
+    },
+    "CALENDAR_YEAR_EXISTS": {
+      "title": "Kalender existiert bereits",
+      "description": "Ein Kalender für dieses Jahr wurde bereits erstellt. Du kannst ihn aktualisieren, anstatt einen neuen zu erstellen."
+    },
+    "CALENDAR_CREATED": {
+      "title": "Kalender erstellt",
+      "description": "Der Kalender wurde erfolgreich erstellt und ist jetzt in deinem Dashboard verfügbar."
+    },
+    "CALENDAR_CREATION_FAILED": {
+      "title": "Fehler beim Erstellen des Kalenders",
+      "description": "Beim Erstellen des Kalenders ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut."
     },
 
     "GLOBAL_INTERNAL_ERROR": {

@@ -12,12 +12,12 @@
   --bg-gradient: #0e2439b3;
   --bg-card: #d1edffcc;
   --text-primary: #1f1f1f;
-  --text-secondary: #6b6b6b;
+  --text-secondary: #7b7b7b;
   --text-inverted: #f0f0f0;
   --shadow-dark: 0px 0px 16px rgba(46, 46, 46, 0.719);
   --shadow-light: 0px 0px 16px rgba(165, 165, 165, 0.466);
   /* Font */
-  --font-family-main: "Inter", sans-serif;
+  --font-family-main: 'Inter', sans-serif;
   --font-size-base: 16px;
 
   /* Status Colors */
@@ -34,7 +34,7 @@
 /* ============================
    DARK MODE (ACTIVADO POR data-theme)
 ============================ */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --bg-main: #2c2c2cb4;
   --bg-card: #d1edff87;
 
@@ -73,11 +73,7 @@ html {
 body {
   font-family: var(--font-family-main);
   background: var(--bg-main);
-  background: radial-gradient(
-    circle,
-    var(--bg-main) 0%,
-    var(--bg-gradient) 100%
-  );
+  background: radial-gradient(circle, var(--bg-main) 0%, var(--bg-gradient) 100%);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -127,19 +123,21 @@ a {
   padding: 8px 16px;
   border-radius: 4px;
   background: var(--brand-primary);
+  border: 1px solid var(--brand-primary);
   box-shadow: var(--shadow-dark);
   color: var(--text-primary);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-  border: none;
 }
 .button_invert {
-  border: 2px solid var(--brand-primary);
+  border: 1px solid var(--brand-primary);
   background-color: transparent;
   color: var(--brand-primary);
 }
 .button_close {
-  border: 2px solid var(--color-error);
+  font-size: clamp(16px, 3vw, 20px);
+  padding: 8px;
+  border: 1px solid var(--color-error);
   background-color: transparent;
   color: var(--color-error);
 }
@@ -150,18 +148,14 @@ a {
 .card {
   padding: 16px;
   background: var(--bg-card);
-  background: radial-gradient(
-    circle,
-    var(--bg-card) 0%,
-    var(--bg-gradient) 100%
-  );
+  background: radial-gradient(circle, var(--bg-card) 0%, var(--bg-gradient) 100%);
   border-radius: 8px;
   box-shadow: var(--shadow-dark);
 }
 
 .quote {
   color: #d93434;
-  font-family: "Lucida Sans", Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
   font-style: italic;
 }
 

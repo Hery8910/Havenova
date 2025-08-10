@@ -1,7 +1,6 @@
 import api from "./api";
 import { ApiResponse } from "../types/api";
-import { GetUserPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, UpdateUserPayload, User, VerifyEmailPayload } from "../types/User";
-import { ServiceRequestItem } from "../types/services";
+import {  ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, ChangePasswordPayload, UpdateUserPayload, User, VerifyEmailPayload } from "../types/User";
 
 
 // REGISTER
@@ -25,6 +24,18 @@ export const updateUser = async (
   payload: UpdateUserPayload
 ): Promise<ApiResponse<User>> => {
   const response = await api.post<ApiResponse<User>>("/api/users/update-user", payload);
+  return response.data;
+};
+
+// UPDATE PASSWORD
+export const chagePassword = async (payload: ChangePasswordPayload): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/update-password", payload);
+  return response.data;
+};
+
+// FORGOT PASSWORD
+export const forgotPassword = async (payload: ForgotPasswordPayload): Promise<ApiResponse<User>> => {
+  const response = await api.post<ApiResponse<User>>("/api/users/forgot-password", payload);
   return response.data;
 };
 

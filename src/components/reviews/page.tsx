@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import styles from "./page.module.css";
 import Link from "next/link";
@@ -25,8 +27,8 @@ export interface ReviewsData {
 
 const Reviews = () => {
   const { texts } = useI18n();
-  const testimonials: ReviewsData | undefined  = texts?.pages?.home?.testimonials;
   
+  const testimonials: ReviewsData = texts?.pages?.home?.testimonials;
        if (!testimonials) {
     return (
       <section className={styles.section}>

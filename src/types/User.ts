@@ -50,17 +50,24 @@ export interface UpdateUserPayload {
   language?: string;
   clientId: string;
 }
-export interface ResetPasswordPayload {
+export interface ChangePasswordPayload {
   email: string;
   password: string;
   newPassword: string;
   clientId: string;
 }
-export interface GetUserPayload {
-  clientId: string;
-}
-export interface ResetPasswordPayload {
+export interface ForgotPasswordPayload {
   email: string;
   clientId: string;
   language?: string;
 }
+export interface ResetPasswordPayload {
+  email: string;
+  token: string;
+  password: string;
+  clientId: string;
+}
+export interface GetUserPayload {
+  clientId: string;
+}
+

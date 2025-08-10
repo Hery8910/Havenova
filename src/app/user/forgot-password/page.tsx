@@ -1,83 +1,115 @@
 "use client";
 import { Suspense, useState } from "react";
-import api from "../../../services/api";
 import styles from "./page.module.css";
-import Image from "next/image";
-import { isEmailValid } from "../../../utils/validators";
+import { useClient } from "../../../contexts/ClientContext";
+import { useI18n } from "../../../contexts/I18nContext";
+import UserContactForm from "../../../components/Form/page";
+import { AlertPopup } from "../../../components/alertPopup/page";
+import { forgotPassword } from "../../../services/userService";
+
+export interface ForgotPasswordData {
+  title: string;
+  info: string;
+  button: string;
+}
+
+interface ForgotPasswordFormData {
+  email: string;
+  clientId: string;
+  language: string;
+}
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const { client } = useClient();
+  const { texts } = useI18n();
+  const popups = texts.popups;
+  const forgotPasswordText: ForgotPasswordData = texts?.pages?.user.forgotPasswordText;
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    title: string;
+    description: string;
+  } | null>(null);
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (!isEmailValid(email)) {
-      setError("The email address is not valid.");
-      return;
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const handleForgotPassword = async (formData: ForgotPasswordFormData) => {
     try {
-      await api.post("/api/users/forgot-password", { email });
-      setMessage("Password reset email sent.");
-      setError("");
+      if (!client?._id) {
+        setAlert({
+          type: "error",
+          title:
+            popups.CLIENT_MISSING_CLIENT_ID.title || "Hoppla, etwas fehlt!",
+          description:
+            popups.CLIENT_MISSING_CLIENT_ID.description ||
+            "Wir konnten Ihre Registrierung nicht verarbeiten, da einige Informationen fehlen. Bitte laden Sie die Seite neu oder kontaktieren Sie den Support.",
+        });
+        return;
+      }
+      if (!formData.email) {
+        setAlert({
+          type: "error",
+          title: popups.USER_FORGOT_PASSWORD_EMPTY_EMAIL.title || "E-Mail erforderlich",
+          description: popups.USER_FORGOT_PASSWORD_EMPTY_EMAIL.description ||
+            "Bitte geben Sie Ihre E-Mail-Adresse ein, um das Zurücksetzen des Passworts zu starten.",
+       
+        });
+        return;
+      }
+      const response = await forgotPassword(formData);
+      if (response.success) {
+        const popupData = popups?.[response.code] || {};
+        setAlert({
+          type: "success",
+          title: popupData.title || popups.USER_FORGOT_PASSWORD_EMAIL_SENDED.title,
+          description:
+            popupData.description || popups.USER_FORGOT_PASSWORD_EMAIL_SENDED.description,
+        });
+      }
     } catch (error: any) {
-      setMessage("");
-      setError(error.response?.data?.message || "Error sending email.");
+      if (error.response && error.response.data) {
+        const errorKey = error.response.data.errorCode;
+        const popupData = popups?.[errorKey] || {};
+        setAlert({
+          type: "error",
+          title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
+          description:
+            popupData.description ||
+            error.response.data.message ||
+            popups.GLOBAL_INTERNAL_ERROR.description,
+        });
+      } else {
+        setAlert({
+          type: "error",
+          title: popups.GLOBAL_INTERNAL_ERROR.title,
+          description: popups.GLOBAL_INTERNAL_ERROR.description,
+        });
+      }
     }
   };
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <main className={styles.main}>
-        <header className={styles.header}>
-          <Image
-            src="/svg/logo-desktop.svg"
-            priority={true}
-            alt="Havenova logo"
-            width={2400}
-            height={400}
-            className={`${styles.desktop} ${styles.image}`}
-          />
-          <Image
-            src="/svg/logo-mobile.svg"
-            priority={true}
-            alt="Havenova logo"
-            width={450}
-            height={450}
-            className={`${styles.mobile} ${styles.image}`}
-          />
-        </header>
-        <section className={styles.section}>
-          <aside className={styles.aside}>
-            <h1 className={styles.h1}>Forgot Password?</h1>
-            <p className={styles.header_p}>
-              Enter your email address and we will send you a link to reset your
-              password.
-            </p>
-          </aside>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <input
-              className={styles.input}
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={handleBlur}
-              required
+      <section className={styles.section}>
+        <main className={styles.main}>
+          <header className={`${styles.header} card`}>
+            <h1 className={styles.h1}>{forgotPasswordText?.title}</h1>
+            <p>{forgotPasswordText?.info}</p>
+          </header>
+          <aside className={styles.aside_form}>
+            <UserContactForm
+              fields={["email", "clientId", "language"]}
+              onSubmit={handleForgotPassword}
+              mode="forgotPassword"
             />
-            {error && <p>{error}</p>}
-            <button className={styles.button} type="submit">
-              Send Reset Link
-            </button>
-          </form>
-            {message && <p>{message}</p>}
-        </section>
-      </main>
+          </aside>
+        </main>
+        {alert && (
+          <AlertPopup
+            type={alert.type}
+            title={alert.title}
+            description={alert.description}
+            onClose={() => setAlert(null)}
+          />
+        )}
+      </section>
     </Suspense>
   );
 };

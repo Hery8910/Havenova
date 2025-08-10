@@ -1,5 +1,5 @@
-'use client'
-import React, { createContext, useContext, useState, useEffect } from "react";
+'use client';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface I18nContextType {
   language: string;
@@ -21,42 +21,49 @@ export function I18nProvider({
   const [language, setLanguage] = useState(initialLanguage);
   const [texts, setTexts] = useState(initialTexts);
 
-    useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedLang = localStorage.getItem("havenova_lang");
-      if (storedLang && storedLang !== language) {
-        setLanguage(storedLang); // Dispara useEffect de abajo
-      }
-    }
-    // eslint-disable-next-line
-  }, []);
-  
+  // Detecta idioma inicial desde localStorage
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("havenova_lang", language);
-      document.cookie = `lang=${language}; path=/;`;
+    const storedLang = localStorage.getItem('havenova_lang');
+    if (storedLang && storedLang !== language) {
+      console.log('🌍 I18nProvider: Idioma inicial desde localStorage:', storedLang);
+      setLanguage(storedLang);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('havenova_lang', language);
+    document.cookie = `lang=${language}; path=/;`;
 
     fetch(`/i18n/${language}.json`)
       .then((res) => res.json())
-      .then((data) => setTexts(data))
+      .then((data) => {
+        setTexts(data);
+      })
       .catch((err) => {
-        console.error("Error loading language file:", err);
-        // Opcional: Si falla, muestra los textos iniciales
-        setTexts(initialTexts);
+        console.error('❌ I18nProvider: Error cargando textos', err);
+        // En caso de error, mantenemos texts anteriores en vez de volver a initialTexts
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [language]); 
+  }, [language]); // 👈 solo depende de language
+
+  // Escuchar cambios de idioma desde otras pestañas o componentes
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'havenova_lang' && event.newValue) {
+        setLanguage(event.newValue);
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
-    <I18nContext.Provider value={{ language, setLanguage, texts }}>
-      {children}
-    </I18nContext.Provider>
+    <I18nContext.Provider value={{ language, setLanguage, texts }}>{children}</I18nContext.Provider>
   );
 }
 
 export function useI18n() {
   const ctx = useContext(I18nContext);
-  if (!ctx) throw new Error("useI18n must be used within I18nProvider");
+  if (!ctx) throw new Error('useI18n must be used within I18nProvider');
   return ctx;
 }

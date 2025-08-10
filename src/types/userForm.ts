@@ -39,7 +39,12 @@ export interface formErrorProps {
     invalid: string;
   };
 }
-export type UserFormMode = "register" | "login" | "edit" | "resetPassword";
+export type UserFormMode =
+  | "register"
+  | "login"
+  | "edit"
+  | "forgotPassword"
+  | "resetPassword";
 
 export type UserFormField =
   | "name"

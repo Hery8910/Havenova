@@ -12,13 +12,10 @@ import ChangePassword from "../../../../components/user/changePassword/page";
 import AvatarSelector from "../../../../components/user/avatarSelector/page";
 import { AlertPopup } from "../../../../components/alertPopup/page";
 
-export interface RegisterData {
-  tilte: string;
+export interface EditData {
+  title: string;
   description: string;
-  cta: { title: string; label: string; url: string };
-  image: { src: string; alt: string };
-  backgroundImage: string;
-  button: string;
+  subheading: string;
 }
 interface EditFormData {
   name: string;
@@ -36,7 +33,7 @@ export default function Edit() {
   const router = useRouter();
   const { texts } = useI18n();
   const popups = texts.popups;
-  const register: RegisterData = texts?.pages?.user.register;
+  const edit: EditData = texts?.pages?.user.edit;
   const [alert, setAlert] = useState<{
     type: "success" | "error";
     title: string;
@@ -100,10 +97,11 @@ export default function Edit() {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <h3>Edit </h3>
+        <h3>{edit.title}</h3>
+        <p>{edit.description}</p>
       </header>
       <article className={styles.article}>
-          <h4>Personal Info</h4>
+          <h4 className={styles.h4}>{edit.subheading}</h4>
           <AvatarSelector />
           <ChangePassword />
           <UserContactForm
