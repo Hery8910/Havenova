@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useUser } from "../../contexts/UserContext";
-import styles from "./page.module.css";
-import { ImEye, ImEyeBlocked } from "react-icons/im";
-import { useI18n } from "../../contexts/I18nContext";
+import { useEffect, useState } from 'react';
+import { useUser } from '../../contexts/UserContext';
+import styles from './page.module.css';
+import { ImEye, ImEyeBlocked } from 'react-icons/im';
+import { useI18n } from '../../contexts/I18nContext';
 
 import {
   validateName,
@@ -12,26 +12,21 @@ import {
   validatePhone,
   validatePassword,
   validateAddress,
-} from "../../utils/validators/userFormValidator";
-import MessageBox from "../messageBox/page";
-import { useClient } from "../../contexts/ClientContext";
-import { registerUser } from "../../services/userService";
-import { AlertPopup } from "../alertPopup/page";
-import AvatarSelector from "../user/avatarSelector/page";
-import { RegisterData } from "../../app/user/register/page";
+} from '../../utils/validators/userFormValidator';
+import MessageBox from '../messageBox/page';
+import { useClient } from '../../contexts/ClientContext';
+import { registerUser } from '../../services/userService';
+import { AlertPopup } from '../alertPopup/page';
+import AvatarSelector from '../user/avatarSelector/page';
+import { RegisterData } from '../../app/user/register/page';
 import {
   formErrorProps,
   RegisterFormData,
   UserContactFormProps,
   UserFormMode,
-} from "../../types/userForm";
+} from '../../types/userForm';
 
-
-const UserContactForm: React.FC<UserContactFormProps> = ({
-  fields,
-  onSubmit,
-  mode,
-}) => {
+const UserContactForm: React.FC<UserContactFormProps> = ({ fields, onSubmit, mode }) => {
   const { user } = useUser();
   const { client } = useClient();
   const clientId = client?._id;
@@ -48,15 +43,15 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
   const submitLabel = buttonLabels[mode as UserFormMode] || texts.components.user.register.button;
 
   const [formData, setFormData] = useState<RegisterFormData>({
-    name: user?.name || "",
-    email: user?.email || "",
-    password: user?.password || "",
-    address: user?.address || "",
-    profileImage: user?.profileImage || "",
-    phone: user?.phone || "",
-    language: user?.language || "de",
-    theme: user?.theme || "light",
-    clientId: clientId || "",
+    name: user?.name || '',
+    email: user?.email || '',
+    password: user?.password || '',
+    address: user?.address || '',
+    profileImage: user?.profileImage || '',
+    phone: user?.phone || '',
+    language: user?.language || 'de',
+    theme: user?.theme || 'light',
+    clientId: clientId || '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -73,45 +68,41 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
     }
   }, [clientId, formData.clientId]);
 
-  const getValidationErrors = (
-    fieldName: string,
-    fieldValue: string
-  ): string => {
+  const getValidationErrors = (fieldName: string, fieldValue: string): string => {
     let errorKeys: string[] = [];
 
     switch (fieldName) {
-      case "name":
+      case 'name':
         errorKeys = validateName(fieldValue);
         break;
-      case "email":
+      case 'email':
         errorKeys = validateEmail(fieldValue);
         break;
-      case "phone":
+      case 'phone':
         errorKeys = validatePhone(fieldValue);
         break;
-      case "password":
+      case 'password':
         errorKeys = validatePassword(fieldValue);
         break;
-      case "address":
+      case 'address':
         errorKeys = validateAddress(fieldValue);
         break;
       default:
         errorKeys = [];
     }
 
-    if (errorKeys.length === 0) return "";
+    if (errorKeys.length === 0) return '';
 
     const errorKey = errorKeys[0];
     const fieldErrors = formError[fieldName as keyof formErrorProps];
 
     // @ts-ignore: indexación dinámica
-    return fieldErrors?.[errorKey] || "Ungültige Daten";
+    return fieldErrors?.[errorKey] || 'Ungültige Daten';
   };
 
   const firstFieldWithError = Object.keys(errors).find((key) => errors[key]);
 
-  const isFieldDisabled = (field: string) =>
-    !!firstFieldWithError && field !== firstFieldWithError;
+  const isFieldDisabled = (field: string) => !!firstFieldWithError && field !== firstFieldWithError;
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value: inputValue } = e.target;
@@ -125,7 +116,7 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
     setFormData({ ...formData, [name]: value });
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: prevErrors[name] ? "" : prevErrors[name],
+      [name]: prevErrors[name] ? '' : prevErrors[name],
     }));
   };
 
@@ -145,66 +136,60 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
       return;
     }
     onSubmit(
-      fields.reduce(
-        (obj, key) => ({ ...obj, [key]: formData[key] }),
-        {} as RegisterFormData
-      )
+      fields.reduce((obj, key) => ({ ...obj, [key]: formData[key] }), {} as RegisterFormData)
     );
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      {fields.includes("name") && (
+      {fields.includes('name') && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
             type="text"
             name="name"
             placeholder="Name"
-            value={formData.name || ""}
+            value={formData.name || ''}
             onChange={handleChange}
             onBlur={handleBlur}
             autoComplete="name"
             required
-            disabled={isFieldDisabled("name")}
+            disabled={isFieldDisabled('name')}
           />
-          {touched.name && errors.name && (
-            <MessageBox message={errors.name} className="error" />
-          )}
+          {touched.name && errors.name && <MessageBox message={errors.name} className="error" />}
         </div>
       )}
-      {fields.includes("email") && mode !== "resetPassword" && (
+      {fields.includes('email') && mode !== 'resetPassword' && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
             type="email"
             name="email"
             placeholder="Email Address"
-            value={formData.email || ""}
+            value={formData.email || ''}
             onChange={handleChange}
             onBlur={handleBlur}
             autoComplete="email"
             required
-            disabled={isFieldDisabled("email")}
+            disabled={isFieldDisabled('email')}
           />
-          {touched.email && errors.email && (
-            <MessageBox message={errors.email} className="error" />
-          )}
+          {touched.email && errors.email && <MessageBox message={errors.email} className="error" />}
         </div>
       )}
-      {fields.includes("password") && (
+      {fields.includes('password') && (
         <div className={styles.wrapper}>
           <div className={styles.div}>
             <input
               className={styles.input}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder="Password"
-              value={formData.password || ""}
+              value={formData.password || ''}
               onChange={handleChange}
               onBlur={handleBlur}
               required
-              disabled={isFieldDisabled("password")}
+              autoComplete="new-password"
+              disabled={isFieldDisabled('password')}
             />
             <button
               className={styles.show}
@@ -219,42 +204,40 @@ const UserContactForm: React.FC<UserContactFormProps> = ({
           )}
         </div>
       )}
-      {fields.includes("address") && (
+      {fields.includes('address') && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
             type="text"
             name="address"
             placeholder="Address"
-            value={formData.address || ""}
+            value={formData.address || ''}
             onChange={handleChange}
             onBlur={handleBlur}
             autoComplete="address"
             required
-            disabled={isFieldDisabled("address")}
+            disabled={isFieldDisabled('address')}
           />
           {touched.address && errors.address && (
             <MessageBox message={errors.address} className="error" />
           )}
         </div>
       )}
-      {fields.includes("phone") && (
+      {fields.includes('phone') && (
         <div className={styles.wrapper}>
           <input
             className={styles.input}
             type="tel"
             name="phone"
             placeholder="Phone +49 123456789"
-            value={formData.phone || ""}
+            value={formData.phone || ''}
             onChange={handleChange}
             onBlur={handleBlur}
             autoComplete="phone"
             required
-            disabled={isFieldDisabled("phone")}
+            disabled={isFieldDisabled('phone')}
           />
-          {touched.phone && errors.phone && (
-            <MessageBox message={errors.phone} className="error" />
-          )}
+          {touched.phone && errors.phone && <MessageBox message={errors.phone} className="error" />}
         </div>
       )}
       <button type="submit" className="button">

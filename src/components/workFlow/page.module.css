@@ -5,30 +5,45 @@
   align-items: center;
 }
 .p {
-  margin-bottom: 64px;
+  margin: 128px auto 32px;
+  max-width: 700px;
+  text-align: center;
+  font-size: clamp(18px, 3.5vw, 26px);
 }
 .ul {
+  margin: 64px;
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 32px;
+  gap: 64px;
   flex-wrap: wrap;
 }
 .li {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   max-width: 450px;
 }
-.image {
-  border-radius: 8px;
-  filter: drop-shadow(var(--shadow-dark));
+.article {
+  position: absolute;
+  bottom: -110px;
+  left: 10px;
+  width: 300px;
+  padding: 16px;
 }
-.h4, .h3 {
-  font-weight: 700;
+.image {
+  width: auto;
+  border-radius: 8px;
+  filter: drop-shadow(var(--shadow));
+}
+
+.h3 {
   color: var(--text-secondary);
 }
 .h4 {
-  margin-top: 16px;
+  color: var(--text-primary);
+  font-weight: 700;
+  color: inherit;
 }

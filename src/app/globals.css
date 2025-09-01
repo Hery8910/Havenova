@@ -3,31 +3,37 @@
 ============================ */
 :root {
   /* Brand Colors */
-  --brand-primary: #0a85ff;
-  --brand-secondary: #daffed;
-  --brand-accent: #0d5c63;
+  --brand-primary: #0768c9;
+  --brand-secondary: #09515a;
+  --brand-accent: #8be8cb;
 
   /* Backgrounds & Text */
-  --bg-main: #0e2439b3;
-  --bg-gradient: #0e2439b3;
-  --bg-card: #d1edffcc;
-  --text-primary: #1f1f1f;
-  --text-secondary: #7b7b7b;
-  --text-inverted: #f0f0f0;
-  --shadow-dark: 0px 0px 16px rgba(46, 46, 46, 0.719);
-  --shadow-light: 0px 0px 16px rgba(165, 165, 165, 0.466);
+  --bg-primary: #cbdcee;
+  --bg-secondary: #cadcdf;
+  --bg-accent: #d9ece6;
+
+  --text-primary: #424242;
+  --text-secondary: #616161;
+
+  --bg-card: #0768c983;
+
+  --shadow: 0px 4px 8px #1313139d;
+
   /* Font */
   --font-family-main: 'Inter', sans-serif;
   --font-size-base: 16px;
 
   /* Status Colors */
-  --color-success: #28a745;
-  --color-error: #dc3545;
+  --color-success: #053d12ff;
+  --bg-success: #35b4537c;
+
+  --color-error: #53050dff;
+  --bg-error: #da4a58a9;
+
   --color-warning: #ffc107;
-  --color-info: #4c929c;
-  --bg-success: #28a745b3;
-  --bg-error: #dc3546b3;
   --bg-warning: #fff3cd;
+
+  --color-info: #20525a;
   --bg-info: #d1ecf1;
 }
 
@@ -35,51 +41,69 @@
    DARK MODE (ACTIVADO POR data-theme)
 ============================ */
 [data-theme='dark'] {
-  --bg-main: #2c2c2cb4;
-  --bg-card: #d1edff87;
+  /* Brand Colors */
+  --brand-primary: #0768c9;
+  --brand-secondary: #09515a;
+  --brand-accent: #8be8cb;
 
-  --text-primary: #f2f2f2;
-  --text-secondary: #aaaaaa;
-  --text-inverted: #000000;
+  /* Backgrounds & Text */
+  --bg-primary: #031d36;
+  --bg-secondary: #05373d;
+  --bg-accent: #1e302c;
 
-  --brand-primary: #0a84ff;
-  --brand-secondary: #2e2e2e;
-  --brand-accent: #ffb347;
+  --text-primary: #dad9d9;
+  --text-secondary: #c7bdbd;
 
-  /* Success */
+  --bg-card: #022a3094;
+
+  --shadow: 0px 4px 8px #1313139d;
+
+  /* Status Colors */
   --color-success: #28d07a;
   --bg-success: #163b2ab3;
 
-  /* Error */
   --color-error: #ff6b6b;
   --bg-error: #3d1a1ab3;
 
-  /* Info */
-  --color-info: #66d9ef;
+  --color-warning: #ffc107;
+  --bg-warning: #4a3b00b3;
+
+  --color-info: #2690a5;
   --bg-info: #1a2e3db3;
 }
 
 /* ============================
    BASE Y TIPOGRAFÍA
 ============================ */
+
+*,
+:root,
 html {
-  color-scheme: light dark;
-}
-* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-  font-family: var(--font-family-main);
-  background: var(--bg-main);
-  background: radial-gradient(circle, var(--bg-main) 0%, var(--bg-gradient) 100%);
-  color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  transition: all 1s ease-in-out;
+  margin: 0 auto;
+  padding: 0;
+  width: 100dvw;
+  font-family: var(--font-family-main);
+  color: var(--text-primary);
+  background: linear-gradient(
+    149deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 50%,
+    var(--bg-accent) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  overflow-x: hidden;
 }
 
 /* ============================
@@ -120,11 +144,10 @@ a {
   gap: 16px;
   font-weight: 700;
   font-size: clamp(14px, 3vw, 18px);
-  padding: 8px 16px;
+  padding: 12px 16px;
   border-radius: 4px;
   background: var(--brand-primary);
-  border: 1px solid var(--brand-primary);
-  box-shadow: var(--shadow-dark);
+  box-shadow: 0px 4px 8px #1313139d;
   color: var(--text-primary);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -148,13 +171,13 @@ a {
 .card {
   padding: 16px;
   background: var(--bg-card);
-  background: radial-gradient(circle, var(--bg-card) 0%, var(--bg-gradient) 100%);
+  backdrop-filter: blur(7px);
   border-radius: 8px;
-  box-shadow: var(--shadow-dark);
+  box-shadow: var(--shadow);
 }
 
 .quote {
-  color: #d93434;
+  color: var(--color-error);
   font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
   font-style: italic;
 }

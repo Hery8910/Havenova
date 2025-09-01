@@ -4,13 +4,9 @@
   justify-content: space-between;
   color: inherit;
   width: 250px;
-  height: -webkit-fill-available;
+  height: 100%;
   background: var(--brand-primary);
-  background: linear-gradient(
-    0deg,
-    var(--brand-accent) 0%,
-    var(--brand-primary) 100%
-  );
+  background: linear-gradient(0deg, var(--brand-accent) 0%, var(--brand-primary) 100%);
   box-shadow: var(--shadow-dark);
   border-radius: 8px 0 0 8px;
   color: var(--text-secundary);
@@ -55,7 +51,7 @@
   box-shadow: var(--shadow-dark);
 }
 .logout {
-   display: flex;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 12px;
@@ -68,4 +64,3 @@
   border: none;
   padding: 0;
 }
-

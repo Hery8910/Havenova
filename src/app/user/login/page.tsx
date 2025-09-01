@@ -1,18 +1,18 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-import styles from "./page.module.css";
-import Image from "next/image";
-import { loginUser } from "../../../services/userService";
-import Link from "next/link";
-import { useUser } from "../../../contexts/UserContext";
-import { ServiceRequestItem } from "../../../types/services";
-import { saveUserToStorage } from "../../../utils/guestUserStorage";
-import { useClient } from "../../../contexts/ClientContext";
-import { useI18n } from "../../../contexts/I18nContext";
-import UserContactForm from "../../../components/Form/page";
-import { AlertPopup } from "../../../components/alertPopup/page";
+import styles from './page.module.css';
+import Image from 'next/image';
+import { loginUser } from '../../../services/userService';
+import Link from 'next/link';
+import { useUser } from '../../../contexts/UserContext';
+import { ServiceRequestItem } from '../../../types/services';
+import { saveUserToStorage } from '../../../utils/guestUserStorage';
+import { useClient } from '../../../contexts/ClientContext';
+import { useI18n } from '../../../contexts/I18nContext';
+import UserContactForm from '../../../components/Form/page';
+import { AlertPopup } from '../../../components/alertPopup/page';
 
 export interface LoginData {
   title: string;
@@ -30,12 +30,12 @@ interface LoginFormData {
 const Login = () => {
   const { refreshUser } = useUser();
   const { client } = useClient();
-  const router = useRouter();
   const { texts } = useI18n();
+  const router = useRouter();
   const popups = texts.popups;
   const login: LoginData = texts?.pages?.user.login;
   const [alert, setAlert] = useState<{
-    type: "success" | "error";
+    type: 'success' | 'error';
     title: string;
     description: string;
   } | null>(null);
@@ -45,10 +45,9 @@ const Login = () => {
       if (!client?._id) {
         const popupData = popups?.INTERNAL_ERROR || {};
         setAlert({
-          type: "error",
+          type: 'error',
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
-          description:
-            popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
+          description: popupData.description || popups.GLOBAL_INTERNAL_ERROR.description,
         });
         return;
       }
@@ -60,21 +59,20 @@ const Login = () => {
         const popupData = popups?.[response.code] || {};
         await refreshUser();
         setAlert({
-          type: "success",
+          type: 'success',
           title: popupData.title || popups.USER_LOGIN_SUCCESS.title,
-          description:
-            popupData.description || popups.USER_LOGIN_SUCCESS.description,
+          description: popupData.description || popups.USER_LOGIN_SUCCESS.description,
         });
       }
       setTimeout(() => {
-        router.push("/");
+        router.push('/');
       }, 3000);
     } catch (error: any) {
       if (error.response && error.response.data) {
         const errorKey = error.response.data.errorCode;
         const popupData = popups?.[errorKey] || {};
         setAlert({
-          type: "error",
+          type: 'error',
           title: popupData.title || popups.GLOBAL_INTERNAL_ERROR.title,
           description:
             popupData.description ||
@@ -83,7 +81,7 @@ const Login = () => {
         });
       } else {
         setAlert({
-          type: "error",
+          type: 'error',
           title: popups.GLOBAL_INTERNAL_ERROR.title,
           description: popups.GLOBAL_INTERNAL_ERROR.description,
         });
@@ -113,7 +111,7 @@ const Login = () => {
         </header>
         <aside className={styles.aside_form}>
           <UserContactForm
-            fields={["email", "password", "clientId"]}
+            fields={['email', 'password', 'clientId']}
             onSubmit={handleLogin}
             mode="login"
           />

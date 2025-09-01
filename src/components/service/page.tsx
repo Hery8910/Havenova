@@ -1,10 +1,11 @@
-import styles from "./page.module.css";
-import { useI18n } from "../../contexts/I18nContext";
-import Image from "next/image";
-import Link from "next/link";
+import styles from './page.module.css';
+import { useI18n } from '../../contexts/I18nContext';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export interface ServicesItems {
   title: string;
+
   image: {
     src: string;
     alt: string;
@@ -12,6 +13,8 @@ export interface ServicesItems {
 }
 export interface ServicesData {
   title: string;
+  subtitle: string;
+  description: string;
   items: ServicesItems[];
   cta: { label: string; href: string };
 }
@@ -19,19 +22,22 @@ export interface ServicesData {
 const Service = () => {
   const { texts } = useI18n();
   const services: ServicesData | undefined = texts?.pages?.home?.services;
-  
-      if (!services) {
+
+  if (!services) {
     return (
       <section className={styles.section}>
-        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+        <div
+          className={styles.skeleton}
+          style={{ width: '100%', height: 504, background: '#eee' }}
+        />
       </section>
     );
   }
-  
-  
+
   return (
     <section className={styles.section}>
       <h2 className={styles.h2}>{services.title}</h2>
+      <h3 className={styles.h3}>{services.subtitle}</h3>
       <ul className={styles.ul}>
         {services.items.map((item, idx) => (
           <li className={styles.li} key={idx}>
@@ -48,6 +54,7 @@ const Service = () => {
           </li>
         ))}
       </ul>
+      <p className={styles.p}>{services.description}</p>
       <Link href={services.cta.href} className="button">
         {services.cta.label}
       </Link>

@@ -9,6 +9,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .wraper {
   display: flex;
@@ -17,30 +20,22 @@
   gap: 8px;
 }
 .main {
-  max-width: 350px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
-  padding: 32px 0 0 0;
   border-radius: 8px;
-  box-shadow: 0 4px 30px rgba(122, 122, 122, 0.1);
   backdrop-filter: blur(8.1px);
+  box-shadow: var(--shadow);
 }
 .article {
-  padding: 64px 32px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 32px;
-  text-align: center;
-  border-radius: 64px 8px 8px 8px;
-  box-shadow: none;
-  backdrop-filter: blur(8.1px);
-  background-color: var(--bg-gradient);
-  box-shadow: var( --shadow-dark);
 }
 .button {
   background-color: transparent;
@@ -50,5 +45,6 @@
   cursor: pointer;
 }
 .image {
-    filter: drop-shadow(0px 0px 16px rgba(3, 41, 41, 0.8));
+  border-radius: 8px 8px 0 0;
+  filter: drop-shadow(0px 4px 8px rgba(3, 41, 41, 0.8));
 }

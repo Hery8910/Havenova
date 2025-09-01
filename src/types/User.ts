@@ -1,4 +1,4 @@
-import { ServiceOrder, ServiceRequestItem } from "./services";
+import { ServiceRequest } from './services';
 
 // src/types/User.ts
 export interface User {
@@ -13,8 +13,8 @@ export interface User {
   isVerified: boolean;
   role: string;
   language: string;
-  theme: "light" | "dark";
-  requests: ServiceOrder[];
+  theme: 'light' | 'dark';
+  requests: ServiceRequest[];
   createdAt: Date;
 }
 export interface RegisterPayload {
@@ -46,7 +46,7 @@ export interface UpdateUserPayload {
   address?: string;
   phone?: string;
   profileImage?: string;
-  theme?: "light" | "dark";
+  theme?: 'light' | 'dark';
   language?: string;
   clientId: string;
 }
@@ -70,4 +70,3 @@ export interface ResetPasswordPayload {
 export interface GetUserPayload {
   clientId: string;
 }
-

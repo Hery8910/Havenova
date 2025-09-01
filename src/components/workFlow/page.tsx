@@ -1,8 +1,8 @@
 // src/components/WorkFlow.tsx
-import Link from "next/link";
-import Image from "next/image";
-import styles from "./page.module.css";
-import { useI18n } from "../../contexts/I18nContext";
+import Link from 'next/link';
+import Image from 'next/image';
+import styles from './page.module.css';
+import { useI18n } from '../../contexts/I18nContext';
 
 export interface HowItWorksStep {
   title: string;
@@ -28,10 +28,13 @@ const WorkFlow: React.FC = () => {
   const { texts } = useI18n();
   const howItWorks: HowItWorksData | undefined = texts?.pages?.home?.howItWorks;
 
-      if (!howItWorks) {
+  if (!howItWorks) {
     return (
       <section className={styles.section}>
-        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+        <div
+          className={styles.skeleton}
+          style={{ width: '100%', height: 504, background: '#eee' }}
+        />
       </section>
     );
   }
@@ -40,7 +43,6 @@ const WorkFlow: React.FC = () => {
     <section className={styles.section}>
       <h2>{howItWorks.title}</h2>
       <h3 className={styles.h3}>{howItWorks.subtitle}</h3>
-      <p className={styles.p}>{howItWorks.description}</p>
       <ul className={styles.ul}>
         {howItWorks.steps.map((step) => (
           <li className={styles.li} key={step.title}>
@@ -49,13 +51,19 @@ const WorkFlow: React.FC = () => {
               src={step.image.src}
               alt={step.image.alt}
               width={450}
-              height={350}
+              height={300}
             />
-            <h4 className={styles.h4}>{step.title}</h4>
-            <p>{step.description}</p>
+            <article className={`${styles.article} card`}>
+              <h4 className={styles.h4}>{step.title}</h4>
+              <p>{step.description}</p>
+            </article>
           </li>
         ))}
       </ul>
+      <p className={styles.p}>{howItWorks.description}</p>
+      <Link href={howItWorks.cta.href} className="button">
+        {howItWorks.cta.label}
+      </Link>
     </section>
   );
 };

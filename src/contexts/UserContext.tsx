@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, {
   createContext,
   useContext,
@@ -6,28 +6,23 @@ import React, {
   ReactNode,
   useEffect,
   useCallback,
-} from "react";
-import { v4 as uuidv4 } from "uuid";
-import { ServiceRequestItem } from "../types/services";
-import { User } from "../types/User";
-import { useClient } from "./ClientContext";
-import api from "../services/api";
-import { getUser, updateUser } from "../services/userService";
+} from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ServiceRequestItem } from '../types/services';
+import { User } from '../types/User';
+import { useClient } from './ClientContext';
+import api from '../services/api';
+import { getUser, updateUser } from '../services/userService';
 
 // --- Utilidades Local Storage ---
-const USER_KEY = "havenova_user";
-function getRandomAvatarPath(): string {
-  const number = Math.floor(Math.random() * 10) + 1;
-  return `https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-${number}.svg`;
-}
+const USER_KEY = 'havenova_user';
 
 function getPersistentGuestAvatar(): string {
-  if (typeof window === "undefined")
-    return "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6_mofdp9.svg";
-  const key = "guest_avatar";
+  if (typeof window === 'undefined') return '/svg/user.svg';
+  const key = 'guest_avatar';
   let avatar = localStorage.getItem(key);
   if (!avatar) {
-    avatar = getRandomAvatarPath();
+    avatar = '/svg/user.svg';
     localStorage.setItem(key, avatar);
   }
   return avatar;
@@ -53,37 +48,37 @@ function getUserFromStorage(): User | null {
 
 function clearUserFromStorage() {
   localStorage.removeItem(USER_KEY);
-  localStorage.removeItem("guest_avatar");
+  localStorage.removeItem('guest_avatar');
 }
 
 export const initialGuestUser: User = {
-  _id: "",
-  name: "",
-  email: "",
-  password: "",
-  address: "",
-  profileImage: "",
-  phone: "",
+  _id: '',
+  name: '',
+  email: '',
+  password: '',
+  address: '',
+  profileImage: '',
+  phone: '',
   isVerified: false,
-  role: "guest",
-  language: "de",
-  theme: "light",
+  role: 'guest',
+  language: 'de',
+  theme: 'light',
   requests: [],
   createdAt: new Date(),
-  clientId: "",
+  clientId: '',
 };
 
 interface UserContextProps {
   user: User | null;
   loading: boolean;
   setUser: (user: User) => void;
-  refreshUser: () => Promise<void>;
+  refreshUser: (onSessionExpired?: () => void) => Promise<void>;
   logout: () => void;
   addRequestToUser: (newRequest: ServiceRequestItem) => void;
   removeRequestFromUser: (id: string) => void;
   clearAllRequests: () => void;
   updateUserLanguage: (lang: string) => Promise<void>;
-  updateUserTheme: (lang: "light" | "dark") => Promise<void>;
+  updateUserTheme: (lang: 'light' | 'dark') => Promise<void>;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -94,7 +89,7 @@ interface DashboardProviderProps {
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const { client } = useClient();
-  const clientId = client?._id || "";
+  const clientId = client?._id || '';
 
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -109,41 +104,45 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   }, [user]);
 
   // --- REFRESH USER: Trae perfil actualizado desde el backend SOLO SI usuario registrado ---
-  const refreshUser = useCallback(async () => {
-    try {
-      const response = await getUser(clientId);
-      if (response.data) {
-        setUser(response.data);
-        saveUserToStorage(response.data);
-        } else {
-          setUser(initialGuestUser);
-        }
-      } catch (error) {
+  const refreshUser = useCallback(
+    async (onSessionExpired?: () => void) => {
       const localUser = getUserFromStorage();
-      setUser(
-        localUser || {
-          ...initialGuestUser,
-          clientId: clientId || "",
-          profileImage: getPersistentGuestAvatar(),
+
+      try {
+        const response = await getUser(clientId);
+        const user = response.data;
+        if (user) {
+          setUser(user);
+          saveUserToStorage(user);
         }
-      );
-    } finally {
-      setLoading(false); // Ya sabemos el estado del usuario
-    }
-  }, [clientId]);
+      } catch (error: any) {
+        clearUserFromStorage();
+        setUser({
+          ...initialGuestUser,
+          clientId: clientId || '',
+          profileImage: getPersistentGuestAvatar(),
+        });
+
+        const wasLoggedIn = !!localUser && localUser.role !== 'guest';
+
+        if (wasLoggedIn && (error?.response?.status === 401 || error?.response?.status === 403)) {
+          onSessionExpired?.();
+        }
+      } finally {
+        setLoading(false);
+      }
+    },
+    [clientId]
+  );
 
   const updateUserLanguage = useCallback(
     async (newLang: string) => {
-      if (user?.role === "guest") {
-        setUser((prev) =>
-          prev ? { ...prev, language: newLang } : initialGuestUser
-        );
-        saveUserToStorage(
-          user ? { ...user, language: newLang } : initialGuestUser
-        );
+      if (user?.role === 'guest') {
+        setUser((prev) => (prev ? { ...prev, language: newLang } : initialGuestUser));
+        saveUserToStorage(user ? { ...user, language: newLang } : initialGuestUser);
         return;
       }
-       const payload = {
+      const payload = {
         clientId,
         email: user?.email,
         language: newLang,
@@ -157,21 +156,17 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
           setUser(initialGuestUser);
         }
       } catch (err) {
-        console.error("Failed to update user language:", err);
+        console.error('Failed to update user language:', err);
       }
     },
     [user, clientId]
   );
 
   const updateUserTheme = useCallback(
-    async (newTheme: "light" | "dark") => {
-      if (user?.role === "guest") {
-        setUser((prev) =>
-          prev ? { ...prev, theme: newTheme } : initialGuestUser
-        );
-        saveUserToStorage(
-          user ? { ...user, theme: newTheme } : initialGuestUser
-        );
+    async (newTheme: 'light' | 'dark') => {
+      if (user?.role === 'guest') {
+        setUser((prev) => (prev ? { ...prev, theme: newTheme } : initialGuestUser));
+        saveUserToStorage(user ? { ...user, theme: newTheme } : initialGuestUser);
         return;
       }
       const payload = {
@@ -185,10 +180,10 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
           setUser(response.data);
           saveUserToStorage(response.data);
         } else {
-          setUser(initialGuestUser); 
+          setUser(initialGuestUser);
         }
       } catch (err) {
-        console.error("Failed to update user theme:", err);
+        console.error('Failed to update user theme:', err);
       }
     },
     [user, clientId]
@@ -221,9 +216,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     setUser((prev) => {
       const updated = {
         ...prev,
-        requests: prev.requests.filter(
-          (req: ServiceRequestItem) => req.id !== id
-        ),
+        requests: prev.requests.filter((req: ServiceRequestItem) => req.id !== id),
       };
       saveUserToStorage(updated);
       return updated;
@@ -264,7 +257,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error("useUser must be used within a DashboardProvider");
+    throw new Error('useUser must be used within a DashboardProvider');
   }
   return context;
 };

@@ -1,32 +1,16 @@
 {
-  "navigation": [
-    {
-      "label": "Leistungen",
-      "href": "#services"
-    },
-    {
-      "label": "So funktioniert’s",
-      "href": "#how-it-works"
-    },
-    {
-      "label": "Mitgliedschaft",
-      "href": "#membership"
-    },
-    { "label": "Blog", "href": "#blog" },
-    { "label": "Kontakt", "href": "#contact" }
-  ],
   "pages": {
     "home": {
       "hero": {
-        "headline1": "Professionelle Hauswartung",
-        "headline2": "Reinigungsservice in Berlin",
-        "subtitle": "Schnelle, zuverlässige und vertrauenswürdige Dienstleistungen für Ihr Zuhause oder Büro.",
+        "headline1": "Hauswartung",
+        "headline2": "Wohnungsreinigung",
+        "subtitle": "Schnelle, zuverlässige und professionelle Hauswartung und Reinigung in Berlin. Entdecken Sie alle unsere Leistungen im Überblick.",
         "cta": {
-          "label": "Jetzt Service anfragen",
+          "label": "Unsere Leistungen ansehen",
           "href": "/services"
         },
         "image": {
-          "src": "/images/Havenova-Hero.png",
+          "src": "/images/hero.png",
           "alt": "Gemütliches Wohnzimmer mit Kommode und Trockenblumen."
         }
       },
@@ -47,20 +31,24 @@
           }
         ],
         "image": {
-          "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/2150576450_w3ezpl.webp",
+          "src": "/images/benefits.webp",
           "alt": "Bauausrüstung und Baupläne"
         }
       },
       "howItWorks": {
         "title": "So funktioniert’s",
         "subtitle": "Nahtlos, transparent und zuverlässig",
-        "description": "Bei Havenova machen wir die Buchung eines Handwerkers einfach und stressfrei...",
+        "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
+        "cta": {
+          "label": "Mehr über uns erfahren",
+          "href": "/about"
+        },
         "steps": [
           {
             "title": "Service anfragen",
-            "description": "Übermitteln Sie Ihre Daten online oder telefonisch.",
+            "description": "Übermitteln Sie Ihre Daten online, schnell, unkompliziert und direkt über unsere App.",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927426/639_eq1uxp.webp",
+              "src": "/images/howItWorks-step-1.webp",
               "alt": "Serviceanfrage ausfüllen"
             }
           },
@@ -68,7 +56,7 @@
             "title": "Angebot erhalten",
             "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/2373_w9dcc3.webp",
+              "src": "/images/howItWorks-step-2.webp",
               "alt": "Angebot erhalten"
             }
           },
@@ -76,58 +64,56 @@
             "title": "Service erhalten",
             "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927427/3147_y3qeps.webp",
+              "src": "/images/howItWorks-step-3.webp",
               "alt": "Fachkraft bei der Arbeit"
             }
           }
-        ],
-        "cta": {
-          "label": "Unsere Leistungen entdecken",
-          "href": "/user/register"
-        }
+        ]
       },
       "services": {
         "title": "Unsere Leistungen",
+        "subtitle": "Maßgeschneiderte Dienstleistungen für Ihr Zuhause",
+        "description": "Von Möbelmontage bis zur gründlichen Reinigung – wir bieten zuverlässige Lösungen für jede Situation. Entdecken Sie, wie wir helfen können.",
         "items": [
           {
             "title": "Küchenmontage",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/kitchen-furniture_8052817_c8q7bu.webp",
+              "src": "/svg/kitchen-assembly.svg",
               "alt": "Symbol Küchenmontage"
             }
           },
           {
             "title": "Hausservice",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/home-renovation_10726215_uingrs.webp",
+              "src": "/svg/home-service.svg",
               "alt": "Symbol Hausservice"
             }
           },
           {
             "title": "Fensterreinigung",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927434/window-cleaning_16872519_aghok7.webp",
+              "src": "/svg/windows-cleaning.svg",
               "alt": "Symbol Fensterreinigung"
             }
           },
           {
             "title": "Wohnungsreinigung",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927429/cleaning_3475522_hyzxc6.webp",
+              "src": "/svg/house-cleaning.svg",
               "alt": "Symbol Wohnungsreinigung"
             }
           },
           {
             "title": "Möbelmontage",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927430/furniture-assembly_shu6wd.webp",
+              "src": "/svg/furniture-assembly.svg",
               "alt": "Symbol Möbelmontage"
             }
           },
           {
             "title": "Küchenreinigung",
             "image": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1750927433/washing-plates_16430273_slliqf.webp",
+              "src": "/svg/kitchen-cleaning.svg",
               "alt": "Symbol Küchenreinigung"
             }
           }
@@ -303,9 +289,591 @@
         "notLoggedInText": "Um auf Ihr Profil zuzugreifen und es zu verwalten, loggen Sie sich bitte in Ihr Havenova-Konto ein. So können Sie Ihre persönlichen Daten einsehen, Serviceanfragen verfolgen und Ihre Einstellungen aktualisieren.",
         "loginButton": "Zum Login"
       }
+    },
+    "legal": {
+      "privacy": {
+        "hero": {
+          "headline1": "Datenschutzerklärung",
+          "headline2": "Transparenz und Datensicherheit",
+          "subtitle": "Diese Richtlinie erklärt, wie Havenova deine personenbezogenen Daten auf dieser Plattform verarbeitet, die technisch von Maped Solutions UG betrieben wird.",
+          "image": {
+            "src": "/images/privacy-hero.png",
+            "alt": "Schloss und geschützte Daten"
+          }
+        },
+        "overview": {
+          "title": "Überblick",
+          "intro": "Deine Privatsphäre ist uns wichtig. Wir verarbeiten deine Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Hier findest du Informationen zu Verantwortlichen, Zwecken, Drittanbietern und deinen Rechten.",
+          "bullets": [
+            "Verantwortlicher: Havenova (Art. 4(7) DSGVO).",
+            "Auftragsverarbeiter: Maped Solutions UG (Art. 28 DSGVO).",
+            "Rechtsgrundlagen: Vertrag (Art. 6 Abs. 1 lit. b), rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c), berechtigtes Interesse (Art. 6 Abs. 1 lit. f), Einwilligung (Art. 6 Abs. 1 lit. a).",
+            "Bevorzugte Datenregion: EU - Aktive",
+            "Mögliche internationale Übermittlungen mit Schutzmaßnahmen (SCC)."
+          ],
+          "cta": {
+            "label": "Datenschutzkontakt",
+            "href": "/contact"
+          }
+        },
+        "roles": {
+          "title": "Verantwortlichkeiten",
+          "controller": {
+            "title": "Verantwortlicher",
+            "body": "Der Verantwortliche ist Havenova, ansässig in Stollberger Str.43, 12627 Berlin. Kontakt: contact@havenova.de."
+          },
+          "processor": {
+            "title": "Auftragsverarbeiter",
+            "body": "Maped Solutions UG agiert als Auftragsverarbeiter gemäß Art. 28 DSGVO und betreibt die Plattform im Auftrag von Havenova. Technischer Kontakt: support@mapedsolutions.de."
+          },
+          "links": [
+            {
+              "label": "Art. 4(7) – Verantwortlicher",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 28 – Auftragsverarbeiter",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            }
+          ]
+        },
+        "purposesAndLegalBases": {
+          "title": "Zwecke und Rechtsgrundlagen",
+          "intro": "Wir verarbeiten deine Daten nur zu klar definierten und legitimen Zwecken.",
+          "items": [
+            {
+              "purpose": "Bereitstellung von Diensten und Kontoverwaltung",
+              "examples": {
+                "title": "Beispiele: ",
+                "description": "Kontoerstellung, Bearbeitung von Anfragen, Reservierungen, Angeboten und Rechnungen"
+              },
+              "legalBases": {
+                "title": "Rechtliche Grundlagen: ",
+                "description": "Art. 6 Abs. 1 lit. b – Vertragserfüllung"
+              }
+            },
+            {
+              "purpose": "Rechtliche Verpflichtungen",
+              "examples": {
+                "title": "Beispiele: ",
+                "description": "Steuerliche und buchhalterische Pflichten"
+              },
+              "legalBases": {
+                "title": "Rechtliche Grundlagen: ",
+                "description": "Art. 6 Abs. 1 lit. c – Gesetzliche Verpflichtung"
+              }
+            },
+            {
+              "purpose": "Plattformverbesserung und Sicherheit",
+              "examples": {
+                "title": "Beispiele: ",
+                "description": "Protokolle, Betrugsprävention, Leistung, Support"
+              },
+              "legalBases": {
+                "title": "Rechtliche Grundlagen: ",
+                "description": "Art. 6 Abs. 1 lit. f – Berechtigtes Interesse"
+              }
+            },
+            {
+              "purpose": "Marketing und nicht-essentielle Cookies",
+              "examples": {
+                "title": "Beispiele: ",
+                "description": "Newsletter, Aktionen, Analyse"
+              },
+              "legalBases": {
+                "title": "Rechtliche Grundlagen: ",
+                "description": "Art. 6 Abs. 1 lit. a – Einwilligung (widerrufbar)"
+              }
+            }
+          ]
+        },
+        "dataCategories": {
+          "title": "Kategorien personenbezogener Daten",
+          "description": "Je nach Nutzung der Plattform können folgende Daten erhoben werden:",
+          "items": [
+            "Identifikations- und Kontaktdaten (Name, E-Mail, Telefonnummer, Adresse).",
+            "Kontoinformationen und Sicherheit (gehashte Passwörter, Sprache, Rollen).",
+            "Details zu Anfragen und Leistungen (Typen, Beschreibungen, Orte, Termine).",
+            "Vertrags- und Zahlungsdaten (Angebote, Rechnungen, Zahlungen über Drittanbieter).",
+            "Technische Daten (IP-Adresse, Gerät, Logs, Cookies je nach Präferenz)."
+          ]
+        },
+        "thirdParties": {
+          "title": "Externe Dienstleister",
+          "subtitle": "Wir nutzen spezialisierte Anbieter, um die Plattform sicher und effizient zu betreiben.",
+          "intro": "Die folgende Liste zeigt externe Dienste (Hosting, Datenbank, E-Mail, CDN, Zahlungen) mit Zwecken und Datenschutzrichtlinien.",
+          "table": {
+            "headers": {
+              "name": "Anbieter",
+              "purpose": "Zweck",
+              "region": "Region",
+              "privacy": "Datenschutzrichtlinie"
+            },
+            "body": [
+              {
+                "name": "Vercel",
+                "purpose": "Frontend-Hosting",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "Vercel",
+                  "href": "https://vercel.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "MongoDB",
+                "purpose": "Datenbank",
+                "region": "EU",
+                "privacyUrl": {
+                  "label": "MongoDB",
+                  "href": "https://www.mongodb.com/legal/privacy-policy"
+                }
+              },
+              {
+                "name": "Cloudflare",
+                "purpose": "CDN / WAF / DDoS Schutz",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "Cloudflare",
+                  "href": "https://www.cloudflare.com/privacypolicy/"
+                }
+              },
+              {
+                "name": "Cloudinary",
+                "purpose": "Medienspeicher (Bilder / PDFs)",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "Cloudinary",
+                  "href": "https://cloudinary.com/privacy"
+                }
+              },
+              {
+                "name": "SendGrid",
+                "purpose": "Transaktions-E-Mail",
+                "region": "USA",
+                "privacyUrl": {
+                  "label": "Twilio",
+                  "href": "https://www.twilio.com/legal/privacy"
+                }
+              },
+              {
+                "name": "Zoho Mail",
+                "purpose": "E-Mail-Dienste für Unternehmen",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "Zoho Mail",
+                  "href": "https://www.zoho.com/privacy.html"
+                }
+              },
+              {
+                "name": "Stripe",
+                "purpose": "Zahlungsabwicklung",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "Stripe",
+                  "href": "https://stripe.com/privacy"
+                }
+              },
+              {
+                "name": "PayPal",
+                "purpose": "Zahlungsabwicklung",
+                "region": "Global",
+                "privacyUrl": {
+                  "label": "PayPal",
+                  "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
+                }
+              }
+            ]
+          }
+        },
+        "security": {
+          "title": "Sicherheitsmaßnahmen (Art. 32 DSGVO)",
+          "body": "Wir setzen geeignete technische und organisatorische Maßnahmen zum Schutz deiner Daten ein: Passwort-Hashing (bcrypt), httpOnly/secure Cookies, rollenbasierter Zugriff, HTTPS, WAF/CDN (Cloudflare), Anomalieerkennung und bevorzugte Speicherung in der EU, wenn möglich. Infrastruktur-Anbieter verschlüsseln Daten bei Übertragung (TLS) und Speicherung."
+        },
+        "cookies": {
+          "title": "Cookies und ähnliche Technologien",
+          "body": "Wir verwenden notwendige Cookies für den Betrieb der Seite. Analyse- und Marketing-Cookies werden nur mit deiner ausdrücklichen Einwilligung verwendet. Du kannst deine Einstellungen jederzeit ändern.",
+          "cta": {
+            "label": "Cookie-Richtlinie",
+            "href": "/cookies-policy"
+          }
+        },
+        "userRights": {
+          "title": "Deine Rechte",
+          "intro": "Du hast gemäß DSGVO folgende Rechte:",
+          "items": [
+            "Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18).",
+            "Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21).",
+            "Widerruf der Einwilligung jederzeit (Art. 7 Abs. 3)."
+          ],
+          "howTo": "Um deine Rechte auszuüben, kontaktiere uns unter contact@havenova.de oder über das Kontaktformular."
+        },
+        "retention": {
+          "title": "Speicherdauer",
+          "body": "Wir speichern personenbezogene Daten nur so lange, wie es für die Zwecke erforderlich ist oder gesetzliche Vorgaben dies verlangen. Beispielsweise werden Rechnungen 10 Jahre aufbewahrt."
+        },
+        "internationalTransfers": {
+          "title": "Internationale Datenübermittlung",
+          "body": "Wenn Daten außerhalb des EWR übertragen werden, erfolgen Schutzmaßnahmen gemäß den Standardvertragsklauseln (SCC). Wo möglich, nutzen wir Anbieter mit Rechenzentren in der EU. Aktueller EU-Präferenzstatus: Aktiv."
+        },
+
+        "changes": {
+          "title": "Änderungen dieser Richtlinie",
+          "body": "Wir können diese Richtlinie bei rechtlichen oder betrieblichen Änderungen aktualisieren. Wichtige Änderungen werden über die App oder per E-Mail mitgeteilt.",
+          "meta": {
+            "lastUpdated": "Letzte Aktualisierung:"
+          }
+        },
+        "legalReferences": {
+          "title": "Rechtliche Verweise",
+          "items": [
+            {
+              "label": "DSGVO (konsolidierter Text)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 6 – Rechtmäßigkeit der Verarbeitung",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 13–14 – Informationspflicht",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 28 – Auftragsverarbeiter",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 30 – Verarbeitungsverzeichnis",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "Art. 32 – Sicherheit der Verarbeitung",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            }
+          ]
+        }
+      },
+      "cookies": {
+        "hero": {
+          "headline1": "Cookies Policy",
+          "headline2": "Use of cookies and similar technologies",
+          "subtitle": "This page explains how and why cookies are used on this platform, which is technically operated by Maped Solutions UG.",
+          "image": {
+            "src": "/images/cookies-hero.png",
+            "alt": "Cookie and settings"
+          }
+        },
+        "overview": {
+          "title": "Overview",
+          "intro": "We use cookies to ensure the technical operation of this platform and to enhance your experience. Some cookies are essential, others require your consent.",
+          "bullets": [
+            "Essential cookies for platform functionality.",
+            "Analytics cookies to improve our services.",
+            "Marketing cookies only with your consent.",
+            "You can change your preferences at any time."
+          ],
+          "cta": {
+            "label": "Manage cookie preferences",
+            "href": "/cookies-settings"
+          }
+        },
+        "whatAreCookies": {
+          "title": "What are cookies?",
+          "body": "Cookies are small files stored on your device when you visit a website. They allow the site to recognize your browser and store information such as preferences or login state."
+        },
+        "types": {
+          "title": "Types of cookies we use",
+          "items": [
+            {
+              "name": "Necessary cookies",
+              "description": "These are required for the core functionality of the website, such as login and navigation."
+            },
+            {
+              "name": "Preference cookies",
+              "description": "They store settings such as language, theme, or region."
+            },
+            {
+              "name": "Analytics cookies",
+              "description": "Help us understand how the platform is used and improve its performance."
+            },
+            {
+              "name": "Marketing cookies",
+              "description": "Used to show relevant and personalized ads. Activated only with your consent."
+            }
+          ]
+        },
+        "thirdParties": {
+          "title": "Third-party cookies",
+          "body": "We use external providers for analytics, security, and payment services. These providers may set their own cookies.",
+          "table": {
+            "headers": {
+              "name": "Provider",
+              "purpose": "Purpose",
+              "privacy": "Privacy Policy"
+            },
+            "body": [
+              {
+                "name": "Google Analytics",
+                "purpose": "Platform usage analytics",
+                "privacyUrl": {
+                  "label": "Google",
+                  "href": "https://policies.google.com/privacy"
+                }
+              },
+              {
+                "name": "Stripe",
+                "purpose": "Payment processing",
+                "privacyUrl": {
+                  "label": "Stripe",
+                  "href": "https://stripe.com/privacy"
+                }
+              },
+              {
+                "name": "PayPal",
+                "purpose": "Payment transactions",
+                "privacyUrl": {
+                  "label": "PayPal",
+                  "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
+                }
+              }
+            ]
+          }
+        },
+        "management": {
+          "title": "Managing cookies",
+          "intro": "You can manage your preferences through the banner or your browser settings.",
+          "methods": [
+            "Accept or reject cookies via the initial banner.",
+            "Modify browser settings to block or delete cookies.",
+            "Access cookie settings from the footer at any time."
+          ],
+          "links": [
+            {
+              "label": "Google Chrome",
+              "href": "https://support.google.com/chrome/answer/95647?hl=en"
+            },
+            {
+              "label": "Mozilla Firefox",
+              "href": "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+            },
+            {
+              "label": "Safari",
+              "href": "https://support.apple.com/en-us/guide/safari/sfri11471/mac"
+            },
+            {
+              "label": "Microsoft Edge",
+              "href": "https://support.microsoft.com/en-us/help/4027947/microsoft-edge-delete-cookies"
+            }
+          ]
+        },
+        "legalBasis": {
+          "title": "Legal basis",
+          "body": "Non-essential cookies are used based on your consent (Art. 6(1)(a) GDPR). Essential cookies are set based on our legitimate interest (Art. 6(1)(f) GDPR)."
+        },
+        "changes": {
+          "title": "Changes to this policy",
+          "body": "This policy may be updated for legal or technical reasons. The last modification date is displayed below.",
+          "meta": {
+            "lastUpdated": "Last updated:"
+          }
+        },
+        "legalReferences": {
+          "title": "Legal references",
+          "items": [
+            {
+              "label": "General Data Protection Regulation (GDPR)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "ePrivacy Directive",
+              "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32002L0058"
+            }
+          ]
+        }
+      },
+      "terms": {
+        "hero": {
+          "headline1": "Nutzungsbedingungen",
+          "headline2": "Bedingungen für die Nutzung der Plattform",
+          "subtitle": "Dieses Dokument legt die Rechte und Pflichten zwischen den Nutzern und dem Unternehmen bei der Nutzung dieser Plattform fest, die technisch von Maped Solutions UG betrieben wird.",
+          "image": {
+            "src": "/images/terms-hero.png",
+            "alt": "Rechtsdokument und Einverständnis"
+          }
+        },
+        "intro": {
+          "title": "Einleitung",
+          "body": "Durch den Zugriff auf oder die Nutzung unserer Dienste erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Wenn du mit den Bedingungen nicht einverstanden bist, solltest du die Plattform nicht nutzen."
+        },
+        "scope": {
+          "title": "Geltungsbereich",
+          "body": "Die Plattform ermöglicht es Nutzern, Dienstleistungen anzufragen, Reservierungen zu verwalten, mit dem Unternehmen zu kommunizieren und digitale Funktionen zu nutzen. Inhalte und Funktionen können je nach Kunde variieren."
+        },
+        "userObligations": {
+          "title": "Pflichten des Nutzers",
+          "items": [
+            "Wahrheitsgemäße und aktuelle Informationen bereitstellen.",
+            "Die Plattform nicht für illegale oder betrügerische Zwecke nutzen.",
+            "Urheberrechte und geistige Eigentumsrechte Dritter respektieren.",
+            "Den technischen Betrieb der Plattform nicht stören.",
+            "Zugangsdaten sicher aufbewahren und nicht an Dritte weitergeben."
+          ]
+        },
+        "providerRights": {
+          "title": "Rechte des Anbieters",
+          "items": [
+            "Funktionen aus technischen oder rechtlichen Gründen ändern oder aussetzen.",
+            "Den Zugriff für Nutzer verweigern, die gegen diese Bedingungen verstoßen.",
+            "Diese Bedingungen bei rechtlichen oder geschäftlichen Änderungen anpassen.",
+            "Spezielle Funktionen nur für bestimmte Kunden oder Regionen anbieten."
+          ]
+        },
+        "payments": {
+          "title": "Zahlungen und Bedingungen",
+          "body": "Für die Nutzung bestimmter Dienste können Zahlungen, Abonnements oder zusätzliche Bedingungen erforderlich sein. Diese werden vor der Buchung klar kommuniziert.",
+          "items": [
+            "Alle Preise verstehen sich inkl. gesetzlicher Steuern, sofern nicht anders angegeben.",
+            "Zahlungen erfolgen über Drittanbieter wie Stripe oder PayPal.",
+            "Stornierungs- und Rückerstattungsbedingungen variieren je nach Dienst und Anbieter."
+          ]
+        },
+        "cancellation": {
+          "title": "Kündigung und Beendigung",
+          "body": "Du kannst die Nutzung der Plattform jederzeit beenden. Das Unternehmen behält sich das Recht vor, Konten bei Verstößen gegen diese Bedingungen zu sperren oder zu löschen – ohne Vorankündigung in schwerwiegenden Fällen."
+        },
+        "liability": {
+          "title": "Haftungsbeschränkung",
+          "body": "Das Unternehmen haftet nicht für indirekte Schäden, Datenverluste oder Ausfälle, die durch Dritte oder höhere Gewalt verursacht werden. Es gelten die gesetzlichen Haftungsbeschränkungen gemäß der zuständigen Gerichtsbarkeit."
+        },
+        "changes": {
+          "title": "Änderungen der Bedingungen",
+          "body": "Diese Bedingungen können aus rechtlichen, technischen oder geschäftlichen Gründen aktualisiert werden. Wesentliche Änderungen werden über die Plattform mitgeteilt.",
+          "meta": {
+            "lastUpdated": "Letzte Aktualisierung:"
+          }
+        },
+        "contact": {
+          "title": "Kontakt",
+          "items": [
+            {
+              "label": "Dienstanbieter",
+              "title": "Havenova",
+              "value": "Stollberger Str.43, 12627 Berlin — contact@havenova.de"
+            },
+            {
+              "label": "Technischer Support",
+              "title": "Maped Solutions UG",
+              "value": "Sarah-Kirsch-Str. 5, 12629 Berlin — contact@mapedsolutions.de"
+            }
+          ],
+          "cta": {
+            "label": "Zum Kontaktformular",
+            "href": "/contact"
+          }
+        },
+        "legalReferences": {
+          "title": "Rechtliche Verweise",
+          "items": [
+            {
+              "label": "DSGVO (EU 2016/679)",
+              "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
+            },
+            {
+              "label": "E-Commerce-Richtlinie (2000/31/EG)",
+              "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32000L0031"
+            },
+            {
+              "label": "BGB – Elektronische Verträge",
+              "href": "https://www.gesetze-im-internet.de/englisch_bgb/"
+            }
+          ]
+        }
+      }
     }
   },
   "components": {
+    "navbar": {
+      "headers": {
+        "services": "Leistungen",
+        "about": "Havenova",
+        "profile": "Profil"
+      },
+      "services": [
+        {
+          "label": "Möbelmontage",
+          "href": "/services/furniture-assembly",
+          "image": "/svg/furniture-assembly.svg",
+          "alt": "Icon Möbelmontage"
+        },
+        {
+          "label": "Küchenmontage",
+          "href": "/services/kitchen-assembly",
+          "image": "/svg/kitchen-assembly.svg",
+          "alt": "Icon Küchenmontage"
+        },
+        {
+          "label": "Hausservice",
+          "href": "/services/home-service",
+          "image": "/svg/home-service.svg",
+          "alt": "Icon Hausservice"
+        },
+        {
+          "label": "Wohnungsreinigung",
+          "href": "/services/house-cleaning",
+          "image": "/svg/house-cleaning.svg",
+          "alt": "Icon Wohnungsreinigung"
+        },
+        {
+          "label": "Küchenreinigung",
+          "href": "/services/kitchen-cleaning",
+          "image": "/svg/kitchen-cleaning.svg",
+          "alt": "Icon Küchenreinigung"
+        },
+        {
+          "label": "Fensterreinigung",
+          "href": "/services/windows-cleaning",
+          "image": "/svg/windows-cleaning.svg",
+          "alt": "Icon Fensterreinigung"
+        }
+      ],
+      "about": [
+        { "label": "Über uns", "href": "/about" },
+        { "label": "Kontakt", "href": "/contact" },
+        { "label": "Fragen & Antworten", "href": "/q&a" },
+        { "label": "Bewertungen", "href": "/reviews" },
+        { "label": "Blog", "href": "/blogs" },
+        { "label": "Unsere Leistungen", "href": "/services" }
+      ],
+      "profile": {
+        "label": "Profil",
+        "href": "/user/profile",
+        "image": "/svg/user.svg",
+        "alt": "Icon Benutzer",
+        "auth": "user"
+      },
+      "register": [
+        {
+          "label": "Registrieren",
+          "href": "/user/register",
+          "image": "/svg/signin.svg",
+          "alt": "Icon Anmeldung",
+          "auth": "guest"
+        },
+        {
+          "label": "Login",
+          "href": "/user/login",
+          "image": "/svg/user.svg",
+          "alt": "Icon Benutzer",
+          "auth": "guest"
+        }
+      ]
+    },
+    "welcomeOffer": {
+      "header": "Willkommen bei Havenova!",
+      "description": "Registrieren Sie sich jetzt und erhalten Sie 10% Rabatt auf Ihre erste Serviceanfrage. Schnell, zuverlässig und professionell.",
+      "cta": "Konto erstellen",
+      "close": "Schließen"
+    },
     "user": {
       "register": {
         "button": "Registrieren"
@@ -476,15 +1044,15 @@
     "legal": [
       {
         "label": "Datenschutzrichtlinie",
-        "href": "/privacy-policy"
+        "href": "/legal/privacy-policy"
       },
       {
         "label": "Cookie-Richtlinie",
-        "href": "/cookie-policy"
+        "href": "/legal/cookie-policy"
       },
       {
         "label": "Nutzungsbedingungen",
-        "href": "/terms-of-service"
+        "href": "/legal/terms-of-service"
       }
     ],
     "social": [
@@ -546,6 +1114,26 @@
     "CLIENT_MISSING_CLIENT_ID": {
       "title": "Hoppla, etwas fehlt!",
       "description": "Wir konnten Ihre Registrierung nicht verarbeiten, da einige Informationen fehlen. Bitte laden Sie die Seite neu oder kontaktieren Sie den Support."
+    },
+    "CLIENT_CREATE_SUCCESS": {
+      "title": "Kunde erfolgreich erstellt",
+      "description": "Der Kunde wurde erfolgreich im System registriert."
+    },
+    "CLIENT_CREATE_MISSING_REQUIRED_FIELDS": {
+      "title": "Pflichtfelder fehlen",
+      "description": "Bitte geben Sie sowohl Logos als auch Typografie-Daten an, um fortzufahren."
+    },
+    "CLIENT_CREATE_DOMAIN_EXISTS": {
+      "title": "Domain already exists",
+      "description": "A client with this domain is already registered. Please check and try again."
+    },
+    "CLIENT_CREATE_ERROR": {
+      "title": "Unexpected error",
+      "description": "Something went wrong while creating the client. Please try again later."
+    },
+    "CLIENT_CLIENT_FOUND": {
+      "title": "Client found",
+      "description": "Client configuration retrieved successfully."
     },
     "CLIENT_CLIENT_NOT_FOUND": {
       "title": "Problem beim Konto-Erstellen",
@@ -683,9 +1271,79 @@
       "description": "Beim Erstellen des Kalenders ist ein unerwarteter Fehler aufgetreten. Bitte versuche es später erneut."
     },
 
+    "WORKER_CREATED": {
+      "title": "Mitarbeiter erstellt",
+      "description": "Der neue Mitarbeiter wurde erfolgreich registriert und eine E-Mail wurde gesendet."
+    },
+    "WORKER_MISSING_CLIENT_ID": {
+      "title": "Client-ID fehlt",
+      "description": "Es wurde keine gültige Client-ID angegeben."
+    },
+    "WORKER_NAME_REQUIRED": {
+      "title": "Name erforderlich",
+      "description": "Bitte geben Sie den Namen des Mitarbeiters an."
+    },
+    "WORKER_ROLES_INVALID": {
+      "title": "Ungültige Rolle",
+      "description": "Eine oder mehrere gewählte Rollen sind nicht erlaubt."
+    },
+    "WORKER_DUPLICATE": {
+      "title": "E-Mail bereits vergeben",
+      "description": "Diese E-Mail ist bereits einem anderen Mitarbeiter zugeordnet."
+    },
+    "WORKER_CREATE_FAILED": {
+      "title": "Erstellung fehlgeschlagen",
+      "description": "Beim Erstellen des Mitarbeiters ist ein unerwarteter Fehler aufgetreten."
+    },
+
     "GLOBAL_INTERNAL_ERROR": {
       "title": "Unerwarteter Fehler.",
       "description": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder kontaktieren Sie den Support."
+    },
+    "SESSION_EXPIRED": {
+      "title": "Sitzung abgelaufen",
+      "description": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an, um fortzufahren."
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "items": [
+      {
+        "label": "Regler",
+        "name": {
+          "label": "Name",
+          "value": "Havenova"
+        },
+        "phone": {
+          "label": "Telefon",
+          "value": "+49 176 7091 7803"
+        },
+        "address": { "label": "Addresse", "value": "Stollberger Str.43, 12627 Berlin" },
+        "email": {
+          "label": "E-Mail",
+          "value": "contact@havenova.de"
+        }
+      },
+      {
+        "label": "Technische Unterstützung",
+        "name": {
+          "label": "Name",
+          "value": "Maped Solutions"
+        },
+        "phone": {
+          "label": "Telefon",
+          "value": "+49 177 7312 606"
+        },
+        "address": { "label": "Addresse", "value": "Sarah-Kirsch-Str. 5, 12629 Berlin" },
+        "email": {
+          "label": "E-Mail",
+          "value": "contact@mapedsolutions.de"
+        }
+      }
+    ],
+    "cta": {
+      "label": "Zum Kontaktformular",
+      "href": "/contact"
     }
   }
 }

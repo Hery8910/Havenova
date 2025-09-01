@@ -1,42 +1,45 @@
 // Nueva interfaz para LOGOS
 export interface Logos {
-  main: string;           // Logo principal (URL)
-  mainDark?: string;      // Logo para dark mode (URL)
-  alt?: string;           // Alternativo
-  favicon?: string;       // Favicon
+  main: string; // Logo principal (URL)
+  mainDark?: string; // Logo para dark mode (URL)
+  alt?: string; // Alternativo
+  favicon?: string; // Favicon
 }
 
 // Nueva interfaz para TIPOGRAFÍA
 export interface Typography {
-  fontFamily: string;           // Ej: 'Roboto'
-  isGoogleFont: boolean;        // true/false
-  googleFontUrl?: string;       // Solo si es Google Fonts
-  weights?: string[];           // ["400", "700", ...]
+  fontFamily: string; // Ej: 'Roboto'
+  isGoogleFont: boolean; // true/false
+  googleFontUrl?: string; // Solo si es Google Fonts
+  weights?: string[]; // ["400", "700", ...]
   secondaryFontFamily?: string; // Opcional
 }
 
 // Interfaz simplificada del cliente
 export interface Branding {
   primaryColor: string;
-  secondaryColor?: string;
-  accentColor?: string;
-  backgroundColor?: string;
-  backgroundGradient?: string;
-  cardBackground?: string;
-  shadowDark?: string;
-  shadowLight?: string;
-  textColorPrimary?: string;
-  textColorSecondary?: string;
-  textColorInverted?: string;
-  colorSuccess?: string;
-  colorError?: string;
-  colorWarning?: string;
-  colorInfo?: string;
-  bgSuccess?: string;
-  bgError?: string;
-  bgWarning?: string;
-  bgInfo?: string;
-  fontUrl?: string;
+  secondaryColor: string;
+  accentColor: string;
+
+  backgroundMain: string;
+  backgroundSecondary: string;
+  backgroundAccent: string;
+
+  textColorPrimary: string;
+  textColorSecondary: string;
+
+  cardBackground: string;
+
+  shadowDark: string;
+
+  colorSuccess: string;
+  bgSuccess: string;
+  colorError: string;
+  bgError: string;
+  colorWarning: string;
+  bgWarning: string;
+  bgInfo: string;
+  colorInfo: string;
 }
 
 export interface Images {
@@ -49,6 +52,19 @@ export interface Schedule {
 
 export interface Texts {
   [lang: string]: any; // puedes tipar más adelante si defines un esquema fijo
+}
+export interface LegalUpdateEntry {
+  policy: 'privacy' | 'cookies' | 'terms';
+  date: string; // ISO string
+  updatedBy: string;
+  note?: string;
+}
+
+export interface LegalUpdateMeta {
+  lastPrivacyUpdate: string;
+  lastCookiesUpdate: string;
+  lastTermsUpdate: string;
+  history: LegalUpdateEntry[];
 }
 
 export interface ClientConfig {
@@ -64,6 +80,7 @@ export interface ClientConfig {
   typography: Typography;
   schedule: Schedule;
   texts: Texts;
+  legalUpdates: LegalUpdateMeta;
 }
 
 export interface ClientContextProps {

@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import Image from "next/image";
-import styles from "./page.module.css";
-import Link from "next/link";
-import { useI18n } from "../../contexts/I18nContext";
+import Image from 'next/image';
+import styles from './page.module.css';
+import Link from 'next/link';
+import { useI18n } from '../../contexts/I18nContext';
 
 export interface ReviewsItems {
   text: string;
@@ -27,26 +27,24 @@ export interface ReviewsData {
 
 const Reviews = () => {
   const { texts } = useI18n();
-  
+
   const testimonials: ReviewsData = texts?.pages?.home?.testimonials;
-       if (!testimonials) {
+  if (!testimonials) {
     return (
       <section className={styles.section}>
-        <div className={styles.skeleton} style={{ width: "100%", height: 504, background: "#eee" }} />
+        <div
+          className={styles.skeleton}
+          style={{ width: '100%', height: 504, background: '#eee' }}
+        />
       </section>
     );
   }
-  
 
   return (
     <section className={styles.section}>
       <header className={styles.header}>
         <h2>{testimonials.title}</h2>
         <h2 className={styles.h2}>{testimonials.subTitle}</h2>
-        <p className={styles.p}>{testimonials.description}</p>
-        <Link href={testimonials.cta.href} className='button'>
-          {testimonials.cta.label}
-        </Link>
       </header>
 
       <ul className={styles.ul}>
@@ -75,6 +73,10 @@ const Reviews = () => {
           </li>
         ))}
       </ul>
+      <p className={styles.p}>{testimonials.description}</p>
+      <Link href={testimonials.cta.href} className="button">
+        {testimonials.cta.label}
+      </Link>
     </section>
   );
 };

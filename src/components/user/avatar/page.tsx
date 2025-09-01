@@ -1,11 +1,11 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import styles from "./page.module.css";
-import { useUser } from "../../../contexts/UserContext";
-import { IoIosArrowForward } from "react-icons/io";
-import Image from "next/image";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import styles from './page.module.css';
+import { useUser } from '../../../contexts/UserContext';
+import { IoIosArrowForward } from 'react-icons/io';
+import Image from 'next/image';
 
 const Avatar = () => {
   const router = useRouter();
@@ -27,12 +27,12 @@ const Avatar = () => {
     if (!hasMounted) return;
     const handleResize = () => setIsMobile(window.innerWidth <= 1000);
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [hasMounted]);
 
   const handleClick = () => setMenuOpen(!menuOpen);
-  const handleLink = () => router.push("/user/profile");
+  const handleLink = () => router.push('/user/profile');
 
   // --- NUEVO: solo renderiza skeleton si no está montado (evita el error de mismatch)
   if (!hasMounted || !user || !user.profileImage) {
@@ -41,12 +41,12 @@ const Avatar = () => {
         <div className={styles.button} aria-label="Avatar loading">
           <span
             style={{
-              display: "inline-block",
+              display: 'inline-block',
               width: 40,
               height: 40,
-              borderRadius: "50%",
-              background: "linear-gradient(135deg, #888 40%, #ddd 60%)",
-              animation: "pulse 1.5s infinite",
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #888 40%, #ddd 60%)',
+              animation: 'pulse 1.5s infinite',
             }}
           />
           <span
@@ -54,9 +54,9 @@ const Avatar = () => {
               width: 80,
               height: 18,
               borderRadius: 8,
-              background: "linear-gradient(135deg, #aaa 40%, #eee 60%)",
-              display: "inline-block",
-              animation: "pulse 1.5s infinite",
+              background: 'linear-gradient(135deg, #aaa 40%, #eee 60%)',
+              display: 'inline-block',
+              animation: 'pulse 1.5s infinite',
               marginLeft: 8,
             }}
           />
@@ -72,12 +72,12 @@ const Avatar = () => {
     );
   }
 
-  if (user.role === "guest") {
+  if (user.role === 'guest') {
     return (
       <section className={styles.section}>
         <button
           onClick={handleClick}
-          className={`${styles.button} ${isMobile ? styles.mobile : ""}`}
+          className={`${styles.button} ${isMobile ? styles.mobile : ''}`}
           aria-label="Toggle menu"
         >
           <Image
@@ -111,7 +111,7 @@ const Avatar = () => {
     <section className={styles.section}>
       <button
         onClick={handleLink}
-        className={`${styles.button} ${isMobile ? styles.mobile : ""}`}
+        className={`${styles.button} ${isMobile ? styles.mobile : ''}`}
         aria-label="Go to profile"
       >
         <Image

@@ -135,7 +135,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendars, onToggleDay }) => {
           Next
         </button>
       </div>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+      <table style={{ width: '500px', borderCollapse: 'collapse' }}>
         <thead>
           <tr>
             <th>Mon</th>
@@ -154,6 +154,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendars, onToggleDay }) => {
                 <td
                   key={dayIndex}
                   style={{
+                    width: '60px',
                     border: '1px solid #ccc',
                     padding: '8px',
                     backgroundColor: day ? (day.available ? '#fff' : '#fdd') : '#eee',

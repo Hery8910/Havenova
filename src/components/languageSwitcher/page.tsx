@@ -1,7 +1,7 @@
-import { useUser } from "../../contexts/UserContext";
-import { useI18n } from "../../contexts/I18nContext";
-import styles from "./page.module.css";
-import { IoLanguage } from "react-icons/io5";
+import { useUser } from '../../contexts/UserContext';
+import { useI18n } from '../../contexts/I18nContext';
+import styles from './page.module.css';
+import { IoLanguage } from 'react-icons/io5';
 
 export default function LanguageSwitcher() {
   const { setLanguage, language } = useI18n();
@@ -14,13 +14,13 @@ export default function LanguageSwitcher() {
 
   return (
     <nav>
-      {language === "en" ? (
-        <button className={styles.button} onClick={() => handleChange("de")}>
-          <IoLanguage /> DE
+      {language === 'en' ? (
+        <button className={styles.button} onClick={() => handleChange('de')}>
+          <IoLanguage /> <p>De</p>
         </button>
       ) : (
-        <button className={styles.button} onClick={() => handleChange("en")}>
-          <IoLanguage /> EN
+        <button className={styles.button} onClick={() => handleChange('en')}>
+          <IoLanguage /> <p>En</p>
         </button>
       )}
     </nav>
