@@ -25,7 +25,6 @@ export function I18nProvider({
   useEffect(() => {
     const storedLang = localStorage.getItem('havenova_lang');
     if (storedLang && storedLang !== language) {
-      console.log('🌍 I18nProvider: Idioma inicial desde localStorage:', storedLang);
       setLanguage(storedLang);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -47,6 +47,9 @@
   gap: 8px;
   font-size: clamp(16px, 3vw, 20px);
   transition: color 0.3s ease-in-out;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 .link:hover {
   color: var(--color-info);
@@ -86,7 +89,7 @@
   width: auto;
   display: grid;
   text-align: left;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr 2fr 1fr;
   border-bottom: 1px solid var(--text-secondary);
 }
 .tr:last-child {
@@ -123,6 +126,8 @@
 .contact_li {
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid var(--text-secondary);
+  margin-bottom: 32px;
 }
 .contact_tr {
   display: grid;

@@ -1,9 +1,9 @@
-import Reviews from "../../../components/reviews/page";
+import Reviews from '../../../components/common/testimonials/testimonialsPreview/page';
 // import BlogList from "../../../components/blog/blogList/page";
 
-import styles from "./page.module.css";
-import ServiceCart from "../../../components/services/serviceCart/page";
-import WindowsCleaningForm from "../../../components/services/windowsCleaning/windowsCleaningForm/page";
+import styles from './page.module.css';
+import ServiceCart from '../../../components/services/serviceCart/page';
+import WindowsCleaningForm from '../../../components/services/windowsCleaning/windowsCleaningForm/page';
 
 const WindowsCleaningPage = () => {
   // const blogs = [
@@ -230,22 +230,20 @@ const WindowsCleaningPage = () => {
   // ];
 
   const windowsCleaningHeader = {
-    title: "Window Cleaning Services in Berlin",
+    title: 'Window Cleaning Services in Berlin',
     description:
       "Book a streak-free window cleaning service. Fill out the form and we'll arrange a visit to assess your needs before confirming pricing.",
     image: {
-      src: "/svg/windows-cleaning.svg",
-      alt: "Window Cleaning Illustration",
+      src: '/svg/windows-cleaning.svg',
+      alt: 'Window Cleaning Illustration',
     },
-    cta: "",
-    href: "",
-    extraClass: "hero_services",
+    cta: '',
+    href: '',
+    extraClass: 'hero_services',
   };
   return (
     <main className={styles.main}>
-      <header>
-        {/* <Hero hero={windowsCleaningHeader} /> */}
-      </header>
+      <header>{/* <Hero hero={windowsCleaningHeader} /> */}</header>
       <section className={styles.section}>
         <WindowsCleaningForm />
         <ServiceCart />

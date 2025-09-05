@@ -6,6 +6,7 @@ import { useI18n } from '../../../contexts/I18nContext';
 import styles from './page.module.css';
 import { FiExternalLink } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
+import { useCookies } from '../../../contexts/CookiesContext';
 
 export interface CookiesPolicyPageTexts {
   hero: {
@@ -18,7 +19,7 @@ export interface CookiesPolicyPageTexts {
     title: string;
     intro: string;
     bullets: string[];
-    cta: { label: string; href: string };
+    cta: { label: string; action: string };
   };
   whatAreCookies: {
     title: string;
@@ -43,10 +44,18 @@ export interface CookiesPolicyPageTexts {
       }[];
     };
   };
+  localStorage: {
+    title: string;
+    body: string;
+  };
   management: {
     title: string;
     intro: string;
     methods: string[];
+    cta: {
+      label: string;
+      action: string;
+    };
     links: { label: string; href: string }[];
   };
   legalBasis: {
@@ -79,6 +88,7 @@ export interface ContactTexts {
 export default function CookiesPolicyPage() {
   const { client } = useClient();
   const { texts } = useI18n();
+  const { openManager } = useCookies();
   const cookies: CookiesPolicyPageTexts = texts?.pages?.legal?.cookies;
   const contact: ContactTexts = texts?.contact;
 
@@ -113,18 +123,18 @@ export default function CookiesPolicyPage() {
             </li>
           ))}
         </ul>
-        <Link href={cookies.overview.cta.href} className={styles.link}>
+        <button className={styles.link} onClick={openManager}>
           {cookies.overview.cta.label} <IoIosLink />
-        </Link>
+        </button>
       </section>
 
-      {/* ¿Qué son las cookies? */}
+      {/* whatAreCookies */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.whatAreCookies.title}</h3>
         <p>{cookies.whatAreCookies.body}</p>
       </section>
 
-      {/* Tipos de cookies */}
+      {/* types */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.types.title}</h3>
         <ul className={styles.ul}>
@@ -137,7 +147,7 @@ export default function CookiesPolicyPage() {
         </ul>
       </section>
 
-      {/* Cookies de terceros */}
+      {/* thirdParties */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.thirdParties.title}</h3>
         <p>{cookies.thirdParties.body}</p>
@@ -170,7 +180,13 @@ export default function CookiesPolicyPage() {
         </table>
       </section>
 
-      {/* Gestión de cookies */}
+      {/* localStorage */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{cookies.localStorage.title}</h3>
+        <p>{cookies.thirdParties.body}</p>
+      </section>
+
+      {/* management */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.management.title}</h3>
         <p>{cookies.management.intro}</p>
@@ -194,13 +210,51 @@ export default function CookiesPolicyPage() {
               </Link>
             </li>
           ))}
+          <li key={cookies.management.cta.action}>
+            <button className={styles.link} onClick={openManager}>
+              {cookies.overview.cta.label} <IoIosLink />
+            </button>
+          </li>
         </ul>
       </section>
 
-      {/* Base legal */}
+      {/* legalBasis */}
       <section className={styles.section}>
         <h3 className={styles.h3}>{cookies.legalBasis.title}</h3>
         <p>{cookies.legalBasis.body}</p>
+      </section>
+
+      {/* changes */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{cookies.changes.title}</h3>
+        <p>{cookies.changes.body}</p>
+        <aside className={styles.aside}>
+          <p>
+            <strong>{cookies.changes.meta.lastUpdated}</strong>
+          </p>
+          <p>
+            <em>{formatDate(legalUpdates?.lastCookiesUpdate || '')}</em>
+          </p>
+        </aside>
+      </section>
+
+      {/* legalReferences */}
+      <section className={styles.section}>
+        <h3 className={styles.h3}>{cookies.legalReferences.title}</h3>
+        <ul className={styles.ul}>
+          {cookies.legalReferences.items.map((item, i) => (
+            <li key={i}>
+              <Link
+                href={item.href}
+                className={styles.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.label} <FiExternalLink />
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Contacto */}
@@ -236,37 +290,6 @@ export default function CookiesPolicyPage() {
         <Link className={styles.link} href={contact.cta.href}>
           {contact.cta.label} <IoIosLink />
         </Link>
-      </section>
-
-      {/* Cambios */}
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{cookies.changes.title}</h3>
-        <p>{cookies.changes.body}</p>
-        <aside className={styles.aside}>
-          <p>
-            <strong>{cookies.changes.meta.lastUpdated}</strong>
-          </p>
-          <p>{formatDate(legalUpdates?.lastCookiesUpdate || '')}</p>
-        </aside>
-      </section>
-
-      {/* Referencias legales */}
-      <section className={styles.section}>
-        <h3 className={styles.h3}>{cookies.legalReferences.title}</h3>
-        <ul className={styles.ul}>
-          {cookies.legalReferences.items.map((item, i) => (
-            <li key={i}>
-              <Link
-                href={item.href}
-                className={styles.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.label} <FiExternalLink />
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
     </main>
   );

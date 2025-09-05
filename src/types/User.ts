@@ -12,6 +12,7 @@ export interface User {
   phone: string;
   isVerified: boolean;
   role: string;
+  isLogged: boolean;
   language: string;
   theme: 'light' | 'dark';
   requests: ServiceRequest[];

@@ -1,10 +1,10 @@
-import Hero from "../../../components/hero/page";
-import ServiceCart from "../../../components/services/serviceCart/page";
-import Reviews from "../../../components/reviews/page";
+import Hero from '../../../components/pages/home/homeHero/page';
+import ServiceCart from '../../../components/services/serviceCart/page';
+import Reviews from '../../../components/common/testimonials/testimonialsPreview/page';
 // import BlogList from "../../../components/blog/blogList/page";
 
-import styles from "./page.module.css";
-import HouseCleaningForm from "../../../components/services/houseCleaning/houseCleaningForm/page";
+import styles from './page.module.css';
+import HouseCleaningForm from '../../../components/services/houseCleaning/houseCleaningForm/page';
 
 const HouseCleaningPage = () => {
   // const blogs = [
@@ -231,16 +231,16 @@ const HouseCleaningPage = () => {
   // ];
 
   const houseCleaningHeader = {
-    title: "House Cleaning Services in Berlin",
+    title: 'House Cleaning Services in Berlin',
     description:
-      "Tell us what kind of cleaning you need. We’ll visit to evaluate your space before offering a price.",
+      'Tell us what kind of cleaning you need. We’ll visit to evaluate your space before offering a price.',
     image: {
-      src: "/svg/house-cleaning.svg",
-      alt: "Home Cleaning Illustration",
+      src: '/svg/house-cleaning.svg',
+      alt: 'Home Cleaning Illustration',
     },
-    cta: "",
-    href: "",
-    extraClass: "hero_services",
+    cta: '',
+    href: '',
+    extraClass: 'hero_services',
   };
   return (
     <main className={styles.main}>

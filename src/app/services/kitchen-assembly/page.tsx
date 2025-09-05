@@ -1,10 +1,10 @@
-import Hero from "../../../components/hero/page";
-import ServiceCart from "../../../components/services/serviceCart/page";
-import Reviews from "../../../components/reviews/page";
+import Hero from '../../../components/pages/home/homeHero/page';
+import ServiceCart from '../../../components/services/serviceCart/page';
+import Reviews from '../../../components/common/testimonials/testimonialsPreview/page';
 // import BlogList from "../../../components/blog/blogList/page";
 
-import styles from "./page.module.css";
-import KitchenAssemblyForm from "../../../components/services/kitchenAssembly/kitchenAssemblyForm/page";
+import styles from './page.module.css';
+import KitchenAssemblyForm from '../../../components/services/kitchenAssembly/kitchenAssemblyForm/page';
 
 const KitchenAssemblyPage = () => {
   // const blogs = [
@@ -230,23 +230,21 @@ const KitchenAssemblyPage = () => {
   //   },
   // ];
   const kitchenAssemblyHeader = {
-    title: "Kitchen Assembly Services in Berlin",
+    title: 'Kitchen Assembly Services in Berlin',
     description:
-      "We assemble kitchens fully or partially. Complete the form to request a visit where we can evaluate and provide a final quote.",
+      'We assemble kitchens fully or partially. Complete the form to request a visit where we can evaluate and provide a final quote.',
     image: {
-      src: "/svg/kitchen-assembly.svg",
-      alt: "Kitchen Assembly Illustration",
+      src: '/svg/kitchen-assembly.svg',
+      alt: 'Kitchen Assembly Illustration',
     },
-    cta: "",
-    href: "",
-    extraClass: "hero_services",
+    cta: '',
+    href: '',
+    extraClass: 'hero_services',
   };
 
   return (
     <main className={styles.main}>
-      <header>
-        {/* <Hero hero={kitchenAssemblyHeader} /> */}
-      </header>
+      <header>{/* <Hero hero={kitchenAssemblyHeader} /> */}</header>
       <section className={styles.section}>
         <KitchenAssemblyForm />
         <ServiceCart />

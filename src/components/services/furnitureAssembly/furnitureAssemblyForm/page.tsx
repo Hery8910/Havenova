@@ -14,6 +14,29 @@ import { useI18n } from '../../../../contexts/I18nContext';
 import { FaArrowLeft } from 'react-icons/fa';
 import { FurnitureAssemblyRequest, ServiceIcon } from '../../../../types/services';
 
+export interface FurnitureAssemblyDetailsForm {
+  title: string;
+  icon: ServiceIcon;
+  notes?: string;
+  type: string;
+  location: string;
+  quantity: number;
+  position: 'floor' | 'wall';
+  width?: string;
+  height?: string;
+  depth?: string;
+  doors?: number;
+  drawers?: number;
+}
+export interface furnitureServiceInput {
+  width: boolean;
+  height: boolean;
+  depth: boolean;
+  doors: boolean;
+  drawers: boolean;
+  wall: boolean;
+}
+
 const FurnitureAssemblyForm = () => {
   const furnitureTypes = [
     {
@@ -410,16 +433,12 @@ const FurnitureAssemblyForm = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<FurnitureAssemblyRequest>({
-    id: '',
-    serviceType: 'furniture-assembly',
-    icon: {
-      src: icon.src,
-      alt: icon.alt,
-    },
-    type: selectedItem,
-    location: selectedLocation,
-    quantity: '1',
+  const [formData, setFormData] = useState<FurnitureAssemblyDetailsForm>({
+    title: '',
+    icon: { src: '', alt: '' },
+    type: '',
+    location: '',
+    quantity: 1,
     position: 'floor',
     width: '',
     height: '',
@@ -435,65 +454,64 @@ const FurnitureAssemblyForm = () => {
 
   const activeGroup = furnitureTypes.find((group) => group.location === selectedLocation);
 
-  const handleClick = (label: string, icon: serviceIcon, input: furnitureServiceInput) => {
+  const handleClick = (label: string, icon: ServiceIcon, input: furnitureServiceInput) => {
     setSelectedItem(label);
     setInput(input);
     setIcon(icon);
     setOpen(true);
-    setFormData((prev: FurnitureAssemblyData) => ({
+    setFormData((prev) => ({
       ...prev,
       title: 'Furniture Assembly',
       icon,
       type: label,
       location: selectedLocation,
-      position: 'floor', // default
-      quantity: '1',
+      position: 'floor',
+      quantity: 1, // ✅ como número
     }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    const typedValue = type === 'number' ? parseFloat(value) || '' : value;
-
-    setFormData((prev: FurnitureAssemblyData) => ({
-      ...prev,
-      [name]: typedValue,
-      title: 'Furniture Assembly',
-      icon: {
-        src: icon.src,
-        alt: icon.alt,
-      },
-      type: selectedItem,
-      location: selectedLocation,
-    }));
+    const typedValue = type === 'number' ? (value === '' ? undefined : parseFloat(value)) : value;
+    if (name in formData) {
+      setFormData((prev: FurnitureAssemblyDetailsForm) => ({
+        ...prev,
+        [name]: typedValue,
+        title: 'Furniture Assembly',
+        icon: {
+          src: icon.src,
+          alt: icon.alt,
+        },
+        type: selectedItem,
+        location: selectedLocation,
+      }));
+    }
   };
 
   const handleAdjust = (field: 'doors' | 'drawers' | 'quantity', action: 'add' | 'subtract') => {
-    setFormData((prev: FurnitureAssemblyData) => {
-      const current = field === 'quantity' ? Number(prev.quantity) : prev[field];
-      const updated =
-        action === 'add'
-          ? current + 1
-          : field === 'drawers' || field === 'doors'
-          ? Math.max(0, current - 1)
-          : Math.max(1, current - 1);
+    setFormData((prev) => {
+      const current = prev[field] || 0;
+      const updated = action === 'add' ? current + 1 : Math.max(0, current - 1);
       return {
         ...prev,
-        [field]: field === 'quantity' ? String(updated) : updated,
+        [field]: updated,
       };
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newRequest: ServiceRequestItem = {
+    const newRequest: FurnitureAssemblyRequest = {
       id: uuidv4(),
       serviceType: 'furniture-assembly',
       price: 0,
       estimatedDuration: 0,
-      details: formData,
+      icon: formData.icon,
+      details: {
+        ...formData,
+      },
     };
-    const error = validateFurnitureForm(formData);
+    const error = validateFurnitureForm(formData, input);
     if (error) {
       alert(error);
       return;
@@ -516,7 +534,7 @@ const FurnitureAssemblyForm = () => {
         },
         type: selectedItem,
         location: selectedLocation,
-        quantity: '1',
+        quantity: 1,
         position: 'floor',
         width: '',
         height: '',
@@ -757,7 +775,7 @@ const FurnitureAssemblyForm = () => {
                       type="checkbox"
                       checked={formData.position === 'wall'}
                       onChange={(e) =>
-                        setFormData((prev: FurnitureAssemblyData) => ({
+                        setFormData((prev: FurnitureAssemblyDetailsForm) => ({
                           ...prev,
                           position: e.target.checked ? 'wall' : 'floor',
                         }))

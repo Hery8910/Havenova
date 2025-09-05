@@ -1,10 +1,10 @@
-import Hero from "../../../components/hero/page";
-import Reviews from "../../../components/reviews/page";
+import Hero from '../../../components/pages/home/homeHero/page';
+import Reviews from '../../../components/common/testimonials/testimonialsPreview/page';
 // import BlogList from "../../../components/blog/blogList/page";
 
-import styles from "./page.module.css";
-import ServiceCart from "../../../components/services/serviceCart/page";
-import HouseServiceForm from "../../../components/services/houseService/houseServiceForm/page";
+import styles from './page.module.css';
+import ServiceCart from '../../../components/services/serviceCart/page';
+import HouseServiceForm from '../../../components/services/houseService/houseServiceForm/page';
 
 const HomeServicePage = () => {
   // const blogs = [
@@ -230,23 +230,23 @@ const HomeServicePage = () => {
   //   },
   // ];
   const homeServiceHeader = {
-    title: "Home Service & Maintenance in Berlin",
+    title: 'Home Service & Maintenance in Berlin',
     description:
-      "Describe the issue or service needed. We’ll review your request and schedule a visit to determine the scope and pricing.",
+      'Describe the issue or service needed. We’ll review your request and schedule a visit to determine the scope and pricing.',
     image: {
-      src: "/svg/home-service.svg",
-      alt: "Home Repair Illustration",
+      src: '/svg/home-service.svg',
+      alt: 'Home Repair Illustration',
     },
-    cta: "",
-    href: "",
-    extraClass: "hero_services",
+    cta: '',
+    href: '',
+    extraClass: 'hero_services',
   };
   return (
     <main className={styles.main}>
       {/* <Hero hero={homeServiceHeader} /> */}
       <section className={styles.section}>
-      <HouseServiceForm />
-      <ServiceCart />
+        <HouseServiceForm />
+        <ServiceCart />
       </section>
       <Reviews />
       {/* <BlogList blogs={blogs} /> */}

@@ -1,5 +1,6 @@
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { IoIosClose } from 'react-icons/io';
 import styles from './page.module.css';
 
@@ -11,8 +12,38 @@ interface AlertPopupProps {
 }
 
 export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description, onClose }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // ✅ Soporte para cerrar con Escape
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && onClose) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
+  // ✅ Montaje y limpieza del listener
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    // Opcional: enfocar el div para accesibilidad
+    containerRef.current?.focus();
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   return (
     <section
+      role="alert"
+      aria-live="assertive"
+      aria-labelledby="alert-title"
+      aria-describedby="alert-description"
+      tabIndex={-1}
+      ref={containerRef}
+      className={`${styles.section} card`}
       style={{
         backgroundImage:
           type === 'success'
@@ -21,7 +52,6 @@ export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description
             ? 'url(/svg/alert-bg.svg)'
             : undefined,
       }}
-      className={`${styles.section} card`}
     >
       <div className={styles.wraper}>
         <main
@@ -37,13 +67,15 @@ export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description
         >
           <Image
             src={type === 'success' ? '/images/success.webp' : '/images/alert.webp'}
-            priority={true}
+            priority
             alt={type === 'success' ? 'Success image' : 'Alert image'}
             width={300}
             height={200}
             className={styles.image}
           />
+
           <article
+            className={styles.article}
             style={{
               color:
                 type === 'success'
@@ -52,16 +84,16 @@ export const AlertPopup: React.FC<AlertPopupProps> = ({ type, title, description
                   ? 'var(--color-alert)'
                   : undefined,
             }}
-            className={styles.article}
           >
-            <h4>
+            <h4 id="alert-title">
               <strong>{title}</strong>
             </h4>
-            <p>{description}</p>
+            <p id="alert-description">{description}</p>
           </article>
         </main>
+
         {onClose && (
-          <button className={styles.button} onClick={onClose}>
+          <button className={styles.button} onClick={onClose} aria-label="Close alert">
             <IoIosClose />
           </button>
         )}

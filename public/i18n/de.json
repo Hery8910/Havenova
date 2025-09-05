@@ -10,201 +10,88 @@
           "href": "/services"
         },
         "image": {
-          "src": "/images/hero.png",
-          "alt": "Gemütliches Wohnzimmer mit Kommode und Trockenblumen."
-        }
-      },
-      "benefits": {
-        "title": "Warum Havenova wählen?",
-        "items": [
-          {
-            "title": "Qualifiziertes Personal",
-            "description": "Unser Team ist erfahren, geschult und geprüft."
+          "lg": {
+            "src": "/images/pages/home-page/home-hero-background-lg.webp",
+            "alt": "Gemütliches Wohnzimmer mit Kommode und Trockenblumen."
           },
-          {
-            "title": "Schnelle Reaktion",
-            "description": "Buchen Sie heute und erhalten Sie den Service innerhalb von 24–48 Stunden."
+          "md": {
+            "src": "/images/pages/home-page/home-hero-background-md.webp"
           },
-          {
-            "title": "Garantierte Qualität",
-            "description": "Wir stellen sicher, dass jede Arbeit höchsten Standards entspricht."
+          "sm": {
+            "src": "/images/pages/home-page/home-hero-background-sm.webp"
           }
-        ],
+        }
+      }
+    },
+    "about": {
+      "hero": {
+        "headline1": "Über Uns",
+        "headline2": "Engagiert für Qualität und Transparenz",
+        "subtitle": "Havenova ist ein junges Unternehmen in Berlin, das sich auf Reinigungs- und Hauswartungsdienste spezialisiert hat – mit Fokus auf Kundenzufriedenheit und digitale Innovation.",
         "image": {
-          "src": "/images/benefits.webp",
-          "alt": "Bauausrüstung und Baupläne"
+          "src": "/images/about-hero.png",
+          "alt": "Team bei der Reinigungsarbeit"
         }
       },
-      "howItWorks": {
-        "title": "So funktioniert’s",
-        "subtitle": "Nahtlos, transparent und zuverlässig",
-        "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
-        "cta": {
-          "label": "Mehr über uns erfahren",
-          "href": "/about"
-        },
-        "steps": [
+      "story": {
+        "title": "Ein junges Unternehmen mit klarer Vision",
+        "paragraphs": [
+          "Havenova wurde 2023 mit einer klaren Idee gegründet: Reinigungs- und Wartungsdienste in Berlin anzubieten – mit dem Kunden im Mittelpunkt.",
+          "Von Anfang an hat sich das Unternehmen darauf konzentriert, sich durch exzellenten Kundenservice und professionelle Kommunikation in jeder Phase des Prozesses abzuheben.",
+          "In den ersten Jahren hat Havenova aktiv an der Entwicklung dieser digitalen Plattform zusammen mit Maped Solutions mitgewirkt. Dieses Tool wurde geschaffen, um die Serviceanfrage zu vereinfachen, die Kommunikation zu verbessern und maximale Transparenz zu gewährleisten.",
+          "Unser Fokus bleibt unverändert: uns täglich zu verbessern, uns an die Bedürfnisse unserer Kunden anzupassen und digitale Lösungen zu entwickeln, die sowohl Kunden als auch Unternehmen zugutekommen."
+        ]
+      },
+      "values": {
+        "title": "Unsere Werte",
+        "list": [
           {
-            "title": "Service anfragen",
-            "description": "Übermitteln Sie Ihre Daten online, schnell, unkompliziert und direkt über unsere App.",
-            "image": {
-              "src": "/images/howItWorks-step-1.webp",
-              "alt": "Serviceanfrage ausfüllen"
-            }
+            "label": "Transparenz",
+            "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung."
           },
           {
-            "title": "Angebot erhalten",
-            "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
-            "image": {
-              "src": "/images/howItWorks-step-2.webp",
-              "alt": "Angebot erhalten"
-            }
+            "label": "Qualität",
+            "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität."
           },
           {
-            "title": "Service erhalten",
-            "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
-            "image": {
-              "src": "/images/howItWorks-step-3.webp",
-              "alt": "Fachkraft bei der Arbeit"
-            }
+            "label": "Innovation",
+            "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung."
+          },
+          {
+            "label": "Empathie",
+            "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis."
           }
         ]
       },
       "services": {
         "title": "Unsere Leistungen",
-        "subtitle": "Maßgeschneiderte Dienstleistungen für Ihr Zuhause",
-        "description": "Von Möbelmontage bis zur gründlichen Reinigung – wir bieten zuverlässige Lösungen für jede Situation. Entdecken Sie, wie wir helfen können.",
-        "items": [
-          {
-            "title": "Küchenmontage",
-            "image": {
-              "src": "/svg/kitchen-assembly.svg",
-              "alt": "Symbol Küchenmontage"
-            }
-          },
-          {
-            "title": "Hausservice",
-            "image": {
-              "src": "/svg/home-service.svg",
-              "alt": "Symbol Hausservice"
-            }
-          },
-          {
-            "title": "Fensterreinigung",
-            "image": {
-              "src": "/svg/windows-cleaning.svg",
-              "alt": "Symbol Fensterreinigung"
-            }
-          },
-          {
-            "title": "Wohnungsreinigung",
-            "image": {
-              "src": "/svg/house-cleaning.svg",
-              "alt": "Symbol Wohnungsreinigung"
-            }
-          },
-          {
-            "title": "Möbelmontage",
-            "image": {
-              "src": "/svg/furniture-assembly.svg",
-              "alt": "Symbol Möbelmontage"
-            }
-          },
-          {
-            "title": "Küchenreinigung",
-            "image": {
-              "src": "/svg/kitchen-cleaning.svg",
-              "alt": "Symbol Küchenreinigung"
-            }
-          }
-        ],
+        "description": "Wir bieten eine Vielzahl von Reinigungs- und Wartungsdiensten an, damit Ihr Zuhause stets in bestem Zustand bleibt.",
         "cta": {
-          "label": "Alle Leistungen ansehen",
-          "href": "/services"
+          "label": "Alle Services ansehen",
+          "url": "/services"
         }
       },
       "testimonials": {
-        "title": "Vertrauenswürdig von Berliner Haushalten.",
-        "subTitle": "Sehen Sie, was unsere Kunden sagen.",
-        "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
-        "items": [
-          {
-            "text": "Havenova hat meinen Umzug so einfach und stressfrei gemacht.",
-            "author": "Anna",
-            "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8.svg",
-              "alt": "Kundenavatar Anna"
-            },
-            "starImage": {
-              "src": "/images/stars.webp",
-              "alt": "Sternebewertung"
-            }
-          },
-          {
-            "text": "Professionell, freundlich und zuverlässig! Sehr empfehlenswerter Reinigungsservice.",
-            "author": "Markus",
-            "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6.svg",
-              "alt": "Kundenavatar Markus"
-            },
-            "starImage": {
-              "src": "/images/stars.webp",
-              "alt": "Sternebewertung"
-            }
-          },
-          {
-            "text": "Endlich habe ich einen Dienstleister gefunden, dem ich mein Zuhause anvertrauen kann.",
-            "author": "Sophie",
-            "profileImage": {
-              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1.svg",
-              "alt": "Kundenavatar Sophie"
-            },
-            "starImage": {
-              "src": "/images/stars.webp",
-              "alt": "Sternebewertung"
-            }
-          }
-        ],
-        "cta": {
-          "label": "Bewertung abgeben",
-          "href": "/review"
-        }
+        "title": "Was unsere Kunden sagen",
+        "description": "Wir schätzen jedes Feedback und lernen aus jeder Erfahrung. Hier einige unserer Bewertungen.",
+        "placeholder": "Hier können echte Kundenstimmen angezeigt oder Google/MyHammer integriert werden."
       },
-      "faq": {
-        "title": "Häufig gestellte Fragen",
-        "items": [
-          {
-            "question": "Welche Services bietet Havenova an?",
-            "answer": "Havenova bietet Reinigung, Reparaturen, Wartung und Umzugshilfe in Berlin."
-          },
-          {
-            "question": "Wie schnell kann ich einen Service buchen?",
-            "answer": "Meist vereinbaren wir einen Termin innerhalb von 24–48 Stunden nach Ihrer Anfrage."
-          },
-          {
-            "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
-            "answer": "Ja, unser gesamtes Team ist geschult und vollständig versichert."
-          },
-          {
-            "question": "Gibt es Rabatte für Mitglieder?",
-            "answer": "Ja, Mitglieder erhalten exklusive Rabatte und Vorteile."
-          }
-        ],
-        "cta": {
-          "label": "Kontakt Support",
-          "href": "/contact",
-          "description": "Kontaktieren Sie unser Team für maßgeschneiderte Unterstützung.",
-          "title": "Benötigen Sie weitere Hilfe?"
+      "finalCta": {
+        "headline": "Bereit für Ihren ersten Service?",
+        "subtext": "Lassen Sie uns Ihnen helfen, Ihr Zuhause sauber, organisiert und in guten Händen zu halten.",
+        "button": {
+          "label": "Service anfragen",
+          "url": "/services"
         }
-      },
-      "blog": {
-        "title": "Neuigkeiten aus unserem Blog",
-        "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
-        "cta": {
-          "title": "Bleiben Sie informiert:",
-          "subtitle": "Tipps, Ratgeber und Updates für Ihr Zuhause. Abonnieren Sie unseren Newsletter und verpassen Sie keinen Tipp!",
-          "label": "Abonnieren"
-        }
+      }
+    },
+    "blog": {
+      "title": "Neuigkeiten aus unserem Blog",
+      "subTitle": "Neuigkeiten & Einblicke für Ihr Zuhause",
+      "cta": {
+        "title": "Bleiben Sie informiert:",
+        "subtitle": "Tipps, Ratgeber und Updates für Ihr Zuhause. Abonnieren Sie unseren Newsletter und verpassen Sie keinen Tipp!",
+        "label": "Abonnieren"
       }
     },
     "user": {
@@ -555,66 +442,58 @@
       },
       "cookies": {
         "hero": {
-          "headline1": "Cookies Policy",
-          "headline2": "Use of cookies and similar technologies",
-          "subtitle": "This page explains how and why cookies are used on this platform, which is technically operated by Maped Solutions UG.",
+          "headline1": "Cookie-Richtlinie",
+          "headline2": "Verwendung von Cookies und ähnlichen Technologien",
+          "subtitle": "Diese Seite erklärt, wie und warum Cookies auf dieser Plattform verwendet werden, die technisch von Maped Solutions UG betrieben wird.",
           "image": {
-            "src": "/images/cookies-hero.png",
-            "alt": "Cookie and settings"
+            "src": "/images/aboutPage/AboutHero.jpg",
+            "alt": "Keks und Einstellungen"
           }
         },
         "overview": {
-          "title": "Overview",
-          "intro": "We use cookies to ensure the technical operation of this platform and to enhance your experience. Some cookies are essential, others require your consent.",
+          "title": "Überblick",
+          "intro": "Wir verwenden Cookies und ähnliche Technologien, um den Betrieb dieser Plattform sicherzustellen und dein Nutzererlebnis kontinuierlich zu verbessern. Einige Cookies sind technisch notwendig, andere erfordern deine ausdrückliche Zustimmung.",
           "bullets": [
-            "Essential cookies for platform functionality.",
-            "Analytics cookies to improve our services.",
-            "Marketing cookies only with your consent.",
-            "You can change your preferences at any time."
+            "Technisch notwendige Cookies für grundlegende Funktionen.",
+            "Statistik-Cookies zur anonymisierten Analyse der Nutzung.",
+            "Kein Einsatz von Marketing-Cookies oder Tracking durch Dritte.",
+            "Deine Einstellungen können jederzeit angepasst werden."
           ],
           "cta": {
-            "label": "Manage cookie preferences",
-            "href": "/cookies-settings"
+            "label": "Cookie-Einstellungen verwalten",
+            "action": "openCookieBanner"
           }
         },
         "whatAreCookies": {
-          "title": "What are cookies?",
-          "body": "Cookies are small files stored on your device when you visit a website. They allow the site to recognize your browser and store information such as preferences or login state."
+          "title": "Was sind Cookies?",
+          "body": "Cookies sind kleine Textdateien, die auf deinem Gerät gespeichert werden, wenn du eine Website besuchst. Sie ermöglichen es, deinen Browser bei zukünftigen Besuchen wiederzuerkennen und bestimmte Informationen wie Login-Status oder Spracheinstellungen zu speichern."
         },
         "types": {
-          "title": "Types of cookies we use",
+          "title": "Welche Arten von Cookies verwenden wir?",
           "items": [
             {
-              "name": "Necessary cookies",
-              "description": "These are required for the core functionality of the website, such as login and navigation."
+              "name": "Notwendige Cookies",
+              "description": "Diese Cookies sorgen dafür, dass die Plattform korrekt funktioniert – z. B. für Anmeldung, Navigation oder Sicherheit. Sie können nicht deaktiviert werden."
             },
             {
-              "name": "Preference cookies",
-              "description": "They store settings such as language, theme, or region."
-            },
-            {
-              "name": "Analytics cookies",
-              "description": "Help us understand how the platform is used and improve its performance."
-            },
-            {
-              "name": "Marketing cookies",
-              "description": "Used to show relevant and personalized ads. Activated only with your consent."
+              "name": "Statistik-Cookies",
+              "description": "Diese Cookies helfen uns zu verstehen, wie Nutzer mit der Plattform interagieren – z. B. welche Seiten besucht oder welche Funktionen genutzt werden. Die Daten sind anonym und dienen ausschließlich der Optimierung."
             }
           ]
         },
         "thirdParties": {
-          "title": "Third-party cookies",
-          "body": "We use external providers for analytics, security, and payment services. These providers may set their own cookies.",
+          "title": "Drittanbieter-Dienste",
+          "body": "Wir nutzen externe Dienste zur technischen Analyse und Zahlungsabwicklung. Diese werden so konfiguriert, dass sie DSGVO-konform sind. Daten werden ausschließlich anonym erfasst und nicht zu Werbezwecken verwendet.",
           "table": {
             "headers": {
-              "name": "Provider",
-              "purpose": "Purpose",
-              "privacy": "Privacy Policy"
+              "name": "Anbieter",
+              "purpose": "Zweck",
+              "privacy": "Datenschutz"
             },
             "body": [
               {
                 "name": "Google Analytics",
-                "purpose": "Platform usage analytics",
+                "purpose": "Anonymisierte Analyse des Nutzerverhaltens (Seitenaufrufe, Interaktionen). Dient der Optimierung der Plattform.",
                 "privacyUrl": {
                   "label": "Google",
                   "href": "https://policies.google.com/privacy"
@@ -622,15 +501,15 @@
               },
               {
                 "name": "Stripe",
-                "purpose": "Payment processing",
+                "purpose": "Verarbeitung von Zahlungen mit hoher Sicherheit. Keine Analyse der Nutzerinteraktion.",
                 "privacyUrl": {
                   "label": "Stripe",
-                  "href": "https://stripe.com/privacy"
+                  "href": "https://stripe.com/de/privacy"
                 }
               },
               {
                 "name": "PayPal",
-                "purpose": "Payment transactions",
+                "purpose": "Zahlungsabwicklung für Nutzer mit PayPal-Konto. Keine Profilbildung durch Maped Solutions.",
                 "privacyUrl": {
                   "label": "PayPal",
                   "href": "https://www.paypal.com/myaccount/privacy/privacyhub"
@@ -639,54 +518,62 @@
             ]
           }
         },
+        "localStorage": {
+          "title": "Verwendung von localStorage",
+          "body": "Neben Cookies nutzen wir auch den localStorage des Browsers, um Einstellungen wie Sprache, Design oder deinen Gast-Avatar lokal zu speichern. Diese Informationen verlassen dein Gerät nicht und werden nicht mit Dritten geteilt."
+        },
         "management": {
-          "title": "Managing cookies",
-          "intro": "You can manage your preferences through the banner or your browser settings.",
+          "title": "Verwaltung von Cookies",
+          "intro": "Du kannst deine Cookie-Einstellungen jederzeit über das Banner oder deinen Browser ändern.",
           "methods": [
-            "Accept or reject cookies via the initial banner.",
-            "Modify browser settings to block or delete cookies.",
-            "Access cookie settings from the footer at any time."
+            "Zustimmung oder Ablehnung im Banner bei deinem ersten Besuch.",
+            "Einstellungen im Browser zum Blockieren oder Löschen von Cookies.",
+            "Über den Link „Cookie-Einstellungen“ im Footer jederzeit zugänglich."
           ],
+          "cta": {
+            "label": "Cookie-Banner erneut öffnen",
+            "action": "openCookieBanner"
+          },
           "links": [
             {
               "label": "Google Chrome",
-              "href": "https://support.google.com/chrome/answer/95647?hl=en"
+              "href": "https://support.google.com/chrome/answer/95647?hl=de"
             },
             {
               "label": "Mozilla Firefox",
-              "href": "https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+              "href": "https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen"
             },
             {
               "label": "Safari",
-              "href": "https://support.apple.com/en-us/guide/safari/sfri11471/mac"
+              "href": "https://support.apple.com/de-de/guide/safari/sfri11471/mac"
             },
             {
               "label": "Microsoft Edge",
-              "href": "https://support.microsoft.com/en-us/help/4027947/microsoft-edge-delete-cookies"
+              "href": "https://support.microsoft.com/de-de/help/4027947/microsoft-edge-delete-cookies"
             }
           ]
         },
         "legalBasis": {
-          "title": "Legal basis",
-          "body": "Non-essential cookies are used based on your consent (Art. 6(1)(a) GDPR). Essential cookies are set based on our legitimate interest (Art. 6(1)(f) GDPR)."
+          "title": "Rechtsgrundlage",
+          "body": "Nicht-essentielle Cookies (wie Statistik-Cookies) werden nur mit deiner Einwilligung gespeichert (Art. 6 Abs. 1 lit. a DSGVO). Notwendige Cookies basieren auf unserem berechtigten Interesse am sicheren Betrieb der Seite (Art. 6 Abs. 1 lit. f DSGVO)."
         },
         "changes": {
-          "title": "Changes to this policy",
-          "body": "This policy may be updated for legal or technical reasons. The last modification date is displayed below.",
+          "title": "Änderungen dieser Richtlinie",
+          "body": "Diese Richtlinie kann bei Änderungen in der Gesetzgebung oder Technik aktualisiert werden. Das Datum der letzten Änderung findest du hier:",
           "meta": {
-            "lastUpdated": "Last updated:"
+            "lastUpdated": "Letzte Aktualisierung:"
           }
         },
         "legalReferences": {
-          "title": "Legal references",
+          "title": "Rechtliche Hinweise",
           "items": [
             {
-              "label": "General Data Protection Regulation (GDPR)",
+              "label": "DSGVO (EU 2016/679)",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             },
             {
-              "label": "ePrivacy Directive",
-              "href": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32002L0058"
+              "label": "ePrivacy-Richtlinie",
+              "href": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32002L0058"
             }
           ]
         }
@@ -694,60 +581,61 @@
       "terms": {
         "hero": {
           "headline1": "Nutzungsbedingungen",
-          "headline2": "Bedingungen für die Nutzung der Plattform",
-          "subtitle": "Dieses Dokument legt die Rechte und Pflichten zwischen den Nutzern und dem Unternehmen bei der Nutzung dieser Plattform fest, die technisch von Maped Solutions UG betrieben wird.",
+          "headline2": "Allgemeine Geschäftsbedingungen für die Plattform",
+          "subtitle": "Dieses Dokument beschreibt die Rechte und Pflichten zwischen den Nutzern und dem Dienstleister, der diese Plattform verwendet. Die Plattform wird technisch von Maped Solutions UG betrieben.",
           "image": {
             "src": "/images/terms-hero.png",
-            "alt": "Rechtsdokument und Einverständnis"
+            "alt": "Rechtliches Dokument und Vertrag"
           }
         },
         "intro": {
           "title": "Einleitung",
-          "body": "Durch den Zugriff auf oder die Nutzung unserer Dienste erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Wenn du mit den Bedingungen nicht einverstanden bist, solltest du die Plattform nicht nutzen."
+          "body": "Mit dem Zugriff auf oder der Nutzung unserer Dienste erklärst du dich mit diesen Nutzungsbedingungen einverstanden. Wenn du mit einem der Bedingungen nicht einverstanden bist, solltest du die Plattform nicht nutzen."
         },
         "scope": {
-          "title": "Geltungsbereich",
-          "body": "Die Plattform ermöglicht es Nutzern, Dienstleistungen anzufragen, Reservierungen zu verwalten, mit dem Unternehmen zu kommunizieren und digitale Funktionen zu nutzen. Inhalte und Funktionen können je nach Kunde variieren."
+          "title": "Leistungsumfang",
+          "body": "Diese Plattform ermöglicht es Nutzern, Dienstleistungen im Bereich Reinigung, Instandhaltung und Hausservice anzufragen, Angebote zu erhalten, Termine zu vereinbaren und mit dem Dienstleister zu kommunizieren. Einige Leistungen werden direkt vom Anbieter erbracht, während bestimmte Aufgaben (z. B. Elektroreparaturen, Malerarbeiten) durch externe Subunternehmer durchgeführt werden."
         },
         "userObligations": {
           "title": "Pflichten des Nutzers",
           "items": [
-            "Wahrheitsgemäße und aktuelle Informationen bereitstellen.",
-            "Die Plattform nicht für illegale oder betrügerische Zwecke nutzen.",
-            "Urheberrechte und geistige Eigentumsrechte Dritter respektieren.",
-            "Den technischen Betrieb der Plattform nicht stören.",
-            "Zugangsdaten sicher aufbewahren und nicht an Dritte weitergeben."
+            "Angabe wahrheitsgemäßer und aktueller Informationen während der Nutzung.",
+            "Keine Nutzung der Plattform für illegale, missbräuchliche oder betrügerische Zwecke.",
+            "Respekt gegenüber den Rechten Dritter, insbesondere bei Dienstleistungen in Gemeinschaftsgebäuden.",
+            "Keine Beeinträchtigung des technischen Betriebs der Plattform.",
+            "Vertrauliche Behandlung der Zugangsdaten."
           ]
         },
         "providerRights": {
           "title": "Rechte des Anbieters",
           "items": [
-            "Funktionen aus technischen oder rechtlichen Gründen ändern oder aussetzen.",
-            "Den Zugriff für Nutzer verweigern, die gegen diese Bedingungen verstoßen.",
-            "Diese Bedingungen bei rechtlichen oder geschäftlichen Änderungen anpassen.",
-            "Spezielle Funktionen nur für bestimmte Kunden oder Regionen anbieten."
+            "Änderung oder Aussetzung von Funktionen aus technischen oder rechtlichen Gründen.",
+            "Ablehnung oder Stornierung von Anfragen bei Verstößen gegen diese Bedingungen.",
+            "Aktualisierung dieser Bedingungen bei rechtlichen oder betrieblichen Änderungen.",
+            "Angebot individueller Preise oder Sonderkonditionen je nach Kundentyp oder Standort."
           ]
         },
         "payments": {
           "title": "Zahlungen und Bedingungen",
-          "body": "Für die Nutzung bestimmter Dienste können Zahlungen, Abonnements oder zusätzliche Bedingungen erforderlich sein. Diese werden vor der Buchung klar kommuniziert.",
+          "body": "Die Nutzung der angebotenen Dienstleistungen kann kostenpflichtig sein. Durch die Annahme eines Angebots erklärt sich der Nutzer mit den Konditionen einverstanden.",
           "items": [
-            "Alle Preise verstehen sich inkl. gesetzlicher Steuern, sofern nicht anders angegeben.",
+            "Die Preise werden individuell je nach Dienstleistungsart und Aufwand festgelegt.",
             "Zahlungen erfolgen über Drittanbieter wie Stripe oder PayPal.",
-            "Stornierungs- und Rückerstattungsbedingungen variieren je nach Dienst und Anbieter."
+            "Bei Stornierung weniger als 24 Stunden vor dem Termin wird eine Stornogebühr von 25 % des vereinbarten Betrags fällig.",
+            "Zahlung erfolgt in der Regel nach Abschluss des Dienstes, sofern nicht anders angegeben."
           ]
         },
         "cancellation": {
-          "title": "Kündigung und Beendigung",
-          "body": "Du kannst die Nutzung der Plattform jederzeit beenden. Das Unternehmen behält sich das Recht vor, Konten bei Verstößen gegen diese Bedingungen zu sperren oder zu löschen – ohne Vorankündigung in schwerwiegenden Fällen."
+          "title": "Stornierung und Beendigung",
+          "body": "Nutzer können bestätigte Termine stornieren. Erfolgt die Stornierung weniger als 24 Stunden vor dem Termin, wird eine Gebühr gemäß Abschnitt 'Zahlungen' fällig. Der Anbieter behält sich das Recht vor, bei wiederholtem Missbrauch den Zugang zu sperren."
         },
         "liability": {
           "title": "Haftungsbeschränkung",
-          "body": "Das Unternehmen haftet nicht für indirekte Schäden, Datenverluste oder Ausfälle, die durch Dritte oder höhere Gewalt verursacht werden. Es gelten die gesetzlichen Haftungsbeschränkungen gemäß der zuständigen Gerichtsbarkeit."
+          "body": "Der Anbieter haftet nicht für indirekte Schäden, wirtschaftliche Verluste oder Ausfälle, die durch Dritte, Subunternehmer oder höhere Gewalt verursacht wurden. Die Haftung für Sachschäden ist auf den vereinbarten Auftragswert beschränkt und übersteigt in keinem Fall die durch die Berufshaftpflichtversicherung abgedeckte Summe von 3 Millionen Euro. Der Nutzer trägt die Verantwortung für den sicheren Zugang zum Einsatzort."
         },
         "changes": {
           "title": "Änderungen der Bedingungen",
-          "body": "Diese Bedingungen können aus rechtlichen, technischen oder geschäftlichen Gründen aktualisiert werden. Wesentliche Änderungen werden über die Plattform mitgeteilt.",
+          "body": "Diese Bedingungen können bei rechtlichen, technischen oder betrieblichen Änderungen aktualisiert werden. Das aktualisierte Dokument wird auf dieser Seite mit dem Datum der letzten Änderung veröffentlicht.",
           "meta": {
             "lastUpdated": "Letzte Aktualisierung:"
           }
@@ -756,9 +644,9 @@
           "title": "Kontakt",
           "items": [
             {
-              "label": "Dienstanbieter",
-              "title": "Havenova",
-              "value": "Stollberger Str.43, 12627 Berlin — contact@havenova.de"
+              "label": "Dienstleister",
+              "title": "Hasan Al AL-Hayyawi",
+              "value": "Adresse und Kontaktangaben noch nicht angegeben."
             },
             {
               "label": "Technischer Support",
@@ -775,7 +663,7 @@
           "title": "Rechtliche Verweise",
           "items": [
             {
-              "label": "DSGVO (EU 2016/679)",
+              "label": "Datenschutz-Grundverordnung (DSGVO)",
               "href": "https://eur-lex.europa.eu/eli/reg/2016/679/oj"
             },
             {
@@ -792,6 +680,222 @@
     }
   },
   "components": {
+    "common": {
+      "welcomeOfferBanner": {
+        "header": "Willkommen bei Havenova!",
+        "description": "Erstelle dein Konto und erhalte 10 % Rabatt auf deine erste Anfrage über die App. Eine Registrierung ist erforderlich, um deine Aufträge zu verwalten und exklusive Angebote zu erhalten.",
+        "cta": {
+          "label": "Konto erstellen",
+          "href": "/user/register"
+        },
+        "image": {
+          "lg": {
+            "src": "/images/components/welcome-offer-banner-lg.webp",
+            "alt": "10 % Rabatt Bild"
+          },
+          "md": {
+            "src": "/images/components/welcome-offer-banner-md.webp"
+          }
+        }
+      },
+      "howItWorks": {
+        "title": "So funktioniert’s",
+        "subtitle": "Nahtlos, transparent und zuverlässig",
+        "description": "Unser Ablauf ist darauf ausgerichtet, Ihnen den Alltag zu erleichtern. Senden Sie Ihre Anfrage in wenigen Schritten, erhalten Sie ein persönliches Angebot und bekommen Sie professionelle Hilfe genau dann, wenn Sie sie brauchen. Kommunikation, Zuverlässigkeit und Flexibilität stehen bei uns an erster Stelle.",
+        "cta": {
+          "label": "Mehr über uns erfahren",
+          "href": "/about"
+        },
+        "steps": [
+          {
+            "title": "Service anfragen",
+            "description": "Übermitteln Sie Ihre Daten online, schnell, unkompliziert und direkt über unsere App.",
+            "image": {
+              "src": "/images/howItWorks-step-1.webp",
+              "alt": "Serviceanfrage ausfüllen"
+            }
+          },
+          {
+            "title": "Angebot erhalten",
+            "description": "Wir prüfen Ihre Bedürfnisse und senden Ihnen ein persönliches Angebot.",
+            "image": {
+              "src": "/images/howItWorks-step-2.webp",
+              "alt": "Angebot erhalten"
+            }
+          },
+          {
+            "title": "Service erhalten",
+            "description": "Unsere Fachkräfte erledigen den Service zum gewünschten Zeitpunkt.",
+            "image": {
+              "src": "/images/howItWorks-step-3.webp",
+              "alt": "Fachkraft bei der Arbeit"
+            }
+          }
+        ]
+      },
+      "servicesPreview": {
+        "title": "Unsere Leistungen",
+        "subtitle": "Maßgeschneiderte Dienstleistungen für Ihr Zuhause",
+        "description": "Von Möbelmontage bis zur gründlichen Reinigung – wir bieten zuverlässige Lösungen für jede Situation. Entdecken Sie, wie wir helfen können.",
+        "items": [
+          {
+            "title": "Küchenmontage",
+            "image": {
+              "src": "/svg/kitchen-assembly.svg",
+              "alt": "Symbol Küchenmontage"
+            }
+          },
+          {
+            "title": "Hausservice",
+            "image": {
+              "src": "/svg/home-service.svg",
+              "alt": "Symbol Hausservice"
+            }
+          },
+          {
+            "title": "Fensterreinigung",
+            "image": {
+              "src": "/svg/windows-cleaning.svg",
+              "alt": "Symbol Fensterreinigung"
+            }
+          },
+          {
+            "title": "Wohnungsreinigung",
+            "image": {
+              "src": "/svg/house-cleaning.svg",
+              "alt": "Symbol Wohnungsreinigung"
+            }
+          },
+          {
+            "title": "Möbelmontage",
+            "image": {
+              "src": "/svg/furniture-assembly.svg",
+              "alt": "Symbol Möbelmontage"
+            }
+          },
+          {
+            "title": "Küchenreinigung",
+            "image": {
+              "src": "/svg/kitchen-cleaning.svg",
+              "alt": "Symbol Küchenreinigung"
+            }
+          }
+        ],
+        "cta": {
+          "label": "Alle Leistungen ansehen",
+          "href": "/services"
+        }
+      },
+      "whyChoose": {
+        "title": "Why Choose Havenova?",
+        "description": "At Havenova, we combine traditional services with modern transparency. Our goal is to make the entire process – from request to completion – as simple, reliable, and customer-focused as possible. The following points highlight what sets us apart from others.",
+        "points": [
+          {
+            "title": "Easy and transparent booking process",
+            "image": {
+              "src": "/svg/whyChoose-1.svg",
+              "alt": "Transparent booking process icon"
+            }
+          },
+          {
+            "title": "Fast and personalized service",
+            "image": {
+              "src": "/svg/whyChoose-2.svg",
+              "alt": "Personalized service icon"
+            }
+          },
+          {
+            "title": "Commitment to quality in every task",
+            "image": {
+              "src": "/svg/whyChoose-3.svg",
+              "alt": "Quality icon"
+            }
+          },
+          {
+            "title": "Ongoing collaboration in digital innovation",
+            "image": {
+              "src": "/svg/whyChoose-4.svg",
+              "alt": "Digital innovation icon"
+            }
+          }
+        ]
+      },
+      "testimonials": {
+        "title": "Vertrauenswürdig von Berliner Haushalten.",
+        "subTitle": "Sehen Sie, was unsere Kunden sagen.",
+        "description": "Bei Havenova arbeiten wir stetig daran, unsere Leistungen zu verbessern. Ihr Feedback hilft uns, den Service weiterzuentwickeln und noch bessere Lösungen zu bieten.",
+        "items": [
+          {
+            "text": "Havenova hat meinen Umzug so einfach und stressfrei gemacht.",
+            "author": "Anna",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117560/avatar-8.svg",
+              "alt": "Kundenavatar Anna"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Sternebewertung"
+            }
+          },
+          {
+            "text": "Professionell, freundlich und zuverlässig! Sehr empfehlenswerter Reinigungsservice.",
+            "author": "Markus",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-6.svg",
+              "alt": "Kundenavatar Markus"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Sternebewertung"
+            }
+          },
+          {
+            "text": "Endlich habe ich einen Dienstleister gefunden, dem ich mein Zuhause anvertrauen kann.",
+            "author": "Sophie",
+            "profileImage": {
+              "src": "https://res.cloudinary.com/dd1i5d0iq/image/upload/v1751117558/avatar-1.svg",
+              "alt": "Kundenavatar Sophie"
+            },
+            "starImage": {
+              "src": "/images/stars.webp",
+              "alt": "Sternebewertung"
+            }
+          }
+        ],
+        "cta": {
+          "label": "Bewertung abgeben",
+          "href": "/review"
+        }
+      },
+      "faq": {
+        "title": "Häufig gestellte Fragen",
+        "items": [
+          {
+            "question": "Welche Services bietet Havenova an?",
+            "answer": "Havenova bietet Reinigung, Reparaturen, Wartung und Umzugshilfe in Berlin."
+          },
+          {
+            "question": "Wie schnell kann ich einen Service buchen?",
+            "answer": "Meist vereinbaren wir einen Termin innerhalb von 24–48 Stunden nach Ihrer Anfrage."
+          },
+          {
+            "question": "Sind Ihre Mitarbeiter qualifiziert und versichert?",
+            "answer": "Ja, unser gesamtes Team ist geschult und vollständig versichert."
+          },
+          {
+            "question": "Gibt es Rabatte für Mitglieder?",
+            "answer": "Ja, Mitglieder erhalten exklusive Rabatte und Vorteile."
+          }
+        ],
+        "cta": {
+          "label": "Kontakt Support",
+          "href": "/contact",
+          "description": "Kontaktieren Sie unser Team für maßgeschneiderte Unterstützung.",
+          "title": "Benötigen Sie weitere Hilfe?"
+        }
+      },
+      "finalCta": {}
+    },
     "navbar": {
       "headers": {
         "services": "Leistungen",
@@ -868,11 +972,54 @@
         }
       ]
     },
+    "cookieBanner": {
+      "title": "Cookies auf dieser Website",
+      "description": "Wir verwenden notwendige Cookies, um die Funktion der Website sicherzustellen. Mit Ihrer Zustimmung verwenden wir auch Statistik-Cookies, um die Nutzung zu analysieren und die Benutzererfahrung zu verbessern. Wir sammeln keine Daten zu Werbe- oder Profilierungszwecken.",
+      "acceptAll": "Alle akzeptieren",
+      "rejectAll": "Nur notwendige",
+      "save": "Auswahl speichern",
+      "close": "Schließen",
+      "enableStats": "Statistik-Cookies aktivieren"
+    },
     "welcomeOffer": {
       "header": "Willkommen bei Havenova!",
       "description": "Registrieren Sie sich jetzt und erhalten Sie 10% Rabatt auf Ihre erste Serviceanfrage. Schnell, zuverlässig und professionell.",
       "cta": "Konto erstellen",
       "close": "Schließen"
+    },
+    "whyChoose": {
+      "title": "Warum Havenova?",
+      "description": "Bei Havenova verbinden wir traditionelle Dienstleistungen mit moderner Transparenz. Unser Ziel ist es, den gesamten Prozess – von der Anfrage bis zur Durchführung – so einfach, zuverlässig und kundenorientiert wie möglich zu gestalten. Die folgenden Punkte zeigen, was uns von anderen unterscheidet.",
+      "points": [
+        {
+          "title": "Einfacher und transparenter Buchungsprozess",
+          "image": {
+            "src": "/svg/whyChoose-1.svg",
+            "alt": "Transparenter Buchungsprozess Symbol"
+          }
+        },
+        {
+          "title": "Schneller und individueller Service",
+          "image": {
+            "src": "/svg/whyChoose-2.svg",
+            "alt": "Individueller Service Symbol"
+          }
+        },
+        {
+          "title": "Verlässliche Qualität bei jeder Aufgabe",
+          "image": {
+            "src": "/svg/whyChoose-3.svg",
+            "alt": "Qualität Symbol"
+          }
+        },
+        {
+          "title": "Ständige Zusammenarbeit bei digitalen Innovationen",
+          "image": {
+            "src": "/svg/whyChoose-4.svg",
+            "alt": "Digitalen Innovationen Symbol"
+          }
+        }
+      ]
     },
     "user": {
       "register": {
@@ -970,6 +1117,43 @@
           "plant_shelf": "Pflanzenregal"
         }
       }
+    },
+    "values": {
+      "title": "Unsere Werte",
+      "list": [
+        {
+          "label": "Transparenz",
+          "description": "Wir glauben an klare und ehrliche Kommunikation in jeder Phase – von der Anfrage bis zur Ausführung.",
+          "image": {
+            "src": "/images/01.png",
+            "alt": "Construction equipment and blueprints"
+          }
+        },
+        {
+          "label": "Qualität",
+          "description": "Wir liefern sorgfältige Arbeit mit Liebe zum Detail und hohem Anspruch an Professionalität.",
+          "image": {
+            "src": "/images/01.png",
+            "alt": "Construction equipment and blueprints"
+          }
+        },
+        {
+          "label": "Innovation",
+          "description": "Wir beteiligen uns aktiv an der Entwicklung digitaler Werkzeuge zur Verbesserung der Kundenerfahrung.",
+          "image": {
+            "src": "/images/01.png",
+            "alt": "Construction equipment and blueprints"
+          }
+        },
+        {
+          "label": "Empathie",
+          "description": "Wir pflegen eine professionelle und zugleich menschliche Beziehung zu unseren Kunden, geprägt von Respekt und Verständnis.",
+          "image": {
+            "src": "/images/01.png",
+            "alt": "Construction equipment and blueprints"
+          }
+        }
+      ]
     }
   },
   "footer": {

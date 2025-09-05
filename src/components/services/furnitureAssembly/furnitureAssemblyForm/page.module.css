@@ -1,5 +1,6 @@
 .main {
-  margin: 300px auto;
+  margin: 70px auto;
+  margin-bottom: 200px;
   max-width: 1200px;
   width: 100%;
   height: 350px;
@@ -29,7 +30,7 @@
 }
 .ul_main {
   position: absolute;
-  top: -125px;
+  top: 0px;
   right: 100px;
   width: 400px;
   height: 600px;
@@ -149,8 +150,8 @@
   justify-content: center;
 }
 .counter_p {
-  border-top: 1px solid var(--brand-accent);
-  border-bottom: 1px solid var(--brand-accent);
+  border-top: 1px solid var(--bg-card);
+  border-bottom: 1px solid var(--bg-card);
   width: 40px;
   height: 32px;
   display: flex;
@@ -159,8 +160,8 @@
 }
 .add_button,
 .rest_button {
-  background: var(--brand-accent);
-  border: 1px solid var(--brand-accent);
+  background: var(--bg-card);
+  border: 1px solid var(--bg-card);
   border-radius: 4px 0 0 4px;
   width: 40px;
   height: 32px;
@@ -174,8 +175,8 @@
   text-align: left;
   min-width: 100%;
   min-height: 100px;
-  border: 1px solid var(--brand-accent);
-  background-color: var(--brand-accent);
+  border: 1px solid var(--bg-card);
+  background-color: var(--bg-card);
   color: var(--text-primary);
   border-radius: 8px;
   padding: 8px;

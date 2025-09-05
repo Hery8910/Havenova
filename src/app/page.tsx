@@ -1,26 +1,37 @@
 'use client';
 import { useUser } from '../contexts/UserContext';
-import { getPublishedBlogs } from '../services/blogServices';
-import { useEffect, useState } from 'react';
-import { BlogFromDB } from '../types/blog';
+import { Suspense, useEffect, useState } from 'react';
 
-import Hero from '../components/hero/page';
-import Benefits from '../components/benefits/page';
-import WorkFlow from '../components/workFlow/page';
-import QuestionAnswer from '../components/q&a/page';
-import Review from '../components/reviews/page';
 import { useClient } from '../contexts/ClientContext';
-import Service from '../components/service/page';
 import { AlertPopup } from '../components/alertPopup/page';
 import { useI18n } from '../contexts/I18nContext';
-import WelcomeOfferBanner from '../components/welcomeOffer/page';
-// import BlogList from "../components/blog/blogList/page";
+
+import HomeHero from '../components/pages/home/homeHero/page';
+import WelcomeOfferBanner from '../components/common/welcomeOfferBanner/page';
+import HowItWorks from '../components/common/howItWorks/page';
+import WhyChoose from '../components/common/whyChoose/page';
+import FAQPreview from '../components/common/faqPreview/page';
+import TestimonialsPreview from '../components/common/testimonials/testimonialsPreview/page';
+import ServicesPreview from '../components/common/servicePreview/page';
+import FinalCTA from '../components/common/finalCTA/page';
+import Loading from '../components/layout/loading/page';
+import HomeHeroSkeleton from '../components/pages/home/homeHero/homeHeroSkeleton';
+import SkeletonWelcomeOfferBanner from '../components/common/welcomeOfferBanner/SkeletonWelcomeOfferBanner';
 
 export default function Home() {
   const { client, loading } = useClient();
-  const { refreshUser, user } = useUser();
-  const [sessionAlert, setSessionAlert] = useState(false);
+  const { registerSessionCallback, user } = useUser();
+
   const { texts } = useI18n();
+  const homeHeroTexts = texts.pages.home.hero;
+  const howItWorksTexts = texts.components.common.howItWorks;
+  const servicesPreviewTexts = texts.components.common.servicesPreview;
+  const whyChooseTexts = texts.components.common.whyChoose;
+  const testimonialsTexts = texts.components.common.testimonials;
+  const faqPreviewTexts = texts.components.common.faq;
+  const welcomeOfferTexts = texts.components.common.welcomeOfferBanner;
+  const finalCtaTexts = texts.components.common.finalCta;
+
   const popups = texts.popups;
   const [alert, setAlert] = useState<{
     type: 'success' | 'error';
@@ -28,39 +39,37 @@ export default function Home() {
     description: string;
   } | null>(null);
 
-  // const [blogs, setBlogs] = useState<BlogFromDB[]>([]);
-  // const [page, setPage] = useState(1);
-  // const [totalPages, setTotalPages] = useState(1);
-  // const [search, setSearch] = useState("");
-  // const [order, setOrder] = useState<"desc" | "asc">("desc");
-  // const limit = 10;
-
   useEffect(() => {
-    refreshUser(() => {
+    registerSessionCallback(() => {
       setAlert({
         type: 'error',
-        title: texts.popups?.SESSION_EXPIRED?.title || 'Session expired',
+        title: popups?.SESSION_EXPIRED?.title || 'Session expired',
         description:
-          texts.popups?.SESSION_EXPIRED?.description ||
-          'Your session has expired. Please log in again.',
+          popups?.SESSION_EXPIRED?.description || 'Your session has expired. Please log in again.',
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshUser]);
-  console.log(client?.branding);
+  }, [texts]);
 
-  if (!client || loading) return <p>Loading...</p>;
+  if (!client || loading) return <Loading />;
 
   return (
     <main>
-      <Hero />
-      <Benefits />
-      <WorkFlow />
-      <Service />
-      <Review />
-      <QuestionAnswer />
-      <WelcomeOfferBanner />
-      {/* <BlogList blogs={blogs} /> */}
+      <Suspense fallback={<HomeHeroSkeleton />}>
+        <HomeHero {...homeHeroTexts} />
+      </Suspense>
+
+      <Suspense fallback={<SkeletonWelcomeOfferBanner />}>
+        <WelcomeOfferBanner {...welcomeOfferTexts} />
+      </Suspense>
+
+      <HowItWorks {...howItWorksTexts} />
+      <ServicesPreview {...servicesPreviewTexts} />
+      <WhyChoose {...whyChooseTexts} />
+      <TestimonialsPreview {...testimonialsTexts} />
+      <FAQPreview {...faqPreviewTexts} />
+      <FinalCTA {...finalCtaTexts} />
+
       {alert && (
         <AlertPopup
           type={alert.type}

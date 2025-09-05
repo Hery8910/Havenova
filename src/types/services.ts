@@ -3,7 +3,7 @@
 // --------------------------------------
 // Tipos generales
 // --------------------------------------
-export type ServiceStatus = 'submitted' | 'in progress' | 'completed' | 'cancelled';
+export type ServiceStatus = 'submitted' | 'accepted' | 'in progress' | 'completed' | 'cancelled';
 
 export type ServiceType =
   | 'house-service'
@@ -11,7 +11,7 @@ export type ServiceType =
   | 'kitchen-assembly'
   | 'house-cleaning'
   | 'furniture-assembly'
-  | 'window-cleaning'; 
+  | 'window-cleaning';
 
 export type ServiceIcon = {
   src: string;
@@ -51,6 +51,7 @@ export interface FurnitureAssemblyRequest {
   serviceType: 'furniture-assembly';
   price: number;
   estimatedDuration: number;
+  icon: ServiceIcon;
   details: BaseServiceDetails & {
     type: string;
     location: string;
@@ -61,6 +62,7 @@ export interface FurnitureAssemblyRequest {
     depth?: string;
     doors?: number;
     drawers?: number;
+    notes?: string;
   };
 }
 

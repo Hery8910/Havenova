@@ -1,12 +1,12 @@
-import Hero from "../../../components/hero/page";
-import Reviews from "../../../components/reviews/page";
+import Hero from '../../../components/pages/home/homeHero/page';
+import Reviews from '../../../components/common/testimonials/testimonialsPreview/page';
 // import BlogList from "../../../components/blog/blogList/page";
 
 import styles from './page.module.css';
-import ServiceCart from "../../../components/services/serviceCart/page";
-import KitchenCleaningForm from "../../../components/services/kitchenCleaning/kitchenCleaningForm/page";
+import ServiceCart from '../../../components/services/serviceCart/page';
+import KitchenCleaningForm from '../../../components/services/kitchenCleaning/kitchenCleaningForm/page';
 
- const KitchenCleaningPage = () => {
+const KitchenCleaningPage = () => {
   // const blogs = [
   //   {
   //     id: "1",
@@ -230,28 +230,28 @@ import KitchenCleaningForm from "../../../components/services/kitchenCleaning/ki
   // ];
 
   const kitchenCleaningHeader = {
-    title: "Deep Kitchen Cleaning in Berlin",
+    title: 'Deep Kitchen Cleaning in Berlin',
     description:
       "Request a professional kitchen deep clean by answering a few questions. We'll schedule a visit to evaluate your space before providing a final quote.",
     image: {
-      src: "/svg/kitchen-cleaning.svg",
-      alt: "Deep Kitchen Cleaning Illustration",
+      src: '/svg/kitchen-cleaning.svg',
+      alt: 'Deep Kitchen Cleaning Illustration',
     },
-    cta: "",
-    href: "",
-    extraClass: "hero_services",
-  }
+    cta: '',
+    href: '',
+    extraClass: 'hero_services',
+  };
   return (
     <main className={styles.main}>
       {/* <Hero hero={kitchenCleaningHeader}/> */}
       <section className={styles.section}>
-      <KitchenCleaningForm />
-      <ServiceCart />
+        <KitchenCleaningForm />
+        <ServiceCart />
       </section>
-        <Reviews />
-        {/* <BlogList  blogs={blogs}/> */}
+      <Reviews />
+      {/* <BlogList  blogs={blogs}/> */}
     </main>
   );
 };
 
-export default KitchenCleaningPage
+export default KitchenCleaningPage;

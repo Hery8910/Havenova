@@ -1,10 +1,11 @@
-"use client";
-import styles from "./page.module.css";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+'use client';
+import styles from './page.module.css';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-import { useI18n } from "../../contexts/I18nContext";
+import { useI18n } from '../../contexts/I18nContext';
+import { useCookies } from '../../contexts/CookiesContext';
 
 interface ContactItem {
   label: string;
@@ -38,8 +39,8 @@ interface FooterProps {
 }
 
 const Footer = () => {
-  const router = useRouter();
   const { texts } = useI18n();
+  const { openManager } = useCookies();
   const footer: FooterProps = texts.footer;
 
   return (
@@ -56,7 +57,7 @@ const Footer = () => {
         </Link>
         <ul className={styles.ul}>
           {footer.contact.map((elem, index) => (
-            <li key={index} className={styles.li}>
+            <li key={index} className={styles.contact_li}>
               {elem.image ? (
                 <Image
                   className={styles.image}
@@ -103,11 +104,16 @@ const Footer = () => {
               </Link>
             </li>
           ))}
+          <li className={styles.li}>
+            <button className={styles.cookie_button} onClick={openManager}>
+              Cookies Preference
+            </button>
+          </li>
         </ul>
       </main>
       <p className={styles.cta}>
-        2025 - <strong>Havenova</strong>. Powered by{" "}
-        <Link href={"/#"}>
+        2025 - <strong>Havenova</strong>. Powered by{' '}
+        <Link href={'/#'}>
           <strong>Maped Solutions</strong>.
         </Link>
       </p>

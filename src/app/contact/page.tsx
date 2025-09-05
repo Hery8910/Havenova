@@ -1,5 +1,5 @@
 import styles from './page.module.css';
-import Hero from '../../components/hero/page';
+import Hero from '../../components/pages/home/homeHero/page';
 import WhoWeAre from '../../components/whoWeAre/page';
 
 const Contact = () => {
@@ -79,7 +79,7 @@ const Contact = () => {
   // };
   return (
     <>
-    {/* <Hero hero={contactHero}/>
+      {/* <Hero hero={contactHero}/>
     <WhoWeAre weAre={weAre} /> */}
     </>
   );

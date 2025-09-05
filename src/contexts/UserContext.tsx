@@ -8,24 +8,22 @@ import React, {
   useCallback,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { ServiceRequestItem } from '../types/services';
+import { ServiceRequest, ServiceRequestItem } from '../types/services';
 import { User } from '../types/User';
 import { useClient } from './ClientContext';
-import api from '../services/api';
 import { getUser, updateUser } from '../services/userService';
 
-// --- Utilidades Local Storage ---
+// --- Local Storage keys ---
 const USER_KEY = 'havenova_user';
+const GUEST_AVATAR_KEY = 'guest_avatar';
 
+// --- Utils ---
 function getPersistentGuestAvatar(): string {
   if (typeof window === 'undefined') return '/svg/user.svg';
-  const key = 'guest_avatar';
-  let avatar = localStorage.getItem(key);
-  if (!avatar) {
-    avatar = '/svg/user.svg';
-    localStorage.setItem(key, avatar);
-  }
-  return avatar;
+  const saved = localStorage.getItem(GUEST_AVATAR_KEY);
+  if (saved) return saved;
+  localStorage.setItem(GUEST_AVATAR_KEY, '/svg/user.svg');
+  return '/svg/user.svg';
 }
 
 function saveUserToStorage(user: User) {
@@ -33,26 +31,60 @@ function saveUserToStorage(user: User) {
 }
 
 function getUserFromStorage(): User | null {
-  const data = localStorage.getItem(USER_KEY);
-  if (data) {
-    try {
-      const user = JSON.parse(data);
-      if (user && user.createdAt) user.createdAt = new Date(user.createdAt);
-      return user;
-    } catch {
-      return null;
-    }
+  const data = typeof window !== 'undefined' ? localStorage.getItem(USER_KEY) : null;
+  if (!data) return null;
+  try {
+    const parsed = JSON.parse(data) as User;
+    if (parsed?.createdAt) parsed.createdAt = new Date(parsed.createdAt);
+    // Asegura defaults en migraciones antiguas
+    if (typeof parsed.isLogged !== 'boolean') parsed.isLogged = parsed.role !== 'guest';
+    if (!Array.isArray(parsed.requests)) parsed.requests = [];
+    return parsed;
+  } catch {
+    return null;
   }
-  return null;
 }
 
 function clearUserFromStorage() {
+  if (typeof window === 'undefined') return;
   localStorage.removeItem(USER_KEY);
-  localStorage.removeItem('guest_avatar');
+  // No borres el avatar persistente si no quieres perder el ícono del invitado
 }
 
-export const initialGuestUser: User = {
+// 🔎 Ayuda a unir requests locales con las del backend sin duplicar ids
+function mergeRequests(local: ServiceRequest[], remote: ServiceRequest[]) {
+  const map = new Map<string, ServiceRequest>();
+  [...remote, ...local].forEach((r) => {
+    map.set(r.id, r);
+  });
+  return Array.from(map.values());
+}
+
+// --- Context types ---
+interface UserContextProps {
+  user: User | null;
+  loading: boolean;
+  setUser: (user: User) => void;
+  refreshUser: (onSessionExpired?: () => void) => Promise<void>;
+  logout: () => void;
+  addRequestToUser: (newRequest: ServiceRequestItem) => void;
+  removeRequestFromUser: (id: string) => void;
+  clearAllRequests: () => void;
+  updateUserLanguage: (lang: string) => Promise<void>;
+  updateUserTheme: (theme: 'light' | 'dark') => Promise<void>;
+  registerSessionCallback: (cb: () => void) => void;
+}
+
+const UserContext = createContext<UserContextProps | undefined>(undefined);
+
+interface DashboardProviderProps {
+  children: ReactNode;
+}
+
+// 👇 IMPORTA tu initialGuestUser real. Lo dejo inline para claridad:
+const initialGuestUser: User = {
   _id: '',
+  clientId: '',
   name: '',
   email: '',
   password: '',
@@ -65,68 +97,78 @@ export const initialGuestUser: User = {
   theme: 'light',
   requests: [],
   createdAt: new Date(),
-  clientId: '',
+  isLogged: false,
 };
-
-interface UserContextProps {
-  user: User | null;
-  loading: boolean;
-  setUser: (user: User) => void;
-  refreshUser: (onSessionExpired?: () => void) => Promise<void>;
-  logout: () => void;
-  addRequestToUser: (newRequest: ServiceRequestItem) => void;
-  removeRequestFromUser: (id: string) => void;
-  clearAllRequests: () => void;
-  updateUserLanguage: (lang: string) => Promise<void>;
-  updateUserTheme: (lang: 'light' | 'dark') => Promise<void>;
-}
-
-const UserContext = createContext<UserContextProps | undefined>(undefined);
-
-interface DashboardProviderProps {
-  children: ReactNode;
-}
 
 export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   const { client } = useClient();
   const clientId = client?._id || '';
-
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const sessionCallbackRef = React.useRef<(() => void) | null>(null);
 
+  // Carga inicial
   useEffect(() => {
+    if (!clientId) return;
     refreshUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [clientId]);
 
+  // Persistencia automática
   useEffect(() => {
     if (user) saveUserToStorage(user);
   }, [user]);
 
-  // --- REFRESH USER: Trae perfil actualizado desde el backend SOLO SI usuario registrado ---
+  // --- REFRESH USER ---
   const refreshUser = useCallback(
     async (onSessionExpired?: () => void) => {
+      setLoading(true);
       const localUser = getUserFromStorage();
 
       try {
         const response = await getUser(clientId);
-        const user = response.data;
-        if (user) {
-          setUser(user);
-          saveUserToStorage(user);
+        if (response.data) {
+          const remoteUser: User = response.data;
+
+          // Merge requests: conserva las locales si no existen en backend aún
+          const localRequests = localUser?.requests ?? [];
+          const mergedRequests = mergeRequests(localRequests, remoteUser?.requests ?? []);
+
+          const finalUser: User = {
+            ...remoteUser,
+            requests: mergedRequests,
+            isLogged: true, // 👈 autenticado
+            clientId: remoteUser.clientId || clientId,
+            profileImage: remoteUser.profileImage || getPersistentGuestAvatar(),
+          };
+
+          setUser(finalUser);
+          saveUserToStorage(finalUser);
         }
       } catch (error: any) {
-        clearUserFromStorage();
-        setUser({
+        // Sin sesión válida → invitado
+        const guestBase = {
           ...initialGuestUser,
-          clientId: clientId || '',
+          clientId,
           profileImage: getPersistentGuestAvatar(),
-        });
+        };
 
-        const wasLoggedIn = !!localUser && localUser.role !== 'guest';
+        // Pero intenta mantener un invitado previamente guardado (para no perder solicitudes del carrito)
+        const fallback = localUser
+          ? { ...guestBase, ...localUser, isLogged: false, role: 'guest' as const }
+          : guestBase;
 
+        setUser(fallback);
+        saveUserToStorage(fallback);
+
+        // Si *antes* estaba logeado y ahora 401/403, notifica expiración
+        const wasLoggedIn = !!localUser && localUser.isLogged && localUser.role !== 'guest';
         if (wasLoggedIn && (error?.response?.status === 401 || error?.response?.status === 403)) {
-          onSessionExpired?.();
+          if (onSessionExpired) {
+            onSessionExpired();
+          } else {
+            sessionCallbackRef.current?.();
+          }
         }
       } finally {
         setLoading(false);
@@ -135,26 +177,27 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
     [clientId]
   );
 
+  const registerSessionCallback = useCallback((cb: () => void) => {
+    sessionCallbackRef.current = cb;
+  }, []);
+
   const updateUserLanguage = useCallback(
     async (newLang: string) => {
-      if (user?.role === 'guest') {
-        setUser((prev) => (prev ? { ...prev, language: newLang } : initialGuestUser));
-        saveUserToStorage(user ? { ...user, language: newLang } : initialGuestUser);
+      // Invitado → solo local
+      if (!user || user.role === 'guest' || !user.isLogged) {
+        const next = { ...(user ?? initialGuestUser), language: newLang, clientId };
+        setUser(next);
+        saveUserToStorage(next);
         return;
       }
-      const payload = {
-        clientId,
-        email: user?.email,
-        language: newLang,
-      };
+
+      // Autenticado → backend + local
       try {
-        const response = await updateUser(payload);
-        if (response.data) {
-          setUser(response.data);
-          saveUserToStorage(response.data);
-        } else {
-          setUser(initialGuestUser);
-        }
+        const response = await updateUser({ clientId, language: newLang });
+        const updated = response.data as User;
+        const next = { ...updated, isLogged: true };
+        setUser(next);
+        saveUserToStorage(next);
       } catch (err) {
         console.error('Failed to update user language:', err);
       }
@@ -164,24 +207,18 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
 
   const updateUserTheme = useCallback(
     async (newTheme: 'light' | 'dark') => {
-      if (user?.role === 'guest') {
-        setUser((prev) => (prev ? { ...prev, theme: newTheme } : initialGuestUser));
-        saveUserToStorage(user ? { ...user, theme: newTheme } : initialGuestUser);
+      if (!user || user.role === 'guest' || !user.isLogged) {
+        const next = { ...(user ?? initialGuestUser), theme: newTheme, clientId };
+        setUser(next);
+        saveUserToStorage(next);
         return;
       }
-      const payload = {
-        clientId,
-        email: user?.email,
-        theme: newTheme,
-      };
       try {
-        const response = await updateUser(payload);
-        if (response.data) {
-          setUser(response.data);
-          saveUserToStorage(response.data);
-        } else {
-          setUser(initialGuestUser);
-        }
+        const response = await updateUser({ clientId, theme: newTheme });
+        const updated = response.data as User;
+        const next = { ...updated, isLogged: true };
+        setUser(next);
+        saveUserToStorage(next);
       } catch (err) {
         console.error('Failed to update user theme:', err);
       }
@@ -190,46 +227,65 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   );
 
   const logout = useCallback(() => {
+    // Ideal: llamar a /api/users/logout para borrar cookie httpOnly en server
     clearUserFromStorage();
-    setUser({
+    const guest = {
       ...initialGuestUser,
       clientId,
       profileImage: getPersistentGuestAvatar(),
-    });
+    };
+    setUser(guest);
+    saveUserToStorage(guest);
   }, [clientId]);
 
-  const addRequestToUser = useCallback((newRequest: ServiceRequestItem) => {
-    const requestWithId = { ...newRequest, id: uuidv4() };
+  const addRequestToUser = useCallback(
+    (newRequest: ServiceRequestItem) => {
+      const requestWithId = { ...newRequest, id: newRequest.id || uuidv4() };
+      setUser((prev) => {
+        const base = prev ?? {
+          ...initialGuestUser,
+          clientId,
+          profileImage: getPersistentGuestAvatar(),
+        };
+        const updated: User = { ...base, requests: [...(base.requests ?? []), requestWithId] };
+        saveUserToStorage(updated);
+        return updated;
+      });
+    },
+    [clientId]
+  );
 
-    setUser((prev) => {
-      if (!prev) return initialGuestUser;
-      const updated = {
-        ...prev,
-        requests: [...(prev.requests || []), requestWithId],
-      };
-      saveUserToStorage(updated);
-      return updated;
-    });
-  }, []);
-
-  const removeRequestFromUser = useCallback((id: string) => {
-    setUser((prev) => {
-      const updated = {
-        ...prev,
-        requests: prev.requests.filter((req: ServiceRequestItem) => req.id !== id),
-      };
-      saveUserToStorage(updated);
-      return updated;
-    });
-  }, []);
+  const removeRequestFromUser = useCallback(
+    (id: string) => {
+      setUser((prev) => {
+        const base = prev ?? {
+          ...initialGuestUser,
+          clientId,
+          profileImage: getPersistentGuestAvatar(),
+        };
+        const updated: User = {
+          ...base,
+          requests: (base.requests ?? []).filter((r) => r.id !== id),
+        };
+        saveUserToStorage(updated);
+        return updated;
+      });
+    },
+    [clientId]
+  );
 
   const clearAllRequests = useCallback(() => {
     setUser((prev) => {
-      const updated = { ...prev, requests: [] };
+      const base = prev ?? {
+        ...initialGuestUser,
+        clientId,
+        profileImage: getPersistentGuestAvatar(),
+      };
+      const updated: User = { ...base, requests: [] };
       saveUserToStorage(updated);
       return updated;
     });
-  }, []);
+  }, [clientId]);
 
   if (loading) return null;
 
@@ -246,6 +302,7 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
         clearAllRequests,
         updateUserLanguage,
         updateUserTheme,
+        registerSessionCallback,
       }}
     >
       {children}
@@ -253,11 +310,9 @@ export const DashboardProvider = ({ children }: DashboardProviderProps) => {
   );
 };
 
-// Custom hook para consumir contexto
+// Custom hook
 export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within a DashboardProvider');
-  }
-  return context;
+  const ctx = useContext(UserContext);
+  if (!ctx) throw new Error('useUser must be used within a DashboardProvider');
+  return ctx;
 };
